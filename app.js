@@ -1242,7 +1242,7 @@
       activeTab.style.opacity = "1";
       activeTab.style.visibility = "visible";
     } else {
-      const defaultTab = document.getElementById("tab-content-tourism");
+      const defaultTab = document.getElementById("tab-content-travelintel");
       if (defaultTab) {
         defaultTab.classList.add("active");
         defaultTab.style.setProperty("display", "block", "important");
@@ -4868,7 +4868,7 @@
       btnExploreDiscoveryState.addEventListener("click", () => {
         if (!currentDiscoveredCity) return;
         const facts = computeLogisticsFacts(currentDiscoveredCity, {lat: 0, lng: 0}, 1);
-        switchTab('tourism');
+        switchTab('travelintel');
         loadStateDetails(facts.state);
         const stateBtn = Array.from(document.querySelectorAll('.state-btn')).find(b => b.textContent === facts.state);
         if (stateBtn) {
@@ -25736,7 +25736,7 @@ setTimeout(init3DParallax, 300);
           <span>🧳</span> Travel Intelligence ➔
         </button>
 
-        <button style="background:linear-gradient(135deg, rgba(255,0,127,0.15), rgba(0,243,255,0.15)); border:1px solid rgba(255,0,127,0.4); padding:0.75rem 0.9rem; border-radius:14px; color:#ffffff; font-weight:800; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:0.5rem; transition:all 0.15s ease;" onclick="closeCitySpotlightModal(); if(window.switchTab) window.switchTab('engine');">
+        <button style="background:linear-gradient(135deg, rgba(255,0,127,0.15), rgba(0,243,255,0.15)); border:1px solid rgba(255,0,127,0.4); padding:0.75rem 0.9rem; border-radius:14px; color:#ffffff; font-weight:800; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:0.5rem; transition:all 0.15s ease;" onclick="closeCitySpotlightModal(); if(window.switchTab) window.switchTab('travelintel');">
           <span>🌌</span> 3D Spatial Matrix ➔
         </button>
 
@@ -25828,7 +25828,7 @@ setTimeout(init3DParallax, 300);
     initTravelIntelligence();
     renderRoamModeData('discover');
     if (typeof window.switchTab === 'function') {
-      window.switchTab('tourism');
+      window.switchTab('travelintel');
     }
   } catch(e) {}
 }
