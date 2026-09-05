@@ -34,6 +34,8 @@
     window.location.href = cleanUrl;
   }
   window.performHardReset = performHardReset;
+  window.openShowcaseModal = openShowcaseModal;
+  window.closeShowcaseModal = closeShowcaseModal;
 
   document.addEventListener("click", (e) => {
     if (e.target.closest("#footer-hard-reset-btn")) {
