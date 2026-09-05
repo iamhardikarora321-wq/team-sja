@@ -24073,9 +24073,66 @@ setTimeout(init3DParallax, 300);
   }
   window.initBentoTiltAndSpotlight = initBentoTiltAndSpotlight;
 
+  function initScrollRevealsAndCounters() {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            const statValues = entry.target.querySelectorAll('.stat-roll-value');
+            statValues.forEach(el => animateCounter(el));
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
+    }
+
+    function animateCounter(el) {
+      if (el.dataset.animated) return;
+      el.dataset.animated = "true";
+
+      const targetVal = parseFloat(el.getAttribute('data-target')) || 0;
+      const prefix = el.getAttribute('data-prefix') || '';
+      const suffix = el.getAttribute('data-suffix') || '';
+      const duration = 1600;
+      const startTime = performance.now();
+
+      function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const currentVal = (targetVal * easeOut);
+
+        if (targetVal % 1 !== 0) {
+          el.textContent = prefix + currentVal.toFixed(1) + suffix;
+        } else {
+          el.textContent = prefix + Math.floor(currentVal).toLocaleString() + suffix;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          if (targetVal % 1 !== 0) {
+            el.textContent = prefix + targetVal.toFixed(1) + suffix;
+          } else {
+            el.textContent = prefix + targetVal.toLocaleString() + suffix;
+          }
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+  }
+  window.initScrollRevealsAndCounters = initScrollRevealsAndCounters;
+
   try {
     render3DCarousel();
     initBentoTiltAndSpotlight();
+    initScrollRevealsAndCounters();
   } catch(e) {}
 
   window.openShowcaseModal = openShowcaseModal;
