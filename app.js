@@ -24557,5 +24557,17 @@ setTimeout(init3DParallax, 300);
 
   window.openShowcaseModal = openShowcaseModal;
   window.closeShowcaseModal = closeShowcaseModal;
+  window.launchActiveFeature = launchActiveFeature;
+  window.showcaseNavLeft = function() {
+    if (activeIndex > 0) activeIndex--;
+    render3DCarousel();
+  };
+  window.showcaseNavRight = function() {
+    if (activeIndex < filteredFeatures.length - 1) activeIndex++;
+    render3DCarousel();
+  };
+  window.handleDirectUnlock = function() {
+    if (typeof closeLockModal === 'function') closeLockModal();
+  };
   }
 })();
