@@ -12,9 +12,51 @@
   <link rel="stylesheet" href="./index.css?v=54.0.0">
 <script>
   window._arvoraPin = "";
+  function populateShowcase3DStage() {
+    var stage = document.getElementById('showcase-3d-stage');
+    if (!stage) return;
+    if (stage.children.length > 0 && stage.querySelector('.showcase-card-3d')) return;
+    var defaultFeatures = [
+      { id: 'engine', title: 'Radix Trie Search Engine', category: 'Core Engine', icon: '🔍', desc: 'High-performance memory-efficient DFS lookup on Indian city dataset.' },
+      { id: 'routes', title: 'Logistics & Route Seed Exporter', category: 'Data & Logistics', icon: '📦', desc: 'Export structured JSON/SQL seed data with state filtering.' },
+      { id: 'game', title: 'Geoguess City Spelling Game', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
+      { id: 'tourism', title: 'State Tourism Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, and culture across all Indian states.' },
+      { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🗺️', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' },
+      { id: 'pattern', title: 'Pattern & Suffix Search', category: 'Search Tool', icon: '🔠', desc: 'Filter cities by suffix, prefix, or length constraints.' },
+      { id: 'analytics', title: '15K City Data Analytics', category: 'Analytics', icon: '📊', desc: 'Visual metrics, length distributions, and start letter frequencies.' },
+      { id: 'scanner', title: 'Indian City Text Scanner', category: 'Text Scanner', icon: '📋', desc: 'Scan any document or news article to detect all Indian city mentions.' }
+    ];
+    var html = '';
+    defaultFeatures.forEach(function(feat, idx) {
+      var offset = idx;
+      var absOffset = Math.abs(offset);
+      if (absOffset > 4) return;
+      var translateX = offset * 220;
+      var translateZ = offset === 0 ? 180 : (absOffset * -130);
+      var rotateY = offset * -24;
+      var opacity = offset === 0 ? 1 : Math.max(0.2, 1 - absOffset * 0.25);
+      html += '<div class="showcase-card-3d' + (offset === 0 ? ' active' : '') + '" style="transform:translateX(' + translateX + 'px) translateZ(' + translateZ + 'px) rotateY(' + rotateY + 'deg); opacity:' + opacity + '; z-index:' + (100 - absOffset) + ';" onclick="if(window.switchTab) window.switchTab(\'' + feat.id + '\'); if(window.closeShowcaseModal) window.closeShowcaseModal();">' +
+        '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
+        '  <div class="showcase-card-icon">' + feat.icon + '</div>' +
+        '  <span class="showcase-card-badge">' + feat.category + '</span>' +
+        '</div>' +
+        '<div>' +
+        '  <h3 class="showcase-card-title">' + feat.title + '</h3>' +
+        '  <p class="showcase-card-desc">' + feat.desc + '</p>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.75rem; font-size:0.75rem; color:#00f3ff; font-weight:700;">' +
+        '  <span>⚡ CLICK TO SELECT</span>' +
+        '  <span>#' + (idx < 9 ? '0' : '') + (idx + 1) + '</span>' +
+        '</div>' +
+        '</div>';
+    });
+    stage.innerHTML = html;
+  }
+  window.populateShowcase3DStage = populateShowcase3DStage;
   window.openShowcaseModal = function() {
     var modal = document.getElementById("showcase-3d-modal");
     if (modal) {
+      populateShowcase3DStage();
       modal.style.setProperty("display", "flex", "important");
       modal.style.setProperty("z-index", "999999999", "important");
       modal.style.setProperty("opacity", "1", "important");

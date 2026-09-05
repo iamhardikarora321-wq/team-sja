@@ -25,7 +25,17 @@
       { id: 'routes', title: 'Logistics & Route Seed Exporter', category: 'Data & Logistics', icon: '📦', desc: 'Export structured JSON/SQL seed data with state filtering.' },
       { id: 'game', title: 'Geoguess City Spelling Game', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
       { id: 'tourism', title: 'State Tourism Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, and culture across all Indian states.' },
-      { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🗺️', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' }
+      { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🗺️', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' },
+      { id: 'pattern', title: 'Pattern & Suffix Search', category: 'Search Tool', icon: '🔠', desc: 'Filter cities by suffix, prefix, or length constraints.' },
+      { id: 'analytics', title: '15K City Data Analytics', category: 'Analytics', icon: '📊', desc: 'Visual metrics, length distributions, and start letter frequencies.' },
+      { id: 'scanner', title: 'Indian City Text Scanner', category: 'Text Scanner', icon: '📋', desc: 'Scan any document or news article to detect all Indian city mentions.' },
+      { id: 'transitbooking', title: 'Transit Booking & Route Hub', category: 'Transit & Travel', icon: '🎫', desc: 'Book IRCTC train tickets, Intercity Volvo buses & flight status.' },
+      { id: 'foodsafety', title: 'Street Food Hygiene Advisor', category: 'Food & Health', icon: '🛡️', desc: 'FSSAI hygiene ratings, mineral water checks & tummy safety.' },
+      { id: 'vault', title: 'Encrypted Offline Document Vault', category: 'Security Vault', icon: '📲', desc: 'Store encrypted passports, driving licenses & booking PDFs offline.' },
+      { id: 'notes', title: 'Offline Travel Journal & Notes', category: 'Journal & Notes', icon: '📒', desc: 'Log travel memories, hotel pin codes & itinerary checklists.' },
+      { id: 'emergency', title: '24/7 Emergency Helplines', category: 'Safety & SOS', icon: '🆘', desc: 'Direct dial 112 Police, Tourist Helpline 1363 & Ambulance 108.' },
+      { id: 'weather', title: 'Live City Weather Forecast', category: 'Weather', icon: '🌤️', desc: 'Real-time temperature, AQI index & monsoon weather alerts.' },
+      { id: 'atmcash', title: 'Zero-Fee ATM & Forex Finder', category: 'Finances', icon: '🏧', desc: 'Locate 24/7 ATMs, currency exchange desks & cash points.' }
     ];
 
   // --- HARD RESET & UNFREEZE RECOVERY ---
@@ -24007,6 +24017,10 @@ setTimeout(init3DParallax, 300);
       render3DCarousel();
     });
   }
+
+  try {
+    render3DCarousel();
+  } catch(e) {}
 
   window.openShowcaseModal = openShowcaseModal;
   window.closeShowcaseModal = closeShowcaseModal;
