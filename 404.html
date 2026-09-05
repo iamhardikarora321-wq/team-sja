@@ -9,9 +9,26 @@
   <meta http-equiv="Expires" content="0">
   <title>Arvora ✨ — India's City Universe & Dev Hub</title>
   <meta name="description" content="Arvora: The next-gen Indian cities universe — blazing-fast Radix Tree autocomplete, interactive state tourism, geoguess spelling game, and database seed exporter. Explore India like never before.">
-  <link rel="stylesheet" href="./index.css?v=53.0.0"">
+  <link rel="stylesheet" href="./index.css?v=54.0.0">
 <script>
   window._arvoraPin = "";
+  window.openShowcaseModal = function() {
+    var modal = document.getElementById("showcase-3d-modal");
+    if (modal) {
+      modal.style.setProperty("display", "flex", "important");
+      modal.style.setProperty("z-index", "999999999", "important");
+      modal.style.setProperty("opacity", "1", "important");
+      modal.style.setProperty("visibility", "visible", "important");
+      modal.classList.add("open", "active");
+    }
+  };
+  window.closeShowcaseModal = function() {
+    var modal = document.getElementById("showcase-3d-modal");
+    if (modal) {
+      modal.style.setProperty("display", "none", "important");
+      modal.classList.remove("open", "active");
+    }
+  };
   function handleDirectUnlock() {
     try {
       sessionStorage.setItem("arvora_session_unlocked", "true");
@@ -1220,8 +1237,8 @@
   </div>
 
   <!-- Include code modules -->
-  <script src="./cities.js"?v=53.0.0"></script>
-  <script src="./trie.js"?v=53.0.0"></script>
-  <script src="./app.js"?v=53.0.0"></script>
+  <script src="./cities.js?v=54.0.0"></script>
+  <script src="./trie.js?v=54.0.0"></script>
+  <script src="./app.js?v=54.0.0"></script>
 </body>
 </html>

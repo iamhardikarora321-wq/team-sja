@@ -23781,27 +23781,37 @@ setTimeout(init3DParallax, 300);
   function openShowcaseModal() {
     var modal = document.getElementById('showcase-3d-modal');
     if (!modal) return;
-    if (typeof window.closeDrawer === 'function') window.closeDrawer();
     
-    var allFeats = buildAllFeaturesList();
-    FEATURES = allFeats.length > 0 ? allFeats : DEFAULT_SHOWCASE_FEATURES.slice();
-    
-    var searchInput = document.getElementById('showcase-search-input');
-    var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
-    if (q) {
-      filteredFeatures = FEATURES.filter(function(f) {
-        return f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
-      });
-    } else {
-      filteredFeatures = FEATURES.slice();
-    }
+    // 1. Immediately show modal so UI responds instantly
     modal.style.setProperty('display', 'flex', 'important');
     modal.style.setProperty('z-index', '999999999', 'important');
     modal.style.setProperty('opacity', '1', 'important');
     modal.style.setProperty('visibility', 'visible', 'important');
     modal.classList.add('open', 'active');
 
-    render3DCarousel();
+    if (typeof window.closeDrawer === 'function') {
+      try { window.closeDrawer(); } catch(e) {}
+    }
+    
+    try {
+      var allFeats = buildAllFeaturesList();
+      FEATURES = (allFeats && allFeats.length > 0) ? allFeats : DEFAULT_SHOWCASE_FEATURES.slice();
+      
+      var searchInput = document.getElementById('showcase-search-input');
+      var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      if (q) {
+        filteredFeatures = FEATURES.filter(function(f) {
+          return f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
+        });
+      } else {
+        filteredFeatures = FEATURES.slice();
+      }
+
+      render3DCarousel();
+    } catch(err) {
+      console.error('[Showcase Modal] Render error:', err);
+    }
+
     var sInput = document.getElementById('showcase-search-input');
     if (sInput) {
       setTimeout(function() { try { sInput.focus(); } catch(e){} }, 80);
