@@ -1001,14 +1001,36 @@
       tab.style.display = "none";
     });
 
-    const activeTab = document.getElementById("tab-content-" + tabId);
+    let activeTab = document.getElementById("tab-content-" + tabId);
+    if (!activeTab) {
+      // Intelligent fallback mapping if specific tab element is not in DOM
+      if (tabId.includes('route') || tabId.includes('export') || tabId.includes('data') || tabId.includes('solver')) {
+        tabId = 'routes';
+      } else if (tabId.includes('game') || tabId.includes('quiz') || tabId.includes('guess')) {
+        tabId = 'game';
+      } else if (tabId.includes('tour') || tabId.includes('state') || tabId.includes('guide') || tabId.includes('travel')) {
+        tabId = 'tourism';
+      } else if (tabId.includes('trip') || tabId.includes('pack') || tabId.includes('plan') || tabId.includes('budget')) {
+        tabId = 'trip';
+      } else {
+        tabId = 'engine';
+      }
+      activeTab = document.getElementById("tab-content-" + tabId);
+    }
+
     if (activeTab) {
       activeTab.classList.add("active");
       activeTab.style.setProperty("display", "block", "important");
       activeTab.style.opacity = "1";
       activeTab.style.visibility = "visible";
     } else {
-      console.warn("Target tab content not found for id:", tabId);
+      const defaultTab = document.getElementById("tab-content-engine");
+      if (defaultTab) {
+        defaultTab.classList.add("active");
+        defaultTab.style.setProperty("display", "block", "important");
+        defaultTab.style.opacity = "1";
+        defaultTab.style.visibility = "visible";
+      }
     }
 
     // Highlight active navigation buttons across UI
