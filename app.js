@@ -64,7 +64,7 @@
 
   // --- UNIVERSAL GLOBAL EVENT DELEGATOR ---
   document.addEventListener("click", function(e) {
-    var target = e.target.closest("button, .tab-btn, .feature-card-compact, .sidebar-feature-item, .island-btn, [data-tab], [data-target], [data-action], a[href^='#']");
+    const target = e.target.closest("button, .tab-btn, .feature-card-compact, .sidebar-feature-item, .island-btn, [data-tab], [data-target], [data-action], a[href^='#']");
     if (!target) return;
 
     // 1. Check data-tab or data-target attribute
@@ -23690,17 +23690,17 @@ function initPunctureRepair() {
    🏎️ 3D CYBERPUNK MOUSE PARALLAX TILT ENGINE (v34.0)
    ===================================================================== */
 function init3DParallax() {
-  var cards = document.querySelectorAll('.panel, .metric-card, #site-lock-card');
+  let cards = document.querySelectorAll('.panel, .metric-card, #site-lock-card');
   cards.forEach(function(card) {
     card.addEventListener('mousemove', function(e) {
-      var rect = card.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      var centerX = rect.width / 2;
-      var centerY = rect.height / 2;
+      let rect = card.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      let centerX = rect.width / 2;
+      let centerY = rect.height / 2;
       
-      var rotateX = ((y - centerY) / centerY) * -6;
-      var rotateY = ((x - centerX) / centerX) * 6;
+      let rotateX = ((y - centerY) / centerY) * -6;
+      let rotateY = ((x - centerX) / centerX) * 6;
       
       card.style.setProperty('--mouse-x', (x / rect.width * 100) + '%');
       card.style.setProperty('--mouse-y', (y / rect.height * 100) + '%');
@@ -23721,17 +23721,17 @@ setTimeout(init3DParallax, 300);
 
 
   function buildAllFeaturesList() {
-    var list = [];
-    var seen = new Set();
+    let list = [];
+    let seen = new Set();
 
     if (window.ARVORA_ALL_FEATURES) {
       Object.keys(window.ARVORA_ALL_FEATURES).forEach(function(catKey) {
-        var items = window.ARVORA_ALL_FEATURES[catKey];
+        let items = window.ARVORA_ALL_FEATURES[catKey];
         if (Array.isArray(items)) {
           items.forEach(function(f) {
             if (f && f.id && !seen.has(f.id)) {
               seen.add(f.id);
-              var catName = catKey === 'engine' ? 'Core Engine' :
+              let catName = catKey === 'engine' ? 'Core Engine' :
                             catKey === 'routing' ? 'Transit & Planning' :
                             catKey === 'safety' ? 'Safety & Security' :
                             catKey === 'culture' ? 'Culture & Experience' : catKey.toUpperCase();
@@ -23750,16 +23750,16 @@ setTimeout(init3DParallax, 300);
 
     // Fallback/Complementary DOM scanner for any unlisted tab-content elements
     try {
-      var tabEls = document.querySelectorAll('.tab-content');
+      let tabEls = document.querySelectorAll('.tab-content');
       tabEls.forEach(function(tab) {
-        var rawId = tab.id.replace(/^tab-content-/, '');
+        let rawId = tab.id.replace(/^tab-content-/, '');
         if (rawId && !seen.has(rawId)) {
           seen.add(rawId);
-          var titleEl = tab.querySelector('.panel-title, h2, h3');
-          var descEl = tab.querySelector('p');
-          var fullTitle = titleEl ? titleEl.textContent.trim() : rawId;
-          var icon = '⚡';
-          var iconMatch = fullTitle.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEF6])/);
+          let titleEl = tab.querySelector('.panel-title, h2, h3');
+          let descEl = tab.querySelector('p');
+          let fullTitle = titleEl ? titleEl.textContent.trim() : rawId;
+          let icon = '⚡';
+          let iconMatch = fullTitle.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEF6])/);
           if (iconMatch) {
             icon = iconMatch[0];
             fullTitle = fullTitle.replace(iconMatch[0], '').trim();
@@ -23778,12 +23778,12 @@ setTimeout(init3DParallax, 300);
     return list.length > 0 ? list : DEFAULT_SHOWCASE_FEATURES.slice();
   }
 
-  var FEATURES = buildAllFeaturesList();
-  var activeIndex = 0;
-  var filteredFeatures = FEATURES.slice();
+  let FEATURES = buildAllFeaturesList();
+  let activeIndex = 0;
+  let filteredFeatures = FEATURES.slice();
 
   function openShowcaseModal() {
-    var modal = document.getElementById('showcase-3d-modal');
+    let modal = document.getElementById('showcase-3d-modal');
     if (!modal) return;
     
     // 1. Immediately show modal so UI responds instantly
@@ -23798,11 +23798,11 @@ setTimeout(init3DParallax, 300);
     }
     
     try {
-      var allFeats = buildAllFeaturesList();
+      let allFeats = buildAllFeaturesList();
       FEATURES = (allFeats && allFeats.length > 0) ? allFeats : DEFAULT_SHOWCASE_FEATURES.slice();
       
-      var searchInput = document.getElementById('showcase-search-input');
-      var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      const showcaseSearchInput = document.getElementById('showcase-search-input');
+      let q = showcaseSearchInput ? showcaseSearchInput.value.trim().toLowerCase() : '';
       if (q) {
         filteredFeatures = FEATURES.filter(function(f) {
           return f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
@@ -23816,7 +23816,7 @@ setTimeout(init3DParallax, 300);
       console.error('[Showcase Modal] Render error:', err);
     }
 
-    var sInput = document.getElementById('showcase-search-input');
+    let sInput = document.getElementById('showcase-search-input');
     if (sInput) {
       setTimeout(function() { try { sInput.focus(); } catch(e){} }, 80);
     }
@@ -23824,14 +23824,14 @@ setTimeout(init3DParallax, 300);
   window.openShowcaseModal = openShowcaseModal;
 
   function closeShowcaseModal() {
-    var modal = document.getElementById('showcase-3d-modal');
+    let modal = document.getElementById('showcase-3d-modal');
     if (!modal) return;
     modal.style.setProperty('display', 'none', 'important');
   }
   window.closeShowcaseModal = closeShowcaseModal;
 
   function render3DCarousel() {
-    var stage = document.getElementById('showcase-3d-stage');
+    let stage = document.getElementById('showcase-3d-stage');
     if (!stage) return;
 
     if (filteredFeatures.length === 0) {
@@ -23845,18 +23845,18 @@ setTimeout(init3DParallax, 300);
     stage.innerHTML = '';
 
     filteredFeatures.forEach(function(feat, idx) {
-      var offset = idx - activeIndex;
-      var absOffset = Math.abs(offset);
+      let offset = idx - activeIndex;
+      let absOffset = Math.abs(offset);
 
       if (absOffset > 4) return;
 
-      var card = document.createElement('div');
+      let card = document.createElement('div');
       card.className = 'showcase-card-3d' + (offset === 0 ? ' active' : '');
       
-      var translateX = offset * 220;
-      var translateZ = offset === 0 ? 180 : (absOffset * -130);
-      var rotateY = offset * -24;
-      var opacity = offset === 0 ? 1 : Math.max(0.2, 1 - absOffset * 0.25);
+      let translateX = offset * 220;
+      let translateZ = offset === 0 ? 180 : (absOffset * -130);
+      let rotateY = offset * -24;
+      let opacity = offset === 0 ? 1 : Math.max(0.2, 1 - absOffset * 0.25);
 
       card.style.transform = 'translateX(' + translateX + 'px) translateZ(' + translateZ + 'px) rotateY(' + rotateY + 'deg)';
       card.style.opacity = opacity;
@@ -23893,28 +23893,28 @@ setTimeout(init3DParallax, 300);
       stage.appendChild(card);
     });
 
-    var activeFeat = filteredFeatures[activeIndex];
+    let activeFeat = filteredFeatures[activeIndex];
     if (activeFeat) {
-      var catEl = document.getElementById('showcase-active-category');
-      var titleEl = document.getElementById('showcase-active-title');
-      var descEl = document.getElementById('showcase-active-desc');
-      var counterEl = document.getElementById('showcase-index-counter');
+      let catEl = document.getElementById('showcase-active-category');
+      let titleEl = document.getElementById('showcase-active-title');
+      let descEl = document.getElementById('showcase-active-desc');
+      let counterEl = document.getElementById('showcase-index-counter');
 
       if (catEl) catEl.textContent = activeFeat.category;
       if (titleEl) titleEl.textContent = activeFeat.title;
       if (descEl) descEl.textContent = activeFeat.desc;
       if (counterEl) counterEl.textContent = (activeIndex + 1) + ' / ' + filteredFeatures.length;
 
-      var fill = document.getElementById('showcase-slider-fill');
-      var handle = document.getElementById('showcase-slider-handle');
-      var pct = (activeIndex / Math.max(1, filteredFeatures.length - 1)) * 100;
+      let fill = document.getElementById('showcase-slider-fill');
+      let handle = document.getElementById('showcase-slider-handle');
+      let pct = (activeIndex / Math.max(1, filteredFeatures.length - 1)) * 100;
       if (fill) fill.style.width = pct + '%';
       if (handle) handle.style.left = pct + '%';
     }
   }
 
   function launchActiveFeature() {
-    var activeFeat = filteredFeatures[activeIndex];
+    let activeFeat = filteredFeatures[activeIndex];
     if (activeFeat && typeof window.switchTab === 'function') {
       window.switchTab(activeFeat.id);
       closeShowcaseModal();
@@ -23924,7 +23924,7 @@ setTimeout(init3DParallax, 300);
   // Universal Fail-Safe Click Listener for All Site Buttons & Modals
   document.addEventListener('click', function(e) {
     // 1. Browse All / Feature Search triggers
-    var browseTrigger = e.target.closest('#header-search-trigger, #island-more-btn, #nav-browse-all-btn, .browse-all-trigger');
+    let browseTrigger = e.target.closest('#header-search-trigger, #island-more-btn, #nav-browse-all-btn, .browse-all-trigger');
     if (browseTrigger) {
       e.preventDefault();
       e.stopPropagation();
@@ -23933,7 +23933,7 @@ setTimeout(init3DParallax, 300);
     }
 
     // 2. Showcase Modal Close & Backdrop Click
-    var modal = document.getElementById('showcase-3d-modal');
+    let modal = document.getElementById('showcase-3d-modal');
     if (e.target.closest('#showcase-close-btn')) {
       e.preventDefault();
       closeShowcaseModal();
@@ -23966,9 +23966,9 @@ setTimeout(init3DParallax, 300);
     }
 
     // 4. Tab & Feature Navigation Triggers (Any button with data-tab or data-target)
-    var navBtn = e.target.closest('[data-tab], [data-target], .tab-btn, .island-btn, .sidebar-feature-item, .feature-card-compact');
+    let navBtn = e.target.closest('[data-tab], [data-target], .tab-btn, .island-btn, .sidebar-feature-item, .feature-card-compact');
     if (navBtn) {
-      var targetTab = navBtn.getAttribute('data-tab') || navBtn.getAttribute('data-target') || navBtn.dataset.tab || navBtn.dataset.target;
+      let targetTab = navBtn.getAttribute('data-tab') || navBtn.getAttribute('data-target') || navBtn.dataset.tab || navBtn.dataset.target;
       if (targetTab && targetTab !== 'browse') {
         if (typeof window.switchTab === 'function') {
           window.switchTab(targetTab);
@@ -23982,7 +23982,7 @@ setTimeout(init3DParallax, 300);
     if ((e.metaKey || e.ctrlKey) && e.key && e.key.toLowerCase() === 'k') {
       e.preventDefault();
       e.stopPropagation();
-      var modal = document.getElementById('showcase-3d-modal');
+      let modal = document.getElementById('showcase-3d-modal');
       if (modal && modal.style.display === 'flex') {
         closeShowcaseModal();
       } else {
@@ -23991,7 +23991,7 @@ setTimeout(init3DParallax, 300);
       return;
     }
 
-    var modal = document.getElementById('showcase-3d-modal');
+    let modal = document.getElementById('showcase-3d-modal');
     if (!modal || modal.style.display === 'none') return;
 
     if (e.key === 'Escape') closeShowcaseModal();
@@ -24005,10 +24005,10 @@ setTimeout(init3DParallax, 300);
   });
 
   // Showcase search input live filtering
-  var searchInput = document.getElementById('showcase-search-input');
-  if (searchInput) {
-    searchInput.addEventListener('input', function(e) {
-      var query = e.target.value.toLowerCase().trim();
+  const showcaseSearchInput = document.getElementById('showcase-search-input');
+  if (showcaseSearchInput) {
+    showcaseSearchInput.addEventListener('input', function(e) {
+      let query = e.target.value.toLowerCase().trim();
       if (!query) {
         filteredFeatures = FEATURES.slice();
       } else {
@@ -24024,12 +24024,12 @@ setTimeout(init3DParallax, 300);
   }
 
   // Showcase neon track click scrub
-  var sliderTrack = document.getElementById('showcase-slider-track');
+  let sliderTrack = document.getElementById('showcase-slider-track');
   if (sliderTrack) {
     sliderTrack.addEventListener('click', function(e) {
-      var rect = sliderTrack.getBoundingClientRect();
-      var clickX = e.clientX - rect.left;
-      var pct = Math.max(0, Math.min(1, clickX / rect.width));
+      let rect = sliderTrack.getBoundingClientRect();
+      let clickX = e.clientX - rect.left;
+      let pct = Math.max(0, Math.min(1, clickX / rect.width));
       activeIndex = Math.round(pct * (filteredFeatures.length - 1));
       render3DCarousel();
     });
@@ -24043,17 +24043,17 @@ setTimeout(init3DParallax, 300);
 
       card.addEventListener('mousemove', function(e) {
         if (window.innerWidth < 768) return;
-        var rect = card.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
+        let rect = card.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
 
         card.style.setProperty('--mouse-x', x + 'px');
         card.style.setProperty('--mouse-y', y + 'px');
 
-        var centerX = rect.width / 2;
-        var centerY = rect.height / 2;
-        var rotateX = ((y - centerY) / centerY) * -6;
-        var rotateY = ((x - centerX) / centerX) * 6;
+        let centerX = rect.width / 2;
+        let centerY = rect.height / 2;
+        let rotateX = ((y - centerY) / centerY) * -6;
+        let rotateY = ((x - centerX) / centerX) * 6;
 
         card.style.transform = 'perspective(1000px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale3d(1.01, 1.01, 1.01)';
       });
@@ -24126,14 +24126,14 @@ setTimeout(init3DParallax, 300);
   // =====================================================================
   // 🌟 IMPOSSIBLE TO IGNORE: 3D QUANTUM HOLOGRAM SPATIAL ENGINE & AUDIO SYNTH
   // =====================================================================
-  var quantumAudioCtx = null;
-  var isQuantumAudioOn = true;
-  var quantumAnimFrame = null;
-  var quantumNodes = [];
-  var quantumRotX = 0, quantumRotY = 0;
-  var isDraggingQuantum = false;
-  var lastMouseX = 0, lastMouseY = 0;
-  var selectedQuantumCity = null;
+  let quantumAudioCtx = null;
+  let isQuantumAudioOn = true;
+  let quantumAnimFrame = null;
+  let quantumNodes = [];
+  let quantumRotX = 0, quantumRotY = 0;
+  let isDraggingQuantum = false;
+  let lastMouseX = 0, lastMouseY = 0;
+  let selectedQuantumCity = null;
 
   function initQuantumAudio() {
     if (!quantumAudioCtx && typeof AudioContext !== 'undefined') {
@@ -24149,8 +24149,8 @@ setTimeout(init3DParallax, 300);
       if (quantumAudioCtx.state === 'suspended') {
         quantumAudioCtx.resume();
       }
-      var osc = quantumAudioCtx.createOscillator();
-      var gain = quantumAudioCtx.createGain();
+      let osc = quantumAudioCtx.createOscillator();
+      let gain = quantumAudioCtx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq || 440, quantumAudioCtx.currentTime);
       gain.gain.setValueAtTime(0.08, quantumAudioCtx.currentTime);
@@ -24164,36 +24164,36 @@ setTimeout(init3DParallax, 300);
 
   function toggleQuantumAudio() {
     isQuantumAudioOn = !isQuantumAudioOn;
-    var icon = document.getElementById('quantum-audio-icon');
-    var txt = document.getElementById('quantum-audio-text');
+    let icon = document.getElementById('quantum-audio-icon');
+    let txt = document.getElementById('quantum-audio-text');
     if (icon) icon.textContent = isQuantumAudioOn ? '🔊' : '🔇';
     if (txt) txt.textContent = isQuantumAudioOn ? 'Audio Synth ON' : 'Audio Synth OFF';
   }
 
   function openQuantumHologramModal() {
-    var modal = document.getElementById('quantum-hologram-modal');
+    let modal = document.getElementById('quantum-hologram-modal');
     if (!modal) return;
     modal.style.display = 'flex';
     initQuantumSpatialSphere();
   }
 
   function closeQuantumHologramModal() {
-    var modal = document.getElementById('quantum-hologram-modal');
+    let modal = document.getElementById('quantum-hologram-modal');
     if (!modal) return;
     modal.style.display = 'none';
     if (quantumAnimFrame) cancelAnimationFrame(quantumAnimFrame);
   }
 
   function initQuantumSpatialSphere() {
-    var canvas = document.getElementById('quantum-hologram-canvas');
+    let canvas = document.getElementById('quantum-hologram-canvas');
     if (!canvas) return;
-    var ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d');
     
     canvas.width = canvas.parentElement.clientWidth;
     canvas.height = canvas.parentElement.clientHeight;
 
     quantumNodes = [];
-    var dataset = (window.INDIAN_CITIES && window.INDIAN_CITIES.length > 0) ? window.INDIAN_CITIES : [
+    let dataset = (window.INDIAN_CITIES && window.INDIAN_CITIES.length > 0) ? window.INDIAN_CITIES : [
       { name: "Mumbai", state: "Maharashtra", district: "Mumbai City", lat: 19.07, lng: 72.87 },
       { name: "Delhi", state: "Delhi", district: "New Delhi", lat: 28.61, lng: 77.20 },
       { name: "Bengaluru", state: "Karnataka", district: "Bengaluru Urban", lat: 12.97, lng: 77.59 },
@@ -24201,13 +24201,13 @@ setTimeout(init3DParallax, 300);
       { name: "Hyderabad", state: "Telangana", district: "Hyderabad", lat: 17.38, lng: 78.48 }
     ];
 
-    var total = Math.min(350, dataset.length);
-    var radius = Math.min(canvas.width, canvas.height) * 0.35;
+    let total = Math.min(350, dataset.length);
+    let radius = Math.min(canvas.width, canvas.height) * 0.35;
 
-    for (var i = 0; i < total; i++) {
-      var phi = Math.acos(-1 + (2 * i) / total);
-      var theta = Math.sqrt(total * Math.PI) * phi;
-      var city = dataset[i % dataset.length];
+    for (let i = 0; i < total; i++) {
+      let phi = Math.acos(-1 + (2 * i) / total);
+      let theta = Math.sqrt(total * Math.PI) * phi;
+      let city = dataset[i % dataset.length];
 
       quantumNodes.push({
         x: radius * Math.cos(theta) * Math.sin(phi),
@@ -24226,8 +24226,8 @@ setTimeout(init3DParallax, 300);
     };
     window.onmousemove = function(e) {
       if (!isDraggingQuantum) return;
-      var dx = e.clientX - lastMouseX;
-      var dy = e.clientY - lastMouseY;
+      let dx = e.clientX - lastMouseX;
+      let dy = e.clientY - lastMouseY;
       quantumRotY += dx * 0.005;
       quantumRotX += dy * 0.005;
       lastMouseX = e.clientX;
@@ -24236,29 +24236,29 @@ setTimeout(init3DParallax, 300);
     window.onmouseup = function() { isDraggingQuantum = false; };
 
     canvas.onclick = function(e) {
-      var rect = canvas.getBoundingClientRect();
-      var mx = e.clientX - rect.left;
-      var my = e.clientY - rect.top;
-      var cx = canvas.width / 2;
-      var cy = canvas.height / 2;
+      let rect = canvas.getBoundingClientRect();
+      let mx = e.clientX - rect.left;
+      let my = e.clientY - rect.top;
+      let cx = canvas.width / 2;
+      let cy = canvas.height / 2;
 
-      var closest = null;
-      var minD = 25;
+      let closest = null;
+      let minD = 25;
 
       quantumNodes.forEach(function(node) {
-        var cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
-        var cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
+        let cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
+        let cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
 
-        var x1 = node.x * cosY - node.z * sinY;
-        var z1 = node.z * cosY + node.x * sinY;
-        var y1 = node.y * cosX - z1 * sinX;
-        var z2 = z1 * cosX + node.y * sinX;
+        let x1 = node.x * cosY - node.z * sinY;
+        let z1 = node.z * cosY + node.x * sinY;
+        let y1 = node.y * cosX - z1 * sinX;
+        let z2 = z1 * cosX + node.y * sinX;
 
-        var scale = 400 / (400 + z2);
-        var px = cx + x1 * scale;
-        var py = cy + y1 * scale;
+        let scale = 400 / (400 + z2);
+        let px = cx + x1 * scale;
+        let py = cy + y1 * scale;
 
-        var dist = Math.hypot(mx - px, my - py);
+        let dist = Math.hypot(mx - px, my - py);
         if (dist < minD && z2 > -150) {
           minD = dist;
           closest = node;
@@ -24272,23 +24272,23 @@ setTimeout(init3DParallax, 300);
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var cx = canvas.width / 2;
-      var cy = canvas.height / 2;
+      let cx = canvas.width / 2;
+      let cy = canvas.height / 2;
 
       if (!isDraggingQuantum) {
         quantumRotY += 0.003;
       }
 
-      var cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
-      var cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
+      let cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
+      let cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
 
-      var projected = quantumNodes.map(function(node) {
-        var x1 = node.x * cosY - node.z * sinY;
-        var z1 = node.z * cosY + node.x * sinY;
-        var y1 = node.y * cosX - z1 * sinX;
-        var z2 = z1 * cosX + node.y * sinX;
+      let projected = quantumNodes.map(function(node) {
+        let x1 = node.x * cosY - node.z * sinY;
+        let z1 = node.z * cosY + node.x * sinY;
+        let y1 = node.y * cosX - z1 * sinX;
+        let z2 = z1 * cosX + node.y * sinX;
 
-        var scale = 450 / (450 + z2);
+        let scale = 450 / (450 + z2);
         return {
           px: cx + x1 * scale,
           py: cy + y1 * scale,
@@ -24301,9 +24301,9 @@ setTimeout(init3DParallax, 300);
       projected.sort(function(a, b) { return a.pz - b.pz; });
 
       ctx.lineWidth = 0.5;
-      for (var i = 0; i < projected.length; i += 4) {
-        var p1 = projected[i];
-        var p2 = projected[(i + 1) % projected.length];
+      for (let i = 0; i < projected.length; i += 4) {
+        let p1 = projected[i];
+        let p2 = projected[(i + 1) % projected.length];
         if (p1.pz > -150 && p2.pz > -150) {
           ctx.strokeStyle = 'rgba(0, 243, 255, ' + (0.12 * p1.scale) + ')';
           ctx.beginPath();
@@ -24314,12 +24314,12 @@ setTimeout(init3DParallax, 300);
       }
 
       projected.forEach(function(p) {
-        var alpha = Math.max(0.1, (p.pz + 300) / 600);
+        let alpha = Math.max(0.1, (p.pz + 300) / 600);
         ctx.fillStyle = p.node.color;
         ctx.shadowColor = p.node.color;
         ctx.shadowBlur = p.pz > 0 ? 15 : 4;
 
-        var size = Math.max(2, 4 * p.scale);
+        let size = Math.max(2, 4 * p.scale);
         ctx.beginPath();
         ctx.arc(p.px, p.py, size, 0, Math.PI * 2);
         ctx.fill();
@@ -24344,16 +24344,16 @@ setTimeout(init3DParallax, 300);
     selectedQuantumCity = pNode;
     playHologramTone(300 + (pNode.index % 20) * 30);
 
-    var card = document.getElementById('quantum-city-card');
+    let card = document.getElementById('quantum-city-card');
     if (!card) return;
     card.style.display = 'block';
 
-    var cName = document.getElementById('dossier-city-name');
-    var sBadge = document.getElementById('dossier-state-badge');
-    var dist = document.getElementById('dossier-district');
-    var lat = document.getElementById('dossier-lat');
-    var lng = document.getElementById('dossier-lng');
-    var idx = document.getElementById('dossier-idx');
+    let cName = document.getElementById('dossier-city-name');
+    let sBadge = document.getElementById('dossier-state-badge');
+    let dist = document.getElementById('dossier-district');
+    let lat = document.getElementById('dossier-lat');
+    let lng = document.getElementById('dossier-lng');
+    let idx = document.getElementById('dossier-idx');
 
     if (cName) cName.textContent = pNode.city.name || "Indian City";
     if (sBadge) sBadge.textContent = pNode.city.state || "INDIA";
@@ -24365,14 +24365,14 @@ setTimeout(init3DParallax, 300);
 
   function warpRandomCity() {
     if (!quantumNodes || quantumNodes.length === 0) return;
-    var rand = quantumNodes[Math.floor(Math.random() * quantumNodes.length)];
+    let rand = quantumNodes[Math.floor(Math.random() * quantumNodes.length)];
     selectQuantumNode(rand);
   }
 
   function jumpToCityFromQuantum() {
     if (!selectedQuantumCity) return;
     closeQuantumHologramModal();
-    var input = document.getElementById('city-input');
+    let input = document.getElementById('city-input');
     if (input) {
       input.value = selectedQuantumCity.city.name || '';
       input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -24534,10 +24534,10 @@ setTimeout(init3DParallax, 300);
   // 🌟 UNIVERSAL DELEGATION CLICK LISTENER
   // =====================================================================
   document.addEventListener('click', function(e) {
-    var btn = e.target.closest('button, [role="button"], .visualizer-btn, .island-btn, .action-btn, .pack-cat-btn, .ptn-mode-btn');
+    let btn = e.target.closest('button, [role="button"], .visualizer-btn, .island-btn, .action-btn, .pack-cat-btn, .ptn-mode-btn');
     if (!btn) return;
 
-    var targetTab = btn.getAttribute('data-target') || btn.getAttribute('data-tab');
+    let targetTab = btn.getAttribute('data-target') || btn.getAttribute('data-tab');
     if (targetTab && typeof window.switchTab === 'function') {
       window.switchTab(targetTab);
     }
@@ -24564,8 +24564,8 @@ setTimeout(init3DParallax, 300);
     if (typeof closeLockModal === 'function') closeLockModal();
   };
   window.setSimulatorMode = function(mode) {
-    var hBtn = document.getElementById('sim-mode-hoteliers');
-    var tBtn = document.getElementById('sim-mode-travelers');
+    let hBtn = document.getElementById('sim-mode-hoteliers');
+    let tBtn = document.getElementById('sim-mode-travelers');
     if (mode === 'hoteliers') {
       if (hBtn) hBtn.classList.add('active');
       if (tBtn) tBtn.classList.remove('active');
