@@ -4397,3 +4397,8 @@ header nav,
   z-index: 10;
   pointer-events: auto !important;
 }
+
+@keyframes quantumMarquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}

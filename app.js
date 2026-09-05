@@ -24219,6 +24219,12 @@ setTimeout(init3DParallax, 300);
       });
     }
 
+    let quantumFocalDistance = 450;
+    canvas.onwheel = function(e) {
+      e.preventDefault();
+      quantumFocalDistance = Math.max(200, Math.min(900, quantumFocalDistance + e.deltaY * 0.5));
+    };
+
     canvas.onmousedown = function(e) {
       isDraggingQuantum = true;
       lastMouseX = e.clientX;
@@ -24234,6 +24240,25 @@ setTimeout(init3DParallax, 300);
       lastMouseY = e.clientY;
     };
     window.onmouseup = function() { isDraggingQuantum = false; };
+
+    canvas.ontouchstart = function(e) {
+      if (e.touches.length === 1) {
+        isDraggingQuantum = true;
+        lastMouseX = e.touches[0].clientX;
+        lastMouseY = e.touches[0].clientY;
+      }
+    };
+    canvas.ontouchmove = function(e) {
+      if (isDraggingQuantum && e.touches.length === 1) {
+        let dx = e.touches[0].clientX - lastMouseX;
+        let dy = e.touches[0].clientY - lastMouseY;
+        quantumRotY += dx * 0.005;
+        quantumRotX += dy * 0.005;
+        lastMouseX = e.touches[0].clientX;
+        lastMouseY = e.touches[0].clientY;
+      }
+    };
+    canvas.ontouchend = function() { isDraggingQuantum = false; };
 
     canvas.onclick = function(e) {
       let rect = canvas.getBoundingClientRect();
@@ -24288,7 +24313,7 @@ setTimeout(init3DParallax, 300);
         let y1 = node.y * cosX - z1 * sinX;
         let z2 = z1 * cosX + node.y * sinX;
 
-        let scale = 450 / (450 + z2);
+        let scale = quantumFocalDistance / (quantumFocalDistance + z2);
         return {
           px: cx + x1 * scale,
           py: cy + y1 * scale,
