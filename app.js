@@ -5,6 +5,139 @@
  */
 
 (function initArvoraApp() {
+
+  // =====================================================================
+  // 🛡️ BULLETPROOF GLOBAL WINDOW REGISTRY (EXPOSED BEFORE DOM READY)
+  // =====================================================================
+  window.switchTab = function(tabId) {
+    if (!tabId) return;
+    if (tabId === 'travel' || tabId === 'stateshowcase' || tabId === 'state' || tabId === 'states' || tabId === 'tourism') {
+      if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
+    }
+    if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
+    if (tabId === 'autocomplete' || tabId === 'radix') tabId = 'engine';
+    if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
+    if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
+    if (tabId === 'transithub' || tabId === 'transit') {
+      if (!document.getElementById('tab-content-' + tabId)) tabId = 'transitbooking';
+    }
+    window._currentActiveTab = tabId;
+    const tabs = document.querySelectorAll(".tab-content");
+    tabs.forEach(tab => {
+      tab.classList.remove("active");
+      tab.style.display = "none";
+    });
+    let activeTab = document.getElementById("tab-content-" + tabId);
+    if (!activeTab) {
+      if (tabId.includes('route') || tabId.includes('export') || tabId.includes('data') || tabId.includes('solver')) tabId = 'routes';
+      else if (tabId.includes('game') || tabId.includes('quiz') || tabId.includes('guess')) tabId = 'game';
+      else if (tabId.includes('tour') || tabId.includes('state') || tabId.includes('guide') || tabId.includes('travel')) tabId = 'tourism';
+      else if (tabId.includes('trip') || tabId.includes('pack') || tabId.includes('plan') || tabId.includes('budget')) tabId = 'trip';
+      else tabId = 'engine';
+      activeTab = document.getElementById("tab-content-" + tabId);
+    }
+    if (activeTab) {
+      activeTab.classList.add("active");
+      activeTab.style.display = "block";
+    }
+    // Update breadcrumb
+    const breadcrumb = document.getElementById('active-feature-breadcrumb');
+    if (breadcrumb) {
+      breadcrumb.textContent = tabId.toUpperCase() + ' MATRIX';
+    }
+  };
+
+  window.openPitchModal = function() {
+    var modal = document.getElementById("pitch-modal");
+    if (modal) {
+      modal.style.display = "flex";
+      modal.style.setProperty("display", "flex", "important");
+      modal.style.setProperty("z-index", "99999", "important");
+    }
+  };
+
+  window.closePitchModal = function() {
+    var modal = document.getElementById("pitch-modal");
+    if (modal) modal.style.display = "none";
+  };
+
+  window.openQuantumHologramModal = function() {
+    var modal = document.getElementById("quantum-hologram-modal");
+    if (modal) {
+      modal.style.display = "flex";
+      modal.style.setProperty("display", "flex", "important");
+      modal.style.setProperty("z-index", "99999999", "important");
+    }
+  };
+
+  window.closeQuantumHologramModal = function() {
+    var modal = document.getElementById("quantum-hologram-modal");
+    if (modal) modal.style.display = "none";
+  };
+
+  window.startHackathonTour = function() {
+    window._activeTourStep = 0;
+    var modal = document.getElementById('tour-90s-modal');
+    if (modal) modal.style.display = 'block';
+    if (window.renderTourStep) window.renderTourStep();
+  };
+
+  window.closeHackathonTour = function() {
+    var modal = document.getElementById('tour-90s-modal');
+    if (modal) modal.style.display = 'none';
+  };
+
+  window.nextHackathonStep = function() {
+    if (typeof window._activeTourStep === 'undefined') window._activeTourStep = 0;
+    var steps = window.HACKATHON_TOUR_STEPS || [];
+    if (window._activeTourStep < steps.length - 1) {
+      window._activeTourStep++;
+      if (window.renderTourStep) window.renderTourStep();
+    } else {
+      window.closeHackathonTour();
+      alert("🎉 Hackathon Tour Complete! Explore all features on Arvora.");
+    }
+  };
+
+  window.prevHackathonStep = function() {
+    if (typeof window._activeTourStep === 'undefined') window._activeTourStep = 0;
+    if (window._activeTourStep > 0) {
+      window._activeTourStep--;
+      if (window.renderTourStep) window.renderTourStep();
+    }
+  };
+
+  window.renderTourStep = function() {
+    if (typeof window._activeTourStep === 'undefined') window._activeTourStep = 0;
+    var steps = window.HACKATHON_TOUR_STEPS || [];
+    var stepData = steps[window._activeTourStep];
+    if (!stepData) return;
+
+    var indicator = document.getElementById('tour-step-indicator');
+    if (indicator) indicator.textContent = 'STEP ' + stepData.step + ' OF ' + steps.length;
+
+    var progressBar = document.getElementById('tour-progress-bar');
+    if (progressBar) progressBar.style.width = ((stepData.step / steps.length) * 100) + '%';
+
+    var contentBox = document.getElementById('tour-step-content');
+    if (contentBox) {
+      contentBox.innerHTML = '<h3 style="font-size:1.15rem; font-weight:900; color:#00f3ff; margin:0 0 0.5rem 0;">' + stepData.title + '</h3>' +
+        '<p style="font-size:0.88rem; color:#94a3b8; line-height:1.6; margin:0;">' + stepData.desc + '</p>';
+    }
+
+    if (window.setRoamMode) window.setRoamMode(stepData.targetTab);
+  };
+
+  window.setRoamMode = function(mode) {
+    ['discover', 'explore', 'market', 'control', 'impact'].forEach(function(m) {
+      var btn = document.getElementById('roam-nav-btn-' + m);
+      var pane = document.getElementById('roam-mode-pane-' + m);
+      if (btn) btn.classList.toggle('active', m === mode);
+      if (pane) pane.style.display = (m === mode) ? 'block' : 'none';
+    });
+    if (window.renderRoamModeData) window.renderRoamModeData(mode);
+  };
+
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", startApp);
   } else {
