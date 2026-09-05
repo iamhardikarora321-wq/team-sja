@@ -25802,6 +25802,269 @@ setTimeout(init3DParallax, 300);
   window.closeCitySpotlightModal = closeCitySpotlightModal;
 
   window.setRoamMode = setRoamMode;
+  
+  // --- BHARAT SPATIAL TOURISM & DESTINATION BALANCER DATA ---
+  window.ROAM_SPATIAL_DATA = {
+    jaipur: {
+      name: "Jaipur",
+      state: "Rajasthan",
+      crowdIndex: "High Crowd Pressure (88%)",
+      crowdClass: "high",
+      suggestedAlternative: "Sanganer Hand-Block Print Village & Nahargarh Sunrise Trail",
+      crowdShiftingIncentive: "Save 35% on Artisanal Guild Passes + Free Entry to Sanganer Museum",
+      highHubs: "Amer Fort, Hawa Mahal, Johari Bazaar",
+      lowHubs: "Sanganer Village, Bagru Weavers, Galta Ji Temple",
+      peakOccupancy: "94%",
+      offpeakForecast: "48%",
+      recommendedDiscount: "28% OFF",
+      revenueRecovery: "₹3,45,000 / month",
+      artisansStat: "420 Craftsmen",
+      incomeStat: "₹18.4 Lakhs",
+      co2Stat: "14.2 Tons",
+      marketListings: [
+        { title: "Sanganeri Master Block Printing Workshop", category: "Craft Studio", host: "Ramdev Chhipa", rating: "4.9 ★", price: "₹450 / pass" },
+        { title: "Bagru Natural Indigo Dyeing Guild", category: "Heritage Guild", host: "Kailash Weavers", rating: "4.8 ★", price: "₹600 / pass" },
+        { title: "Amer Heritage Havelis (Off-Peak Homestay)", category: "Homestay", host: "Singh Family", rating: "4.95 ★", price: "₹1,800 / night" }
+      ]
+    },
+    varanasi: {
+      name: "Varanasi",
+      state: "Uttar Pradesh",
+      crowdIndex: "Severe Congestion (94%)",
+      crowdClass: "high",
+      suggestedAlternative: "Ramnagar Heritage Fort & Chunar Stonemason Weaving Village",
+      crowdShiftingIncentive: "Free VIP E-Boat Pass + 30% Off Banarasi Silk Weaving Workshop",
+      highHubs: "Dashashwamedh Ghat, Kashi Vishwanath Temple, Assi Ghat",
+      lowHubs: "Ramnagar Fort, Chunar Village, Sarnath Peace Trail",
+      peakOccupancy: "98%",
+      offpeakForecast: "52%",
+      recommendedDiscount: "35% OFF",
+      revenueRecovery: "₹4,80,000 / month",
+      artisansStat: "680 Weavers",
+      incomeStat: "₹28.5 Lakhs",
+      co2Stat: "19.8 Tons",
+      marketListings: [
+        { title: "Zari Silk Handloom Masterclass", category: "Weaving Guild", host: "Master Ustad Ansari", rating: "4.95 ★", price: "₹550 / pass" },
+        { title: "Ganges Sunrise Wooden Boat Guild", category: "Local Guild", host: "Mahaadev Boatmen", rating: "4.9 ★", price: "₹350 / pass" },
+        { title: "Sarnath Heritage Eco-Lodge", category: "Eco-Lodge", host: "Tripathi Family", rating: "4.88 ★", price: "₹1,500 / night" }
+      ]
+    },
+    goa: {
+      name: "Goa",
+      state: "Goa",
+      crowdIndex: "Moderate Crowd (74%)",
+      crowdClass: "medium",
+      suggestedAlternative: "Divar Island Spice Plantation & Netravali Waterfall Trail",
+      crowdShiftingIncentive: "Free Kayak Pass + 25% Off Organic Spice Village Tasting",
+      highHubs: "Baga Beach, Calangute, Tito's Lane",
+      lowHubs: "Divar Island, Netravali, Fontainhas Latin Quarter",
+      peakOccupancy: "89%",
+      offpeakForecast: "42%",
+      recommendedDiscount: "30% OFF",
+      revenueRecovery: "₹5,20,000 / month",
+      artisansStat: "310 Artisans",
+      incomeStat: "₹22.1 Lakhs",
+      co2Stat: "16.4 Tons",
+      marketListings: [
+        { title: "Divar Organic Spice Farm & Culinary Tour", category: "Agri-Tourism", host: "Fernandes Family", rating: "4.92 ★", price: "₹750 / pass" },
+        { title: "Fontainhas Portuguese Tile Painting", category: "Art Studio", host: "Maria Souza", rating: "4.87 ★", price: "₹500 / pass" },
+        { title: "Netravali Rainforest Heritage Homestay", category: "Homestay", host: "Naik Guild", rating: "4.9 ★", price: "₹2,200 / night" }
+      ]
+    },
+    shimla: {
+      name: "Shimla",
+      state: "Himachal Pradesh",
+      crowdIndex: "Peak Overcrowding (91%)",
+      crowdClass: "high",
+      suggestedAlternative: "Mashobra Pine Forest Eco-Trail & Craignano Apple Orchard",
+      crowdShiftingIncentive: "Free Electric Mountain Bus Pass + 20% Off Apple Farm Stay",
+      highHubs: "The Ridge, Mall Road, Jakhoo Temple",
+      lowHubs: "Mashobra Trail, Craignano, Narkanda Ridge",
+      peakOccupancy: "96%",
+      offpeakForecast: "38%",
+      recommendedDiscount: "32% OFF",
+      revenueRecovery: "₹3,90,000 / month",
+      artisansStat: "240 Woodcrafters",
+      incomeStat: "₹15.2 Lakhs",
+      co2Stat: "12.8 Tons",
+      marketListings: [
+        { title: "Pine Wood Carving Workshop", category: "Craft Studio", host: "Verma Artisans", rating: "4.88 ★", price: "₹400 / pass" },
+        { title: "Apple Orchard Harvest Experience", category: "Agri-Tourism", host: "Sharma Estates", rating: "4.94 ★", price: "₹650 / pass" },
+        { title: "Mashobra Forest View Wooden Cottage", category: "Cottage", host: "Thakur Family", rating: "4.91 ★", price: "₹2,400 / night" }
+      ]
+    },
+    delhi: {
+      name: "Delhi",
+      state: "Delhi NCR",
+      crowdIndex: "High Density (85%)",
+      crowdClass: "high",
+      suggestedAlternative: "Sunder Nursery Botanical Walk & Nizamuddin Heritage Guild",
+      crowdShiftingIncentive: "Free Heritage Walk Pass + 25% Off Sufi Culinary Tasting",
+      highHubs: "Chandni Chowk, India Gate, Qutub Minar",
+      lowHubs: "Sunder Nursery, Mehrauli Archaeological Park, Majnu ka Tilla",
+      peakOccupancy: "91%",
+      offpeakForecast: "55%",
+      recommendedDiscount: "25% OFF",
+      revenueRecovery: "₹6,10,000 / month",
+      artisansStat: "850 Artisans",
+      incomeStat: "₹42.0 Lakhs",
+      co2Stat: "28.5 Tons",
+      marketListings: [
+        { title: "Old Delhi Spice & Calligraphy Guild", category: "Heritage Walk", host: "Ustad Qureshi", rating: "4.92 ★", price: "₹500 / pass" },
+        { title: "Mehrauli Monument Photography Trail", category: "Photo Walk", host: "Kapoor Photography", rating: "4.89 ★", price: "₹450 / pass" },
+        { title: "Nizamuddin Heritage Haveli Homestay", category: "Haveli Stay", host: "Khan Family", rating: "4.93 ★", price: "₹2,800 / night" }
+      ]
+    },
+    mumbai: {
+      name: "Mumbai",
+      state: "Maharashtra",
+      crowdIndex: "Heavy Congestion (89%)",
+      crowdClass: "high",
+      suggestedAlternative: "Khotachiwadi Heritage Village & Kanheri Caves Eco-Trail",
+      crowdShiftingIncentive: "Free Suburban Rail Pass + 30% Off Warli Art Workshop",
+      highHubs: "Gateway of India, Marine Drive, Bandra Fort",
+      lowHubs: "Khotachiwadi, Kanheri Caves, Banganga Tank",
+      peakOccupancy: "93%",
+      offpeakForecast: "60%",
+      recommendedDiscount: "22% OFF",
+      revenueRecovery: "₹7,40,000 / month",
+      artisansStat: "520 Craftsmen",
+      incomeStat: "₹38.5 Lakhs",
+      co2Stat: "24.1 Tons",
+      marketListings: [
+        { title: "Warli Tribal Art & Painting Workshop", category: "Art Studio", host: "Jivya Mashe Guild", rating: "4.96 ★", price: "₹400 / pass" },
+        { title: "Khotachiwadi Portuguese Heritage Walk", category: "Heritage Walk", host: "James Ferreira", rating: "4.94 ★", price: "₹600 / pass" },
+        { title: "Bandra Heritage Villa Homestay", category: "Homestay", host: "D'Souza Family", rating: "4.91 ★", price: "₹3,200 / night" }
+      ]
+    },
+    udaipur: {
+      name: "Udaipur",
+      state: "Rajasthan",
+      crowdIndex: "High Pressure (82%)",
+      crowdClass: "high",
+      suggestedAlternative: "Shilpgram Artisan Craft Village & Badi Lake Sunset Trail",
+      crowdShiftingIncentive: "Free Solar Boat Ticket + 30% Off Miniature Painting Workshop",
+      highHubs: "City Palace, Lake Pichola, Jagdish Temple",
+      lowHubs: "Shilpgram, Badi Lake, Rayta Hills",
+      peakOccupancy: "92%",
+      offpeakForecast: "45%",
+      recommendedDiscount: "28% OFF",
+      revenueRecovery: "₹4,10,000 / month",
+      artisansStat: "390 Artisans",
+      incomeStat: "₹20.8 Lakhs",
+      co2Stat: "15.6 Tons",
+      marketListings: [
+        { title: "Udaipur Mewar Miniature Painting Studio", category: "Art Studio", host: "Sharma Miniature Guild", rating: "4.93 ★", price: "₹500 / pass" },
+        { title: "Shilpgram Pottery & Terracotta Workshop", category: "Craft Village", host: "Prajapat Guild", rating: "4.88 ★", price: "₹350 / pass" },
+        { title: "Lake Badi Eco-Heritage Farmstead", category: "Farmstay", host: "Rathore Family", rating: "4.95 ★", price: "₹2,100 / night" }
+      ]
+    },
+    kochi: {
+      name: "Kochi",
+      state: "Kerala",
+      crowdIndex: "Optimal / Moderate (68%)",
+      crowdClass: "medium",
+      suggestedAlternative: "Kumbalangi Model Tourism Village & Backwater Canoe Trail",
+      crowdShiftingIncentive: "Free Village Shuttle + 25% Off Traditional Net Fishing Class",
+      highHubs: "Fort Kochi, Chinese Fishing Nets, Mattancherry",
+      lowHubs: "Kumbalangi Village, Vypeen Island, Kadamakkudy",
+      peakOccupancy: "84%",
+      offpeakForecast: "50%",
+      recommendedDiscount: "25% OFF",
+      revenueRecovery: "₹3,70,000 / month",
+      artisansStat: "450 Weavers",
+      incomeStat: "₹24.2 Lakhs",
+      co2Stat: "18.1 Tons",
+      marketListings: [
+        { title: "Kumbalangi Village Crab Farming & Cooking", category: "Eco-Tourism", host: "Varghese Family", rating: "4.97 ★", price: "₹700 / pass" },
+        { title: "Mattancherry Spice Blending Masterclass", category: "Culinary Guild", host: "Seth Brothers", rating: "4.91 ★", price: "₹450 / pass" },
+        { title: "Vypeen Island Heritage Waterfront Homestay", category: "Homestay", host: "Menon Guild", rating: "4.93 ★", price: "₹2,000 / night" }
+      ]
+    }
+  };
+
+  window.selectRoamCity = function(cityKey) {
+    window.currentIntelCityKey = cityKey;
+    document.querySelectorAll('.intel-chip-btn').forEach(btn => {
+      if (btn.textContent.strip ? btn.textContent.strip().toLowerCase().includes(cityKey) : btn.textContent.toLowerCase().includes(cityKey)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    if (window.renderRoamModeData) {
+      window.renderRoamModeData(window._currentRoamMode || 'discover');
+    }
+  };
+
+  window.renderRoamModeData = function(mode) {
+    window._currentRoamMode = mode || 'discover';
+    const cityKey = window.currentIntelCityKey || 'jaipur';
+    const data = window.ROAM_SPATIAL_DATA[cityKey] || window.ROAM_SPATIAL_DATA['jaipur'];
+
+    if (!data) return;
+
+    const locLabel = document.getElementById('roam-location-label');
+    if (locLabel) locLabel.textContent = `${data.name.toUpperCase()} • ${data.state.toUpperCase()} (LIVE SPATIAL DATA)`;
+
+    const destName = document.getElementById('roam-dest-name');
+    if (destName) destName.textContent = data.name;
+
+    const crowdBadge = document.getElementById('roam-crowd-badge');
+    if (crowdBadge) crowdBadge.textContent = data.crowdIndex;
+
+    const altTrail = document.getElementById('roam-alt-trail');
+    if (altTrail) altTrail.textContent = data.suggestedAlternative;
+
+    const incentive = document.getElementById('roam-incentive');
+    if (incentive) incentive.textContent = '🎁 Incentive: ' + data.crowdShiftingIncentive;
+
+    const highHubs = document.getElementById('roam-high-hubs');
+    if (highHubs) highHubs.textContent = data.highHubs;
+
+    const lowHubs = document.getElementById('roam-low-hubs');
+    if (lowHubs) lowHubs.textContent = data.lowHubs;
+
+    const peakOcc = document.getElementById('roam-peak-occ');
+    if (peakOcc) peakOcc.textContent = data.peakOccupancy;
+
+    const offpeak = document.getElementById('roam-offpeak-forecast');
+    if (offpeak) offpeak.textContent = data.offpeakForecast;
+
+    const discount = document.getElementById('roam-rec-disc');
+    if (discount) discount.textContent = data.recommendedDiscount;
+
+    const revRec = document.getElementById('roam-rev-rec');
+    if (revRec) revRec.textContent = data.revenueRecovery;
+
+    const artisans = document.getElementById('roam-artisans-stat');
+    if (artisans) artisans.textContent = data.artisansStat;
+
+    const income = document.getElementById('roam-income-stat');
+    if (income) income.textContent = data.incomeStat;
+
+    const co2 = document.getElementById('roam-co2-stat');
+    if (co2) co2.textContent = data.co2Stat;
+
+    const marketGrid = document.getElementById('roam-market-grid');
+    if (marketGrid && data.marketListings) {
+      marketGrid.innerHTML = data.marketListings.map(item => `
+        <div class="intel-item-card" style="border-color:rgba(255,0,127,0.3); background:rgba(255,255,255,0.02); padding:1rem; border-radius:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.4rem;">
+            <h4 style="font-size:0.98rem; font-weight:800; color:#fff; margin:0;">${item.title}</h4>
+            <span style="font-size:0.7rem; font-weight:700; color:#ff007f; background:rgba(255,0,127,0.12); padding:0.2rem 0.55rem; border-radius:10px; border:1px solid rgba(255,0,127,0.3);">${item.category}</span>
+          </div>
+          <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.6rem;">Host: <strong style="color:#fff;">${item.host}</strong> | Rating: <span style="color:#f59e0b; font-weight:700;">${item.rating}</span></div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.92rem; font-weight:900; color:#10b981;">${item.price}</span>
+            <button class="visualizer-btn" style="padding:0.3rem 0.75rem; font-size:0.75rem; background:rgba(255,0,127,0.15); border-color:rgba(255,0,127,0.4); color:#fff;" onclick="alert('Unlocked 0% Commission Direct Pass for ${item.title}!');">Unlock Pass ⚡</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  };
+
+
   window.renderRoamModeData = renderRoamModeData;
   window.startHackathonTour = startHackathonTour;
   window.closeHackathonTour = closeHackathonTour;
