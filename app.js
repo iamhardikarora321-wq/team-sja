@@ -25428,24 +25428,35 @@ setTimeout(init3DParallax, 300);
       if (!pane) return;
 
       let lingoHtml = data.lingo.map(l => `
-        <div class="intel-item-card">
-          <div style="font-size:0.78rem; font-weight:700; color:#00f3ff; text-transform:uppercase; margin-bottom:0.25rem;">${l.phrase}</div>
+        <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
+          <div style="font-size:0.75rem; font-weight:700; color:#00f3ff; text-transform:uppercase; margin-bottom:0.25rem;">${l.phrase}</div>
           <div style="font-size:1.15rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">${l.local}</div>
-          <div style="font-size:0.8rem; color:#a7f3d0; font-style:italic;">🗣️ Pronunciation: "${l.pronunciation}"</div>
+          <div style="font-size:0.8rem; color:#a7f3d0; font-style:italic; margin-bottom:0.65rem;">🗣️ Pronunciation: "${l.pronunciation}"</div>
+          <button class="visualizer-btn" style="background:rgba(0,243,255,0.15); border:1px solid rgba(0,243,255,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" onclick="if(window.speakLingoPhrase) window.speakLingoPhrase('${l.local.replace(/'/g, "\\'")}');">
+            🔊 Listen Audio
+          </button>
         </div>
       `).join('');
 
       pane.innerHTML = `
-        <h4 style="font-size:1rem; font-weight:800; color:#00f3ff; margin-bottom:0.85rem;">🗣️ Regional Everyday Language Quick-Translator</h4>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem; flex-wrap:wrap; gap:0.5rem;">
+          <h4 style="font-size:1rem; font-weight:800; color:#00f3ff; margin:0;">🗣️ Regional Everyday Language Quick-Translator (${data.name})</h4>
+          <button class="visualizer-btn" style="background:rgba(255,0,127,0.15); border:1px solid rgba(255,0,127,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.85rem; border-radius:10px;" onclick="if(window.switchTab) window.switchTab('lingo');">Full 10-Language Audio Matrix ➔</button>
+        </div>
         <div class="intel-card-grid">${lingoHtml}</div>
       `;
     } else if (currentIntelTab === 'apps') {
       let pane = document.getElementById('intel-tab-content-apps');
       if (!pane) return;
 
-      let apps = window.DIGITAL_SURVIVAL_APPS || [];
+      let apps = window.DIGITAL_SURVIVAL_APPS || [
+        { name: "IRCTC Rail Connect", category: "Railways", icon: "🚆", desc: "Official Indian Railways app for train seat reservation & live PNR status." },
+        { name: "UTS Mobile App", category: "Local Transit", icon: "🎟️", desc: "Unreserved ticketing for suburban trains & city buses." },
+        { name: "PhonePe / Paytm", category: "UPI Payments", icon: "💳", desc: "Scan any roadside QR code to pay instantly." },
+        { name: "Uber / Ola / Rapido", category: "Cabs & Autos", icon: "🛺", desc: "Book auto-rickshaws & city cabs with upfront digital fares." }
+      ];
       let appsHtml = apps.map(app => `
-        <div class="intel-item-card">
+        <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
           <div style="display:flex; align-items:center; gap:0.65rem; margin-bottom:0.4rem;">
             <div style="font-size:1.4rem;">${app.icon}</div>
             <div>
@@ -25458,8 +25469,46 @@ setTimeout(init3DParallax, 300);
       `).join('');
 
       pane.innerHTML = `
-        <h4 style="font-size:1rem; font-weight:800; color:#10b981; margin-bottom:0.85rem;">📲 Must-Have Digital Survival Apps in India</h4>
-        <div class="intel-card-grid">${appsHtml}</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem; flex-wrap:wrap; gap:0.5rem;">
+          <h4 style="font-size:1rem; font-weight:800; color:#10b981; margin:0;">📲 Must-Have Digital Survival Apps in India</h4>
+          <button class="visualizer-btn" style="background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.85rem; border-radius:10px;" onclick="if(window.switchTab) window.switchTab('survival');">Full Emergency SOS Center ➔</button>
+        </div>
+        <div class="intel-card-grid" style="margin-bottom:1.25rem;">${appsHtml}</div>
+
+        <!-- Emergency Hotlines Quick Panel -->
+        <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); border-radius:14px; padding:1rem;">
+          <h5 style="font-size:0.9rem; font-weight:800; color:#f87171; margin:0 0 0.65rem 0;">🚨 Emergency Speed-Dial Helplines</h5>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.65rem;">
+            <a href="tel:112" class="intel-item-card" style="text-decoration:none; padding:0.65rem; background:rgba(2,6,23,0.8); border-color:rgba(239,68,68,0.3); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.65rem; color:#f87171; font-weight:700;">Emergency</div>
+                <div style="font-size:1.05rem; font-weight:900; color:#fff;">112</div>
+              </div>
+              <span style="font-size:1.1rem;">📞</span>
+            </a>
+            <a href="tel:100" class="intel-item-card" style="text-decoration:none; padding:0.65rem; background:rgba(2,6,23,0.8); border-color:rgba(59,130,246,0.3); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.65rem; color:#3b82f6; font-weight:700;">Police</div>
+                <div style="font-size:1.05rem; font-weight:900; color:#fff;">100</div>
+              </div>
+              <span style="font-size:1.1rem;">👮</span>
+            </a>
+            <a href="tel:108" class="intel-item-card" style="text-decoration:none; padding:0.65rem; background:rgba(2,6,23,0.8); border-color:rgba(16,185,129,0.3); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.65rem; color:#10b981; font-weight:700;">Ambulance</div>
+                <div style="font-size:1.05rem; font-weight:900; color:#fff;">108</div>
+              </div>
+              <span style="font-size:1.1rem;">🚑</span>
+            </a>
+            <a href="tel:1363" class="intel-item-card" style="text-decoration:none; padding:0.65rem; background:rgba(2,6,23,0.8); border-color:rgba(168,85,247,0.3); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:0.65rem; color:#c084fc; font-weight:700;">Tourist Helpline</div>
+                <div style="font-size:1.05rem; font-weight:900; color:#fff;">1363</div>
+              </div>
+              <span style="font-size:1.1rem;">🧳</span>
+            </a>
+          </div>
+        </div>
       `;
     }
   }
