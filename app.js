@@ -1179,10 +1179,12 @@
     
     if (!title && typeof FEATURES !== 'undefined') {
       for (const cat in FEATURES) {
-        const found = FEATURES[cat].find(f => f.id === tabId);
-        if (found) {
-          title = `${found.name} ${found.icon || ''}`.trim();
-          break;
+        if (Array.isArray(FEATURES[cat])) {
+          const found = FEATURES[cat].find(f => f.id === tabId);
+          if (found) {
+            title = `${found.name || found.title || ''} ${found.icon || ''}`.trim();
+            break;
+          }
         }
       }
     }
@@ -27812,10 +27814,12 @@ class SearchBarController {
       }
 
       const matches = ALL_INDIAN_LOCATIONS.filter(loc => {
-        return loc.name.toLowerCase().includes(q) ||
-               loc.state.toLowerCase().includes(q) ||
-               loc.type.toLowerCase().includes(q) ||
-               loc.tags.some(t => t.toLowerCase().includes(q));
+        if (!loc) return false;
+        const nameMatch = loc.name ? loc.name.toLowerCase().includes(q) : false;
+        const stateMatch = loc.state ? loc.state.toLowerCase().includes(q) : false;
+        const typeMatch = loc.type ? loc.type.toLowerCase().includes(q) : false;
+        const tagMatch = (loc.tags && Array.isArray(loc.tags)) ? loc.tags.some(t => t && t.toLowerCase().includes(q)) : false;
+        return nameMatch || stateMatch || typeMatch || tagMatch;
       }).slice(0, 8);
 
       if (matches.length === 0) {
@@ -28060,7 +28064,7 @@ class DiscoverViewController {
                 </div>
 
                 <div class="discover-tagline">
-                  Tags: ${loc.tags.slice(0, 3).join(' • ')}
+                  Tags: ${(loc.tags && Array.isArray(loc.tags)) ? loc.tags.slice(0, 3).join(' • ') : (loc.culturalRegion || loc.type || 'Heritage Destination')}
                 </div>
               </div>
 
