@@ -3378,14 +3378,14 @@ header::before {
    🚀 FULL-SCREEN 3D INTERACTIVE SHOWCASE STAGE MODAL (v34.4.0)
    ===================================================================== */
 .showcase-3d-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999999;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 999999999 !important;
   background: #020611;
   background-image: 
     radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0, 243, 255, 0.28), transparent 70%),
