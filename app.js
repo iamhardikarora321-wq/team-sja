@@ -33,7 +33,7 @@
       else if (tabId.includes('game') || tabId.includes('quiz') || tabId.includes('guess')) tabId = 'game';
       else if (tabId.includes('tour') || tabId.includes('state') || tabId.includes('guide') || tabId.includes('travel')) tabId = 'tourism';
       else if (tabId.includes('trip') || tabId.includes('pack') || tabId.includes('plan') || tabId.includes('budget')) tabId = 'trip';
-      else tabId = 'engine';
+      else tabId = 'tourism';
       activeTab = document.getElementById("tab-content-" + tabId);
     }
     if (activeTab) {
@@ -1242,7 +1242,7 @@
       activeTab.style.opacity = "1";
       activeTab.style.visibility = "visible";
     } else {
-      const defaultTab = document.getElementById("tab-content-engine");
+      const defaultTab = document.getElementById("tab-content-tourism");
       if (defaultTab) {
         defaultTab.classList.add("active");
         defaultTab.style.setProperty("display", "block", "important");
@@ -25827,6 +25827,9 @@ setTimeout(init3DParallax, 300);
   try {
     initTravelIntelligence();
     renderRoamModeData('discover');
+    if (typeof window.switchTab === 'function') {
+      window.switchTab('tourism');
+    }
   } catch(e) {}
 }
 })();
