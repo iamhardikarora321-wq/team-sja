@@ -1215,40 +1215,24 @@
     window._currentActiveTab = tabId;
     const tabs = document.querySelectorAll(".tab-content");
     tabs.forEach(tab => {
-      tab.classList.remove("active");
-      tab.style.display = "none";
+      tab.classList.add("active");
+      tab.style.setProperty("display", "block", "important");
+      tab.style.opacity = "1";
+      tab.style.visibility = "visible";
     });
 
     let activeTab = document.getElementById("tab-content-" + tabId);
     if (!activeTab) {
-      // Intelligent fallback mapping if specific tab element is not in DOM
-      if (tabId.includes('route') || tabId.includes('export') || tabId.includes('data') || tabId.includes('solver')) {
-        tabId = 'routes';
-      } else if (tabId.includes('game') || tabId.includes('quiz') || tabId.includes('guess')) {
-        tabId = 'game';
-      } else if (tabId.includes('tour') || tabId.includes('state') || tabId.includes('guide') || tabId.includes('travel')) {
-        tabId = 'tourism';
-      } else if (tabId.includes('trip') || tabId.includes('pack') || tabId.includes('plan') || tabId.includes('budget')) {
-        tabId = 'trip';
-      } else {
-        tabId = 'engine';
-      }
+      if (['game', 'quiz', 'guess'].some(k => tabId.includes(k))) tabId = 'game';
+      else if (['trip', 'budget', 'pack', 'plan', 'itinerary'].some(k => tabId.includes(k))) tabId = 'trip';
+      else if (['roam', 'discover', 'explore'].some(k => tabId.includes(k))) tabId = 'roam';
+      else if (['travel', 'showcase', '3d', 'map'].some(k => tabId === k || k === '3d' && tabId.includes('3d'))) tabId = 'travel';
+      else tabId = 'travelintel';
       activeTab = document.getElementById("tab-content-" + tabId);
     }
 
     if (activeTab) {
-      activeTab.classList.add("active");
-      activeTab.style.setProperty("display", "block", "important");
-      activeTab.style.opacity = "1";
-      activeTab.style.visibility = "visible";
-    } else {
-      const defaultTab = document.getElementById("tab-content-travelintel");
-      if (defaultTab) {
-        defaultTab.classList.add("active");
-        defaultTab.style.setProperty("display", "block", "important");
-        defaultTab.style.opacity = "1";
-        defaultTab.style.visibility = "visible";
-      }
+      activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // Highlight active navigation buttons across UI
