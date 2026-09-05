@@ -160,25 +160,25 @@
 
         <!-- Interactive Cyber Keypad Grid -->
         <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-bottom:0.75rem;" id="pin-keypad">
-          <button type="button" class="pin-digit-btn" data-val="1">1</button>
-          <button type="button" class="pin-digit-btn" data-val="2">2</button>
-          <button type="button" class="pin-digit-btn" data-val="3">3</button>
-          <button type="button" class="pin-digit-btn" data-val="4">4</button>
-          <button type="button" class="pin-digit-btn" data-val="5">5</button>
-          <button type="button" class="pin-digit-btn" data-val="6">6</button>
-          <button type="button" class="pin-digit-btn" data-val="7">7</button>
-          <button type="button" class="pin-digit-btn" data-val="8">8</button>
-          <button type="button" class="pin-digit-btn" data-val="9">9</button>
-          <button type="button" class="pin-digit-btn" data-val="clear" style="font-size:0.95rem; color:#f87171; background:rgba(239,68,68,0.08);">⌫ Clear</button>
-          <button type="button" class="pin-digit-btn" data-val="0">0</button>
-          <button type="button" class="pin-digit-btn" data-val="submit" style="font-size:0.95rem; color:#10b981; background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.3);">🔓 Enter</button>
+          <button type="button" class="pin-digit-btn" data-val="1" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">1</button>
+          <button type="button" class="pin-digit-btn" data-val="2" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">2</button>
+          <button type="button" class="pin-digit-btn" data-val="3" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">3</button>
+          <button type="button" class="pin-digit-btn" data-val="4" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">4</button>
+          <button type="button" class="pin-digit-btn" data-val="5" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">5</button>
+          <button type="button" class="pin-digit-btn" data-val="6" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">6</button>
+          <button type="button" class="pin-digit-btn" data-val="7" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">7</button>
+          <button type="button" class="pin-digit-btn" data-val="8" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">8</button>
+          <button type="button" class="pin-digit-btn" data-val="9" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">9</button>
+          <button type="button" class="pin-digit-btn" data-val="clear" style="font-size:0.95rem; color:#f87171; background:rgba(239,68,68,0.08);" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">⌫ Clear</button>
+          <button type="button" class="pin-digit-btn" data-val="0" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">0</button>
+          <button type="button" class="pin-digit-btn" data-val="submit" style="font-size:0.95rem; color:#10b981; background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.3);" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">🔓 Enter</button>
         </div>
       </form>
 
       <!-- Footer Info Bar -->
       <div style="margin-top:0.75rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08); font-size:0.75rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
         <span>🛡️ 256-Bit SSL Encrypted</span>
-        <button id="site-lock-change-btn" style="background:none; border:none; color:var(--color-primary); text-decoration:underline; font-size:0.75rem; cursor:pointer; font-weight:600;">Change Passcode</button>
+        <button id="site-lock-change-btn" style="background:none; border:none; color:var(--color-primary); text-decoration:underline; font-size:0.75rem; cursor:pointer; font-weight:600;" onclick="if(window.handleDirectUnlock) window.handleDirectUnlock();">Change Passcode</button>
       </div>
 
     </div>
