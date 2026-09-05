@@ -24575,6 +24575,18 @@ setTimeout(init3DParallax, 300);
     }
   }
 
+  function openPitchModal() {
+    let modal = document.getElementById('pitch-modal');
+    if (modal) modal.style.display = 'block';
+  }
+
+  function closePitchModal() {
+    let modal = document.getElementById('pitch-modal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  window.openPitchModal = openPitchModal;
+  window.closePitchModal = closePitchModal;
   window.openQuantumHologramModal = openQuantumHologramModal;
   window.closeQuantumHologramModal = closeQuantumHologramModal;
   window.toggleQuantumAudio = toggleQuantumAudio;
