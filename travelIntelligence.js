@@ -161,6 +161,119 @@
         { phrase: "How much?", local: "Kitlem tem? (कितलें तें?)", pronunciation: "Keet-lem tem?" },
         { phrase: "Relaxed / Chill vibes", local: "Susegad (सुशेगाद)", pronunciation: "Soo-say-gaad" }
       ]
+    },
+    "kolkata": {
+      name: "Kolkata",
+      state: "West Bengal",
+      tier: "Cultural & Literary Capital",
+      bestSeason: "October to March (14°C – 26°C)",
+      cultureSnapshot: "The City of Joy — famous for colonial architecture, Rabindra Sangeet, yellow taxis, tramways, Durga Puja, and rich intellectual heritage.",
+      food: [
+        { name: "Rosogolla & Mishti Doi", type: "Iconic Sweet", spot: "K.C. Das / Balaram Mullick, College Street", desc: "Spongy cottage cheese balls soaked in light syrup and sweetened fermented yogurt." },
+        { name: "Kolkata Biryani", type: "Culinary Legend", spot: "Arsalan / Royal Indian Hotel, Park Circus", desc: "Fragrant rice dish cooked with tender meat, boiled egg, and melt-in-mouth spiced potato." },
+        { name: "Kathi Roll", type: "Street Snack", spot: "Nizam's / Kusum Rolls, Park Street", desc: "Flaky paratha wrapped around skewered kebabs, onions, and green chilies." }
+      ],
+      attractions: [
+        { name: "Victoria Memorial & Maidan", category: "Colonial Heritage", timing: "10:00 AM – 5:00 PM", desc: "Grand white marble monument surrounded by lush green gardens." },
+        { name: "Howrah Bridge & Hooghly Ghats", category: "Engineering Marvel", timing: "24/7 Landmark", desc: "Iconic cantilever bridge over the Hooghly river with bustling morning ferry ghats." },
+        { name: "Dakshineswar Kali Temple & Belur Math", category: "Spiritual Landmark", timing: "6:00 AM – 8:00 PM", desc: "Sacred temple complex associated with Ramakrishna Paramahamsa." }
+      ],
+      transitFares: {
+        autoRickshaw: "Shared Auto ₹15 – ₹30 per route",
+        cityBus: "Yellow Taxi / InDriver Cab | Kolkata Metro: ₹5 – ₹25 (India's first metro)",
+        trainSleeper: "Howrah (HWH) / Sealdah (SDAH) / Shalimar Hubs",
+        train3AC: "Express connection across North & South",
+        flight: "Netaji Subhash Chandra Bose Airport (CCU)",
+        baggageAllowance: "Flight: 15 kg Check-in, 7 kg Cabin | Metro: 20 kg per passenger"
+      },
+      lingo: [
+        { phrase: "Hello / Greetings", local: "Namaskar (नमस्कार)", pronunciation: "Nuh-mush-kaar" },
+        { phrase: "How are you?", local: "Kemon achen? (केमोन आचेन?)", pronunciation: "Kay-mon aa-chen?" },
+        { phrase: "Very good!", local: "Khub bhalo! (खूब भालो!)", pronunciation: "Khoob bhaa-loh" },
+        { phrase: "Thank you", local: "Dhanyabad (धन्यवाद)", pronunciation: "Dhun-yoh-baad" }
+      ]
+    },
+    "bengaluru": {
+      name: "Bengaluru (Bangalore)",
+      state: "Karnataka",
+      tier: "Silicon Valley of India",
+      bestSeason: "Year-Round Pleasant (16°C – 28°C)",
+      cultureSnapshot: "India's tech capital renowned for pleasant weather, green botanical parks, craft breweries, and vibrant startup culture.",
+      food: [
+        { name: "Masala Dosa", type: "Breakfast Staple", spot: "CTR (Central Tiffin Room), Malleshwaram / Vidyarthi Bhavan, Gandhi Bazaar", desc: "Crispy golden crepe filled with spiced potato mash served with coconut chutney and butter." },
+        { name: "Filter Coffee", type: "Iconic Beverage", spot: "Brahmin's Coffee Bar, Basavanagudi", desc: "Strong frothed coffee brewed in traditional brass filter." }
+      ],
+      attractions: [
+        { name: "Lalbagh Botanical Garden & Cubbon Park", category: "Nature Sanctuary", timing: "6:00 AM – 7:00 PM", desc: "Historical 240-acre glasshouse garden and lush urban forest." },
+        { name: "Bengaluru Palace", category: "Tudor Heritage", timing: "10:00 AM – 5:30 PM", desc: "Majestic palace inspired by England's Windsor Castle." }
+      ],
+      transitFares: {
+        autoRickshaw: "Auto / Rapido Bike: ₹30 minimum",
+        cityBus: "Namma Metro: ₹10 – ₹60 | BMTC Bus: ₹5 – ₹45",
+        trainSleeper: "KSR Bengaluru (SBC) / Yesvantpur (YPR)",
+        train3AC: "Connectivity to all South hubs",
+        flight: "Kempegowda International Airport (BLR)",
+        baggageAllowance: "Flight: 15 kg Check-in, 7 kg Cabin"
+      },
+      lingo: [
+        { phrase: "Hello!", local: "Namaskara! (नमस्कारा!)", pronunciation: "Nuh-mus-kaa-rah" },
+        { phrase: "How much?", local: "Eshtu? (एष्टु?)", pronunciation: "Esh-too?" },
+        { phrase: "Super / Awesome!", local: "Sakkath agide! (सक्कत् आगिदे!)", pronunciation: "Suk-kuth aa-gee-day" }
+      ]
+    },
+    "chennai": {
+      name: "Chennai",
+      state: "Tamil Nadu",
+      tier: "Cultural Gateway of South India",
+      bestSeason: "November to February (20°C – 28°C)",
+      cultureSnapshot: "Dravidian heritage, Carnatic classical music, Bharatanatyam dance, expansive beaches, and Kollywood cinema hub.",
+      food: [
+        { name: "Idli Sambar & Medu Vada", type: "Breakfast Staple", spot: "Murugan Idli Shop / Saravana Bhavan", desc: "Steamed rice cakes and crispy lentil donuts served with piping hot lentil stew." },
+        { name: "Chettinad Chicken Curry", type: "Spicy Cuisine", spot: "Anjappar Chettinad, T. Nagar", desc: "Fiery aromatic curry made with freshly ground sun-dried black pepper and spices." }
+      ],
+      attractions: [
+        { name: "Marina Beach", category: "Coastal Promenade", timing: "24/7 Access", desc: "World's second longest natural urban beach with lighthouse views." },
+        { name: "Kapaleeshwarar Temple", category: "Dravidian Marvel", timing: "6:00 AM – 9:00 PM", desc: "7th-century temple with intricate colorful Gopuram tower." }
+      ],
+      transitFares: {
+        autoRickshaw: "Auto / Taxi: ₹40 minimum",
+        cityBus: "Chennai Metro & Suburban Rail: ₹5 – ₹40",
+        trainSleeper: "Chennai Central (MAS) / Egmore (MS)",
+        train3AC: "Direct connectivity to North & West",
+        flight: "Chennai International Airport (MAA)",
+        baggageAllowance: "Flight: 15 kg Check-in, 7 kg Cabin"
+      },
+      lingo: [
+        { phrase: "Hello!", local: "Vanakkam! (வணக்கம் / वणक्कम!)", pronunciation: "Vuh-nuk-kum" },
+        { phrase: "How are you?", local: "Eppadi irukkinga? (एप्पडि इरुक्कींगा?)", pronunciation: "Ep-puh-dee ee-rook-king-gah?" }
+      ]
+    },
+    "hyderabad": {
+      name: "Hyderabad",
+      state: "Telangana",
+      tier: "City of Pearls & Cyberabad",
+      bestSeason: "October to March (15°C – 26°C)",
+      cultureSnapshot: "Nizami heritage, world-famous biryani, historic fortresses, sparkling pearl bazaars, and thriving IT parks.",
+      food: [
+        { name: "Hyderabadi Dum Biryani", type: "Culinary Legend", spot: "Paradise / Bawarchi / Cafe Bahar", desc: "Slow-cooked basmati rice layered with marinated meat, saffron, and aromatic spices." },
+        { name: "Irani Chai & Osmania Biscuits", type: "Tea Culture", spot: "Nimrah Cafe & Bakery, Charminar", desc: "Creamy spiced tea served with melt-in-mouth salty-sweet biscuits." }
+      ],
+      attractions: [
+        { name: "Charminar & Laad Bazaar", category: "Nizami Monument", timing: "9:30 AM – 5:30 PM", desc: "16th-century four-arched mosque flanked by bustling bangle bazaars." },
+        { name: "Golconda Fort & Light Show", category: "Acoustic Citadel", timing: "9:00 AM – 5:30 PM", desc: "Historic diamond trade fortress with extraordinary acoustic engineering." }
+      ],
+      transitFares: {
+        autoRickshaw: "Auto / Rapido: ₹35 minimum",
+        cityBus: "Hyderabad Metro: ₹10 – ₹60",
+        trainSleeper: "Secunderabad (SC) / Hyderabad Deccan (HYB)",
+        train3AC: "Express rail connectivity across India",
+        flight: "Rajiv Gandhi International Airport (HYD)",
+        baggageAllowance: "Flight: 15 kg Check-in, 7 kg Cabin"
+      },
+      lingo: [
+        { phrase: "Hello!", local: "Adaab! (आदाब)", pronunciation: "Aa-daab" },
+        { phrase: "How are you brother?", local: "Kaisa hai baap? (कैसा है बाप?)", pronunciation: "Kai-sah hai baap?" }
+      ]
     }
   };
 

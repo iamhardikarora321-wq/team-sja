@@ -24944,7 +24944,19 @@ setTimeout(init3DParallax, 300);
 
     if (!input) return;
 
-    if (input) input.addEventListener('input', function(e) {
+    if (input) {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const query = input.value.trim();
+          if (query) {
+            const key = query.toLowerCase();
+            selectIntelCity(key, query);
+          }
+        }
+      });
+
+      input.addEventListener('input', function(e) {
       const query = e.target.value.trim().toLowerCase();
       if (clearBtn) clearBtn.style.display = query ? 'inline-block' : 'none';
 
@@ -24953,7 +24965,7 @@ setTimeout(init3DParallax, 300);
         return;
       }
 
-      // Fuzzy match against TRAVEL_INTEL_DB and all 50k cities
+      // Fuzzy match against TRAVEL_INTEL_DB and all 50k cities (CITIES_DATA)
       const dbKeys = Object.keys(window.TRAVEL_INTEL_DB || {});
       let matches = dbKeys.filter(k => {
         const item = window.TRAVEL_INTEL_DB[k];
@@ -24962,24 +24974,38 @@ setTimeout(init3DParallax, 300);
                (item.cultureSnapshot && item.cultureSnapshot.toLowerCase().includes(query));
       });
 
-      // If no DB key direct match, search from global ALL_CITIES array if available
-      if (matches.length === 0 && typeof ALL_CITIES !== 'undefined') {
-        const cityMatches = ALL_CITIES.filter(c => c.toLowerCase().startsWith(query)).slice(0, 5);
-        if (cityMatches.length > 0) {
-          renderIntelSuggestions(cityMatches.map(c => ({ key: c.toLowerCase(), name: c, isCustom: true })), suggestionsBox);
-          return;
-        }
-      }
+      // Search from global CITIES_DATA array if available
+      let cityList = (typeof CITIES_DATA !== 'undefined') ? CITIES_DATA : (window.CITIES_DATA || []);
+      let cityMatches = cityList.filter(c => c.toLowerCase().includes(query)).slice(0, 8);
 
-      if (matches.length > 0) {
-        renderIntelSuggestions(matches.map(k => ({ key: k, name: window.TRAVEL_INTEL_DB[k].name, state: window.TRAVEL_INTEL_DB[k].state })), suggestionsBox);
+      let combinedSuggestions = [];
+      
+      // Add DB matches first
+      matches.forEach(k => {
+        combinedSuggestions.push({ key: k, name: window.TRAVEL_INTEL_DB[k].name, state: window.TRAVEL_INTEL_DB[k].state });
+      });
+
+      // Add CITIES_DATA matches that aren't already in DB
+      cityMatches.forEach(c => {
+        const key = c.toLowerCase();
+        if (!combinedSuggestions.some(s => s.key === key)) {
+          const capName = c.charAt(0).toUpperCase() + c.slice(1);
+          combinedSuggestions.push({ key: key, name: capName, state: 'India Destination' });
+        }
+      });
+
+      if (combinedSuggestions.length > 0) {
+        renderIntelSuggestions(combinedSuggestions, suggestionsBox);
       } else {
         if (suggestionsBox) {
-          suggestionsBox.innerHTML = '<div style="padding:0.75rem 1rem; font-size:0.85rem; color:#94a3b8;">No direct match found. Select to load flexible district intelligence template.</div>';
+          const capQuery = query.charAt(0).toUpperCase() + query.slice(1);
+          suggestionsBox.innerHTML = `<div style="padding:0.75rem 1rem; font-size:0.85rem; color:#00f3ff; cursor:pointer;" onclick="if(window.selectIntelCity) window.selectIntelCity('${query.toLowerCase()}', '${capQuery}');">
+            📍 Explore <strong>"${capQuery}"</strong> Regional Hub & Intelligence ➔
+          </div>`;
           suggestionsBox.style.display = 'block';
         }
-      }
-    });
+      });
+    }
 
     selectIntelCity('jaipur');
   }
