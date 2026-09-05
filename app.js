@@ -25101,8 +25101,147 @@ setTimeout(init3DParallax, 300);
   window.clearIntelSearch = clearIntelSearch;
   window.calculatePointToPointRoute = calculatePointToPointRoute;
 
+  // =====================================================================
+  // 🧭 ROAM SPATIAL NAVIGATION & HACKATHON TOUR CONTROLLER
+  // =====================================================================
+  let currentRoamMode = 'discover';
+  let activeTourStep = 0;
+
+  function setRoamMode(mode) {
+    currentRoamMode = mode;
+    ['discover', 'explore', 'market', 'control', 'impact'].forEach(m => {
+      let btn = document.getElementById('roam-nav-btn-' + m);
+      let pane = document.getElementById('roam-mode-pane-' + m);
+      if (btn) btn.classList.toggle('active', m === mode);
+      if (pane) pane.style.display = (m === mode) ? 'block' : 'none';
+    });
+
+    renderRoamModeData(mode);
+  }
+
+  function renderRoamModeData(mode) {
+    const cityKey = window.currentIntelCityKey || 'jaipur';
+    const db = window.ROAM_DESTINATION_INTELLIGENCE || {};
+    const data = db[cityKey] || db['jaipur'];
+
+    if (!data) return;
+
+    // Update active location label
+    const locLabel = document.getElementById('roam-location-label');
+    if (locLabel) locLabel.textContent = `${data.name.toUpperCase()} • ${data.state.toUpperCase()} (DEMO DATA)`;
+
+    const destName = document.getElementById('roam-dest-name');
+    if (destName) destName.textContent = data.name;
+
+    const crowdBadge = document.getElementById('roam-crowd-badge');
+    if (crowdBadge) crowdBadge.textContent = data.crowdIndex;
+
+    const altTrail = document.getElementById('roam-alt-trail');
+    if (altTrail) altTrail.textContent = data.suggestedAlternative;
+
+    const incentive = document.getElementById('roam-incentive');
+    if (incentive) incentive.textContent = '🎁 Incentive: ' + data.crowdShiftingIncentive;
+
+    if (mode === 'market') {
+      const marketGrid = document.getElementById('roam-market-grid');
+      if (marketGrid) {
+        marketGrid.innerHTML = data.marketListings.map(item => `
+          <div class="intel-item-card" style="border-color:rgba(255,0,127,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.4rem;">
+              <h4 style="font-size:0.98rem; font-weight:800; color:#fff; margin:0;">${item.title}</h4>
+              <span style="font-size:0.7rem; font-weight:700; color:#ff007f; background:rgba(255,0,127,0.1); padding:0.2rem 0.5rem; border-radius:10px;">${item.category}</span>
+            </div>
+            <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.5rem;">Host: <strong style="color:#fff;">${item.host}</strong> | Rating: <span style="color:#f59e0b; font-weight:700;">${item.rating}</span></div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:1.05rem; font-weight:900; color:#10b981;">${item.price}</span>
+              <button class="visualizer-btn" style="background:linear-gradient(135deg, #ff007f, #7928ca); color:#fff; font-size:0.75rem; font-weight:800; padding:0.35rem 0.75rem; border-radius:8px;" onclick="alert('⚡ Zero-Commission Direct Guild Pass Requested for ${item.title}!');">Book Direct</button>
+            </div>
+          </div>
+        `).join('');
+      }
+    } else if (mode === 'control') {
+      const peak = document.getElementById('roam-peak-occ');
+      const offpeak = document.getElementById('roam-offpeak-forecast');
+      const disc = document.getElementById('roam-rec-disc');
+      const rev = document.getElementById('roam-rev-rec');
+
+      if (peak) peak.textContent = data.controlYield.peakOccupancy;
+      if (offpeak) offpeak.textContent = data.controlYield.offPeakForecast;
+      if (disc) disc.textContent = data.controlYield.recommendedFlashDiscount + ' OFF';
+      if (rev) rev.textContent = data.controlYield.projectedRevenueRecovery;
+    } else if (mode === 'impact') {
+      const art = document.getElementById('roam-artisans-stat');
+      const inc = document.getElementById('roam-income-stat');
+      const co2 = document.getElementById('roam-co2-stat');
+
+      if (art) art.textContent = data.impact.artisansEmpowered;
+      if (inc) inc.textContent = data.impact.ruralIncomeGenerated;
+      if (co2) co2.textContent = data.impact.co2Reduced;
+    }
+  }
+
+  function startHackathonTour() {
+    activeTourStep = 0;
+    const modal = document.getElementById('tour-90s-modal');
+    if (modal) modal.style.display = 'block';
+    renderTourStep();
+  }
+
+  function closeHackathonTour() {
+    const modal = document.getElementById('tour-90s-modal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function nextHackathonStep() {
+    const steps = window.HACKATHON_TOUR_STEPS || [];
+    if (activeTourStep < steps.length - 1) {
+      activeTourStep++;
+      renderTourStep();
+    } else {
+      closeHackathonTour();
+      alert("🎉 Hackathon Tour Complete! Explore all features on Arvora.");
+    }
+  }
+
+  function prevHackathonStep() {
+    if (activeTourStep > 0) {
+      activeTourStep--;
+      renderTourStep();
+    }
+  }
+
+  function renderTourStep() {
+    const steps = window.HACKATHON_TOUR_STEPS || [];
+    const stepData = steps[activeTourStep];
+    if (!stepData) return;
+
+    const indicator = document.getElementById('tour-step-indicator');
+    if (indicator) indicator.textContent = `STEP ${stepData.step} OF ${steps.length}`;
+
+    const progressBar = document.getElementById('tour-progress-bar');
+    if (progressBar) progressBar.style.width = `${((stepData.step) / steps.length) * 100}%`;
+
+    const contentBox = document.getElementById('tour-step-content');
+    if (contentBox) {
+      contentBox.innerHTML = `
+        <h3 style="font-size:1.15rem; font-weight:900; color:#00f3ff; margin:0 0 0.5rem 0;">${stepData.title}</h3>
+        <p style="font-size:0.88rem; color:#94a3b8; line-height:1.6; margin:0;">${stepData.desc}</p>
+      `;
+    }
+
+    if (window.setRoamMode) window.setRoamMode(stepData.targetTab);
+  }
+
+  window.setRoamMode = setRoamMode;
+  window.renderRoamModeData = renderRoamModeData;
+  window.startHackathonTour = startHackathonTour;
+  window.closeHackathonTour = closeHackathonTour;
+  window.nextHackathonStep = nextHackathonStep;
+  window.prevHackathonStep = prevHackathonStep;
+
   try {
     initTravelIntelligence();
+    renderRoamModeData('discover');
   } catch(e) {}
 
   }
