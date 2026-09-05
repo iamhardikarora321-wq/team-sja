@@ -435,155 +435,132 @@
     </div>
 
     <!-- =====================================================================
-         ROAM LIVING DESTINATION INTELLIGENCE LAYER (5 MODES)
-         ===================================================================== -->
-    <div id="tab-content-roam" class="tab-content active" style="margin-bottom:2rem;">
-      <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)); border:1px solid rgba(255,0,127,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(255,0,127,0.15);">
-        
-        <!-- Header & Dynamic Active Location Pill -->
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <div style="width:44px; height:44px; border-radius:14px; background:linear-gradient(135deg, #ff007f, #7928ca); display:flex; align-items:center; justify-content:center; font-size:1.5rem; box-shadow:0 0 18px rgba(255,0,127,0.5);">
-              <span>🧭</span>
-            </div>
-            <div>
-              <span style="font-size:0.7rem; font-weight:800; color:#ff007f; text-transform:uppercase; letter-spacing:0.12em;">ROAM • Spatial Intelligence &amp; Demand Balancer</span>
-              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:1px 0 0 0;">Bharat Spatial Tourism &amp; Destination Balancer</h2>
+     NEXORA ROAM — INDIA'S LIVING DESTINATION INTELLIGENCE LAYER
+     ===================================================================== -->
+<div id="tab-content-roam" class="tab-content active" style="margin-bottom:2.5rem;">
+  <div class="roam-platform-wrapper" style="background:linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.99)); border:1px solid rgba(0,243,255,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 45px rgba(0,243,255,0.15);">
+    
+    <!-- Hero & Hackathon Demo Header Bar -->
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+      <div style="display:flex; align-items:center; gap:0.85rem;">
+        <div style="width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg, #00f3ff, #7928ca); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 0 20px rgba(0,243,255,0.4);">
+          <span>🧭</span>
+        </div>
+        <div>
+          <span style="font-size:0.72rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.12em;">Nexora ROAM • Living Destination Intelligence Layer</span>
+          <h2 id="hero-headline-text" style="font-size:1.45rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">DON'T FOLLOW THE CROWD.</h2>
+        </div>
+      </div>
+
+      <!-- Action Buttons & Hackathon Tour Launcher -->
+      <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+        <div id="active-location-pill" style="cursor:pointer; background:rgba(0,243,255,0.1); border:1px solid rgba(0,243,255,0.4); padding:0.45rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:800; color:#00f3ff; display:flex; align-items:center; gap:0.5rem;">
+          <span class="location-indicator-dot" style="width:8px; height:8px; border-radius:50%; background:#00f3ff; box-shadow:0 0 10px #00f3ff; display:inline-block;"></span>
+          <span>JAIPUR • RAJASTHAN</span>
+        </div>
+        <button id="launch-tour-btn" class="reroute-btn" style="background:linear-gradient(135deg, #ff007f, #7928ca); border:none; color:#fff; font-weight:800; padding:0.5rem 1.1rem; border-radius:20px; font-size:0.8rem; cursor:pointer; box-shadow:0 0 15px rgba(255,0,127,0.4);" onclick="if(window.ROAM && window.ROAM.hackathonGuide) window.ROAM.hackathonGuide.start();">
+          ⚡ 90s Hackathon Demo Tour
+        </button>
+      </div>
+    </div>
+
+    <!-- 5 Nav Tab Buttons -->
+    <div style="display:flex; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+      <button class="nav-tab-btn active" data-mode="discover" onclick="if(window.ROAM) window.ROAM.switchMode('discover');">🌏 Discover</button>
+      <button class="nav-tab-btn" data-mode="explore" onclick="if(window.ROAM) window.ROAM.switchMode('explore');">🗺️ Explore &amp; Load Map</button>
+      <button class="nav-tab-btn" data-mode="market" onclick="if(window.ROAM) window.ROAM.switchMode('market');">🏪 Local Business</button>
+      <button class="nav-tab-btn" data-mode="control" onclick="if(window.ROAM) window.ROAM.switchMode('control');">🏛️ Control Center</button>
+      <button class="nav-tab-btn" data-mode="impact" onclick="if(window.ROAM) window.ROAM.switchMode('impact');">📊 Macro Impact</button>
+    </div>
+
+    <!-- Mode 1: Discover -->
+    <div id="mode-view-discover" class="mode-view active">
+      <div id="spatial-search-mount" style="margin-bottom:1.25rem;"></div>
+      <div id="place-identity-mount" style="margin-bottom:1.25rem;"></div>
+      <div id="discover-view-mount"></div>
+    </div>
+
+    <!-- Mode 2: Explore -->
+    <div id="mode-view-explore" class="mode-view" style="display:none;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+        <!-- Left: Destination Load Map SVG -->
+        <div class="card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,243,255,0.3); border-radius:18px; padding:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+            <h3 style="font-size:1.1rem; font-weight:800; color:#fff; margin:0;">🗺️ Spatial Destination Load Map</h3>
+            <div style="display:flex; gap:0.35rem;">
+              <button class="map-filter-btn active" data-filter="all">All Sites</button>
+              <button class="map-filter-btn" data-filter="critical">Overloaded (🔴)</button>
+              <button class="map-filter-btn" data-filter="optimal">Underutilized (🟢)</button>
             </div>
           </div>
+          <div id="map-canvas-container" class="map-canvas-wrap" style="height:320px; background:rgba(2,6,23,0.8); border-radius:14px; position:relative; overflow:hidden;"></div>
+        </div>
 
-          <!-- Active Location Indicator Pill -->
-          <div id="roam-active-location-pill" style="background:rgba(255,0,127,0.1); border:1px solid rgba(255,0,127,0.4); padding:0.5rem 1.1rem; border-radius:20px; font-size:0.82rem; font-weight:800; color:#ff007f; display:flex; align-items:center; gap:0.5rem;">
-            <span class="ripple-dot" style="background:#ff007f;"></span>
-            <span id="roam-location-label">JAIPUR • RAJASTHAN (LIVE SPATIAL DATA)</span>
+        <!-- Right: Intelligent Recommendations Stack -->
+        <div class="card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,0,127,0.3); border-radius:18px; padding:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 style="font-size:1.1rem; font-weight:800; color:#ff007f; margin:0;">✨ ROAM RECOMMENDS</h3>
+            <span class="badge badge-optimal" style="background:rgba(16,185,129,0.15); color:#10b981; padding:0.25rem 0.65rem; border-radius:12px; font-size:0.75rem; font-weight:800;">ALGORITHM ACTIVE</span>
           </div>
+          <div id="recommendations-stack" class="recommendation-stack"></div>
         </div>
+      </div>
 
-        <!-- Quick City Selector Chips -->
-        <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.25rem;">
-          <span style="font-size:0.75rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-right:0.25rem;">Select Destination:</span>
-          <button class="intel-chip-btn active" onclick="if(window.selectRoamCity) window.selectRoamCity('jaipur');">Jaipur</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('varanasi');">Varanasi</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('goa');">Goa</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('shimla');">Shimla</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('delhi');">Delhi</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('mumbai');">Mumbai</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('udaipur');">Udaipur</button>
-          <button class="intel-chip-btn" onclick="if(window.selectRoamCity) window.selectRoamCity('kochi');">Kochi</button>
+      <!-- Reroute Banner -->
+      <div class="reroute-banner" style="background:linear-gradient(135deg, rgba(255,0,127,0.15), rgba(121,40,202,0.25)); border:1px solid rgba(255,0,127,0.4); border-radius:18px; padding:1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <h3 style="font-size:1.1rem; font-weight:900; color:#fff; margin:0;">⚡ Attraction load warning detected</h3>
+          <p style="font-size:0.85rem; color:#94a3b8; margin:4px 0 0 0;">Click below to simulate real-time dynamic rerouting. ROAM restructures your schedule to avoid peak crowds.</p>
         </div>
+        <button id="reroute-trigger-btn" class="reroute-btn" style="background:linear-gradient(135deg, #00f3ff, #10b981); border:none; color:#020617; font-weight:900; padding:0.7rem 1.4rem; border-radius:14px; font-size:0.9rem; cursor:pointer;">
+          ⚡ REROUTE MY DAY
+        </button>
+      </div>
 
-        <!-- 5 Primary Mode Navigation Bar -->
-        <div style="display:flex; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem; margin-bottom:1.25rem; flex-wrap:wrap;">
-          <button id="roam-nav-btn-discover" class="roam-mode-btn active" onclick="if(window.setRoamMode) window.setRoamMode('discover');">🌏 Discover &amp; Congestion</button>
-          <button id="roam-nav-btn-explore" class="roam-mode-btn" onclick="if(window.setRoamMode) window.setRoamMode('explore');">🗺️ Density &amp; Distance Radar</button>
-          <button id="roam-nav-btn-market" class="roam-mode-btn" onclick="if(window.setRoamMode) window.setRoamMode('market');">🏪 Local Artisan Marketplace</button>
-          <button id="roam-nav-btn-control" class="roam-mode-btn" onclick="if(window.setRoamMode) window.setRoamMode('control');">🏛️ Hotelier Yield Center</button>
-          <button id="roam-nav-btn-impact" class="roam-mode-btn" onclick="if(window.setRoamMode) window.setRoamMode('impact');">📊 UN SDG Impact Ledger</button>
-        </div>
+      <!-- Itinerary Container -->
+      <div class="card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:1.25rem;">
+        <div id="itinerary-container"></div>
+      </div>
+    </div>
 
-        <!-- Mode 1: DISCOVER -->
-        <div id="roam-mode-pane-discover" class="roam-mode-pane">
-          <div id="roam-discover-card" class="intel-item-card" style="border-color:rgba(255,0,127,0.35); background:rgba(255,255,255,0.02);">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
-              <div>
-                <span style="font-size:0.7rem; font-weight:800; color:#ff007f; text-transform:uppercase;">Real-Time Spatial Pressure Radar</span>
-                <h3 style="font-size:1.15rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">🔥 Live Destination Congestion &amp; Demand Balancer</h3>
-              </div>
-              <span id="roam-crowd-badge" style="background:rgba(239,68,68,0.2); color:#ef4444; border:1px solid rgba(239,68,68,0.4); padding:0.35rem 0.85rem; border-radius:16px; font-size:0.8rem; font-weight:800;">High Crowd Pressure (88%)</span>
-            </div>
+    <!-- Mode 3: Market -->
+    <div id="mode-view-market" class="mode-view" style="display:none;">
+      <div id="business-mode-container"></div>
+    </div>
 
-            <p style="font-size:0.88rem; color:#94a3b8; line-height:1.55; margin-bottom:1.1rem;">
-              Famous hotspots in <strong id="roam-dest-name" style="color:#fff;">Jaipur</strong> are currently experiencing high tourist congestion. ROAM intelligently redirects travelers to vibrant local craft villages to eliminate long queues and support rural artisan livelihoods.
-            </p>
+    <!-- Mode 4: Control -->
+    <div id="mode-view-control" class="mode-view" style="display:none;">
+      <div id="authority-mode-container"></div>
+    </div>
 
-            <div style="background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(6,78,59,0.2)); border:1px solid rgba(16,185,129,0.4); border-radius:16px; padding:1.1rem; margin-bottom:1.1rem;">
-              <div style="font-size:0.75rem; font-weight:800; color:#10b981; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.35rem;">✨ Recommended Uncrowded Heritage Alternative:</div>
-              <div id="roam-alt-trail" style="font-size:1.08rem; font-weight:900; color:#ffffff; margin-bottom:0.4rem;">Sanganer Hand-Block Print Village &amp; Nahargarh Sunrise Trail</div>
-              <div id="roam-incentive" style="font-size:0.85rem; color:#a7f3d0; font-weight:700;">🎁 Incentive: Save 35% on Artisanal Guild Passes + Free Entry to Sanganer Museum</div>
-            </div>
+    <!-- Mode 5: Impact -->
+    <div id="mode-view-impact" class="mode-view" style="display:none;">
+      <div id="difference-section-container" style="margin-bottom:1.5rem;"></div>
+      <div id="calc-section-container"></div>
+    </div>
 
-            <!-- Detailed Transport & Time Comparison -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.75rem;">
-              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:0.75rem; border-radius:12px;">
-                <span style="font-size:0.7rem; color:#94a3b8; font-weight:700;">🚗 E-AUTO / TAXI</span>
-                <div style="font-size:0.92rem; font-weight:800; color:#fff; margin-top:0.2rem;">18 Mins (₹120)</div>
-              </div>
-              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:0.75rem; border-radius:12px;">
-                <span style="font-size:0.7rem; color:#94a3b8; font-weight:700;">🚌 HERITAGE SHUTTLE</span>
-                <div style="font-size:0.92rem; font-weight:800; color:#10b981; margin-top:0.2rem;">25 Mins (₹20)</div>
-              </div>
-              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:0.75rem; border-radius:12px;">
-                <span style="font-size:0.7rem; color:#94a3b8; font-weight:700;">🚴 ECO-BIKE TRAIL</span>
-                <div style="font-size:0.92rem; font-weight:800; color:#00f3ff; margin-top:0.2rem;">30 Mins (₹40)</div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- Three-Sided Value Proposition -->
+    <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.1); display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+      <div class="card" style="background:rgba(255,255,255,0.02); border-top:3px solid #00f3ff; border-radius:14px; padding:1.1rem;">
+        <div style="font-size:1.5rem; margin-bottom:0.4rem;">🎒</div>
+        <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin-bottom:0.35rem;">Tourists</h3>
+        <p style="font-size:0.83rem; color:#94a3b8; line-height:1.45; margin:0;">Discover authentic uncrowded wonders, skip 60-min queues, save costs, and experience deeper culture.</p>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.02); border-top:3px solid #ff007f; border-radius:14px; padding:1.1rem;">
+        <div style="font-size:1.5rem; margin-bottom:0.4rem;">🏪</div>
+        <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin-bottom:0.35rem;">Local Businesses</h3>
+        <p style="font-size:0.83rem; color:#94a3b8; line-height:1.45; margin:0;">Capture high-intent travelers diverted directly to your door, gain visibility, and grow artisan revenue.</p>
+      </div>
+      <div class="card" style="background:rgba(255,255,255,0.02); border-top:3px solid #10b981; border-radius:14px; padding:1.1rem;">
+        <div style="font-size:1.5rem; margin-bottom:0.4rem;">🏛️</div>
+        <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin-bottom:0.35rem;">Destination Authorities</h3>
+        <p style="font-size:0.83rem; color:#94a3b8; line-height:1.45; margin:0;">Protect centuries-old monuments from wear, balance transit corridors, and build sustainable economic growth.</p>
+      </div>
+    </div>
 
-        <!-- Mode 2: EXPLORE -->
-        <div id="roam-mode-pane-explore" class="roam-mode-pane" style="display:none;">
-          <div id="roam-explore-card" class="intel-item-card" style="border-color:rgba(16,185,129,0.35); background:rgba(255,255,255,0.02);">
-            <h3 style="font-size:1.15rem; font-weight:900; color:#10b981; margin:0 0 0.85rem 0;">🗺️ Spatial Density &amp; Heritage Layer Map Explorer</h3>
-            
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.1rem;">
-              <div style="background:rgba(239,68,68,0.08); padding:1rem; border-radius:14px; border:1px solid rgba(239,68,68,0.25);">
-                <div style="font-size:0.75rem; color:#ef4444; font-weight:800; letter-spacing:0.05em;">🔴 HIGH DENSITY CONGESTION HUBS</div>
-                <div id="roam-high-hubs" style="font-size:0.95rem; color:#fff; font-weight:800; margin-top:0.35rem; line-height:1.4;">Amer Fort, Hawa Mahal, Johari Bazaar</div>
-                <div style="font-size:0.75rem; color:#f87171; margin-top:0.35rem;">Wait Time: 45-60 mins</div>
-              </div>
+  </div>>
 
-              <div style="background:rgba(16,185,129,0.08); padding:1rem; border-radius:14px; border:1px solid rgba(16,185,129,0.25);">
-                <div style="font-size:0.75rem; color:#10b981; font-weight:800; letter-spacing:0.05em;">🟢 UNCROWDED HERITAGE TRAILS</div>
-                <div id="roam-low-hubs" style="font-size:0.95rem; color:#fff; font-weight:800; margin-top:0.35rem; line-height:1.4;">Sanganer Village, Bagru Weavers, Galta Ji</div>
-                <div style="font-size:0.75rem; color:#34d399; margin-top:0.35rem;">Wait Time: 0 mins (Instant Pass)</div>
-              </div>
-            </div>
-
-            <div style="background:rgba(0,243,255,0.05); border:1px solid rgba(0,243,255,0.2); padding:0.85rem; border-radius:12px; font-size:0.83rem; color:#94a3b8; display:flex; align-items:center; gap:0.5rem;">
-              <span style="font-size:1.1rem; color:#00f3ff;">⚡</span>
-              <span>Sub-0.05ms Radix Trie spatial indexing active across all 36 Indian States &amp; UTs.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mode 3: MARKET -->
-        <div id="roam-mode-pane-market" class="roam-mode-pane" style="display:none;">
-          <div id="roam-market-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-              <h3 style="font-size:1.15rem; font-weight:900; color:#ff007f; margin:0;">🏪 Direct Local Guild &amp; Homestay Marketplace (0% Commission)</h3>
-              <span style="font-size:0.75rem; font-weight:800; color:#10b981; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:0.25rem 0.65rem; border-radius:12px;">Verified Artisan Guilds</span>
-            </div>
-            <div id="roam-market-grid" class="intel-card-grid"></div>
-          </div>
-        </div>
-
-        <!-- Mode 4: CONTROL -->
-        <div id="roam-mode-pane-control" class="roam-mode-pane" style="display:none;">
-          <div id="roam-control-card" class="intel-item-card" style="border-color:rgba(0,243,255,0.35); background:rgba(255,255,255,0.02);">
-            <h3 style="font-size:1.15rem; font-weight:900; color:#00f3ff; margin:0 0 0.9rem 0;">🏛️ Hotelier &amp; Tourism Authority Yield Command Center</h3>
-            
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:1.1rem;">
-              <div style="background:rgba(255,255,255,0.03); padding:1rem; border-radius:14px; border:1px solid rgba(0,243,255,0.2);">
-                <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">PEAK OCCUPANCY</div>
-                <div id="roam-peak-occ" style="font-size:1.3rem; font-weight:900; color:#00f3ff; margin-top:0.25rem;">94%</div>
-              </div>
-              <div style="background:rgba(255,255,255,0.03); padding:1rem; border-radius:14px; border:1px solid rgba(255,0,127,0.2);">
-                <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">OFF-PEAK FORECAST</div>
-                <div id="roam-offpeak-forecast" style="font-size:1.3rem; font-weight:900; color:#ff007f; margin-top:0.25rem;">48%</div>
-              </div>
-              <div style="background:rgba(255,255,255,0.03); padding:1rem; border-radius:14px; border:1px solid rgba(16,185,129,0.2);">
-                <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">FLASH DISCOUNT</div>
-                <div id="roam-rec-disc" style="font-size:1.3rem; font-weight:900; color:#10b981; margin-top:0.25rem;">28% OFF</div>
-              </div>
-            </div>
-
-            <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:14px; padding:0.9rem; font-size:0.88rem; color:#a7f3d0; font-weight:800;">
-              💰 Projected Monthly Revenue Recovery: <span id="roam-rev-rec" style="color:#fff; font-weight:900;">₹3,45,000 / month</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Mode 5: IMPACT -->
+<!-- Mode 5: IMPACT -->
         <div id="roam-mode-pane-impact" class="roam-mode-pane" style="display:none;">
           <div id="roam-impact-card" class="intel-item-card" style="border-color:rgba(16,185,129,0.35); background:rgba(255,255,255,0.02);">
             <h3 style="font-size:1.15rem; font-weight:900; color:#10b981; margin:0 0 0.9rem 0;">📊 UN Sustainable Tourism Impact Ledger (SDG 8 &amp; 11)</h3>
@@ -610,8 +587,9 @@
           </div>
         </div>
 
-      </div>
-    </div>id="tab-content-engine" class="tab-content active">
+      
+
+id="tab-content-engine" class="tab-content active">
       <div class="dashboard-grid">
         
         <!-- Left Column: Search & Benchmarks -->

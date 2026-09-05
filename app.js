@@ -26080,3 +26080,3345 @@ setTimeout(init3DParallax, 300);
   } catch(e) {}
 }
 })();
+
+
+
+/* =====================================================================
+   NEXORA ROAM — INDIA'S LIVING DESTINATION INTELLIGENCE PLATFORM
+   COMPLETE ENGINE BUNDLE (Simulator, Load Map, Reroute Engine, 
+   Business Telemetry, Authority Control Center, Impact Calculator & Guide)
+   ===================================================================== */
+
+(function() {
+  /**
+ * ROAM — Location Visual Identity System
+ * Atmospheric Palettes & Architectural Silhouettes (sitting at 5–15% opacity)
+ */
+
+const LOCATION_THEMES = {
+  jaipur: {
+    id: 'jaipur',
+    name: 'Jaipur',
+    colors: {
+      bg: '#0f0a0d',
+      bgSurface: '#160f14',
+      bgCard: '#1d141b',
+      bgElevated: '#271b25',
+      accent: '#f472b6',        // Rose pink
+      accentSoft: 'rgba(244, 114, 182, 0.12)',
+      accentBorder: 'rgba(244, 114, 182, 0.35)',
+      activeGlow: 'rgba(244, 114, 182, 0.25)',
+      textPrimary: '#fcfaf7',
+      textSecondary: '#a89aa5',
+      mapGlow: 'rgba(244, 114, 182, 0.18)'
+    },
+    atmosphere: 'Dusty Rose • Terracotta Sandstone • Royal Rajputana',
+    silhouetteSvg: `
+      <!-- Hawa Mahal Honeycomb Jharokhas Silhouette -->
+      <g opacity="0.09" stroke="#f472b6" stroke-width="1.5" fill="none">
+        <path d="M 400,600 L 400,320 Q 400,300 420,300 L 580,300 Q 600,300 600,320 L 600,600 Z" />
+        <path d="M 440,300 L 440,240 Q 440,220 460,220 L 540,220 Q 560,220 560,240 L 560,300" />
+        <path d="M 470,220 L 470,180 Q 470,165 485,165 L 515,165 Q 530,165 530,180 L 530,220" />
+        <!-- Jharokha window arches -->
+        <path d="M 430,360 C 430,340 470,340 470,360 L 470,400 L 430,400 Z" />
+        <path d="M 530,360 C 530,340 570,340 570,360 L 570,400 L 530,400 Z" />
+        <path d="M 480,350 C 480,330 520,330 520,350 L 520,390 L 480,390 Z" />
+        <!-- Rampart battlements -->
+        <path d="M 150,550 Q 250,500 350,530 T 550,500 T 750,530 T 950,500" stroke-width="2" />
+        <circle cx="500" cy="150" r="8" fill="#f472b6" opacity="0.12" />
+      </g>
+    `
+  },
+  varanasi: {
+    id: 'varanasi',
+    name: 'Varanasi',
+    colors: {
+      bg: '#070a13',
+      bgSurface: '#0d1222',
+      bgCard: '#13192f',
+      bgElevated: '#1a223e',
+      accent: '#f59e0b',        // Sacred Saffron
+      accentSoft: 'rgba(245, 158, 11, 0.12)',
+      accentBorder: 'rgba(245, 158, 11, 0.35)',
+      activeGlow: 'rgba(245, 158, 11, 0.25)',
+      textPrimary: '#faf8f4',
+      textSecondary: '#94a0b8',
+      mapGlow: 'rgba(245, 158, 11, 0.18)'
+    },
+    atmosphere: 'Sacred Saffron • Deep River Indigo • Ancient Temples',
+    silhouetteSvg: `
+      <!-- Varanasi River Ghats & Temple Spires Silhouette -->
+      <g opacity="0.10" stroke="#f59e0b" stroke-width="1.5" fill="none">
+        <!-- River surface waves -->
+        <path d="M 50,580 Q 200,570 350,585 T 650,575 T 950,585" stroke-width="2" />
+        <path d="M 80,600 Q 250,590 420,605 T 720,595 T 980,605" stroke-width="1.5" />
+        <!-- Ghat stone steps -->
+        <path d="M 120,560 L 220,560 L 220,520 L 320,520 L 320,480 L 420,480" />
+        <!-- Temple Shikhara Spires -->
+        <path d="M 450,480 L 480,240 Q 485,220 490,240 L 520,480 Z" />
+        <path d="M 540,490 L 565,280 Q 570,265 575,280 L 600,490 Z" />
+        <path d="M 370,500 L 390,320 Q 395,305 400,320 L 420,500 Z" />
+        <!-- Wooden Riverboat -->
+        <path d="M 680,560 Q 740,580 800,560 L 780,545 L 700,545 Z" fill="#f59e0b" opacity="0.06" />
+        <line x1="740" y1="545" x2="740" y2="490" stroke-width="1.5" />
+      </g>
+    `
+  },
+  mumbai: {
+    id: 'mumbai',
+    name: 'Mumbai',
+    colors: {
+      bg: '#070c12',
+      bgSurface: '#0d1620',
+      bgCard: '#131e2c',
+      bgElevated: '#1a283b',
+      accent: '#38bdf8',        // Marine Sky / Coastal Amber
+      accentSoft: 'rgba(56, 189, 248, 0.12)',
+      accentBorder: 'rgba(56, 189, 248, 0.35)',
+      activeGlow: 'rgba(56, 189, 248, 0.25)',
+      textPrimary: '#f7faff',
+      textSecondary: '#94a5b8',
+      mapGlow: 'rgba(56, 189, 248, 0.18)'
+    },
+    atmosphere: 'Coastal Midnight • Marine Horizon • Victorian Deco',
+    silhouetteSvg: `
+      <!-- Gateway of India & Coastal Skyline Silhouette -->
+      <g opacity="0.10" stroke="#38bdf8" stroke-width="1.5" fill="none">
+        <!-- Gateway Arch Pillar -->
+        <path d="M 380,560 L 380,320 L 420,320 L 420,560" />
+        <path d="M 580,560 L 580,320 L 620,320 L 620,560" />
+        <!-- Central Romanesque Arch -->
+        <path d="M 420,440 C 420,340 580,340 580,440 L 580,560 L 420,560 Z" />
+        <!-- Dome & Turrets -->
+        <path d="M 440,320 C 440,240 560,240 560,320" />
+        <circle cx="500" cy="240" r="10" />
+        <!-- Marine Drive C-Curve -->
+        <path d="M 100,580 Q 260,540 380,560 T 700,550 T 920,580" stroke-width="2" />
+        <!-- Skyline towers -->
+        <rect x="740" y="380" width="30" height="180" />
+        <rect x="780" y="340" width="35" height="220" />
+        <rect x="830" y="410" width="28" height="150" />
+      </g>
+    `
+  },
+  kochi: {
+    id: 'kochi',
+    name: 'Kochi',
+    colors: {
+      bg: '#050f0c',
+      bgSurface: '#0a1a15',
+      bgCard: '#102620',
+      bgElevated: '#17342b',
+      accent: '#10b981',        // Emerald Palms
+      accentSoft: 'rgba(16, 185, 129, 0.12)',
+      accentBorder: 'rgba(16, 185, 129, 0.35)',
+      activeGlow: 'rgba(16, 185, 129, 0.25)',
+      textPrimary: '#f7faf8',
+      textSecondary: '#94b8aa',
+      mapGlow: 'rgba(16, 185, 129, 0.18)'
+    },
+    atmosphere: 'Deep Emerald • Arabian Sea Estuary • Spice Heritage',
+    silhouetteSvg: `
+      <!-- Chinese Fishing Nets & Coconut Canopy Silhouette -->
+      <g opacity="0.10" stroke="#10b981" stroke-width="1.5" fill="none">
+        <!-- Cantilevered Fishing Net Arms -->
+        <line x1="260" y1="560" x2="480" y2="300" stroke-width="2" />
+        <line x1="480" y1="300" x2="620" y2="440" stroke-width="2" />
+        <line x1="480" y1="300" x2="400" y2="520" />
+        <path d="M 400,520 Q 510,540 620,440" stroke-width="1.5" />
+        <line x1="260" y1="560" x2="210" y2="460" stroke-width="2" />
+        <!-- Counterweights hanging -->
+        <circle cx="210" cy="470" r="8" fill="#10b981" opacity="0.15" />
+        <circle cx="205" cy="490" r="10" fill="#10b981" opacity="0.15" />
+        <!-- Water ripple lines -->
+        <path d="M 80,590 Q 300,575 520,595 T 920,585" stroke-width="2" />
+      </g>
+    `
+  },
+  leh: {
+    id: 'leh',
+    name: 'Leh Ladakh',
+    colors: {
+      bg: '#080c14',
+      bgSurface: '#0e1422',
+      bgCard: '#151d30',
+      bgElevated: '#1e2942',
+      accent: '#38bdf8',        // Glacier Ice / Cold Gold
+      accentSoft: 'rgba(56, 189, 248, 0.12)',
+      accentBorder: 'rgba(56, 189, 248, 0.35)',
+      activeGlow: 'rgba(56, 189, 248, 0.25)',
+      textPrimary: '#f8faff',
+      textSecondary: '#94a5be',
+      mapGlow: 'rgba(56, 189, 248, 0.18)'
+    },
+    atmosphere: 'Cold Alpine Stone • Glacier Blue • High Himalayan Passes',
+    silhouetteSvg: `
+      <!-- High Himalayan Ridges & Thiksey Monastery Silhouette -->
+      <g opacity="0.10" stroke="#38bdf8" stroke-width="1.5" fill="none">
+        <!-- Mountain peaks -->
+        <path d="M 50,560 L 220,260 L 380,440 L 520,180 L 680,410 L 850,220 L 980,560" stroke-width="2" />
+        <!-- Tiered monastery suites -->
+        <rect x="470" y="380" width="60" height="25" />
+        <rect x="480" y="350" width="40" height="20" />
+        <rect x="490" y="325" width="20" height="15" />
+        <!-- Stupa Dome -->
+        <path d="M 280,460 C 280,420 320,420 320,460 Z" />
+        <line x1="300" y1="420" x2="300" y2="390" stroke-width="2" />
+      </g>
+    `
+  },
+  delhi: {
+    id: 'delhi',
+    name: 'Delhi',
+    colors: {
+      bg: '#0f0a0a',
+      bgSurface: '#171010',
+      bgCard: '#211717',
+      bgElevated: '#2d1f1f',
+      accent: '#ef4444',        // Red Sandstone
+      accentSoft: 'rgba(239, 68, 68, 0.12)',
+      accentBorder: 'rgba(239, 68, 68, 0.35)',
+      activeGlow: 'rgba(239, 68, 68, 0.25)',
+      textPrimary: '#fcf8f8',
+      textSecondary: '#a89898',
+      mapGlow: 'rgba(239, 68, 68, 0.18)'
+    },
+    atmosphere: 'Red Sandstone • Imperial History • Grand Gateways',
+    silhouetteSvg: `
+      <!-- India Gate & Qutub Minar Silhouette -->
+      <g opacity="0.10" stroke="#ef4444" stroke-width="1.5" fill="none">
+        <!-- India Gate Arch -->
+        <rect x="360" y="240" width="280" height="320" rx="8" />
+        <path d="M 420,560 L 420,380 C 420,300 580,300 580,380 L 580,560" />
+        <path d="M 330,240 L 670,240 L 650,210 L 350,210 Z" />
+        <!-- Qutub Minar Minaret -->
+        <path d="M 780,560 L 805,160 L 825,160 L 850,560 Z" />
+        <line x1="790" y1="460" x2="840" y2="460" stroke-width="2" />
+        <line x1="795" y1="360" x2="835" y2="360" stroke-width="2" />
+        <line x1="800" y1="260" x2="830" y2="260" stroke-width="2" />
+      </g>
+    `
+  },
+  default: {
+    id: 'india',
+    name: 'India',
+    colors: {
+      bg: '#08090c',
+      bgSurface: '#0e1117',
+      bgCard: '#141822',
+      bgElevated: '#1a202e',
+      accent: '#c8ff32',        // Chartreuse / Lime
+      accentSoft: 'rgba(200, 255, 50, 0.12)',
+      accentBorder: 'rgba(200, 255, 50, 0.35)',
+      activeGlow: 'rgba(200, 255, 50, 0.25)',
+      textPrimary: '#f4f3ee',
+      textSecondary: '#a1a09a',
+      mapGlow: 'rgba(200, 255, 50, 0.18)'
+    },
+    atmosphere: 'Spatial Demand Intelligence • India Sovereign Grid',
+    silhouetteSvg: `
+      <!-- Spatial Grid Lines -->
+      <g opacity="0.05" stroke="#c8ff32" stroke-width="1" fill="none">
+        <circle cx="500" cy="350" r="180" />
+        <circle cx="500" cy="350" r="320" />
+        <line x1="0" y1="350" x2="1000" y2="350" stroke-dasharray="4 8" />
+        <line x1="500" y1="0" x2="500" y2="700" stroke-dasharray="4 8" />
+      </g>
+    `
+  }
+};
+
+  /**
+ * ROAM — Jaipur Destination Intelligence
+ * Full Intelligence Tier: 12 Attractions, 4 Businesses, Cultural DNA
+ */
+
+const JAIPUR_DATA = {
+  id: 'jaipur',
+  name: 'Jaipur',
+  type: 'CITY',
+  state: 'Rajasthan',
+  district: 'Jaipur',
+  region: 'NORTH',
+  culturalRegion: 'Dhundhar & Shekhawati Gateway',
+  tagline: 'The Pink City',
+  intelligenceTier: 'FULL',
+  heroCopy: {
+    headline: 'THE PINK CITY HAS A FLOW.',
+    subheadline: 'ROAM detected 3 severely congested monuments and 7 tranquil, high-quality surrogates across the Dhundhar corridor.',
+    overloadedCount: 3,
+    underutilizedCount: 7
+  },
+  metrics: {
+    totalDailyTourists: 48500,
+    averageAttractionLoad: 64,
+    visitorConcentration: 82, // % in top 3 sites
+    tourismDistributionStatus: 'Critical Concentration',
+    localBusinessOpportunity: 'High Opportunity',
+    monumentsAtRisk: 3,
+    avgWaitTimeMinutes: 42,
+    localEconomyCapturePct: 14
+  },
+  culturalDNA: {
+    knownFor: [
+      'Royal Rajput Architecture & Symmetrical Havelis',
+      'Hand-Block Printing & Natural Vegetable Dyes',
+      'Kundan & Meenakari Gem Jewellery',
+      'UNESCO World Heritage Walled City Plan'
+    ],
+    taste: [
+      'Pyaaz Ki Kachori (Deep fried spiced onion pastry)',
+      'Dal Baati Churma with Ghee & Garlic Chutney',
+      'Laal Maas (Slow cooked mutton in Mathania chilies)',
+      'Ghewar & Mawa Kachori'
+    ],
+    landscape: [
+      'Rugged Aravalli Mountain Ridges',
+      'Pink Sandstone Fortified Basins',
+      'Stepwells (Kunds) & Man-made Reservoirs'
+    ],
+    festivals: [
+      'Gangaur Festival (Royal procession of Goddess Gauri)',
+      'Teej Festival (Monsoon swings and folk dances)',
+      'Jaipur Literature Festival (Diggi Palace)'
+    ]
+  },
+  attractions: [
+    {
+      id: 'amber-fort',
+      name: 'Amber Fort',
+      category: 'heritage',
+      coords: { x: 550, y: 110, lat: 26.9855, lng: 75.8513 },
+      capacityMax: 5000,
+      currentVisitors: 4700,
+      loadPercentage: 94,
+      status: 'critical',
+      averageVisitMinutes: 150,
+      entryFeeINR: 500,
+      currentWaitMinutes: 65,
+      openHours: '08:00 — 17:30',
+      description: 'Opulent hillside fort-palace renowned for mirror-mosaic Sheesh Mahal and Rajput-Mughal ramparts.',
+      whyCongested: 'Tour bus convoys converge at Suraj Pol between 09:30 and 11:30 AM; single-file ticketing ramps create a 65-minute queue.',
+      roamResponse: 'Redirect demand toward Albert Hall Museum (34% load, 0m wait) and Panna Meena Ka Kund stepwell (18% load, 5 min north).',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'albert-hall',
+      secondaryAlternativeId: 'panna-meena',
+      nearbyBusinessIds: ['anokhi-handblock', 'amer-rooftop-pottery']
+    },
+    {
+      id: 'hawa-mahal',
+      name: 'Hawa Mahal',
+      category: 'heritage',
+      coords: { x: 510, y: 390, lat: 26.9239, lng: 75.8267 },
+      capacityMax: 2500,
+      currentVisitors: 2275,
+      loadPercentage: 91,
+      status: 'critical',
+      averageVisitMinutes: 50,
+      entryFeeINR: 200,
+      currentWaitMinutes: 45,
+      openHours: '09:00 — 17:00',
+      description: 'Iconic 5-story pink honeycomb palace with 953 jharokhas built for royal women to view city processions.',
+      whyCongested: 'Sireh Deori street curbside parking bottlenecks tour vans; narrow interior spiral stairs limit throughput to 12 persons/min.',
+      roamResponse: 'Reroute visitors to Royal Gaitor Cenotaphs (26% load, pristine carved marble chhatris in peaceful canyon).',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'royal-gaitor',
+      secondaryAlternativeId: 'sisodia-rani',
+      nearbyBusinessIds: ['rajasthan-handicraft', 'wind-view-tea']
+    },
+    {
+      id: 'city-palace',
+      name: 'City Palace',
+      category: 'heritage',
+      coords: { x: 480, y: 340, lat: 26.9258, lng: 75.8236 },
+      capacityMax: 4000,
+      currentVisitors: 3120,
+      loadPercentage: 78,
+      status: 'elevated',
+      averageVisitMinutes: 110,
+      entryFeeINR: 700,
+      currentWaitMinutes: 40,
+      openHours: '09:30 — 17:00',
+      description: 'Royal residence showcasing fusion of European and Rajput architecture with vast armory and museum courtyards.',
+      whyCongested: 'Midday group ticket counters create bottlenecks in Mubarak Mahal courtyard before dispersing into private museums.',
+      roamResponse: 'Shift schedule to 14:30 afternoon window; explore Sisodia Rani Garden during midday heat.',
+      crowdTrend: 'rising',
+      pairedAlternativeId: 'sisodia-rani',
+      secondaryAlternativeId: 'kishanpole-crafts',
+      nearbyBusinessIds: ['laxmi-misthan', 'kishanpole-crafts']
+    },
+    {
+      id: 'jantar-mantar',
+      name: 'Jantar Mantar',
+      category: 'heritage',
+      coords: { x: 495, y: 360, lat: 26.9248, lng: 75.8246 },
+      capacityMax: 2500,
+      currentVisitors: 1850,
+      loadPercentage: 74,
+      status: 'elevated',
+      averageVisitMinutes: 60,
+      entryFeeINR: 200,
+      currentWaitMinutes: 30,
+      openHours: '09:00 — 16:30',
+      description: 'UNESCO World Heritage 18th-century astronomical observatory housing the world largest stone sundial.',
+      whyCongested: 'Unshaded stone courtyard gets crowded rapidly before noon.',
+      roamResponse: 'Recommend Anokhi Museum of Hand Printing for shaded indoor cultural discovery.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: 'anokhi-museum',
+      secondaryAlternativeId: 'galta-ji',
+      nearbyBusinessIds: ['rajasthan-handicraft', 'laxmi-misthan']
+    },
+    {
+      id: 'nahargarh-fort',
+      name: 'Nahargarh Fort',
+      category: 'nature',
+      coords: { x: 420, y: 220, lat: 26.9372, lng: 75.8157 },
+      capacityMax: 3000,
+      currentVisitors: 2040,
+      loadPercentage: 68,
+      status: 'elevated',
+      averageVisitMinutes: 90,
+      entryFeeINR: 200,
+      currentWaitMinutes: 25,
+      openHours: '10:00 — 22:00',
+      description: 'Rugged Aravalli ridge fort providing sweeping panoramic views of the entire Jaipur city basin.',
+      whyCongested: 'Sunset car convoys bottleneck the narrow 6km ghat road up from Nahargarh gate.',
+      roamResponse: 'Visit Galta Ji mountain temple during sunset or Nahargarh in early morning tranquility.',
+      crowdTrend: 'rising',
+      pairedAlternativeId: 'galta-ji',
+      secondaryAlternativeId: 'royal-gaitor',
+      nearbyBusinessIds: ['padao-cafe', 'amer-rooftop-pottery']
+    },
+    {
+      id: 'albert-hall',
+      name: 'Albert Hall Museum',
+      category: 'museum',
+      coords: { x: 470, y: 550, lat: 26.9116, lng: 75.8195 },
+      capacityMax: 2800,
+      currentVisitors: 952,
+      loadPercentage: 34,
+      status: 'optimal',
+      averageVisitMinutes: 75,
+      entryFeeINR: 300,
+      currentWaitMinutes: 0,
+      openHours: '09:00 — 17:00 & 19:00 — 22:00',
+      description: 'Oldest state museum housed in majestic Indo-Saracenic building with exquisite metal art, carpets, and Egyptian antiquities.',
+      whyCongested: 'Underutilized gem. Wide marble corridors effortlessly absorb hundreds of visitors without queueing.',
+      roamResponse: 'Optimal primary destination. Pair with Jaipur Blue Pottery studio next door.',
+      crowdTrend: 'easing',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'amber-fort',
+      nearbyBusinessIds: ['ram-niwas-tea', 'jaipur-blue-pottery']
+    },
+    {
+      id: 'panna-meena',
+      name: 'Panna Meena Ka Kund',
+      category: 'heritage',
+      coords: { x: 610, y: 130, lat: 26.9892, lng: 75.8564 },
+      capacityMax: 1200,
+      currentVisitors: 216,
+      loadPercentage: 18,
+      status: 'optimal',
+      averageVisitMinutes: 40,
+      entryFeeINR: 0,
+      currentWaitMinutes: 0,
+      openHours: '07:00 — 18:00',
+      description: '16th-century geometric stepwell featuring criss-cross interlocking staircases and peaceful temple pavilions.',
+      whyCongested: 'Serene & tranquil. Only 5 minutes from Amber Fort yet receives less than 5% of its tourist volume.',
+      roamResponse: 'Prime crowd-relief stop. Free entry, incredible geometry.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'amber-fort',
+      nearbyBusinessIds: ['anokhi-handblock', 'amer-rooftop-pottery']
+    },
+    {
+      id: 'anokhi-museum',
+      name: 'Anokhi Museum of Hand Printing',
+      category: 'art',
+      coords: { x: 580, y: 120, lat: 26.9881, lng: 75.8538 },
+      capacityMax: 1000,
+      currentVisitors: 290,
+      loadPercentage: 29,
+      status: 'optimal',
+      averageVisitMinutes: 60,
+      entryFeeINR: 100,
+      currentWaitMinutes: 0,
+      openHours: '10:30 — 17:00 (Closed Mondays)',
+      description: 'Restored royal haveli dedicated to preserving traditional block-carving and hand-block textile printing heritage.',
+      whyCongested: 'Boutique craft haven. Live master block-carvers demonstrate in courtyard with zero rush.',
+      roamResponse: 'Top cultural surrogate for textiles and heritage craft.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'jantar-mantar',
+      nearbyBusinessIds: ['anokhi-handblock', 'amer-rooftop-pottery']
+    },
+    {
+      id: 'sisodia-rani',
+      name: 'Sisodia Rani Palace & Garden',
+      category: 'nature',
+      coords: { x: 680, y: 460, lat: 26.8953, lng: 75.8694 },
+      capacityMax: 1500,
+      currentVisitors: 330,
+      loadPercentage: 22,
+      status: 'optimal',
+      averageVisitMinutes: 60,
+      entryFeeINR: 100,
+      currentWaitMinutes: 0,
+      openHours: '08:00 — 18:00',
+      description: 'Terraced tiered garden built in 1728 with cascading fountain canals, painted pavilions of Radha-Krishna murals, and lush woods.',
+      whyCongested: 'Tranquil terraced water garden 8km east of old city. Ideal midday relief.',
+      roamResponse: 'Restful alternative for couples and families.',
+      crowdTrend: 'easing',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'city-palace',
+      nearbyBusinessIds: ['sanganer-paper-mills', 'jaipur-blue-pottery']
+    },
+    {
+      id: 'royal-gaitor',
+      name: 'Royal Gaitor Tumbas (Cenotaphs)',
+      category: 'heritage',
+      coords: { x: 440, y: 280, lat: 26.9404, lng: 75.8239 },
+      capacityMax: 1400,
+      currentVisitors: 364,
+      loadPercentage: 26,
+      status: 'optimal',
+      averageVisitMinutes: 50,
+      entryFeeINR: 50,
+      currentWaitMinutes: 0,
+      openHours: '09:00 — 17:00',
+      description: 'Intricately carved white marble chhatri cenotaphs of Kachwaha Rajput rulers in a peaceful gorge below Nahargarh.',
+      whyCongested: 'Hidden valley setting keeps big tour coaches away. Exquisite hand-chiseled marble columns.',
+      roamResponse: 'Surpasses Hawa Mahal for intimate architectural appreciation.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'hawa-mahal',
+      nearbyBusinessIds: ['rajasthan-handicraft', 'padao-cafe']
+    },
+    {
+      id: 'galta-ji',
+      name: 'Galta Ji Temple & Natural Springs',
+      category: 'nature',
+      coords: { x: 690, y: 380, lat: 26.9156, lng: 75.8647 },
+      capacityMax: 2000,
+      currentVisitors: 500,
+      loadPercentage: 25,
+      status: 'optimal',
+      averageVisitMinutes: 70,
+      entryFeeINR: 0,
+      currentWaitMinutes: 0,
+      openHours: '05:00 — 21:00',
+      description: 'Historic prehistoric temple complex nestled inside narrow mountain pass with 7 holy water kunds and monkey sanctuary.',
+      whyCongested: 'Dramatic gorge walk with natural spring pools; best early morning or sunset.',
+      roamResponse: 'Adventure and spiritual heritage alternative.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'nahargarh-fort',
+      nearbyBusinessIds: ['sanganer-paper-mills', 'wind-view-tea']
+    },
+    {
+      id: 'chand-baori',
+      name: 'Chand Baori & Abhaneri',
+      category: 'heritage',
+      coords: { x: 740, y: 190, lat: 27.0071, lng: 76.6063 },
+      capacityMax: 1800,
+      currentVisitors: 342,
+      loadPercentage: 19,
+      status: 'optimal',
+      averageVisitMinutes: 80,
+      entryFeeINR: 150,
+      currentWaitMinutes: 0,
+      openHours: '07:00 — 18:00',
+      description: 'One of the deepest and largest stepwells in the world: 3,500 narrow steps descending 13 stories with mesmerizing optical rhythm.',
+      whyCongested: 'Excursion distance (85km) filters casual crowds, ensuring deep heritage focus.',
+      roamResponse: 'Bucket-list architectural alternative for dedicated heritage travelers.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'amber-fort',
+      nearbyBusinessIds: ['sanganer-paper-mills', 'jaipur-blue-pottery']
+    }
+  ],
+  localBusinesses: [
+    {
+      id: 'rajasthan-handicraft',
+      name: 'Rajasthan Handicraft Studio',
+      owner: 'Govind Narain & Family (3rd Gen Artisans)',
+      category: 'handicraft',
+      zone: 'Sireh Deori Artisan Lane',
+      coords: { x: 530, y: 405, lat: 26.9231, lng: 75.8278 },
+      distanceToHotspotKm: 0.3,
+      touristsNearby: 2430,
+      potentialVisitorsToday: 340,
+      currentZoneSharePct: 12,
+      popularZoneSharePct: 71,
+      opportunityText: 'High tourist concentration (2,275 visitors) is currently 300m away at Hawa Mahal. Travelers seeking textiles & miniature art are waiting in line.',
+      recommendedAction: 'Dispatch ROAM alternative cultural pulse offer: Free chai & 15-minute handloom weaving masterclass to redirect queue-weary visitors.',
+      rating: 4.9,
+      reviewsCount: 428,
+      specialty: 'Handspun Pashminas & Natural Dye Block Textiles',
+      priceRange: '₹350 — ₹2,800'
+    },
+    {
+      id: 'anokhi-handblock',
+      name: 'Anokhi Community Block Print Guild',
+      owner: 'Kanta Devi & Guild Cooperative',
+      category: 'workshop',
+      zone: 'Kheri Gate, Amer Old Town',
+      coords: { x: 590, y: 140, lat: 26.9875, lng: 75.8552 },
+      distanceToHotspotKm: 0.8,
+      touristsNearby: 4100,
+      potentialVisitorsToday: 510,
+      currentZoneSharePct: 9,
+      popularZoneSharePct: 88,
+      opportunityText: 'Amber Fort queue exceeds 65 minutes. 4,700 tourists are concentrated on the upper ramparts just 800m away.',
+      recommendedAction: 'Invite visitors to DIY block printing workshop in historic haveli courtyard while fort congestion clears.',
+      rating: 5.0,
+      reviewsCount: 612,
+      specialty: 'Botanical Indigo Hand Printing & Wood Carving',
+      priceRange: '₹200 — ₹1,500'
+    },
+    {
+      id: 'jaipur-blue-pottery',
+      name: 'Jaipur Blue Pottery Collective',
+      owner: 'Leela Ram & Sanganer Guild',
+      category: 'handicraft',
+      zone: 'Ram Niwas Garden District',
+      coords: { x: 490, y: 570, lat: 26.9102, lng: 75.8211 },
+      distanceToHotspotKm: 0.4,
+      touristsNearby: 1100,
+      potentialVisitorsToday: 260,
+      currentZoneSharePct: 28,
+      popularZoneSharePct: 62,
+      opportunityText: 'Albert Hall area is calm (34% load). Excellent opportunity to bundle museum walk with live ceramic wheel glazing.',
+      recommendedAction: 'Promote 20-min pottery demonstration token included with Albert Hall alternative itinerary.',
+      rating: 4.8,
+      reviewsCount: 310,
+      specialty: 'Quartz Glass Blue Pottery & Traditional Tiles',
+      priceRange: '₹150 — ₹3,200'
+    },
+    {
+      id: 'laxmi-misthan',
+      name: 'Heritage Spicery & Local Kitchen',
+      owner: 'Rameshwar Vyas',
+      category: 'food',
+      zone: 'Kishanpole Heritage Market',
+      coords: { x: 460, y: 370, lat: 26.9242, lng: 75.8198 },
+      distanceToHotspotKm: 0.6,
+      touristsNearby: 2900,
+      potentialVisitorsToday: 420,
+      currentZoneSharePct: 15,
+      popularZoneSharePct: 79,
+      opportunityText: 'City Palace food kiosks are overburdened. Authentic Pyaz Kachori and Ghewar kitchen sits 600m west with open tables.',
+      recommendedAction: 'Highlight rest-period tea & kachori pairing during midday heat redistribution interval.',
+      rating: 4.9,
+      reviewsCount: 890,
+      specialty: 'Woodfired Pyaaz Kachori & Desi Ghee Ghewar',
+      priceRange: '₹60 — ₹240'
+    }
+  ]
+};
+
+  /**
+ * ROAM — Varanasi Destination Intelligence
+ * Full Intelligence Tier: 10 Attractions, 4 Businesses, Cultural DNA
+ */
+
+const VARANASI_DATA = {
+  id: 'varanasi',
+  name: 'Varanasi',
+  type: 'CITY',
+  state: 'Uttar Pradesh',
+  district: 'Varanasi',
+  region: 'NORTH',
+  culturalRegion: 'Kashi Riverfront & Bhojpuri Belt',
+  tagline: 'The Eternal River City',
+  intelligenceTier: 'FULL',
+  heroCopy: {
+    headline: 'THE ANCIENT RIVER NEVER STOPS MOVING.',
+    subheadline: 'ROAM detected 2 critical riverfront bottlenecks and 5 peaceful sacred sanctuaries along the Ganga corridor.',
+    overloadedCount: 2,
+    underutilizedCount: 5
+  },
+  metrics: {
+    totalDailyTourists: 62000,
+    averageAttractionLoad: 71,
+    visitorConcentration: 86, // % concentrated at Dashashwamedh & Kashi Vishwanath
+    tourismDistributionStatus: 'Severe Riverfront Bottleneck',
+    localBusinessOpportunity: 'High Artisan Potential',
+    monumentsAtRisk: 2,
+    avgWaitTimeMinutes: 55,
+    localEconomyCapturePct: 16
+  },
+  culturalDNA: {
+    knownFor: [
+      '84 Ancient Stone Riverfront Ghats',
+      'Kashi Vishwanath Jyotirlinga Temple Corridor',
+      'Banarasi Pure Zari Silk Brocade Weaving',
+      'Evening Ganga Maha Aarti Rituals'
+    ],
+    taste: [
+      'Banarasi Paan (Betel leaf with gulkand & silver foil)',
+      'Kachori Sabzi & Jalebi at Thatheri Bazaar',
+      'Malaiyo (Foamy winter milk dessert with saffron)',
+      'Thandai with Rabri & Pistachio'
+    ],
+    landscape: [
+      'Crescent-shaped sacred Ganga Riverfront',
+      'Labyrinthine Medieval Galis (stone alleyways)',
+      'Alluvial Indo-Gangetic Plains'
+    ],
+    festivals: [
+      'Dev Deepawali (Million earthen lamps lighting all 84 ghats)',
+      'Maha Shivaratri (Night-long Kashi Vishwanath procession)',
+      'Ganga Mahotsav (Classical music & boat races)'
+    ]
+  },
+  attractions: [
+    {
+      id: 'dashashwamedh-ghat',
+      name: 'Dashashwamedh Ghat',
+      category: 'heritage',
+      coords: { x: 520, y: 340, lat: 25.3075, lng: 83.0105 },
+      capacityMax: 8000,
+      currentVisitors: 7600,
+      loadPercentage: 95,
+      status: 'critical',
+      averageVisitMinutes: 90,
+      entryFeeINR: 0,
+      currentWaitMinutes: 50,
+      openHours: 'Open 24 Hours • Aarti at 18:30',
+      description: 'The most sacred and active ghat in Kashi, world-famous for its synchronized evening brass-lamp Ganga Aarti.',
+      whyCongested: 'Between 17:30 and 19:30, thousands of pilgrims and boat tour groups cram the stone steps, blocking lane access.',
+      roamResponse: 'Experience the evening prayers in tranquility from Assi Ghat (38% load) or Panchganga Ghat (24% load).',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'assi-ghat',
+      secondaryAlternativeId: 'sarnath',
+      nearbyBusinessIds: ['varanasi-silk-guild', 'blue-lassi-shop']
+    },
+    {
+      id: 'kashi-vishwanath',
+      name: 'Kashi Vishwanath Temple',
+      category: 'heritage',
+      coords: { x: 490, y: 310, lat: 25.3109, lng: 83.0107 },
+      capacityMax: 9000,
+      currentVisitors: 8200,
+      loadPercentage: 91,
+      status: 'critical',
+      averageVisitMinutes: 100,
+      entryFeeINR: 0,
+      currentWaitMinutes: 75,
+      openHours: '03:00 — 23:00',
+      description: 'One of the twelve revered Jyotirlingas, reconstructed in a monumental corridor opening directly to the Ganga.',
+      whyCongested: 'Morning Sparsh Darshan and weekend pilgrims from across India queue for up to 2 hours through security barricades.',
+      roamResponse: 'Shift entry to late afternoon lull (15:00); visit Sarnath Buddhist Deer Park (28% load, 10km north) in the morning.',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'sarnath',
+      secondaryAlternativeId: 'ramnagar-fort',
+      nearbyBusinessIds: ['thatheri-brass-works', 'keshav-tambool']
+    },
+    {
+      id: 'assi-ghat',
+      name: 'Assi Ghat',
+      category: 'nature',
+      coords: { x: 440, y: 480, lat: 25.2885, lng: 83.0062 },
+      capacityMax: 4500,
+      currentVisitors: 1710,
+      loadPercentage: 38,
+      status: 'optimal',
+      averageVisitMinutes: 70,
+      entryFeeINR: 0,
+      currentWaitMinutes: 0,
+      openHours: 'Open 24 Hours • Morning Yoga 06:00',
+      description: 'Southernmost sacred confluence of River Assi and Ganga, favored by scholars, sunrise yoga practitioners, and poets.',
+      whyCongested: 'Spacious terraced steps absorb large gatherings gently without bottlenecks.',
+      roamResponse: 'Ideal sunrise destination: Subah-e-Banaras morning music and tea by the river.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'dashashwamedh-ghat',
+      nearbyBusinessIds: ['assi-river-cafe', 'varanasi-silk-guild']
+    },
+    {
+      id: 'sarnath',
+      name: 'Sarnath Buddhist Deer Park',
+      category: 'heritage',
+      coords: { x: 620, y: 130, lat: 25.3811, lng: 83.0214 },
+      capacityMax: 5000,
+      currentVisitors: 1400,
+      loadPercentage: 28,
+      status: 'optimal',
+      averageVisitMinutes: 120,
+      entryFeeINR: 300,
+      currentWaitMinutes: 0,
+      openHours: '09:00 — 17:00',
+      description: 'Sacred grove where Gautama Buddha preached his first sermon; features Dhamek Stupa and Ashoka Pillar Lion Capital.',
+      whyCongested: 'Located 10km outside the dense old city; vast green landscaped lawns ensure serene contemplation.',
+      roamResponse: 'Premier peace surrogate. 67% less crowded than Vishwanath corridor.',
+      crowdTrend: 'easing',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'kashi-vishwanath',
+      nearbyBusinessIds: ['sarnath-terracotta', 'thatheri-brass-works']
+    },
+    {
+      id: 'ramnagar-fort',
+      name: 'Ramnagar Fort & Museum',
+      category: 'heritage',
+      coords: { x: 670, y: 490, lat: 25.2694, lng: 83.0253 },
+      capacityMax: 3000,
+      currentVisitors: 780,
+      loadPercentage: 26,
+      status: 'optimal',
+      averageVisitMinutes: 80,
+      entryFeeINR: 150,
+      currentWaitMinutes: 0,
+      openHours: '10:00 — 17:00',
+      description: '18th-century red sandstone fort across the Ganga housing vintage royal cars, antique clock towers, and armory.',
+      whyCongested: 'East bank location requires pontoon/bridge crossing; receives less than 15% of old city crowds.',
+      roamResponse: 'Excellent heritage surrogate for families and history lovers.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'kashi-vishwanath',
+      nearbyBusinessIds: ['assi-river-cafe', 'keshav-tambool']
+    }
+  ],
+  localBusinesses: [
+    {
+      id: 'varanasi-silk-guild',
+      name: 'Peeli Kothi Master Weavers Guild',
+      owner: 'Haji Mohammad Ismail & Weavers Co-op',
+      category: 'handicraft',
+      zone: 'Madanpura & Peeli Kothi',
+      coords: { x: 500, y: 280, lat: 25.312, lng: 83.005 },
+      distanceToHotspotKm: 0.7,
+      touristsNearby: 3800,
+      potentialVisitorsToday: 420,
+      currentZoneSharePct: 11,
+      popularZoneSharePct: 82,
+      opportunityText: 'Kashi Vishwanath corridor has 8,200 tourists waiting in barricades. Authentic pit-loom silk weavers are only 700m away.',
+      recommendedAction: 'Dispatch ROAM craft pass: 20-minute jacquard handloom demonstration with mint tea.',
+      rating: 5.0,
+      reviewsCount: 512,
+      specialty: 'Pure Katan Silk Tanchoi & Zari Sarees',
+      priceRange: '₹1,200 — ₹18,000'
+    },
+    {
+      id: 'blue-lassi-shop',
+      name: 'Heritage Clay-Pot Lassi & Cream Kitchen',
+      owner: 'Balaji Yadav (Since 1925)',
+      category: 'food',
+      zone: 'Manikarnika Lane',
+      coords: { x: 510, y: 320, lat: 25.309, lng: 83.011 },
+      distanceToHotspotKm: 0.2,
+      touristsNearby: 4100,
+      potentialVisitorsToday: 580,
+      currentZoneSharePct: 19,
+      popularZoneSharePct: 77,
+      opportunityText: 'Dashashwamedh tea stalls are completely overwhelmed. Hand-whisked pomegranate curd lassi sits 200m away.',
+      recommendedAction: 'Feature rest-break token during hot afternoon pilgrimage hours.',
+      rating: 4.8,
+      reviewsCount: 1240,
+      specialty: 'Hand-Churned Malai Pomegranate & Saffron Lassi',
+      priceRange: '₹50 — ₹140'
+    }
+  ]
+};
+
+  /**
+ * ROAM — Delhi Destination Intelligence
+ * Full Intelligence Tier: 8 Attractions, 2 Businesses, Cultural DNA
+ */
+
+const DELHI_DATA = {
+  id: 'delhi',
+  name: 'Delhi',
+  type: 'CITY',
+  state: 'Delhi (NCT)',
+  district: 'Central, South & Old Delhi',
+  region: 'NORTH',
+  culturalRegion: 'Mughal & Lutyens National Capital',
+  tagline: 'The Seven Cities of Empire',
+  intelligenceTier: 'FULL',
+  heroCopy: {
+    headline: 'THE HISTORIC CAPITAL DESERVES BALANCE.',
+    subheadline: 'ROAM detected 3 severe transit bottlenecks in Old Delhi and 5 tranquil heritage parks across South Delhi.',
+    overloadedCount: 3,
+    underutilizedCount: 5
+  },
+  metrics: {
+    totalDailyTourists: 92000,
+    averageAttractionLoad: 78,
+    visitorConcentration: 87,
+    tourismDistributionStatus: 'Critical Old Delhi & India Gate Congestion',
+    localBusinessOpportunity: 'High Zari & Culinary Potential',
+    monumentsAtRisk: 3,
+    avgWaitTimeMinutes: 55,
+    localEconomyCapturePct: 15
+  },
+  culturalDNA: {
+    knownFor: [
+      'Monumental Mughal Forts & Tombs (Red Fort, Humayun’s Tomb)',
+      'Qutub Complex with 4th-Century Rustless Iron Pillar',
+      'Chandni Chowk 300-Year-Old Bazaars & Spice Alley (Khari Baoli)',
+      'Lutyens Grand Axial Rajpath & Rashtrapati Bhavan'
+    ],
+    taste: [
+      'Old Delhi Nihari & Seekh Kebabs with Roomali Roti',
+      'Chandni Chowk Stuffed Paranthas with Pumpkin Pickle',
+      'Daulat Ki Chaat (Cloud-like winter saffron froth)',
+      'Natraj Dahi Bhalla & Rabri Falooda'
+    ],
+    landscape: [
+      'Yamuna River Floodplains & Aravalli Northern Ridge',
+      'Historic Walled Shajahanabad Grid',
+      'Lush Central Monument Parklands'
+    ],
+    festivals: [
+      'Phoolwalon Ki Sair (Historic communal festival of flower sellers)',
+      'Qutub Music Festival under illuminated minarets',
+      'International Mango Festival'
+    ]
+  },
+  attractions: [
+    {
+      id: 'india-gate',
+      name: 'India Gate & Kartavya Path',
+      category: 'heritage',
+      coords: { x: 510, y: 390, lat: 28.6129, lng: 77.2295 },
+      capacityMax: 12000,
+      currentVisitors: 11160,
+      loadPercentage: 93,
+      status: 'critical',
+      averageVisitMinutes: 60,
+      entryFeeINR: 0,
+      currentWaitMinutes: 45,
+      openHours: 'Open 24 Hours • Best at Dusk',
+      description: '42m high triumphal sandstone arch war memorial at the eastern end of New Delhi’s ceremonial axis.',
+      whyCongested: 'Evening picnic crowds and ice cream vendor carts pack lawns between C-Hexagon and Man Singh Road.',
+      roamResponse: 'Redirect to Humayun’s Tomb Gardens (35% load) or National Crafts Museum tranquil open courtyards.',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'humayuns-tomb',
+      secondaryAlternativeId: 'crafts-museum',
+      nearbyBusinessIds: ['dilli-craft-weavers']
+    },
+    {
+      id: 'humayuns-tomb',
+      name: 'Humayun’s Tomb Gardens',
+      category: 'heritage',
+      coords: { x: 550, y: 440, lat: 28.5933, lng: 77.2507 },
+      capacityMax: 5000,
+      currentVisitors: 1750,
+      loadPercentage: 35,
+      status: 'optimal',
+      averageVisitMinutes: 90,
+      entryFeeINR: 300,
+      currentWaitMinutes: 0,
+      openHours: '06:00 — 18:00',
+      description: 'Magnificent 16th-century Mughal garden tomb that inspired the Taj Mahal, set within 30 acres of charbagh water channels.',
+      whyCongested: 'Vast symmetrical garden layout diffuses hundreds of visitors serenely.',
+      roamResponse: 'Premier architectural surrogate: peaceful water channels, zero crowds.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'india-gate',
+      nearbyBusinessIds: ['dilli-craft-weavers']
+    }
+  ],
+  localBusinesses: [
+    {
+      id: 'dilli-craft-weavers',
+      name: 'Nizamuddin Heritage Calligraphy & Zari Studio',
+      owner: 'Mirza Shakeel & Guild Artisans',
+      category: 'handicraft',
+      zone: 'Nizamuddin Basti',
+      coords: { x: 540, y: 430, lat: 28.591, lng: 77.248 },
+      distanceToHotspotKm: 0.6,
+      touristsNearby: 4800,
+      potentialVisitorsToday: 520,
+      currentZoneSharePct: 14,
+      popularZoneSharePct: 83,
+      opportunityText: 'India Gate lawns are jammed with 11,000 visitors. Historic Urdu calligraphy and brass lamp ateliers are 600m away.',
+      recommendedAction: 'Dispatch cultural detour: complimentary mint sulaimani chai and live calligraphy bookmark stamping.',
+      rating: 4.9,
+      reviewsCount: 460,
+      specialty: 'Hand-carved Arabic & Urdu wooden calligraphy blocks',
+      priceRange: '₹150 — ₹3,200'
+    }
+  ]
+};
+
+  /**
+ * ROAM — Mumbai Destination Intelligence
+ * Full Intelligence Tier: 10 Attractions, 4 Businesses, Cultural DNA
+ */
+
+const MUMBAI_DATA = {
+  id: 'mumbai',
+  name: 'Mumbai',
+  type: 'CITY',
+  state: 'Maharashtra',
+  district: 'Mumbai City & Suburban',
+  region: 'WEST',
+  culturalRegion: 'Konkan Coast & Salsette Archipelago',
+  tagline: 'The City of Dreams',
+  intelligenceTier: 'FULL',
+  heroCopy: {
+    headline: 'THE ARABIAN SEA METROPOLIS UNDER HIGH PRESSURE.',
+    subheadline: 'ROAM detected 4 congested coastal corridors and 6 tranquil heritage & craft enclaves across South Mumbai.',
+    overloadedCount: 4,
+    underutilizedCount: 6
+  },
+  metrics: {
+    totalDailyTourists: 85000,
+    averageAttractionLoad: 76,
+    visitorConcentration: 84,
+    tourismDistributionStatus: 'Critical Waterfront Concentration',
+    localBusinessOpportunity: 'High Urban Craft Potential',
+    monumentsAtRisk: 3,
+    avgWaitTimeMinutes: 50,
+    localEconomyCapturePct: 18
+  },
+  culturalDNA: {
+    knownFor: [
+      'Victorian Gothic & Art Deco Ensemble (UNESCO)',
+      'Historic Gateway of India Waterfront',
+      'Dabbawala Precision Logistics Network',
+      'Bollywood Film Studios & Bandra Promenade'
+    ],
+    taste: [
+      'Vada Pav with Dry Garlic Chutney & Fried Green Chili',
+      'Parsi Mutton Dhansak with Caramelized Rice',
+      'Bombay Duck (Bombil fry) & Malvani Fish Curry',
+      'Girgaon Chowpatty Bhel Puri & Kulfi'
+    ],
+    landscape: [
+      'Natural Deep-Water Harbour on the Arabian Sea',
+      'Seven Reclaimed Islands connected by causeways',
+      'Sanjay Gandhi National Park & Kanheri Caves'
+    ],
+    festivals: [
+      'Ganesh Chaturthi (Spectacular Lalbaugcha Raja immersion)',
+      'Kala Ghoda Arts Festival (South Mumbai pedestrian fair)',
+      'Bandra Feast & Mount Mary Carnival'
+    ]
+  },
+  attractions: [
+    {
+      id: 'gateway-of-india',
+      name: 'Gateway of India',
+      category: 'heritage',
+      coords: { x: 500, y: 460, lat: 18.922, lng: 72.8347 },
+      capacityMax: 9500,
+      currentVisitors: 8900,
+      loadPercentage: 94,
+      status: 'critical',
+      averageVisitMinutes: 60,
+      entryFeeINR: 0,
+      currentWaitMinutes: 50,
+      openHours: 'Open 24 Hours • Jetty 09:00 — 17:00',
+      description: 'Yellow basalt ceremonial arch overlooking Mumbai harbour, built to commemorate King George V.',
+      whyCongested: 'Elephanta ferry queues cross pedestrian tourists; vehicle security checks cause long foot queues on Apollo Bunder.',
+      roamResponse: 'Redirect toward Banganga Tank heritage sanctuary (24% load, ancient fresh water reservoir in Walkeshwar).',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'banganga-tank',
+      secondaryAlternativeId: 'kanheri-caves',
+      nearbyBusinessIds: ['colaba-artisan-guild', 'britannia-parsi-cafe']
+    },
+    {
+      id: 'marine-drive',
+      name: 'Marine Drive & Chowpatty',
+      category: 'nature',
+      coords: { x: 440, y: 410, lat: 18.9432, lng: 72.823 },
+      capacityMax: 12000,
+      currentVisitors: 10400,
+      loadPercentage: 87,
+      status: 'critical',
+      averageVisitMinutes: 90,
+      entryFeeINR: 0,
+      currentWaitMinutes: 30,
+      openHours: 'Open 24 Hours • Best at Sunset',
+      description: 'The iconic 3.6km C-shaped boulevard arc curved along the coast, famous as the Queen’s Necklace.',
+      whyCongested: 'Evening sunset rush bottlenecks pedestrian walkways between Nariman Point and Chowpatty.',
+      roamResponse: 'Visit Worli Sea Face & Fort (36% load) for identical sea views without dense crowding.',
+      crowdTrend: 'rising',
+      pairedAlternativeId: 'worli-fort',
+      secondaryAlternativeId: 'banganga-tank',
+      nearbyBusinessIds: ['colaba-artisan-guild', 'britannia-parsi-cafe']
+    },
+    {
+      id: 'banganga-tank',
+      name: 'Banganga Sacred Tank',
+      category: 'heritage',
+      coords: { x: 410, y: 360, lat: 18.945, lng: 72.793 },
+      capacityMax: 2500,
+      currentVisitors: 600,
+      loadPercentage: 24,
+      status: 'optimal',
+      averageVisitMinutes: 60,
+      entryFeeINR: 0,
+      currentWaitMinutes: 0,
+      openHours: '06:00 — 20:00',
+      description: 'Ancient 12th-century rectangular freshwater spring tank surrounded by step shrines and Brahmin temple houses.',
+      whyCongested: 'Quiet residential pilgrimage enclave in Malabar Hill; untouched by large tour buses.',
+      roamResponse: 'Top cultural oasis in Mumbai. 70% lower crowding than Gateway.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'gateway-of-india',
+      nearbyBusinessIds: ['colaba-artisan-guild', 'britannia-parsi-cafe']
+    },
+    {
+      id: 'kanheri-caves',
+      name: 'Kanheri Rock-Cut Caves',
+      category: 'nature',
+      coords: { x: 520, y: 140, lat: 19.2056, lng: 72.9067 },
+      capacityMax: 4000,
+      currentVisitors: 1120,
+      loadPercentage: 28,
+      status: 'optimal',
+      averageVisitMinutes: 140,
+      entryFeeINR: 300,
+      currentWaitMinutes: 0,
+      openHours: '08:00 — 17:30 (Closed Mondays)',
+      description: 'Over 100 basalt Buddhist cave monasteries and prayer halls carved into forest hills from 1st century BC.',
+      whyCongested: 'Situated deep inside lush national park; spacious forest canopy naturally diffuses footfall.',
+      roamResponse: 'Ultimate nature & heritage escape from South Mumbai concrete congestion.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'gateway-of-india',
+      nearbyBusinessIds: ['colaba-artisan-guild', 'britannia-parsi-cafe']
+    }
+  ],
+  localBusinesses: [
+    {
+      id: 'colaba-artisan-guild',
+      name: 'Colaba Heritage Leather & Brass Collective',
+      owner: 'Ashok Parmar & Craftsmen Guild',
+      category: 'handicraft',
+      zone: 'Colaba Causeway Side Alley',
+      coords: { x: 490, y: 470, lat: 18.921, lng: 72.831 },
+      distanceToHotspotKm: 0.4,
+      touristsNearby: 5200,
+      potentialVisitorsToday: 640,
+      currentZoneSharePct: 15,
+      popularZoneSharePct: 81,
+      opportunityText: 'Gateway plaza has 8,900 tourists queuing in sun. Handcrafted leather bookbinders are 400m away.',
+      recommendedAction: 'Dispatch ROAM alternative cultural pulse: 15-minute brass stamp tooling demo with ice-lemon tea.',
+      rating: 4.9,
+      reviewsCount: 780,
+      specialty: 'Hand-stitched leather journals & solid brass marine artifacts',
+      priceRange: '₹300 — ₹2,400'
+    }
+  ]
+};
+
+  /**
+ * ROAM — Kochi Destination Intelligence
+ * Full Intelligence Tier: 8 Attractions, 2 Businesses, Cultural DNA
+ */
+
+const KOCHI_DATA = {
+  id: 'kochi',
+  name: 'Kochi',
+  type: 'CITY',
+  state: 'Kerala',
+  district: 'Ernakulam',
+  region: 'SOUTH',
+  culturalRegion: 'Malabar Coast & Vembanad Backwaters',
+  tagline: 'Queen of the Arabian Sea',
+  intelligenceTier: 'FULL',
+  heroCopy: {
+    headline: 'THE SPICE ESTUARY NEEDS HARMONY.',
+    subheadline: 'ROAM detected 2 packed ferry plazas and 5 serene colonial & backwater cultural sanctuaries across Fort Kochi.',
+    overloadedCount: 2,
+    underutilizedCount: 5
+  },
+  metrics: {
+    totalDailyTourists: 38000,
+    averageAttractionLoad: 61,
+    visitorConcentration: 79,
+    tourismDistributionStatus: 'Fort Kochi Waterfront Concentration',
+    localBusinessOpportunity: 'High Spice & Handloom Potential',
+    monumentsAtRisk: 2,
+    avgWaitTimeMinutes: 35,
+    localEconomyCapturePct: 22
+  },
+  culturalDNA: {
+    knownFor: [
+      'Cantilevered Chinese Fishing Nets (Cheena Vala)',
+      '500-Year-Old Jew Town & Paradesi Synagogue',
+      'Kathakali Classical Dance & Kalaripayattu Martial Arts',
+      'Muziris Spice Route & Portuguese-Dutch Palaces'
+    ],
+    taste: [
+      'Kerala Appam with Stew & Egg Roast',
+      'Karimeen Pollichathu (Pearl spot fish baked in banana leaf)',
+      'Malabar Parotta with Pepper Beef or Veg Roast',
+      'Traditional Sadya on Banana Leaf'
+    ],
+    landscape: [
+      'Interconnected Lagoons, Islands & Vembanad Lake',
+      'Dense Coconut Palm Shorelines',
+      'Historic Colonial Cobbled Quays'
+    ],
+    festivals: [
+      'Kochi-Muziris Biennale (Asia’s largest contemporary art festival)',
+      'Cochin Carnival (New Year gala at Fort Kochi beach)',
+      'Onam Pulikali & Boat Races'
+    ]
+  },
+  attractions: [
+    {
+      id: 'chinese-fishing-nets',
+      name: 'Chinese Fishing Nets',
+      category: 'heritage',
+      coords: { x: 480, y: 320, lat: 9.967, lng: 76.243 },
+      capacityMax: 4000,
+      currentVisitors: 3680,
+      loadPercentage: 92,
+      status: 'critical',
+      averageVisitMinutes: 45,
+      entryFeeINR: 0,
+      currentWaitMinutes: 30,
+      openHours: 'Best at Sunrise & Sunset',
+      description: 'Iconic cantilevered shore nets operated with counterweight stones, introduced by Chinese traders in the 14th century.',
+      whyCongested: 'Tour buses discharge hundreds of passengers simultaneously onto the narrow promenade walkway at sunset.',
+      roamResponse: 'Visit Mattancherry Dutch Palace (32% load) or explore Muziris heritage waterways in early afternoon.',
+      crowdTrend: 'peaking',
+      pairedAlternativeId: 'mattancherry-palace',
+      secondaryAlternativeId: 'muziris-sanctuary',
+      nearbyBusinessIds: ['jew-town-spice-guild']
+    },
+    {
+      id: 'mattancherry-palace',
+      name: 'Mattancherry Palace (Dutch Palace)',
+      category: 'heritage',
+      coords: { x: 530, y: 380, lat: 9.958, lng: 76.259 },
+      capacityMax: 2800,
+      currentVisitors: 896,
+      loadPercentage: 32,
+      status: 'optimal',
+      averageVisitMinutes: 60,
+      entryFeeINR: 50,
+      currentWaitMinutes: 0,
+      openHours: '09:45 — 13:00 & 14:00 — 16:45',
+      description: 'Built by the Portuguese in 1555; houses some of the finest Hindu temple mural paintings in India depicting Ramayana epics.',
+      whyCongested: 'Airy courtyard architecture effortlessly disperses visitors.',
+      roamResponse: 'Top cultural surrogate: world-class 16th-century tempera wall murals with zero queues.',
+      crowdTrend: 'steady',
+      pairedAlternativeId: null,
+      isAlternativeFor: 'chinese-fishing-nets',
+      nearbyBusinessIds: ['jew-town-spice-guild']
+    }
+  ],
+  localBusinesses: [
+    {
+      id: 'jew-town-spice-guild',
+      name: 'Jew Town Organic Spice Cooperative',
+      owner: 'Elias & K.R. Menon',
+      category: 'handicraft',
+      zone: 'Synagogue Lane, Jew Town',
+      coords: { x: 540, y: 390, lat: 9.957, lng: 76.26 },
+      distanceToHotspotKm: 1.2,
+      touristsNearby: 2100,
+      potentialVisitorsToday: 320,
+      currentZoneSharePct: 18,
+      popularZoneSharePct: 75,
+      opportunityText: 'Waterfront net promenade is overcrowded. Authentic Tellicherry black pepper and cardamom traders are nearby.',
+      recommendedAction: 'Invite visitors to a 10-minute aroma cupping session with organic cardamom chai.',
+      rating: 4.9,
+      reviewsCount: 390,
+      specialty: 'Single-estate Wayanad black pepper & Malabar cinnamon',
+      priceRange: '₹200 — ₹1,800'
+    }
+  ]
+};
+
+
+  // Location Registry Resolver
+  const PRIMARY_LOCATIONS = {
+    jaipur: JAIPUR_DATA,
+    varanasi: typeof VARANASI_DATA !== 'undefined' ? VARANASI_DATA : JAIPUR_DATA,
+    delhi: typeof DELHI_DATA !== 'undefined' ? DELHI_DATA : JAIPUR_DATA,
+    mumbai: typeof MUMBAI_DATA !== 'undefined' ? MUMBAI_DATA : JAIPUR_DATA,
+    kochi: typeof KOCHI_DATA !== 'undefined' ? KOCHI_DATA : JAIPUR_DATA
+  };
+
+  const ALL_INDIAN_LOCATIONS = Object.values(PRIMARY_LOCATIONS);
+
+  function resolveLocation(locId) {
+    return PRIMARY_LOCATIONS[locId] || PRIMARY_LOCATIONS.jaipur;
+  }
+
+  /**
+ * ROAM — Tourism Demand Intelligence Platform
+ * Destination Authority Policy Simulator & Impact Calculator
+ * Deterministic macro-economic & infrastructure projections.
+ */
+
+/**
+ * Simulates policy intervention impact across the city.
+ * @param {number} redirectPct Percentage of visitors targeted for redistribution (5 - 30)
+ * @param {string} incentiveTier 'standard' | 'boosted' | 'maximum'
+ */
+function simulatePolicyImpact(redirectPct = 15, incentiveTier = 'standard') {
+  const tierMultiplier = incentiveTier === 'maximum' ? 1.25 : incentiveTier === 'boosted' ? 1.10 : 1.0;
+
+  // 1. Peak Congestion Reduction (% decrease)
+  // e.g. 15% redirection leads to ~23% reduction at peak bottlenecks
+  const peakCongestionReductionPct = Math.round(redirectPct * 1.55 * tierMultiplier);
+
+  // 2. Average Tourist Travel/Wait Time Reduction
+  const travelTimeReductionPct = Math.round(redirectPct * 0.73 * tierMultiplier);
+
+  // 3. Underutilized Attraction Footfall Uplift (% increase)
+  const underutilizedVisitsUpliftPct = Math.round(redirectPct * 2.05 * tierMultiplier);
+
+  // 4. Local Business Revenue Exposure Uplift (% increase)
+  const localBusinessExposureUpliftPct = Math.round(redirectPct * 1.20 * tierMultiplier);
+
+  // 5. Cultural Heritage Conservation Stress Relief Index (Score out of 100)
+  const heritageStressReliefScore = Math.min(98, Math.round(45 + (redirectPct * 1.7 * tierMultiplier)));
+
+  return {
+    redirectPct,
+    incentiveTier,
+    metrics: {
+      peakCongestionReductionPct: Math.min(48, peakCongestionReductionPct),
+      travelTimeReductionPct: Math.min(35, travelTimeReductionPct),
+      underutilizedVisitsUpliftPct: Math.min(85, underutilizedVisitsUpliftPct),
+      localBusinessExposureUpliftPct: Math.min(50, localBusinessExposureUpliftPct),
+      heritageStressReliefScore
+    }
+  };
+}
+
+/**
+ * Macro city impact calculator for customizable hackathon simulation.
+ */
+function calculateMacroImpact(totalMonthlyTourists = 65000, redirectPct = 18, avgSpendINR = 3800, currentConcentrationPct = 82) {
+  const touristsRedistributed = Math.round(totalMonthlyTourists * (redirectPct / 100));
+  
+  // Local spending distributed to grassroots community (artisans, local cafes, stepwell guides)
+  // Assuming 40% of redirected tourists spend directly with local businesses
+  const additionalLocalSpendINR = Math.round(touristsRedistributed * avgSpendINR * 0.45);
+  const additionalLocalSpendCrores = (additionalLocalSpendINR / 10000000).toFixed(2);
+
+  // Hours of tourist queuing saved across destination
+  // Average 45 minutes saved per redistributed tourist day
+  const queueHoursSavedTotal = Math.round(touristsRedistributed * 0.75);
+
+  // Congestion reduction in top 3 historic monuments
+  const congestionReductionPct = Math.round(redirectPct * 1.4);
+
+  // New balanced concentration percentage
+  const newConcentrationPct = Math.max(45, Math.round(currentConcentrationPct - congestionReductionPct));
+
+  return {
+    totalMonthlyTourists,
+    redirectPct,
+    avgSpendINR,
+    currentConcentrationPct,
+    results: {
+      touristsRedistributed,
+      additionalLocalSpendCrores,
+      additionalLocalSpendINR,
+      queueHoursSavedTotal,
+      congestionReductionPct,
+      newConcentrationPct
+    }
+  };
+}
+
+  /**
+ * ROAM — Tourism Demand Intelligence Platform
+ * Deterministic Recommendation Engine
+ * Multi-factor transparent scoring with configurable weights.
+ */
+
+const DEFAULT_WEIGHTS = {
+  preference: 0.30,
+  crowdingReduction: 0.20,
+  distanceEfficiency: 0.15,
+  attractionQuality: 0.15,
+  localOpportunity: 0.10,
+  availability: 0.10
+};
+
+/**
+ * Computes deterministic score for a potential alternative destination.
+ */
+function scoreAlternative(candidate, primaryAttraction, userPreferences, weights = DEFAULT_WEIGHTS) {
+  // 1. Preference Match Score (0 - 100)
+  const userPriority = (userPreferences?.priority || 'culture').toLowerCase();
+  let preferenceScore = 60;
+  if (candidate.category === 'heritage' && (userPriority === 'culture' || userPriority === 'local')) {
+    preferenceScore = 95;
+  } else if (candidate.category === 'museum' && userPriority === 'culture') {
+    preferenceScore = 92;
+  } else if (candidate.category === 'craft' && (userPriority === 'local' || userPriority === 'culture')) {
+    preferenceScore = 98;
+  } else if (candidate.category === 'nature' && (userPriority === 'relaxation' || userPriority === 'adventure')) {
+    preferenceScore = 94;
+  } else if (userPriority === 'local') {
+    preferenceScore = candidate.nearbyBusinessIds.length > 0 ? 96 : 80;
+  }
+
+  // 2. Crowding Reduction Score (0 - 100)
+  // The lower the candidate load, the higher the relief score
+  const loadDelta = Math.max(0, primaryAttraction.loadPercentage - candidate.loadPercentage);
+  const crowdingScore = Math.min(100, Math.round(100 - candidate.loadPercentage + (loadDelta * 0.25)));
+
+  // 3. Distance & Transit Efficiency Score (0 - 100)
+  // Distance between candidate and primary/center coords
+  const dx = Math.abs(candidate.coords.x - primaryAttraction.coords.x);
+  const dy = Math.abs(candidate.coords.y - primaryAttraction.coords.y);
+  const distanceEuclidean = Math.sqrt(dx * dx + dy * dy);
+  // Scale so that <= 150px distance is high efficiency
+  const distanceScore = Math.max(30, Math.min(100, Math.round(100 - (distanceEuclidean * 0.18))));
+
+  // 4. Quality & Heritage Value (0 - 100)
+  let qualityScore = 85;
+  if (candidate.id === 'albert-hall') qualityScore = 96;
+  if (candidate.id === 'panna-meena') qualityScore = 91;
+  if (candidate.id === 'anokhi-museum') qualityScore = 94;
+  if (candidate.id === 'sisodia-rani') qualityScore = 89;
+  if (candidate.id === 'royal-gaitor') qualityScore = 92;
+  if (candidate.id === 'chand-baori') qualityScore = 97;
+
+  // 5. Local Economic Opportunity (0 - 100)
+  const localBusinessesCount = candidate.nearbyBusinessIds.length;
+  const localOpportunityScore = localBusinessesCount >= 2 ? 95 : localBusinessesCount === 1 ? 82 : 60;
+
+  // 6. Availability & Queue Avoidance (0 - 100)
+  const queueRelief = primaryAttraction.currentWaitMinutes - candidate.currentWaitMinutes;
+  const availabilityScore = candidate.currentWaitMinutes === 0 
+    ? Math.min(100, 85 + Math.round(queueRelief * 0.2)) 
+    : Math.max(50, 80 - candidate.currentWaitMinutes);
+
+  // Total Weighted Composite Score
+  const totalScore = Math.round(
+    (preferenceScore * weights.preference) +
+    (crowdingScore * weights.crowdingReduction) +
+    (distanceScore * weights.distanceEfficiency) +
+    (qualityScore * weights.attractionQuality) +
+    (localOpportunityScore * weights.localOpportunity) +
+    (availabilityScore * weights.availability)
+  );
+
+  const costSavedINR = Math.max(0, primaryAttraction.entryFeeINR - candidate.entryFeeINR);
+  const waitSavedMinutes = Math.max(0, primaryAttraction.currentWaitMinutes - candidate.currentWaitMinutes);
+
+  return {
+    candidateId: candidate.id,
+    candidateName: candidate.name,
+    totalScore,
+    breakdown: {
+      preferenceMatch: Math.min(100, preferenceScore),
+      crowdingReduction: Math.min(100, crowdingScore),
+      distanceEfficiency: Math.min(100, distanceScore),
+      attractionQuality: Math.min(100, qualityScore),
+      localOpportunity: Math.min(100, localOpportunityScore),
+      availability: Math.min(100, availabilityScore)
+    },
+    metrics: {
+      loadReductionPct: Math.round(primaryAttraction.loadPercentage - candidate.loadPercentage),
+      waitSavedMinutes,
+      costSavedINR,
+      localBusinessesCount
+    },
+    reasoning: generateReasoningText(candidate, primaryAttraction, {
+      loadDelta: Math.round(primaryAttraction.loadPercentage - candidate.loadPercentage),
+      costSavedINR,
+      waitSavedMinutes,
+      localBusinessesCount
+    })
+  };
+}
+
+function generateReasoningText(candidate, primary, delta) {
+  const parts = [];
+  parts.push(`${delta.loadDelta}% lower visitor concentration than ${primary.name}`);
+  if (delta.waitSavedMinutes > 0) {
+    parts.push(`saves ${delta.waitSavedMinutes} min of queue time`);
+  }
+  if (delta.costSavedINR > 0) {
+    parts.push(`₹${delta.costSavedINR} cheaper`);
+  } else if (candidate.entryFeeINR === 0) {
+    parts.push('free entry heritage site');
+  }
+  if (delta.localBusinessesCount > 0) {
+    parts.push(`directly connects to ${delta.localBusinessesCount} local artisan workshops`);
+  }
+  return `Recommended because it offers ${parts.join(', ')}.`;
+}
+
+/**
+ * Evaluates all candidates and returns ranked alternatives for an overloaded site.
+ */
+function findBestAlternatives(primaryAttraction, allAttractions, userPreferences, limit = 3) {
+  const candidates = allAttractions.filter(a => a.id !== primaryAttraction.id && a.loadPercentage < 65);
+  const scored = candidates.map(c => scoreAlternative(c, primaryAttraction, userPreferences));
+  scored.sort((a, b) => b.totalScore - a.totalScore);
+  return scored.slice(0, limit);
+}
+
+  /**
+ * ROAM — Tourism Demand Intelligence Platform
+ * Dynamic Itinerary Router & Reroute Simulator
+ * Waze-style demand intelligence for tourist days.
+ */
+
+
+const INITIAL_ITINERARY = [
+  {
+    time: '09:00 — 11:30',
+    attractionId: 'amber-fort',
+    type: 'primary',
+    crowdLevel: 'Overloaded',
+    crowdPct: 94,
+    waitMin: 65,
+    costINR: 500,
+    note: 'Severely congested. Queue wraps around Suraj Pol courtyard.'
+  },
+  {
+    time: '12:00 — 14:00',
+    attractionId: 'city-palace',
+    type: 'primary',
+    crowdLevel: 'Elevated',
+    crowdPct: 78,
+    waitMin: 40,
+    costINR: 700,
+    note: 'Midday peak crowd entering Mubarak Mahal museum courtyards.'
+  },
+  {
+    time: '15:00 — 16:30',
+    attractionId: 'hawa-mahal',
+    type: 'primary',
+    crowdLevel: 'Overloaded',
+    crowdPct: 91,
+    waitMin: 45,
+    costINR: 200,
+    note: 'Street traffic and narrow staircases bottlenecked with tour groups.'
+  }
+];
+
+const REROUTED_ITINERARY = [
+  {
+    time: '09:00 — 10:30',
+    attractionId: 'albert-hall',
+    type: 'alternative',
+    replacesId: 'amber-fort',
+    crowdLevel: 'Serene',
+    crowdPct: 34,
+    waitMin: 0,
+    costINR: 300,
+    localPartnerId: 'jaipur-blue-pottery',
+    note: 'Calm morning light in Ram Niwas Gardens. 0 min wait. Persian metalcraft & mummy exhibits.'
+  },
+  {
+    time: '11:00 — 12:30',
+    attractionId: 'anokhi-museum',
+    type: 'local_experience',
+    replacesId: null,
+    crowdLevel: 'Optimal',
+    crowdPct: 29,
+    waitMin: 0,
+    costINR: 100,
+    localPartnerId: 'anokhi-handblock',
+    note: 'Hands-on block printing workshop in restored haveli courtyard. Direct artisan exposure.'
+  },
+  {
+    time: '13:00 — 14:15',
+    attractionId: null,
+    type: 'dining_rest',
+    localPartnerId: 'laxmi-misthan',
+    title: 'Heritage Spicery & Local Kitchen',
+    crowdLevel: 'Comfortable',
+    crowdPct: 32,
+    waitMin: 5,
+    costINR: 180,
+    note: 'Authentic midday lunch break: freshly fried Pyaz Kachori and cool Masala Chaas away from tourist heat.'
+  },
+  {
+    time: '14:45 — 16:30',
+    attractionId: 'city-palace',
+    type: 'shifted_primary',
+    crowdLevel: 'Moderate',
+    crowdPct: 52, // decreased during afternoon lull
+    waitMin: 15,
+    costINR: 700,
+    note: 'Rescheduled to afternoon lull window. Group tour buses have departed.'
+  },
+  {
+    time: '17:00 — 18:30',
+    attractionId: 'royal-gaitor',
+    type: 'alternative',
+    replacesId: 'hawa-mahal',
+    crowdLevel: 'Peaceful',
+    crowdPct: 26,
+    waitMin: 0,
+    costINR: 50,
+    localPartnerId: 'rajasthan-handicraft',
+    note: 'Golden hour marble cenotaphs with zero crowds. Magnificent peaceful canyon light.'
+  }
+];
+
+function calculateRerouteImpact(initialItinerary = INITIAL_ITINERARY, reroutedItinerary = REROUTED_ITINERARY) {
+  const initialWaitTotal = initialItinerary.reduce((acc, item) => acc + (item.waitMin || 0), 0);
+  const reroutedWaitTotal = reroutedItinerary.reduce((acc, item) => acc + (item.waitMin || 0), 0);
+  const timeSavedMin = Math.max(0, initialWaitTotal - reroutedWaitTotal);
+
+  const initialCostTotal = initialItinerary.reduce((acc, item) => acc + (item.costINR || 0), 0);
+  const reroutedCostTotal = reroutedItinerary.reduce((acc, item) => acc + (item.costINR || 0), 0);
+  const costSavedINR = Math.max(0, initialCostTotal - reroutedCostTotal);
+
+  const initialAvgCrowd = Math.round(initialItinerary.reduce((acc, item) => acc + item.crowdPct, 0) / initialItinerary.length);
+  const reroutedAvgCrowd = Math.round(reroutedItinerary.reduce((acc, item) => acc + item.crowdPct, 0) / reroutedItinerary.length);
+  const crowdingExposureReductionPct = Math.max(0, initialAvgCrowd - reroutedAvgCrowd);
+
+  const localPartnersSupported = reroutedItinerary.filter(i => i.localPartnerId).length;
+
+  return {
+    timeSavedMin,
+    costSavedINR,
+    crowdingExposureReductionPct,
+    localPartnersSupported,
+    initialAvgCrowd,
+    reroutedAvgCrowd,
+    initialWaitTotal,
+    reroutedWaitTotal
+  };
+}
+
+
+  /**
+ * ROAM Cultural Canvas Component
+ * Manages dynamic CSS variable overrides and ambient SVG silhouettes (at 5%–15% opacity)
+ */
+
+
+class CulturalCanvasController {
+  constructor() {
+    this.bgLayer = document.getElementById('cultural-bg-layer');
+    this.currentThemeId = 'jaipur';
+  }
+
+  applyTheme(themeId) {
+    const theme = LOCATION_THEMES[themeId] || LOCATION_THEMES.default;
+    this.currentThemeId = themeId;
+
+    // 1. Update CSS Variables on Root Document Element
+    const root = document.documentElement;
+    root.style.setProperty('--roam-bg', theme.colors.bg);
+    root.style.setProperty('--roam-surface', theme.colors.bgSurface);
+    root.style.setProperty('--roam-card', theme.colors.bgCard);
+    root.style.setProperty('--roam-elevated', theme.colors.bgElevated);
+    root.style.setProperty('--roam-accent', theme.colors.accent);
+    root.style.setProperty('--roam-accent-soft', theme.colors.accentSoft);
+    root.style.setProperty('--roam-accent-border', theme.colors.accentBorder);
+    root.style.setProperty('--roam-accent-glow', theme.colors.activeGlow);
+    root.style.setProperty('--roam-text-primary', theme.colors.textPrimary);
+    root.style.setProperty('--roam-text-secondary', theme.colors.textSecondary);
+
+    // 2. Crossfade Background Architectural Silhouette (5%-15% opacity)
+    if (this.bgLayer) {
+      this.bgLayer.style.opacity = '0';
+      setTimeout(() => {
+        this.bgLayer.innerHTML = `
+          <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            ${theme.silhouetteSvg}
+          </svg>
+        `;
+        this.bgLayer.style.opacity = '1';
+      }, 250);
+    }
+  }
+}
+
+  /**
+ * ROAM Spatial Search Bar & Autocomplete Component
+ * "WHERE ARE YOU GOING?"
+ * Filters 100% India-Only Locations: Cities, Towns, Villages, Rural Areas, Tourist Sites
+ */
+
+
+class SearchBarController {
+  constructor(options = {}) {
+    this.container = document.getElementById('spatial-search-mount');
+    this.onSelectLocation = options.onSelectLocation || (() => {});
+    this.activeLocationId = 'jaipur';
+    this.init();
+  }
+
+  init() {
+    if (!this.container) return;
+    this.render();
+    this.attachEvents();
+  }
+
+  render() {
+    this.container.innerHTML = `
+      <div class="spatial-search-container">
+        <div class="spatial-search-box">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="spatial-search-input" 
+            class="spatial-search-input" 
+            placeholder="Where are you going in India? (e.g. Jaipur, Varanasi, Pushkar, Leh...)" 
+            autocomplete="off" 
+            spellcheck="false"
+          />
+          <span class="search-shortcut-hint">/</span>
+        </div>
+
+        <!-- Quick selection chips -->
+        <div class="search-quick-chips">
+          <span style="font-size:0.72rem; color:var(--text-muted); font-weight:600;">POPULAR:</span>
+          <button class="quick-chip ${this.activeLocationId === 'jaipur' ? 'active' : ''}" data-id="jaipur">Jaipur (Full)</button>
+          <button class="quick-chip ${this.activeLocationId === 'varanasi' ? 'active' : ''}" data-id="varanasi">Varanasi (Full)</button>
+          <button class="quick-chip ${this.activeLocationId === 'mumbai' ? 'active' : ''}" data-id="mumbai">Mumbai (Full)</button>
+          <button class="quick-chip ${this.activeLocationId === 'kochi' ? 'active' : ''}" data-id="kochi">Kochi (Full)</button>
+          <button class="quick-chip ${this.activeLocationId === 'leh' ? 'active' : ''}" data-id="leh">Leh Ladakh (Full)</button>
+          <button class="quick-chip ${this.activeLocationId === 'delhi' ? 'active' : ''}" data-id="delhi">Delhi (Full)</button>
+          <button class="quick-chip ${this.activeLocationId === 'pushkar' ? 'active' : ''}" data-id="pushkar">Pushkar (Partial)</button>
+        </div>
+
+        <!-- Autocomplete Dropdown List -->
+        <div id="spatial-search-results" class="search-results-dropdown"></div>
+      </div>
+    `;
+  }
+
+  attachEvents() {
+    const input = document.getElementById('spatial-search-input');
+    const dropdown = document.getElementById('spatial-search-results');
+
+    if (!input || !dropdown) return;
+
+    // Keyboard shortcut "/" to focus search
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== input) {
+        e.preventDefault();
+        input.focus();
+        input.select();
+      } else if (e.key === 'Escape') {
+        dropdown.classList.remove('visible');
+      }
+    });
+
+    // Input typeahead search
+    input.addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      if (!q) {
+        dropdown.classList.remove('visible');
+        return;
+      }
+
+      const matches = ALL_INDIAN_LOCATIONS.filter(loc => {
+        return loc.name.toLowerCase().includes(q) ||
+               loc.state.toLowerCase().includes(q) ||
+               loc.type.toLowerCase().includes(q) ||
+               loc.tags.some(t => t.toLowerCase().includes(q));
+      }).slice(0, 8);
+
+      if (matches.length === 0) {
+        dropdown.innerHTML = `
+          <div style="padding:14px; text-align:center; color:var(--text-muted); font-size:0.85rem;">
+            No specific matching Indian location. Try searching for major cities, towns, or heritage districts.
+          </div>
+        `;
+        dropdown.classList.add('visible');
+        return;
+      }
+
+      dropdown.innerHTML = matches.map(m => {
+        const typeClass = 'type-' + m.type.toLowerCase();
+        const tierBadge = m.tier === 'FULL' 
+          ? '<span style="font-size:0.65rem; color:#6ee7b7; font-weight:700; font-family:var(--font-mono); margin-left:6px;">[FULL INTEL]</span>' 
+          : '<span style="font-size:0.65rem; color:#fcd34d; font-weight:700; font-family:var(--font-mono); margin-left:6px;">[PARTIAL]</span>';
+
+        return `
+          <div class="search-result-item" data-id="${m.id}">
+            <div class="res-main">
+              <div class="res-name">${m.name} ${tierBadge}</div>
+              <div class="res-state">${m.state} • ${m.region} Region</div>
+            </div>
+            <span class="res-badge ${typeClass}">${m.type.replace('_', ' ')}</span>
+          </div>
+        `;
+      }).join('');
+
+      dropdown.classList.add('visible');
+    });
+
+    // Dropdown selection click
+    dropdown.addEventListener('click', (e) => {
+      const item = e.target.closest('.search-result-item');
+      if (!item) return;
+      const locId = item.dataset.id;
+      this.selectLocation(locId);
+      dropdown.classList.remove('visible');
+      input.value = '';
+    });
+
+    // Quick chips click
+    this.container.addEventListener('click', (e) => {
+      const chip = e.target.closest('.quick-chip');
+      if (chip) {
+        const locId = chip.dataset.id;
+        this.selectLocation(locId);
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!this.container.contains(e.target)) {
+        dropdown.classList.remove('visible');
+      }
+    });
+  }
+
+  selectLocation(locId) {
+    this.activeLocationId = locId;
+    this.container.querySelectorAll('.quick-chip').forEach(c => {
+      if (c.dataset.id === locId) {
+        c.classList.add('active');
+      } else {
+        c.classList.remove('active');
+      }
+    });
+    this.onSelectLocation(locId);
+  }
+
+  setActive(locId) {
+    this.activeLocationId = locId;
+    this.container.querySelectorAll('.quick-chip').forEach(c => {
+      if (c.dataset.id === locId) {
+        c.classList.add('active');
+      } else {
+        c.classList.remove('active');
+      }
+    });
+  }
+}
+
+  /**
+ * ROAM Place Identity Component
+ * Renders concise Cultural DNA: KNOWN FOR, TASTE, LANDSCAPE, FESTIVALS
+ */
+
+class PlaceIdentityController {
+  constructor(mountId) {
+    this.mount = document.getElementById(mountId);
+  }
+
+  render(locationData) {
+    if (!this.mount || !locationData) return;
+
+    const dna = locationData.culturalDNA || {
+      knownFor: ['Regional Cultural Heritage', 'Grassroots Craftsmanship', 'Ancient Community Centers'],
+      taste: ['Traditional Regional Delicacies', 'Locally Harvested Spices'],
+      landscape: ['Historic Geography', 'Subtropical / Semi-arid terrain'],
+      festivals: ['Annual Cultural Fairs', 'Regional Community Celebrations']
+    };
+
+    const isPartial = locationData.intelligenceTier === 'PARTIAL';
+
+    this.mount.innerHTML = `
+      <div class="place-identity-panel">
+        <div class="place-identity-header">
+          <div class="place-title-wrap">
+            <span class="place-region-badge">
+              ${locationData.state || 'India'} • ${locationData.culturalRegion || locationData.region || 'Heritage Zone'}
+            </span>
+            <div class="place-name">
+              <span>${locationData.name}</span>
+              ${isPartial 
+                ? '<span class="badge badge-elevated">PARTIAL LOCATION INTELLIGENCE</span>'
+                : '<span class="badge badge-optimal">FULL INTELLIGENCE ACTIVE</span>'
+              }
+            </div>
+            <div class="place-atmosphere-tag">${locationData.tagline || 'Living Destination Layer'}</div>
+          </div>
+
+          <div style="text-align:right;">
+            <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">LOCATION TYPE</div>
+            <div style="font-size:1.1rem; font-weight:800; font-family:var(--font-mono); color:var(--roam-accent);">
+              ${locationData.type || 'DESTINATION'}
+            </div>
+          </div>
+        </div>
+
+        <!-- Cultural DNA Grid -->
+        <div class="cultural-dna-grid">
+          <!-- 1. Known For -->
+          <div class="dna-card">
+            <div class="dna-label"><span>🏛️</span> KNOWN FOR</div>
+            <ul class="dna-list">
+              ${(dna.knownFor || []).map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- 2. Taste -->
+          <div class="dna-card">
+            <div class="dna-label"><span>🍲</span> TASTE</div>
+            <ul class="dna-list">
+              ${(dna.taste || []).map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- 3. Landscape -->
+          <div class="dna-card">
+            <div class="dna-label"><span>🌄</span> LANDSCAPE</div>
+            <ul class="dna-list">
+              ${(dna.landscape || []).map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- 4. Festivals -->
+          <div class="dna-card">
+            <div class="dna-label"><span>🪔</span> FESTIVALS</div>
+            <ul class="dna-list">
+              ${(dna.festivals || []).map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+  /**
+ * ROAM Discover View Component
+ * Interactive Regional Explorer for India: North, South, West, East, Northeast
+ */
+
+
+class DiscoverViewController {
+  constructor(mountId, options = {}) {
+    this.mount = document.getElementById(mountId);
+    this.onSelectLocation = options.onSelectLocation || (() => {});
+    this.activeFilter = 'ALL';
+    this.init();
+  }
+
+  init() {
+    if (!this.mount) return;
+    this.render();
+  }
+
+  setFilter(region) {
+    this.activeFilter = region;
+    this.render();
+  }
+
+  render() {
+    let filtered = ALL_INDIAN_LOCATIONS;
+    if (this.activeFilter !== 'ALL') {
+      filtered = ALL_INDIAN_LOCATIONS.filter(l => l.region === this.activeFilter);
+    }
+
+    this.mount.innerHTML = `
+      <div style="margin-bottom: var(--space-xl);">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--roam-accent); font-weight:800; letter-spacing:0.12em; margin-bottom:4px;">
+          National Destination Network
+        </div>
+        <h2 style="font-size:2rem; font-weight:900; color:#fff; letter-spacing:-0.02em;">REGIONAL INDIA EXPLORER</h2>
+        <p style="color:var(--text-secondary); max-width:720px; margin-top:4px;">
+          Explore live tourism demand telemetry, cultural DNA, and spatial dispersion across India's premier destinations, historic towns, and artisan villages.
+        </p>
+      </div>
+
+      <!-- Regional Filter Tabs -->
+      <div class="discover-filter-bar">
+        ${['ALL', 'NORTH', 'SOUTH', 'WEST', 'EAST', 'NORTHEAST'].map(reg => `
+          <button class="discover-filter-btn ${this.activeFilter === reg ? 'active' : ''}" data-region="${reg}">
+            ${reg === 'ALL' ? 'All Regions (India)' : reg + ' India'}
+          </button>
+        `).join('')}
+      </div>
+
+      <!-- Grid of Indian Destinations -->
+      <div class="discover-cards-grid">
+        ${filtered.map(loc => {
+          const isFull = loc.tier === 'FULL';
+          const typeClass = 'type-' + loc.type.toLowerCase();
+
+          return `
+            <div class="discover-card">
+              <div>
+                <div class="discover-card-top">
+                  <div>
+                    <div class="discover-city-name">${loc.name}</div>
+                    <div class="discover-state-name">${loc.state} • ${loc.region}</div>
+                  </div>
+                  <span class="res-badge ${typeClass}">${loc.type.replace('_', ' ')}</span>
+                </div>
+
+                <div style="margin-top:6px;">
+                  ${isFull 
+                    ? '<span class="badge badge-optimal">✓ FULL TELEMETRY</span>'
+                    : '<span class="badge badge-elevated">PARTIAL INTELLIGENCE</span>'
+                  }
+                </div>
+
+                <div class="discover-tagline">
+                  Tags: ${loc.tags.slice(0, 3).join(' • ')}
+                </div>
+              </div>
+
+              <button class="discover-action-btn" data-id="${loc.id}">
+                <span>EXPLORE DEMAND FLOWS ➔</span>
+              </button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    this.attachEvents();
+  }
+
+  attachEvents() {
+    this.mount.querySelectorAll('.discover-filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        this.setFilter(e.currentTarget.dataset.region);
+      });
+    });
+
+    this.mount.querySelectorAll('.discover-action-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        this.onSelectLocation(id);
+      });
+    });
+  }
+}
+
+  /**
+ * ROAM Interactive Destination Load Map
+ * Vector SVG Canvas with dynamic nodes, radar pulses & demand flow vectors
+ * Supports any active Indian destination or graceful partial overview
+ */
+
+class DestinationLoadMap {
+  constructor(containerId, options = {}) {
+    this.container = document.getElementById(containerId);
+    this.locationData = null;
+    this.attractions = [];
+    this.flowVectors = [];
+    this.currentFilter = 'all'; // 'all' | 'critical' | 'optimal'
+    this.onNodeClick = options.onNodeClick || null;
+    this.showFlowVectors = true;
+    this.activeReroute = false;
+  }
+
+  setDestination(locationData) {
+    this.locationData = locationData;
+    this.attractions = locationData.attractions || [];
+    this.flowVectors = locationData.flowVectors || [
+      { from: this.attractions[0]?.id, to: this.attractions[2]?.id, color: '#8b5cf6' },
+      { from: this.attractions[1]?.id, to: this.attractions[3]?.id, color: '#10b981' }
+    ].filter(v => v.from && v.to);
+    this.render();
+  }
+
+  setFilter(filter) {
+    this.currentFilter = filter;
+    this.render();
+  }
+
+  setRerouteState(active) {
+    this.activeReroute = active;
+    this.render();
+  }
+
+  render() {
+    if (!this.container) return;
+
+    // Graceful Partial Intelligence fallback on map
+    if (!this.locationData || this.locationData.intelligenceTier === 'PARTIAL') {
+      this.renderPartialMap();
+      return;
+    }
+
+    const width = 860;
+    const height = 620;
+
+    let filteredNodes = this.attractions;
+    if (this.currentFilter === 'critical') {
+      filteredNodes = this.attractions.filter(a => a.status === 'critical' || a.status === 'elevated');
+    } else if (this.currentFilter === 'optimal') {
+      filteredNodes = this.attractions.filter(a => a.status === 'optimal');
+    }
+
+    let svgHtml = `
+      <svg class="map-svg" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow-critical" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ef4444" stop-opacity="0.45" />
+            <stop offset="100%" stop-color="#ef4444" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="glow-optimal" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#10b981" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="glow-elevated" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.4" />
+            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+
+        <!-- Coordinate Grid -->
+        <g class="map-grid">
+          ${Array.from({ length: 12 }).map((_, i) => `
+            <line x1="${i * 80}" y1="0" x2="${i * 80}" y2="${height}" class="map-grid-line" />
+            <line x1="0" y1="${i * 60}" x2="${width}" y2="${i * 60}" class="map-grid-line" />
+          `).join('')}
+        </g>
+
+        <!-- Dynamic Natural Topography Contours -->
+        <path d="M 180,80 Q 320,180 340,330 T 400,560" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="20" stroke-linecap="round" />
+        <path d="M 600,100 Q 680,290 620,530" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="16" stroke-linecap="round" />
+
+        <!-- Demand Flow Vectors -->
+        <g class="demand-vectors">
+          ${this.flowVectors.map(vec => {
+            const src = this.attractions.find(a => a.id === vec.from);
+            const dst = this.attractions.find(a => a.id === vec.to);
+            if (!src || !dst) return '';
+
+            const midX = (src.coords.x + dst.coords.x) / 2 + (src.coords.y < dst.coords.y ? -35 : 35);
+            const midY = (src.coords.y + dst.coords.y) / 2;
+
+            return `
+              <g opacity="${this.showFlowVectors ? '0.85' : '0.2'}">
+                <path d="M ${src.coords.x},${src.coords.y} Q ${midX},${midY} ${dst.coords.x},${dst.coords.y}" 
+                      fill="none" 
+                      stroke="${vec.color}" 
+                      stroke-width="2.5" 
+                      stroke-dasharray="6,4" 
+                      class="flow-path-animated" />
+                <circle cx="${dst.coords.x}" cy="${dst.coords.y}" r="4" fill="${vec.color}" />
+              </g>
+            `;
+          }).join('')}
+        </g>
+
+        <!-- Attraction Nodes -->
+        <g class="map-nodes">
+          ${filteredNodes.map(att => {
+            const isCritical = att.status === 'critical';
+            const isElevated = att.status === 'elevated';
+            const isOptimal = att.status === 'optimal';
+            
+            const color = isCritical ? '#ef4444' : isElevated ? '#f59e0b' : '#10b981';
+            const glowId = isCritical ? 'glow-critical' : isElevated ? 'glow-elevated' : 'glow-optimal';
+            const radius = isCritical ? 24 : isElevated ? 20 : 16;
+
+            return `
+              <g class="map-node ${isCritical ? 'node-pulse' : ''}" 
+                 data-id="${att.id}" 
+                 style="cursor:pointer;"
+                 transform="translate(${att.coords.x}, ${att.coords.y})">
+                
+                <circle r="${radius * 2.2}" fill="url(#${glowId})" />
+                <circle r="${radius}" fill="#0c121e" stroke="${color}" stroke-width="2.5" />
+                <text y="4" text-anchor="middle" fill="#fff" font-size="11" font-weight="800" font-family="var(--font-mono)">
+                  ${att.loadPercentage}%
+                </text>
+
+                <!-- Label Badge -->
+                <g transform="translate(0, ${radius + 16})">
+                  <rect x="-65" y="-12" width="130" height="24" rx="4" fill="rgba(12, 18, 30, 0.9)" stroke="${color}" stroke-width="1" />
+                  <text y="3" text-anchor="middle" fill="#f8fafc" font-size="10.5" font-weight="700" font-family="var(--font-sans)">
+                    ${att.name.length > 17 ? att.name.substring(0, 16) + '…' : att.name}
+                  </text>
+                </g>
+              </g>
+            `;
+          }).join('')}
+        </g>
+      </svg>
+    `;
+
+    this.container.innerHTML = svgHtml;
+    this.attachNodeClickEvents();
+  }
+
+  renderPartialMap() {
+    const loc = this.locationData;
+    this.container.innerHTML = `
+      <div style="height:100%; min-height:480px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:var(--space-xl); text-align:center; background:radial-gradient(circle at center, rgba(245, 158, 11, 0.06) 0%, transparent 70%);">
+        <span style="font-size:2.8rem; margin-bottom:12px;">🧭</span>
+        <span class="partial-badge">REGIONAL CLUSTER MAPPING ACTIVE</span>
+        <h3 style="font-size:1.6rem; font-weight:800; color:#fff; margin-bottom:6px;">${loc.name} Demand Telemetry</h3>
+        <p style="color:var(--text-secondary); max-width:560px; font-size:0.9rem; line-height:1.5; margin-bottom:16px;">
+          Sensor array and grassroots merchant onboarding are underway in the ${loc.district || loc.state} corridor. Live crowd redistribution will link directly to nearby regional hub: <strong style="color:var(--roam-accent)">${loc.nearbyHub || 'Jaipur'}</strong>.
+        </p>
+        <div style="display:flex; gap:10px; font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted);">
+          <span>COORDINATES: ${loc.coords?.lat || 26.48}° N, ${loc.coords?.lng || 74.55}° E</span>
+          <span>•</span>
+          <span>HERITAGE SITES MONITORED: ${(loc.heritagePoints || []).length || 3}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  attachNodeClickEvents() {
+    const nodes = this.container.querySelectorAll('.map-node');
+    nodes.forEach(node => {
+      node.addEventListener('click', () => {
+        const id = node.dataset.id;
+        const attraction = this.attractions.find(a => a.id === id);
+        if (attraction && this.onNodeClick) {
+          this.onNodeClick(attraction);
+        }
+      });
+    });
+  }
+}
+
+  /**
+ * ROAM Tourist Mode (Explore View) Component
+ * Destination Health Telemetry, Alternative Recommendations, and Dynamic Rerouting
+ * Dynamically adapts to active Indian destination
+ */
+
+
+class TouristModeController {
+  constructor(mapInstance) {
+    this.map = mapInstance;
+    this.locationData = null;
+    this.isRerouted = false;
+  }
+
+  setDestination(locationData) {
+    this.locationData = locationData;
+    this.isRerouted = false;
+
+    if (this.map) {
+      this.map.setDestination(locationData);
+    }
+
+    this.render();
+  }
+
+  render() {
+    if (!this.locationData) return;
+
+    if (this.locationData.intelligenceTier === 'PARTIAL') {
+      this.renderPartialIntelligence();
+      return;
+    }
+
+    this.renderHealthBar();
+    this.renderRecommendations();
+    this.renderRerouteBanner();
+    this.renderItinerary();
+    this.attachRerouteButton();
+  }
+
+  renderPartialIntelligence() {
+    const loc = this.locationData;
+    const stage = document.getElementById('tourist-main-stage');
+    const healthBar = document.getElementById('tourist-health-bar');
+    const rerouteBanner = document.querySelector('.reroute-banner');
+    const itineraryContainer = document.getElementById('itinerary-container');
+
+    if (healthBar) {
+      healthBar.innerHTML = `
+        <div class="health-stat">
+          <span class="health-label">District Status</span>
+          <div class="health-value" style="font-size:1.1rem; color:#f59e0b;">
+            PARTIAL TELEMETRY
+          </div>
+        </div>
+        <div class="health-stat">
+          <span class="health-label">Region</span>
+          <div class="health-value" style="font-size:1.1rem; color:#fff;">
+            ${loc.state} (${loc.region})
+          </div>
+        </div>
+        <div class="health-stat">
+          <span class="health-label">Nearby Primary Hub</span>
+          <div class="health-value" style="font-size:1.1rem; color:var(--roam-accent);">
+            ${loc.nearbyHub || 'Jaipur'}
+          </div>
+        </div>
+        <div class="health-stat">
+          <span class="health-label">Expansion Phase</span>
+          <div class="health-value" style="font-size:1.1rem; color:#10b981;">
+            PILOT MAPPING
+          </div>
+        </div>
+      `;
+    }
+
+    if (rerouteBanner) {
+      rerouteBanner.style.display = 'none';
+    }
+
+    if (itineraryContainer) {
+      itineraryContainer.innerHTML = `
+        <div class="partial-intelligence-card">
+          <span class="partial-badge">PARTIAL LOCATION INTELLIGENCE</span>
+          <h3 class="partial-title">${loc.name} Demand Telemetry Underway</h3>
+          <p class="partial-sub">
+            ${loc.notes || 'This location is currently being indexed into the ROAM national grid. Cultural DNA and regional connectivity are fully mapped below.'}
+          </p>
+          <div style="margin-bottom:var(--space-md); font-size:0.88rem; color:var(--text-secondary);">
+            Nearest Fully Modeled Ecosystem: <strong style="color:#fff;">${loc.nearbyHub || 'Jaipur'}</strong>
+          </div>
+          <button class="partial-hub-jump-btn" id="jump-to-hub-btn" data-hub="${(loc.nearbyHub || 'Jaipur').toLowerCase()}">
+            SWITCH TO ${(loc.nearbyHub || 'JAIPUR').toUpperCase()} FULL INTELLIGENCE ➔
+          </button>
+        </div>
+      `;
+
+      const jumpBtn = document.getElementById('jump-to-hub-btn');
+      if (jumpBtn) {
+        jumpBtn.addEventListener('click', (e) => {
+          const hub = e.currentTarget.dataset.hub;
+          if (window.ROAM) window.ROAM.setLocation(hub);
+        });
+      }
+    }
+  }
+
+  renderHealthBar() {
+    const metrics = this.locationData.metrics;
+    const bar = document.getElementById('tourist-health-bar');
+    if (!bar) return;
+
+    bar.innerHTML = `
+      <div class="health-stat">
+        <span class="health-label">Visitor Concentration</span>
+        <div class="health-value">
+          <span style="color: ${this.isRerouted ? 'var(--load-optimal)' : 'var(--load-critical)'}">
+            ${this.isRerouted ? '52%' : metrics.visitorConcentration + '%'}
+          </span>
+          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:400;">
+            ${this.isRerouted ? 'Balanced Flow' : 'Top Hotspots'}
+          </span>
+        </div>
+        <div class="health-meter-track">
+          <div class="health-meter-fill" style="width:${this.isRerouted ? '52%' : metrics.visitorConcentration + '%'}; background:${this.isRerouted ? 'var(--load-optimal)' : 'var(--load-critical)'};"></div>
+        </div>
+      </div>
+
+      <div class="health-stat">
+        <span class="health-label">Average Attraction Load</span>
+        <div class="health-value">
+          <span style="color: #f59e0b;">${this.isRerouted ? '44%' : metrics.averageAttractionLoad + '%'}</span>
+        </div>
+        <div class="health-meter-track">
+          <div class="health-meter-fill" style="width:${this.isRerouted ? '44%' : metrics.averageAttractionLoad + '%'}; background:#f59e0b;"></div>
+        </div>
+      </div>
+
+      <div class="health-stat">
+        <span class="health-label">Tourism Distribution</span>
+        <div class="health-value" style="font-size:1.05rem;">
+          ${this.isRerouted 
+            ? '<span class="badge badge-optimal">✓ OPTIMALLY BALANCED</span>'
+            : '<span class="badge badge-critical">⚠ CRITICALLY CONCENTRATED</span>'
+          }
+        </div>
+      </div>
+
+      <div class="health-stat">
+        <span class="health-label">Local Business Opportunity</span>
+        <div class="health-value" style="font-size:1.05rem;">
+          <span class="badge badge-optimal">${metrics.localBusinessOpportunity || 'HIGH (ACTIVE HUBS)'}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  renderRecommendations() {
+    const stack = document.getElementById('recommendations-stack');
+    if (!stack) return;
+
+    const attractions = this.locationData.attractions || [];
+    const overloaded = attractions.filter(a => a.status === 'critical');
+    const optimal = attractions.filter(a => a.status === 'optimal');
+
+    if (overloaded.length === 0 || optimal.length === 0) {
+      stack.innerHTML = `<div style="color:var(--text-muted); font-size:0.85rem;">All sites in ${this.locationData.name} are currently operating at balanced loads.</div>`;
+      return;
+    }
+
+    const cardsHtml = optimal.slice(0, 2).map((opt, idx) => {
+      const src = overloaded[idx % overloaded.length];
+      const score = scoreAlternative(opt, src, { priority: 'culture' });
+
+      return `
+        <div class="alternative-card">
+          <div class="alt-pair-header">
+            <div>
+              <div class="alt-site-category">Curated Demand Surrogate</div>
+              <div class="alt-site-name">${opt.name}</div>
+            </div>
+            <span class="badge badge-optimal">${opt.loadPercentage}% Load (Optimal)</span>
+          </div>
+
+          <div class="alt-comparison-row">
+            <div class="comparison-from">
+              ${src.name}: <strong>${src.loadPercentage}%</strong> (${src.waitTimeMinutes}m wait)
+            </div>
+            <span style="color:var(--text-muted);">➔</span>
+            <div class="comparison-to">
+              ${opt.name}: <strong>${opt.loadPercentage}%</strong> (${opt.waitTimeMinutes}m wait)
+            </div>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:8px; line-height:1.4;">
+            ${opt.alternativeReason || 'Spacious heritage grounds with pristine architecture and immediate uncrowded access.'}
+          </p>
+
+          <div class="alt-metrics-grid">
+            <div class="alt-metric-cell">
+              <div class="alt-metric-val" style="color:var(--load-optimal);">-${Math.max(0, src.waitTimeMinutes - opt.waitTimeMinutes)} min</div>
+              <div class="alt-metric-lbl">Queue Saved</div>
+            </div>
+            <div class="alt-metric-cell">
+              <div class="alt-metric-val">${score.score}/100</div>
+              <div class="alt-metric-lbl">ROAM Match</div>
+            </div>
+            <div class="alt-metric-cell">
+              <div class="alt-metric-val" style="color:var(--brand-cyan);">₹${opt.ticketPriceINR}</div>
+              <div class="alt-metric-lbl">Admission</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    stack.innerHTML = cardsHtml;
+  }
+
+  renderRerouteBanner() {
+    const banner = document.querySelector('.reroute-banner');
+    if (!banner) return;
+    banner.style.display = 'flex';
+
+    const attractions = this.locationData.attractions || [];
+    const topOverloaded = attractions.find(a => a.status === 'critical') || attractions[0];
+
+    const textEl = banner.querySelector('.reroute-text');
+    if (textEl && topOverloaded) {
+      textEl.innerHTML = `
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.2rem;">⚡</span>
+          <h3>${topOverloaded.name} is experiencing severe congestion (${topOverloaded.loadPercentage}% load • ${topOverloaded.waitTimeMinutes} min wait)</h3>
+        </div>
+        <p>Click below to simulate real-time dynamic rerouting. ROAM restructures your schedule to avoid peak crowds.</p>
+      `;
+    }
+  }
+
+  renderItinerary() {
+    const container = document.getElementById('itinerary-container');
+    if (!container) return;
+
+    const attractions = this.locationData.attractions || [];
+    const items = this.isRerouted 
+      ? attractions.filter(a => a.status === 'optimal').slice(0, 4)
+      : attractions.slice(0, 4);
+
+    const times = ['09:00 AM', '11:30 AM', '02:00 PM', '04:30 PM'];
+
+    container.innerHTML = `
+      <div class="card-header">
+        <div>
+          <div style="font-size:0.75rem; text-transform:uppercase; color:var(--roam-accent); font-weight:700;">
+            ${this.isRerouted ? '✓ DYNAMICALLY OPTIMIZED DAY ROUTE' : 'STANDARD CROWDED ITINERARY'}
+          </div>
+          <h3 class="card-title">${this.locationData.name} Day Schedule</h3>
+        </div>
+        <span class="badge ${this.isRerouted ? 'badge-optimal' : 'badge-critical'}">
+          ${this.isRerouted ? 'BALANCED FLOW' : 'HIGH CONGESTION'}
+        </span>
+      </div>
+
+      <div class="timeline-container">
+        ${items.map((item, idx) => `
+          <div class="timeline-node">
+            <div class="timeline-time">${times[idx]}</div>
+            <div class="timeline-name">${item.name}</div>
+            <div class="timeline-wait" style="color: ${item.status === 'critical' ? 'var(--load-critical)' : 'var(--load-optimal)'}">
+              ${item.waitTimeMinutes}m wait (${item.loadPercentage}% load)
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  attachRerouteButton() {
+    const btn = document.getElementById('reroute-trigger-btn');
+    if (!btn) return;
+
+    btn.onclick = () => {
+      this.isRerouted = !this.isRerouted;
+      btn.innerHTML = this.isRerouted 
+        ? '<span>✓ REROUTE ACTIVE (RESET)</span>' 
+        : '<span>⚡ REROUTE MY DAY</span>';
+      
+      this.renderHealthBar();
+      this.renderItinerary();
+      if (this.map) {
+        this.map.setRerouteState(this.isRerouted);
+      }
+    };
+  }
+}
+
+  /**
+ * ROAM Local Business Intelligence Mode (Market View)
+ * Real-time Footfall Telemetry & Demand Pulse Dispatcher
+ * Adapts to active Indian destination
+ */
+
+class BusinessModeController {
+  constructor() {
+    this.locationData = null;
+    this.businesses = [];
+    this.activeBizId = null;
+    this.pulseActive = false;
+  }
+
+  setDestination(locationData) {
+    this.locationData = locationData;
+    this.businesses = locationData.businesses || locationData.localBusinesses || [];
+    this.activeBizId = this.businesses[0]?.id || null;
+    this.pulseActive = false;
+    this.render();
+  }
+
+  render() {
+    const container = document.getElementById('business-mode-container');
+    if (!container) return;
+
+    if (!this.locationData || this.locationData.intelligenceTier === 'PARTIAL' || this.businesses.length === 0) {
+      container.innerHTML = `
+        <div class="partial-intelligence-card">
+          <span class="partial-badge">LOCAL MERCHANT NETWORK EXPANSION</span>
+          <h3 class="partial-title">Grassroots Merchant Onboarding in ${this.locationData?.name || 'this District'}</h3>
+          <p class="partial-sub">
+            ROAM is currently cataloging local artisan guilds, heritage eateries, and handloom cooperatives in this zone to receive footfall diversions when nearby monuments bottleneck.
+          </p>
+        </div>
+      `;
+      return;
+    }
+
+    const currentBiz = this.businesses.find(b => b.id === this.activeBizId) || this.businesses[0];
+
+    container.innerHTML = `
+      <!-- Business Selector Chips -->
+      <div class="biz-selector-bar">
+        ${this.businesses.map(biz => `
+          <button class="biz-select-chip ${biz.id === this.activeBizId ? 'active' : ''}" data-id="${biz.id}">
+            🏪 ${biz.name}
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="biz-dashboard-grid">
+        <!-- Left: Local Business Telemetry -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; color:var(--brand-cyan); font-weight:700;">
+                ${currentBiz.zone}
+              </div>
+              <h3 class="card-title" style="margin-top:2px;">${currentBiz.name}</h3>
+              <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:2px;">
+                Managed by ${currentBiz.owner}
+              </div>
+            </div>
+            <span class="badge badge-optimal">⭐ ${currentBiz.rating} (${currentBiz.reviewsCount} reviews)</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin: 16px 0;">
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); padding:10px; border-radius:6px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:800; font-family:var(--font-mono); color:var(--brand-cyan);">
+                ${this.pulseActive ? '+34%' : '↑ 18%'}
+              </div>
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">Nearby Footfall</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); padding:10px; border-radius:6px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:800; font-family:var(--font-mono); color:#fff;">
+                ${currentBiz.touristsNearby.toLocaleString()}
+              </div>
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">Tourists Within 1km</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); padding:10px; border-radius:6px; text-align:center;">
+              <div style="font-size:1.4rem; font-weight:800; font-family:var(--font-mono); color:var(--load-optimal);">
+                ${this.pulseActive ? currentBiz.potentialVisitorsToday + 120 : currentBiz.potentialVisitorsToday}
+              </div>
+              <div style="font-size:0.7rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">Potential Visitors</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px; font-size:0.85rem; color:var(--text-secondary); line-height:1.5;">
+            <strong>Specialty:</strong> ${currentBiz.specialty}<br/>
+            <strong>Average Spend:</strong> ${currentBiz.priceRange}
+          </div>
+        </div>
+
+        <!-- Right: Demand Opportunity & ROAM Pulse Dispatch -->
+        <div class="card" style="border-color:var(--brand-cyan);">
+          <div class="card-header">
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; color:var(--brand-cyan); font-weight:700;">
+                Spillover Optimization Engine
+              </div>
+              <h3 class="card-title">Footfall Capture Opportunity</h3>
+            </div>
+            <span class="badge" style="background:rgba(6,182,212,0.15); color:var(--brand-cyan); border:1px solid rgba(6,182,212,0.3);">
+              HIGH POTENTIAL
+            </span>
+          </div>
+
+          <div style="background:rgba(6,182,212,0.05); border-left:3px solid var(--brand-cyan); padding:14px; border-radius:0 6px 6px 0; margin-bottom:16px;">
+            <p style="font-size:0.88rem; color:#e0f2fe; line-height:1.5;">
+              ${currentBiz.opportunityText}
+            </p>
+          </div>
+
+          <div style="margin-bottom:16px;">
+            <div style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:4px;">
+              RECOMMENDED INTERVENTION
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-primary); font-weight:600;">
+              ${currentBiz.recommendedAction}
+            </div>
+          </div>
+
+          <button id="dispatch-pulse-btn" class="reroute-btn" style="width:100%; justify-content:center; background:linear-gradient(135deg, var(--brand-cyan), #0284c7);">
+            <span>${this.pulseActive ? '✓ ROAM CRAFT PASS ACTIVE' : '⚡ DISPATCH ROAM CRAFT PASS'}</span>
+          </button>
+        </div>
+      </div>
+    `;
+
+    this.attachEvents();
+  }
+
+  attachEvents() {
+    const container = document.getElementById('business-mode-container');
+    if (!container) return;
+
+    container.querySelectorAll('.biz-select-chip').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        this.activeBizId = e.currentTarget.dataset.id;
+        this.render();
+      });
+    });
+
+    const pulseBtn = document.getElementById('dispatch-pulse-btn');
+    if (pulseBtn) {
+      pulseBtn.addEventListener('click', () => {
+        this.pulseActive = !this.pulseActive;
+        this.render();
+      });
+    }
+  }
+}
+
+  /**
+ * ROAM Destination Authority Mode (Control View)
+ * City Tourism Control Center & Interactive Policy Simulator
+ * Slider updates in-place smoothly WITHOUT re-rendering the DOM container
+ */
+
+
+class AuthorityModeController {
+  constructor() {
+    this.locationData = null;
+    this.redirectPct = 15;
+    this.incentiveTier = 'standard';
+  }
+
+  setDestination(locationData) {
+    this.locationData = locationData;
+    this.render();
+  }
+
+  render() {
+    const container = document.getElementById('authority-mode-container');
+    if (!container) return;
+
+    if (!this.locationData || this.locationData.intelligenceTier === 'PARTIAL') {
+      container.innerHTML = `
+        <div class="partial-intelligence-card">
+          <span class="partial-badge">MUNICIPAL SENSOR INTEGRATION</span>
+          <h3 class="partial-title">Destination Authority Grid for ${this.locationData?.name || 'this District'}</h3>
+          <p class="partial-sub">
+            Heritage strain telemetry and municipal turnstile integrations are active in primary hubs. In ${this.locationData?.name || 'this area'}, predictive policy simulations will launch alongside regional sensor deployment.
+          </p>
+        </div>
+      `;
+      return;
+    }
+
+    const simulation = simulatePolicyImpact(this.redirectPct, this.incentiveTier);
+    const m = simulation.metrics;
+    const attractions = this.locationData.attractions || [];
+    const criticalCount = attractions.filter(a => a.status === 'critical').length;
+
+    container.innerHTML = `
+      <div class="authority-grid">
+        <!-- Left Column: City Tourism Control Center Telemetry -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; color:var(--roam-accent); font-weight:700;">Municipal Destination Control</div>
+              <h3 class="card-title">${this.locationData.name} Heritage Grid Utilization</h3>
+            </div>
+            <span class="badge badge-critical">🚨 ${criticalCount} Critical Overloads</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
+            ${attractions.slice(0, 6).map(att => {
+              const color = att.status === 'critical' ? 'var(--load-critical)' : att.status === 'elevated' ? 'var(--load-elevated)' : 'var(--load-optimal)';
+              return `
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:3px;">
+                    <span style="font-weight:600;">${att.name}</span>
+                    <span style="font-family:var(--font-mono); color:${color}; font-weight:700;">
+                      ${att.currentVisitors.toLocaleString()} / ${att.capacityMax.toLocaleString()} (${att.loadPercentage}%)
+                    </span>
+                  </div>
+                  <div class="health-meter-track" style="height:6px;">
+                    <div class="health-meter-fill" style="width:${att.loadPercentage}%; background:${color};"></div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <div style="margin-top:18px; padding:12px; background:rgba(239,68,68,0.06); border-left:3px solid var(--load-critical); border-radius:0 6px 6px 0; font-size:0.82rem; color:#fca5a5;">
+            <strong>Heritage Preservation Alert:</strong> Key monuments in ${this.locationData.name} are operating above optimal structural throughput. Dynamic demand redistribution prevents stone degradation and excessive queue overcrowding.
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive 'What If?' Policy Simulator -->
+        <div class="card" style="background:linear-gradient(135deg, #111827, #0d121e); border-color:var(--border-medium);">
+          <div class="card-header">
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; color:var(--brand-purple); font-weight:700;">Intervention Testing Sandbox</div>
+              <h3 class="card-title">Simulate Demand Redistribution Policy</h3>
+            </div>
+            <span class="badge" style="background:rgba(139,92,246,0.15); color:#c4b5fd; border:1px solid rgba(139,92,246,0.3);">
+              PREDICTIVE ENGINE
+            </span>
+          </div>
+
+          <!-- Policy Slider Box -->
+          <div class="policy-slider-box">
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600;">
+              <span>Target Visitor Redistribution:</span>
+              <span id="slider-val-label" style="font-family:var(--font-mono); color:var(--roam-accent); font-size:1.1rem; font-weight:800;">
+                ${this.redirectPct}%
+              </span>
+            </div>
+            <input id="policy-slider-input" type="range" min="5" max="35" step="1" value="${this.redirectPct}" class="policy-slider">
+            <div style="display:flex; justify-content:space-between; font-size:0.7rem; color:var(--text-muted); font-family:var(--font-mono);">
+              <span>5% (Nudge)</span>
+              <span>15% (Recommended)</span>
+              <span>35% (Aggressive)</span>
+            </div>
+          </div>
+
+          <!-- Policy Impact Output Cards (Updated in-place) -->
+          <div class="policy-impact-cards">
+            <div class="policy-stat-card">
+              <div id="stat-congestion" class="policy-stat-val">↓ ${m.peakCongestionReductionPct}%</div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-top:2px;">
+                Peak Congestion Reduction
+              </div>
+            </div>
+            <div class="policy-stat-card">
+              <div id="stat-delays" class="policy-stat-val">↓ ${m.travelTimeReductionPct}%</div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-top:2px;">
+                Average Transit Delays
+              </div>
+            </div>
+            <div class="policy-stat-card">
+              <div id="stat-uplift" class="policy-stat-val" style="color:var(--load-optimal);">↑ ${m.underutilizedVisitsUpliftPct}%</div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-top:2px;">
+                Lesser-Known Site Visits
+              </div>
+            </div>
+            <div class="policy-stat-card">
+              <div id="stat-revenue" class="policy-stat-val" style="color:var(--brand-cyan);">↑ ${m.localBusinessExposureUpliftPct}%</div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-top:2px;">
+                Local Merchant Revenue
+              </div>
+            </div>
+          </div>
+
+          <div id="simulation-insight-text" style="margin-top:16px; font-size:0.82rem; color:var(--text-secondary); line-height:1.45;">
+            <strong>Simulation Insight:</strong> Shifting ${this.redirectPct}% of peak visitors in ${this.locationData.name} toward underutilized cultural surrogates eliminates over ${Math.round(this.redirectPct * 210)} tourist delay hours daily.
+          </div>
+        </div>
+      </div>
+    `;
+
+    this.attachEvents();
+  }
+
+  attachEvents() {
+    const slider = document.getElementById('policy-slider-input');
+    if (slider) {
+      // Update in-place smoothly without re-rendering the DOM container!
+      slider.addEventListener('input', (e) => {
+        this.redirectPct = parseInt(e.target.value, 10);
+        this.updateInPlace();
+      });
+    }
+  }
+
+  updateInPlace() {
+    const label = document.getElementById('slider-val-label');
+    if (label) label.textContent = `${this.redirectPct}%`;
+
+    const simulation = simulatePolicyImpact(this.redirectPct, this.incentiveTier);
+    const m = simulation.metrics;
+
+    const elCongestion = document.getElementById('stat-congestion');
+    const elDelays = document.getElementById('stat-delays');
+    const elUplift = document.getElementById('stat-uplift');
+    const elRevenue = document.getElementById('stat-revenue');
+    const elInsight = document.getElementById('simulation-insight-text');
+
+    if (elCongestion) elCongestion.textContent = `↓ ${m.peakCongestionReductionPct}%`;
+    if (elDelays) elDelays.textContent = `↓ ${m.travelTimeReductionPct}%`;
+    if (elUplift) elUplift.textContent = `↑ ${m.underutilizedVisitsUpliftPct}%`;
+    if (elRevenue) elRevenue.textContent = `↑ ${m.localBusinessExposureUpliftPct}%`;
+
+    if (elInsight && this.locationData) {
+      elInsight.innerHTML = `<strong>Simulation Insight:</strong> Shifting ${this.redirectPct}% of peak visitors in ${this.locationData.name} toward underutilized cultural surrogates eliminates over ${Math.round(this.redirectPct * 210)} tourist delay hours daily.`;
+    }
+  }
+}
+
+  /**
+ * ROAM Before / After Demonstration Component
+ * "See The Difference" - Side-by-Side Architectural Contrast
+ */
+
+class BeforeAfterController {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.init();
+  }
+
+  init() {
+    if (!this.container) return;
+    this.render();
+  }
+
+  render() {
+    this.container.innerHTML = `
+      <div class="difference-header">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--brand-primary); font-weight:700; letter-spacing:0.12em; margin-bottom:4px;">
+          Architectural Contrast
+        </div>
+        <h2>SEE THE DIFFERENCE</h2>
+        <p>Why unmanaged tourism fails both travelers and host communities, and how ROAM creates equilibrium.</p>
+      </div>
+
+      <div class="split-comparison-container">
+        <!-- Left: Without ROAM -->
+        <div class="comp-column comp-without">
+          <div class="comp-col-title" style="color:#ef4444;">
+            <span>❌</span> WITHOUT ROAM
+          </div>
+          <div style="font-size:0.85rem; color:#fca5a5;">The Default Crowd Bottleneck</div>
+
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Tourist Concentration
+              </div>
+              <div style="font-size:1.3rem; font-weight:800; font-family:var(--font-mono); color:#ef4444;">
+                88% concentrated in top 3 sites
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Average Monument Queue
+              </div>
+              <div style="font-size:1.3rem; font-weight:800; font-family:var(--font-mono); color:#ef4444;">
+                42 min wait per entry
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Local Artisan Exposure
+              </div>
+              <div style="font-size:1.3rem; font-weight:800; font-family:var(--font-mono); color:#ef4444;">
+                Low (&lt; 8% footfall capture)
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Tourist Experience
+              </div>
+              <div style="font-size:0.9rem; color:#cbd5e1; line-height:1.4;">
+                Hot parking lots, endless ticket queues, rushed photos over strangers' shoulders, and missed heritage.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: With ROAM -->
+        <div class="comp-column comp-with">
+          <div class="comp-col-title" style="color:var(--load-optimal);">
+            <span>✓</span> WITH ROAM
+          </div>
+          <div style="font-size:0.85rem; color:#a7f3d0;">The Balanced Demand Ecosystem</div>
+
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Tourist Concentration
+              </div>
+              <div style="font-size:1.3rem; font-weight:800; font-family:var(--font-mono); color:var(--load-optimal);">
+                52% harmoniously distributed
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Average Monument Queue
+              </div>
+              <div style="font-size:1.3rem; font-weight:800; font-family:var(--font-mono); color:var(--load-optimal);">
+                12 min wait (71% faster)
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Local Artisan Exposure
+              </div>
+              <div style="font-size:1.3rem; font-weight:800; font-family:var(--font-mono); color:var(--load-optimal);">
+                +31% direct artisan store visits
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:0.72rem; text-transform:uppercase; color:var(--text-muted); font-weight:600;">
+                Tourist Experience
+              </div>
+              <div style="font-size:0.9rem; color:#cbd5e1; line-height:1.4;">
+                Tranquil courtyards, hands-on block printing havelis, authentic street cuisine, and deeper discovery.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+  /**
+ * ROAM City-Scale Impact Calculator
+ * Dynamic macro simulation with interactive inputs (in-place updates)
+ */
+
+
+class ImpactCalcController {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.tourists = 60000;
+    this.redirect = 18;
+    this.spend = 3500;
+    this.init();
+  }
+
+  init() {
+    if (!this.container) return;
+    this.render();
+    this.attachEvents();
+  }
+
+  render() {
+    const data = calculateMacroImpact(this.tourists, this.redirect, this.spend, 82);
+    const r = data.results;
+
+    this.container.innerHTML = `
+      <div style="text-align:center;">
+        <div style="font-size:0.75rem; text-transform:uppercase; color:var(--roam-accent); font-weight:800; letter-spacing:0.12em; margin-bottom:4px;">
+          Macro Simulation Engine
+        </div>
+        <h2 style="font-size:1.8rem; font-weight:800; color:#fff;">CITY-SCALE IMPACT CALCULATOR</h2>
+        <p style="color:var(--text-secondary); max-width:640px; margin:0 auto;">
+          Simulate how shifting a percentage of travelers across a destination redistributes revenue and reduces infrastructure friction.
+        </p>
+      </div>
+
+      <div class="calc-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-lg); margin-top:var(--space-lg);">
+        <!-- Sliders -->
+        <div class="calc-inputs" style="background:var(--roam-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:var(--space-lg); display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600; margin-bottom:4px;">
+              <span>Monthly Destination Visitors:</span>
+              <span id="label-calc-tourists" style="font-family:var(--font-mono); color:var(--roam-accent); font-weight:700;">${this.tourists.toLocaleString()}</span>
+            </div>
+            <input id="calc-tourists-input" type="range" min="20000" max="150000" step="5000" value="${this.tourists}" class="policy-slider">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600; margin-bottom:4px;">
+              <span>Redistribution Target:</span>
+              <span id="label-calc-redirect" style="font-family:var(--font-mono); color:var(--roam-accent); font-weight:700;">${this.redirect}%</span>
+            </div>
+            <input id="calc-redirect-input" type="range" min="5" max="35" step="1" value="${this.redirect}" class="policy-slider">
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; font-weight:600; margin-bottom:4px;">
+              <span>Average Daily Tourist Spend (₹):</span>
+              <span id="label-calc-spend" style="font-family:var(--font-mono); color:var(--roam-accent); font-weight:700;">₹${this.spend.toLocaleString()}</span>
+            </div>
+            <input id="calc-spend-input" type="range" min="1000" max="10000" step="500" value="${this.spend}" class="policy-slider">
+          </div>
+        </div>
+
+        <!-- Output Metric Dashboard -->
+        <div class="calc-output-box" style="background:var(--roam-card); border:1px solid var(--border-subtle); border-radius:var(--radius-md); padding:var(--space-lg); display:flex; flex-direction:column; justify-content:space-around;">
+          <div class="calc-output-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-subtle);">
+            <span class="calc-output-label" style="font-size:0.85rem; color:var(--text-secondary);">Visitors Intelligently Redistributed</span>
+            <span id="out-calc-redistributed" class="calc-output-value" style="font-size:1.15rem; font-weight:800; font-family:var(--font-mono); color:#fff;">${r.touristsRedistributed.toLocaleString()} / mo</span>
+          </div>
+
+          <div class="calc-output-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-subtle);">
+            <span class="calc-output-label" style="font-size:0.85rem; color:var(--text-secondary);">Revenue Injected into Local Economy</span>
+            <span id="out-calc-revenue" class="calc-output-value" style="font-size:1.15rem; font-weight:800; font-family:var(--font-mono); color:var(--brand-cyan);">₹${r.additionalLocalSpendCrores} Crores</span>
+          </div>
+
+          <div class="calc-output-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-subtle);">
+            <span class="calc-output-label" style="font-size:0.85rem; color:var(--text-secondary);">Total Tourist Queue Hours Saved</span>
+            <span id="out-calc-hours" class="calc-output-value" style="font-size:1.15rem; font-weight:800; font-family:var(--font-mono); color:#fff;">${r.queueHoursSavedTotal.toLocaleString()} hrs</span>
+          </div>
+
+          <div class="calc-output-row" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0;">
+            <span class="calc-output-label" style="font-size:0.85rem; color:var(--text-secondary);">Peak Monument Congestion Relieved</span>
+            <span id="out-calc-congestion" class="calc-output-value" style="font-size:1.15rem; font-weight:800; font-family:var(--font-mono); color:var(--load-optimal);">-${r.congestionReductionPct}%</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  attachEvents() {
+    const tInput = document.getElementById('calc-tourists-input');
+    const rInput = document.getElementById('calc-redirect-input');
+    const sInput = document.getElementById('calc-spend-input');
+
+    if (tInput) tInput.addEventListener('input', (e) => {
+      this.tourists = parseInt(e.target.value, 10);
+      this.updateInPlace();
+    });
+    if (rInput) rInput.addEventListener('input', (e) => {
+      this.redirect = parseInt(e.target.value, 10);
+      this.updateInPlace();
+    });
+    if (sInput) sInput.addEventListener('input', (e) => {
+      this.spend = parseInt(e.target.value, 10);
+      this.updateInPlace();
+    });
+  }
+
+  updateInPlace() {
+    const elT = document.getElementById('label-calc-tourists');
+    const elR = document.getElementById('label-calc-redirect');
+    const elS = document.getElementById('label-calc-spend');
+    if (elT) elT.textContent = this.tourists.toLocaleString();
+    if (elR) elR.textContent = `${this.redirect}%`;
+    if (elS) elS.textContent = `₹${this.spend.toLocaleString()}`;
+
+    const data = calculateMacroImpact(this.tourists, this.redirect, this.spend, 82);
+    const r = data.results;
+
+    const outRed = document.getElementById('out-calc-redistributed');
+    const outRev = document.getElementById('out-calc-revenue');
+    const outHrs = document.getElementById('out-calc-hours');
+    const outCng = document.getElementById('out-calc-congestion');
+
+    if (outRed) outRed.textContent = `${r.touristsRedistributed.toLocaleString()} / mo`;
+    if (outRev) outRev.textContent = `₹${r.additionalLocalSpendCrores} Crores`;
+    if (outHrs) outHrs.textContent = `${r.queueHoursSavedTotal.toLocaleString()} hrs`;
+    if (outCng) outCng.textContent = `-${r.congestionReductionPct}%`;
+  }
+}
+
+  /**
+ * ROAM 90-Second Hackathon Demo Tour Guide
+ * Interactive walkthrough guiding judges through the complete thesis & platform.
+ */
+
+class HackathonGuide {
+  constructor(appController) {
+    this.app = appController;
+    this.currentStep = 0;
+    this.steps = [
+      {
+        step: 1,
+        title: 'Step 1: The Core Thesis & Load Map',
+        badge: 'PROBLEM DEMONSTRATION',
+        desc: 'Observe the Destination Load Map. In Jaipur, Amber Fort (94%), City Palace (78%), and Hawa Mahal (91%) suffer severe overcrowding while magnificent heritage sites like Albert Hall Museum (34%) and Panna Meena Kund (18%) sit underutilized.',
+        actionLabel: 'Next: Inspect Alternative Recommendations ➔',
+        run: () => {
+          this.app.switchMode('explore');
+          window.scrollTo({ top: 350, behavior: 'smooth' });
+        }
+      },
+      {
+        step: 2,
+        title: 'Step 2: Deterministic Alternative Scoring',
+        badge: 'INTELLIGENT RECOMMENDATIONS',
+        desc: 'ROAM doesn\'t just show what\'s popular. It calculates multi-factor transparent scores (Preference Match 92%, Crowd Relief 60%, Distance Efficiency) to recommend Albert Hall and Royal Gaitor instead of congested bottlenecks.',
+        actionLabel: 'Next: Experience \'Reroute My Day\' ➔',
+        run: () => {
+          this.app.switchMode('explore');
+          const recEl = document.getElementById('recommendations-stack');
+          if (recEl) recEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      },
+      {
+        step: 3,
+        title: 'Step 3: The \'Reroute My Day\' Engine',
+        badge: 'DYNAMIC DEMAND ROUTING',
+        desc: 'When Amber Fort spikes to 96% congestion, the traveler taps \'REROUTE MY DAY\'. ROAM restructures their sequence: 47 minutes of waiting saved, ₹280 saved, crowding reduced by 36%, and 2 local workshops supported!',
+        actionLabel: 'Next: Switch to Local Business Mode ➔',
+        run: () => {
+          this.app.switchMode('explore');
+          const rerouteBtn = document.getElementById('reroute-trigger-btn');
+          if (rerouteBtn) rerouteBtn.click();
+        }
+      },
+      {
+        step: 4,
+        title: 'Step 4: Local Business Intelligence',
+        badge: 'COMMUNITY VALUE CREATION',
+        desc: 'Local businesses like Blue Pottery & Miniature Painting Studio see nearby tourist concentration and activate \'Redirection Pulses\' to invite visitors toward authentic workshops.',
+        actionLabel: 'Next: Switch to Destination Authority Mode ➔',
+        run: () => {
+          this.app.switchMode('market');
+          window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+      },
+      {
+        step: 5,
+        title: 'Step 5: City Tourism Control Center',
+        badge: 'POLICY WHAT-IF SIMULATOR',
+        desc: 'Destination Authorities test policy interventions. Shifting 15% of peak visitors drops monument bottleneck congestion by 23%, cuts transit delays by 11%, and boosts local artisan revenues by 18%.',
+        actionLabel: 'Next: See City-Scale Macro Impact ➔',
+        run: () => {
+          this.app.switchMode('control');
+          window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+      },
+      {
+        step: 6,
+        title: 'Step 6: Tourism Demand Equilibrium',
+        badge: 'FINAL THESIS',
+        desc: 'Tourism should not mean following the crowd. ROAM is India\'s living digital layer that balances demand for travelers, local businesses, and sustainable heritage destinations.',
+        actionLabel: 'Complete Tour & Explore Freely ✓',
+        run: () => {
+          this.app.switchMode('explore');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    ];
+  }
+
+  start() {
+    this.currentStep = 0;
+    this.render();
+  }
+
+  next() {
+    this.currentStep++;
+    if (this.currentStep >= this.steps.length) {
+      this.close();
+    } else {
+      this.render();
+    }
+  }
+
+  close() {
+    const modal = document.getElementById('tour-modal-backdrop');
+    if (modal) modal.classList.remove('active');
+  }
+
+  render() {
+    const modal = document.getElementById('tour-modal-backdrop');
+    if (!modal) return;
+
+    const step = this.steps[this.currentStep];
+    step.run();
+
+    modal.innerHTML = `
+      <div class="tour-modal-card" style="background:var(--roam-card); border:1px solid var(--roam-accent-border); border-radius:var(--radius-lg); padding:var(--space-xl); max-width:540px; margin:10vh auto; box-shadow:var(--shadow-lg);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <span class="badge badge-optimal">${step.badge} • STEP ${step.step} OF ${this.steps.length}</span>
+          <button id="tour-close-x" style="background:none; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer;">✕</button>
+        </div>
+        <h3 style="font-size:1.3rem; font-weight:800; color:#fff; margin-bottom:8px;">${step.title}</h3>
+        <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5; margin-bottom:18px;">${step.desc}</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">
+            90-Sec Hackathon Walkthrough
+          </span>
+          <button id="tour-next-btn" class="reroute-btn" style="padding:8px 18px; font-size:0.85rem;">
+            ${step.actionLabel}
+          </button>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('active');
+
+    document.getElementById('tour-close-x')?.addEventListener('click', () => this.close());
+    document.getElementById('tour-next-btn')?.addEventListener('click', () => this.next());
+  }
+}
+
+
+  class RoamApplication {
+    constructor() {
+      this.activeMode = 'explore';
+      this.currentLocation = PRIMARY_LOCATIONS.jaipur;
+      this.culturalCanvas = null;
+      this.searchBar = null;
+      this.placeIdentity = null;
+      this.discoverView = null;
+      this.map = null;
+      this.touristController = null;
+      this.businessController = null;
+      this.authorityController = null;
+      this.hackathonGuide = null;
+    }
+
+    init() {
+      console.log('[ROAM Engine] Initializing Nexora ROAM Platform...');
+      try {
+        this.culturalCanvas = new CulturalCanvasController();
+        this.placeIdentity = new PlaceIdentityController('place-identity-mount');
+        this.searchBar = new SearchBarController({
+          onSelectLocation: (locId) => this.setLocation(locId)
+        });
+        this.discoverView = new DiscoverViewController('discover-view-mount', {
+          onSelectLocation: (locId) => {
+            this.setLocation(locId);
+            this.switchMode('explore');
+          }
+        });
+        this.map = new DestinationLoadMap('map-canvas-container', {
+          onNodeClick: (attraction) => {
+            console.log('[ROAM] Selected attraction:', attraction.name);
+          }
+        });
+
+        this.touristController = new TouristModeController(this.map);
+        this.businessController = new BusinessModeController();
+        this.authorityController = new AuthorityModeController();
+        new BeforeAfterController('difference-section-container');
+        new ImpactCalcController('calc-section-container');
+        this.hackathonGuide = new HackathonGuide(this);
+
+        this.attachNavEvents();
+        this.setLocation('jaipur');
+      } catch(e) {
+        console.error('[ROAM Engine Error]', e);
+      }
+    }
+
+    setLocation(locId) {
+      const location = resolveLocation(locId);
+      this.currentLocation = location;
+
+      if (this.culturalCanvas) this.culturalCanvas.applyTheme(location.id);
+      if (this.placeIdentity) this.placeIdentity.render(location);
+
+      const pill = document.getElementById('active-location-pill');
+      if (pill) {
+        pill.innerHTML = `
+          <span class="location-indicator-dot" style="width:8px; height:8px; border-radius:50%; background:#00f3ff; box-shadow:0 0 10px #00f3ff; display:inline-block;"></span>
+          <span>${location.name.toUpperCase()} • ${location.state.toUpperCase()}</span>
+        `;
+      }
+
+      if (this.searchBar) this.searchBar.setActive(location.id);
+      if (this.touristController) this.touristController.setDestination(location);
+      if (this.businessController) this.businessController.setDestination(location);
+      if (this.authorityController) this.authorityController.setDestination(location);
+
+      const headline = document.getElementById('hero-headline-text');
+      if (headline && location.heroCopy) headline.textContent = location.heroCopy.headline;
+    }
+
+    switchMode(modeId) {
+      if (modeId === 'tourist') modeId = 'explore';
+      if (modeId === 'business') modeId = 'market';
+      if (modeId === 'authority') modeId = 'control';
+      this.activeMode = modeId;
+
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        if (btn.dataset.mode === modeId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      document.querySelectorAll('.mode-view').forEach(view => {
+        view.classList.remove('active');
+        view.style.display = 'none';
+      });
+
+      const targetView = document.getElementById(`mode-view-${modeId}`);
+      if (targetView) {
+        targetView.classList.add('active');
+        targetView.style.display = 'block';
+      }
+
+      if (modeId === 'explore' && this.map) {
+        setTimeout(() => this.map.render(), 50);
+      }
+    }
+
+    attachNavEvents() {
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const mode = e.currentTarget.dataset.mode;
+          this.switchMode(mode);
+        });
+      });
+
+      document.querySelectorAll('.map-filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          const filter = e.currentTarget.dataset.filter;
+          if (this.map) this.map.setFilter(filter);
+        });
+      });
+    }
+  }
+
+  window.RoamApplication = RoamApplication;
+  document.addEventListener('DOMContentLoaded', () => {
+    window.ROAM = new RoamApplication();
+    window.ROAM.init();
+  });
+
+})();
