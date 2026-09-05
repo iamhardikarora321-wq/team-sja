@@ -201,9 +201,11 @@
       <div class="island-shortcuts">
         <button class="island-btn active" data-target="roam" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('roam');" title="Nexora ROAM Destination Intelligence">🧭</button>
         <button class="island-btn" data-target="travelintel" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('travelintel');" title="Bharat Travel Intelligence & City Explorer">🗺️</button>
+        <button class="island-btn" data-target="transport" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('transport');" title="Separated Transport Modes (Aeroplane, Bus, Car, Auto, Train)">✈️</button>
+        <button class="island-btn" data-target="lingo" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('lingo');" title="Regional Lingo & Culture Audio Translator">🗣️</button>
+        <button class="island-btn" data-target="survival" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('survival');" title="Digital Survival Kit & SOS Hotlines">📲</button>
         <button class="island-btn" data-target="engine" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('engine');" title="Pan-India Radix Trie Autocomplete & Dev Hub">🔍</button>
         <button class="island-btn" data-target="game" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('game');" title="Geoguess Heritage & Culture Quiz">🎮</button>
-        <button class="island-btn" data-target="travel" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('travel');" title="India Geography & Travel Hub">🌐</button>
         <button class="island-btn" data-target="tourism" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('tourism');" title="State Showcase & Virtual Tour">🏛️</button>
         <button class="island-btn" data-target="trip" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('trip');" title="Trip Planner & Itinerary Builder">🧳</button>
         <div class="island-divider"></div>
@@ -436,6 +438,173 @@
 
         <!-- Tab 4: Digital Survival Kit -->
         <div id="intel-tab-content-apps" class="intel-tab-pane" style="display:none;"></div>
+
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         FEATURE #1B: SEPARATED MULTI-MODE TRANSPORT MATRIX & ESTIMATOR HUB
+         ===================================================================== -->
+    <div id="tab-content-transport" class="tab-content" style="margin-bottom:2rem;">
+      <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98)); border:1px solid rgba(0,243,255,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(0,243,255,0.15);">
+        
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+          <div style="display:flex; align-items:center; gap:0.85rem;">
+            <div style="width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg, #00f3ff, #10b981); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 0 20px rgba(0,243,255,0.4);">
+              <span>🚀</span>
+            </div>
+            <div>
+              <span style="font-size:0.72rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.12em;">Separated Multi-Mode Transit Engine</span>
+              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Bharat Multi-Mode Transport &amp; Tariff Hub</h2>
+            </div>
+          </div>
+          <div style="font-size:0.8rem; color:#a7f3d0; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:0.4rem 0.85rem; border-radius:20px; font-weight:700;">
+            ● 5 Separated Travel Modes Active
+          </div>
+        </div>
+
+        <!-- 5 Separated Transport Mode Tabs -->
+        <div style="display:flex; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.85rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+          <button id="transport-tab-btn-flight" class="intel-tab-btn active" onclick="if(window.switchTransportMode) window.switchTransportMode('flight');">✈️ Aeroplane &amp; Flights</button>
+          <button id="transport-tab-btn-bus" class="intel-tab-btn" onclick="if(window.switchTransportMode) window.switchTransportMode('bus');">🚌 Intercity &amp; City Bus</button>
+          <button id="transport-tab-btn-car" class="intel-tab-btn" onclick="if(window.switchTransportMode) window.switchTransportMode('car');">🚗 Car, Taxi &amp; Fuel/Toll</button>
+          <button id="transport-tab-btn-auto" class="intel-tab-btn" onclick="if(window.switchTransportMode) window.switchTransportMode('auto');">🛺 Auto Meter &amp; Surge</button>
+          <button id="transport-tab-btn-train" class="intel-tab-btn" onclick="if(window.switchTransportMode) window.switchTransportMode('train');">🚆 Express Railways &amp; PNR</button>
+        </div>
+
+        <!-- Dynamic Transport Content Container -->
+        <div id="transport-mode-display-area">
+          <!-- Dynamically populated by JS switchTransportMode() -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         FEATURE #1C: REGIONAL LINGO, AUDIO SPEECH TRANSLATOR & CULTURE HUB
+         ===================================================================== -->
+    <div id="tab-content-lingo" class="tab-content" style="margin-bottom:2rem;">
+      <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98)); border:1px solid rgba(255,0,127,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(255,0,127,0.15);">
+        
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+          <div style="display:flex; align-items:center; gap:0.85rem;">
+            <div style="width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg, #ff007f, #7928ca); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 0 20px rgba(255,0,127,0.4);">
+              <span>🗣️</span>
+            </div>
+            <div>
+              <span style="font-size:0.72rem; font-weight:800; color:#ff007f; text-transform:uppercase; letter-spacing:0.12em;">Voice Audio & Multi-Language Engine</span>
+              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Bharat Lingo &amp; Cultural Etiquette Matrix</h2>
+            </div>
+          </div>
+          <div style="font-size:0.8rem; color:#f472b6; background:rgba(255,0,127,0.12); border:1px solid rgba(255,0,127,0.3); padding:0.4rem 0.85rem; border-radius:20px; font-weight:700;">
+            🔊 Text-to-Speech Audio Enabled
+          </div>
+        </div>
+
+        <!-- Language Selector Chips -->
+        <div style="margin-bottom:1.25rem;">
+          <label style="display:block; font-size:0.78rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem;">Select Regional Indian Language / State</label>
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;" id="lingo-lang-chips">
+            <button class="intel-chip-btn active" onclick="if(window.setLingoLanguage) window.setLingoLanguage('hindi');">🇮🇳 Hindi (North India)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('rajasthani');">🏰 Rajasthani (Jaipur)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('marathi');">🌊 Marathi (Mumbai/Pune)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('tamil');">🏛️ Tamil (Chennai)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('bengali');">🎨 Bengali (Kolkata)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('gujarati');">🦁 Gujarati (Ahmedabad)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('telugu');">💎 Telugu (Hyderabad)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('malayalam');">🌴 Malayalam (Kochi)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('kannada');">💻 Kannada (Bengaluru)</button>
+            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('punjabi');">🌾 Punjabi (Amritsar)</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Lingo & Culture Display -->
+        <div id="lingo-culture-display-area">
+          <!-- Dynamically rendered by JS setLingoLanguage() -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         FEATURE #1D: DIGITAL SURVIVAL KIT & EMERGENCY SOS HUB
+         ===================================================================== -->
+    <div id="tab-content-survival" class="tab-content" style="margin-bottom:2rem;">
+      <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98)); border:1px solid rgba(16,185,129,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(16,185,129,0.15);">
+        
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+          <div style="display:flex; align-items:center; gap:0.85rem;">
+            <div style="width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg, #10b981, #00f3ff); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 0 20px rgba(16,185,129,0.4);">
+              <span>📲</span>
+            </div>
+            <div>
+              <span style="font-size:0.72rem; font-weight:800; color:#10b981; text-transform:uppercase; letter-spacing:0.12em;">Emergency SOS & Essential Apps</span>
+              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Digital Survival Kit for Indian Travel</h2>
+            </div>
+          </div>
+          <div style="font-size:0.8rem; color:#a7f3d0; background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:0.4rem 0.85rem; border-radius:20px; font-weight:700;">
+            🆘 Emergency Hotlines Ready
+          </div>
+        </div>
+
+        <!-- Emergency SOS Hotline Grid -->
+        <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); border-radius:18px; padding:1.25rem; margin-bottom:1.5rem;">
+          <h3 style="font-size:1.05rem; font-weight:800; color:#f87171; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
+            <span>🚨</span> Pan-India Emergency SOS Speed-Dial Helplines
+          </h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.85rem;">
+            <a href="tel:112" class="intel-item-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:rgba(15,23,42,0.8); border-color:rgba(239,68,68,0.4);">
+              <div>
+                <div style="font-size:0.72rem; font-weight:700; color:#f87171; text-transform:uppercase;">National Emergency</div>
+                <div style="font-size:1.2rem; font-weight:900; color:#fff;">112</div>
+              </div>
+              <span style="font-size:1.3rem;">📞</span>
+            </a>
+            <a href="tel:100" class="intel-item-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:rgba(15,23,42,0.8); border-color:rgba(59,130,246,0.4);">
+              <div>
+                <div style="font-size:0.72rem; font-weight:700; color:#3b82f6; text-transform:uppercase;">Police Assistance</div>
+                <div style="font-size:1.2rem; font-weight:900; color:#fff;">100</div>
+              </div>
+              <span style="font-size:1.3rem;">👮</span>
+            </a>
+            <a href="tel:108" class="intel-item-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:rgba(15,23,42,0.8); border-color:rgba(16,185,129,0.4);">
+              <div>
+                <div style="font-size:0.72rem; font-weight:700; color:#10b981; text-transform:uppercase;">Ambulance / Medical</div>
+                <div style="font-size:1.2rem; font-weight:900; color:#fff;">108</div>
+              </div>
+              <span style="font-size:1.3rem;">🚑</span>
+            </a>
+            <a href="tel:1091" class="intel-item-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:rgba(15,23,42,0.8); border-color:rgba(244,114,182,0.4);">
+              <div>
+                <div style="font-size:0.72rem; font-weight:700; color:#f472b6; text-transform:uppercase;">Women Safety Helpline</div>
+                <div style="font-size:1.2rem; font-weight:900; color:#fff;">1091</div>
+              </div>
+              <span style="font-size:1.3rem;">🛡️</span>
+            </a>
+            <a href="tel:139" class="intel-item-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:rgba(15,23,42,0.8); border-color:rgba(0,243,255,0.4);">
+              <div>
+                <div style="font-size:0.72rem; font-weight:700; color:#00f3ff; text-transform:uppercase;">Railway Security</div>
+                <div style="font-size:1.2rem; font-weight:900; color:#fff;">139</div>
+              </div>
+              <span style="font-size:1.3rem;">🚆</span>
+            </a>
+            <a href="tel:1363" class="intel-item-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:rgba(15,23,42,0.8); border-color:rgba(168,85,247,0.4);">
+              <div>
+                <div style="font-size:0.72rem; font-weight:700; color:#c084fc; text-transform:uppercase;">National Tourist 24/7</div>
+                <div style="font-size:1.2rem; font-weight:900; color:#fff;">1363</div>
+              </div>
+              <span style="font-size:1.3rem;">🧳</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dynamic App Directory & Survival Checklist -->
+        <div id="survival-kit-display-area">
+          <!-- Dynamically rendered by JS renderSurvivalKit() -->
+        </div>
 
       </div>
     </div>

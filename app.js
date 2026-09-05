@@ -18,9 +18,9 @@
     if (tabId === 'autocomplete' || tabId === 'radix') tabId = 'engine';
     if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
     if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
-    if (tabId === 'transithub' || tabId === 'transit') {
-      if (!document.getElementById('tab-content-' + tabId)) tabId = 'transitbooking';
-    }
+    if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';
+    if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'apps' || tabId === 'digitalsurvival') tabId = 'survival';
+    if (tabId === 'transport' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'transithub') tabId = 'transport';
     window._currentActiveTab = tabId;
     const tabs = document.querySelectorAll(".tab-content");
     tabs.forEach(tab => {
@@ -1210,9 +1210,9 @@
     if (tabId === 'autocomplete' || tabId === 'radix') tabId = 'engine';
     if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
     if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
-    if (tabId === 'transithub' || tabId === 'transit') {
-      if (!document.getElementById('tab-content-' + tabId)) tabId = 'transitbooking';
-    }
+    if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';
+    if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'apps' || tabId === 'digitalsurvival') tabId = 'survival';
+    if (tabId === 'transport' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'transithub') tabId = 'transport';
     
     window._currentActiveTab = tabId;
 
@@ -29725,5 +29725,496 @@ class HackathonGuide {
     window.ROAM = new RoamApplication();
     window.ROAM.init();
   });
+
+
+  // =====================================================================
+  // 🚀 SEPARATED MULTI-MODE TRANSPORT ENGINE (Aeroplane, Bus, Car, Auto, Train)
+  // =====================================================================
+  let currentTransportMode = 'flight';
+
+  function switchTransportMode(mode) {
+    currentTransportMode = mode || 'flight';
+    ['flight', 'bus', 'car', 'auto', 'train'].forEach(m => {
+      let btn = document.getElementById('transport-tab-btn-' + m);
+      if (btn) btn.classList.toggle('active', m === currentTransportMode);
+    });
+
+    const container = document.getElementById('transport-mode-display-area');
+    if (!container) return;
+
+    if (currentTransportMode === 'flight') {
+      container.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">✈️</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Domestic Air Travel & Major Flight Corridors</h3>
+            <p style="font-size:0.83rem; color:#94a3b8; line-height:1.5; margin:0 0 1rem 0;">Connect major Indian metros & Tier-2 regional airports via nonstop flights.</p>
+            <div style="background:rgba(2,6,23,0.8); border:1px solid rgba(0,243,255,0.2); border-radius:12px; padding:0.85rem; font-size:0.82rem; color:#a7f3d0; line-height:1.6;">
+              ⚡ <strong>Avg Air Fares:</strong> ₹3,200 – ₹7,500 (Metro Corridors)<br>
+              ⏱️ <strong>Flight Durations:</strong> 1h 15m – 2h 45m<br>
+              🛫 <strong>Major Hubs:</strong> DEL (Delhi), BOM (Mumbai), BLR (Bengaluru), CCU (Kolkata), MAA (Chennai), JAI (Jaipur), GOI (Goa)
+            </div>
+          </div>
+
+          <div class="intel-item-card" style="border-color:rgba(59,130,246,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🧳</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#3b82f6; margin:0 0 0.35rem 0;">Standard Domestic Baggage Policy</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Cabin Hand Baggage:</strong> 7 kg limit (1 piece max 115cm dimensions)<br>
+              • <strong>Check-in Baggage:</strong> 15 kg limit (1 piece included in standard fare)<br>
+              • <strong>Extra Weight Surcharge:</strong> ~₹500 per additional kg at airport check-in counter.<br>
+              • <strong>Air India Extra Perk:</strong> Offers 25 kg check-in allowance on domestic routes.
+            </div>
+          </div>
+
+          <div class="intel-item-card" style="border-color:rgba(168,85,247,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛫</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#c084fc; margin:0 0 0.35rem 0;">Indian Carrier Directory</h3>
+            <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem; color:#e2e8f0;">
+              <div>🔹 <strong>IndiGo:</strong> 60%+ market share, high punctuality, 100+ domestic airports.</div>
+              <div>🔹 <strong>Air India:</strong> Full-service carrier, includes complimentary hot meal.</div>
+              <div>🔹 <strong>Akasa Air:</strong> Modern Boeing 737 MAX fleet, budget friendly fares.</div>
+              <div>🔹 <strong>SpiceJet:</strong> Connects key regional UDAN scheme remote airstrips.</div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (currentTransportMode === 'bus') {
+      container.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+          <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚌</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#10b981; margin:0 0 0.35rem 0;">Intercity AC Sleeper & Volvo Buses</h3>
+            <p style="font-size:0.83rem; color:#94a3b8; line-height:1.5; margin:0 0 1rem 0;">Overnight luxury bus connectivity between major Indian cities and hill stations.</p>
+            <div style="background:rgba(2,6,23,0.8); border:1px solid rgba(16,185,129,0.2); border-radius:12px; padding:0.85rem; font-size:0.82rem; color:#a7f3d0; line-height:1.6;">
+              🛌 <strong>AC Multi-Axle Sleeper:</strong> ₹800 – ₹1,800 per berth<br>
+              💺 <strong>AC Seater / Executive Volvo:</strong> ₹450 – ₹950 per seat<br>
+              🚌 <strong>State Express Roadways:</strong> UPSRTC (UP), RSRTC (Rajasthan), MSRTC (Maharashtra), KSRTC (Karnataka), HRTC (Himachal)
+            </div>
+          </div>
+
+          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚏</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">City Local Bus Transport</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Tariff Rates:</strong> ₹10 base fare up to 5 km; ₹25 – ₹50 for long city routes.<br>
+              • <strong>Air-Conditioned City Buses:</strong> Available in Delhi (DTC Electric), Mumbai (BEST AC), Bengaluru (BMTC Vayu Vajra), Chennai (MTC).<br>
+              • <strong>NCMC Smart Card:</strong> National Common Mobility Card works across city buses & metros.
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (currentTransportMode === 'car') {
+      container.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem;">
+          
+          <!-- Fuel & Toll Cost Calculator -->
+          <div class="intel-item-card" style="border-color:rgba(255,0,127,0.35); grid-column:1 / -1;">
+            <h3 style="font-size:1.15rem; font-weight:800; color:#ff007f; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
+              <span>🚗</span> Interactive Car Trip Fuel &amp; FASTag Toll Cost Calculator
+            </h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; align-items:end;">
+              <div>
+                <label style="display:block; font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:0.35rem;">Trip Distance (km)</label>
+                <input type="number" id="car-calc-distance" value="280" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:10px; padding:0.55rem; color:#fff; font-size:0.9rem;">
+              </div>
+              <div>
+                <label style="display:block; font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:0.35rem;">Fuel Mileage (km/L)</label>
+                <input type="number" id="car-calc-mileage" value="16" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:10px; padding:0.55rem; color:#fff; font-size:0.9rem;">
+              </div>
+              <div>
+                <label style="display:block; font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:0.35rem;">Fuel Price (₹ / Litre)</label>
+                <input type="number" id="car-calc-price" value="96" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:10px; padding:0.55rem; color:#fff; font-size:0.9rem;">
+              </div>
+              <div>
+                <button class="visualizer-btn" style="width:100%; background:linear-gradient(135deg, #ff007f, #7928ca); color:#fff; font-weight:800; padding:0.6rem 1rem; border-radius:10px; font-size:0.85rem;" onclick="if(window.calcCarFuelToll) window.calcCarFuelToll();">Calculate Cost ⚡</button>
+              </div>
+            </div>
+
+            <div id="car-calc-result" style="margin-top:1.1rem; background:rgba(2,6,23,0.85); border:1px solid rgba(255,0,127,0.3); border-radius:14px; padding:1rem; color:#a7f3d0; font-size:0.9rem; line-height:1.6;">
+              ⛽ Required Fuel: <strong>17.5 Litres</strong> | 💰 Total Fuel Expense: <strong>₹1,680</strong> | 🛣️ Estimated FASTag Tolls: <strong>₹320</strong><br>
+              ✨ Total Trip Estimate: <strong style="color:#00f3ff; font-size:1.1rem;">₹2,000</strong> (~₹500 per passenger for 4 travelers)
+            </div>
+          </div>
+
+          <!-- Outstation Cabs & Self-Drive -->
+          <div class="intel-item-card">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚕</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Outstation Cabs & Rental Rates</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Compact Hatchback (WagonR):</strong> ₹10 – ₹11 / km (Min 250 km/day)<br>
+              • <strong>Sedan (Dzire / Etios):</strong> ₹12 – ₹13 / km<br>
+              • <strong>SUV (Innova Crysta):</strong> ₹16 – ₹19 / km<br>
+              • <strong>Self-Drive Rental (Revv / Zoomcar):</strong> ₹1,200 – ₹2,500 / day
+            </div>
+          </div>
+
+          <!-- Airport Taxi vs App Cab -->
+          <div class="intel-item-card">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚖</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">Airport Taxi vs App Cabs</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Uber / Ola / BluSmart EV:</strong> Dynamic upfront pricing, fixed toll charges included.<br>
+              • <strong>Prepaid Airport Taxi Counter:</strong> Official fixed RTO rate counter inside terminal arrivals.<br>
+              • <strong>Tip:</strong> BluSmart offers zero cancellation & guaranteed EV cabs in Delhi & Bengaluru.
+            </div>
+          </div>
+
+        </div>
+      `;
+    } else if (currentTransportMode === 'auto') {
+      container.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+          
+          <!-- Official Auto Meter Calculator -->
+          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.35); grid-column:1 / -1;">
+            <h3 style="font-size:1.15rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
+              <span>🛺</span> Official City Auto Rickshaw Meter & Night Surge Tariff Estimator
+            </h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; align-items:end;">
+              <div>
+                <label style="display:block; font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:0.35rem;">Distance Traveled (km)</label>
+                <input type="number" id="auto-calc-distance" value="7" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:10px; padding:0.55rem; color:#fff; font-size:0.9rem;">
+              </div>
+              <div>
+                <label style="display:block; font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:0.35rem;">Night Travel (11 PM – 5 AM)</label>
+                <select id="auto-calc-night" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:10px; padding:0.55rem; color:#fff; font-size:0.9rem;">
+                  <option value="no">Day Rate (Standard)</option>
+                  <option value="yes">Night Surge (+25% Surcharge)</option>
+                </select>
+              </div>
+              <div>
+                <button class="visualizer-btn" style="width:100%; background:linear-gradient(135deg, #00f3ff, #10b981); color:#020617; font-weight:900; padding:0.6rem 1rem; border-radius:10px; font-size:0.85rem;" onclick="if(window.calcAutoMeter) window.calcAutoMeter();">Estimate Tariff 🛺</button>
+              </div>
+            </div>
+
+            <div id="auto-calc-result" style="margin-top:1.1rem; background:rgba(2,6,23,0.85); border:1px solid rgba(0,243,255,0.3); border-radius:14px; padding:1rem; color:#a7f3d0; font-size:0.9rem; line-height:1.6;">
+              📍 Distance: <strong>7 km</strong> | 🛺 Base Fare (First 1.5 km): <strong>₹30</strong> | ➕ Additional Distance: <strong>₹82.5</strong><br>
+              🏷️ Estimated Auto Meter Tariff: <strong style="color:#00f3ff; font-size:1.15rem;">₹113.00</strong>
+            </div>
+          </div>
+
+          <div class="intel-item-card">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛺</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Shared Auto & E-Rickshaw Commute</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>E-Rickshaws (Battery Auto):</strong> Flat ₹10 – ₹20 per passenger for last-mile metro & railway station drops.<br>
+              • <strong>Shared Auto Corridors:</strong> Fixed ₹15 – ₹30 per seat on popular bazaar corridors.<br>
+              • <strong>Meter Refusal Tip:</strong> In Mumbai & Delhi, autos are legally bound to run by meter.
+            </div>
+          </div>
+
+        </div>
+      `;
+    } else if (currentTransportMode === 'train') {
+      container.innerHTML = `
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
+          <div class="intel-item-card" style="border-color:rgba(168,85,247,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚆</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#c084fc; margin:0 0 0.35rem 0;">Indian Railways Class & Tariff Matrix</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Vande Bharat Executive CC:</strong> High-speed AC express train with gourmet meals.<br>
+              • <strong>3AC Tier (3A):</strong> Economy AC sleeper coach, complimentary bedroll provided.<br>
+              • <strong>Sleeper Class (SL):</strong> Non-AC reserved berths, budget friendly.<br>
+              • <strong>Tatkal Quota Booking:</strong> Opens at 10:00 AM for AC classes & 11:00 AM for Sleeper classes daily.
+            </div>
+          </div>
+
+          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🎒</div>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">IRCTC Luggage Allowance Rules</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>1st AC (1A):</strong> Free allowance 70 kg<br>
+              • <strong>2nd AC (2A):</strong> Free allowance 50 kg<br>
+              • <strong>3rd AC (3A) & Sleeper:</strong> Free allowance 40 kg<br>
+              • <strong>Margin:</strong> 10 kg additional grace weight allowed per passenger.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  function calcCarFuelToll() {
+    const dist = parseFloat(document.getElementById('car-calc-distance').value) || 0;
+    const mileage = parseFloat(document.getElementById('car-calc-mileage').value) || 1;
+    const price = parseFloat(document.getElementById('car-calc-price').value) || 0;
+
+    const liters = (dist / mileage).toFixed(1);
+    const fuelCost = Math.round(dist / mileage * price);
+    const tollCost = Math.round(dist * 1.15); // Avg ₹1.15 toll per km on Indian highways
+    const totalCost = fuelCost + tollCost;
+    const perPerson = Math.round(totalCost / 4);
+
+    const resBox = document.getElementById('car-calc-result');
+    if (resBox) {
+      resBox.innerHTML = `
+        ⛽ Required Fuel: <strong>${liters} Litres</strong> | 💰 Fuel Expense: <strong>₹${fuelCost.toLocaleString('en-IN')}</strong> | 🛣️ Estimated FASTag Tolls: <strong>₹${tollCost}</strong><br>
+        ✨ Total Trip Estimate: <strong style="color:#00f3ff; font-size:1.15rem;">₹${totalCost.toLocaleString('en-IN')}</strong> (~₹${perPerson} per passenger for 4 travelers)
+      `;
+    }
+  }
+
+  function calcAutoMeter() {
+    const dist = parseFloat(document.getElementById('auto-calc-distance').value) || 0;
+    const isNight = document.getElementById('auto-calc-night').value === 'yes';
+
+    let fare = 30; // base fare for first 1.5 km
+    if (dist > 1.5) {
+      fare += (dist - 1.5) * 15;
+    }
+    if (isNight) {
+      fare *= 1.25; // 25% night surcharge
+    }
+    fare = Math.round(fare);
+
+    const resBox = document.getElementById('auto-calc-result');
+    if (resBox) {
+      resBox.innerHTML = `
+        📍 Distance: <strong>${dist} km</strong> | 🛺 Base Fare: <strong>₹30</strong> ${isNight ? '| 🌙 <strong>+25% Night Surge Applied</strong>' : ''}<br>
+        🏷️ Estimated Auto Meter Tariff: <strong style="color:#00f3ff; font-size:1.15rem;">₹${fare}.00</strong>
+      `;
+    }
+  }
+
+  // =====================================================================
+  // 🗣️ REGIONAL LINGO & AUDIO SPEECH TRANSLATOR ENGINE
+  // =====================================================================
+  const LINGO_DATA = {
+    hindi: {
+      langName: "Hindi (North India)",
+      phrases: [
+        { phrase: "Hello / Welcome", local: "Namaste (नमस्ते)", pronunciation: "Nuh-mus-tay" },
+        { phrase: "How much is this?", local: "Yeh kitne ka hai? (यह कितने का है?)", pronunciation: "Yeh kit-nay kah hai?" },
+        { phrase: "Please lower the price", local: "Thoda kam kar do (थोड़ा कम कर दो)", pronunciation: "Thoh-dah kum kur doh" },
+        { phrase: "Where is the station?", local: "Station kahan hai? (स्टेशन कहां है?)", pronunciation: "Stay-shun kuh-haan hai?" },
+        { phrase: "Please drive by meter", local: "Meter se chalo (मीटर से चलो)", pronunciation: "Mee-tur say chul-oh" },
+        { phrase: "Make food less spicy", local: "Mirchi kam rakhna (मिर्च कम रखना)", pronunciation: "Mir-chee kum rukh-nah" },
+        { phrase: "Give water bottle", local: "Pani ki bottle dena (पानी की बोतल देना)", pronunciation: "Pah-nee kee boh-tul day-nah" },
+        { phrase: "Thank you", local: "Dhanyawad (धन्यवाद)", pronunciation: "Dhun-yuh-vaad" }
+      ]
+    },
+    rajasthani: {
+      langName: "Rajasthani (Jaipur / Udaipur)",
+      phrases: [
+        { phrase: "Hello / Greetings", local: "Khamma Ghani (खम्मा घणी)", pronunciation: "Khum-mah Ghuh-nee" },
+        { phrase: "Welcome!", local: "Padharo Mhare Desh (पधारो म्हारे देश)", pronunciation: "Puh-dhaa-roh Mhaa-ray Daysh" },
+        { phrase: "How are you?", local: "Kaisa ho sa? (कैसा हो सा?)", pronunciation: "Kay-sah hoh sah?" },
+        { phrase: "How much money?", local: "Atta rupea kitna hua? (कितना रुपया हुआ?)", pronunciation: "Ut-tuh roo-pyay kit-nah hoo-ah?" }
+      ]
+    },
+    marathi: {
+      langName: "Marathi (Mumbai / Pune)",
+      phrases: [
+        { phrase: "Hello / Greetings", local: "Namaskar (नमस्कार)", pronunciation: "Nuh-mus-kaar" },
+        { phrase: "How are you?", local: "Kasa ahat? (कसे आहात?)", pronunciation: "Kuh-suh aa-haat?" },
+        { phrase: "How much for this?", local: "Yache kimmat kiti aahe? (याची किंमत किती आहे?)", pronunciation: "Yah-chay kim-mut ki-tee aa-hay?" },
+        { phrase: "Where to go?", local: "Kuthe jayche? (कुठे जायचे?)", pronunciation: "Koo-thay jaay-chay?" }
+      ]
+    },
+    tamil: {
+      langName: "Tamil (Chennai / Madurai)",
+      phrases: [
+        { phrase: "Hello", local: "Vanakkam (வணக்கம்)", pronunciation: "Vuh-nuk-kum" },
+        { phrase: "How are you?", local: "Eppadi irukkinga? (எப்படி இருக்கீங்க?)", pronunciation: "Ep-puh-dee i-rook-king-guh?" },
+        { phrase: "How much is this?", local: "Idhu evvalavu? (இது எவ்வளவு?)", pronunciation: "I-dhoo ev-vuh-luh-voo?" },
+        { phrase: "Thank you", local: "Nandri (நன்றி)", pronunciation: "Nun-dree" }
+      ]
+    },
+    bengali: {
+      langName: "Bengali (Kolkata)",
+      phrases: [
+        { phrase: "Hello / Respect", local: "Nomoshkar (নমস্কার)", pronunciation: "Noh-mosh-kaar" },
+        { phrase: "How are you?", local: "Kemon achen? (কেমন আছেন?)", pronunciation: "Kay-mon aa-chen?" },
+        { phrase: "How much?", local: "Etai koto daam? (এটার কত দাম?)", pronunciation: "Ay-taar koh-toh daam?" },
+        { phrase: "Very good food!", local: "Khub bhalo khabar! (খুব ভালো খাবার!)", pronunciation: "Khoob bhaa-loh kha-baar!" }
+      ]
+    },
+    gujarati: {
+      langName: "Gujarati (Ahmedabad)",
+      phrases: [
+        { phrase: "Hello / Welcome", local: "Kem Cho? (કેમ છો?)", pronunciation: "Kem Choh?" },
+        { phrase: "I am good!", local: "Majama! (મજામાં!)", pronunciation: "Muh-jah-maan!" },
+        { phrase: "How much for this?", local: "Aa ketla nu che? (આ કેટલાનું છે?)", pronunciation: "Aa ket-laa noo chay?" }
+      ]
+    },
+    telugu: {
+      langName: "Telugu (Hyderabad)",
+      phrases: [
+        { phrase: "Hello", local: "Namaskaram (నమస్కారం)", pronunciation: "Nuh-mus-kaa-rum" },
+        { phrase: "How are you?", local: "Ela unnaru? (ఎలా ఉన్నారు?)", pronunciation: "Ay-laa oon-naa-roo?" },
+        { phrase: "How much is this?", local: "Idi entha? (ఇది ఎంత?)", pronunciation: "I-dee en-thaa?" }
+      ]
+    },
+    malayalam: {
+      langName: "Malayalam (Kochi / Kerala)",
+      phrases: [
+        { phrase: "Hello", local: "Namaskaram (നമസ്കാരം)", pronunciation: "Nuh-mus-kaa-rum" },
+        { phrase: "How are you?", local: "Sugham aano? (സുഖമാണോ?)", pronunciation: "Soo-khum aa-noh?" },
+        { phrase: "How much?", local: "Ithinu ethra aayi? (ഇതിന് എത്രയായി?)", pronunciation: "I-thi-noo eth-ruh aa-yee?" }
+      ]
+    },
+    kannada: {
+      langName: "Kannada (Bengaluru)",
+      phrases: [
+        { phrase: "Hello", local: "Namaskara (ನಮಸ್ಕಾರ)", pronunciation: "Nuh-mus-kaa-ruh" },
+        { phrase: "How are you?", local: "Hegiddira? (ಹೇಗಿದ್ದೀರಾ?)", pronunciation: "Hay-gid-dee-rah?" },
+        { phrase: "How much?", local: "Idhu eshtu? (ಇದು ಎಷ್ಟು?)", pronunciation: "I-dhoo esh-too?" }
+      ]
+    },
+    punjabi: {
+      langName: "Punjabi (Amritsar / Punjab)",
+      phrases: [
+        { phrase: "Hello / Respect", local: "Sat Shri Akaal (ਸਤਿ ਸ਼੍ਰੀ ਅਕਾਲ)", pronunciation: "Sut Shree Uh-kaal" },
+        { phrase: "How are you?", local: "Kiddan? (ਕਿੱਦਾਂ?)", pronunciation: "Kid-daan?" },
+        { phrase: "How much?", local: "Eh kinne da hai? (ਇਹ ਕਿੰਨੇ ਦਾ ਹੈ?)", pronunciation: "Eh kin-nay dah hai?" }
+      ]
+    }
+  };
+
+  let currentLingoLang = 'hindi';
+
+  function setLingoLanguage(langKey) {
+    currentLingoLang = langKey || 'hindi';
+    
+    // update chip active states
+    const btns = document.querySelectorAll('#lingo-lang-chips .intel-chip-btn');
+    btns.forEach(b => {
+      let isTarget = b.getAttribute('onclick') && b.getAttribute('onclick').includes(currentLingoLang);
+      b.classList.toggle('active', isTarget);
+    });
+
+    const area = document.getElementById('lingo-culture-display-area');
+    if (!area) return;
+
+    const langObj = LINGO_DATA[currentLingoLang] || LINGO_DATA['hindi'];
+
+    const phrasesHtml = langObj.phrases.map(p => `
+      <div class="intel-item-card" style="border-color:rgba(255,0,127,0.25);">
+        <div style="font-size:0.75rem; font-weight:700; color:#ff007f; text-transform:uppercase; margin-bottom:0.25rem;">${p.phrase}</div>
+        <div style="font-size:1.15rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">${p.local}</div>
+        <div style="font-size:0.8rem; color:#a7f3d0; font-style:italic; margin-bottom:0.65rem;">🗣️ Pronunciation: "${p.pronunciation}"</div>
+        <button class="visualizer-btn" style="background:rgba(255,0,127,0.15); border:1px solid rgba(255,0,127,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" onclick="if(window.speakLingoPhrase) window.speakLingoPhrase('${p.local.replace(/'/g, "\'")}');">
+          🔊 Listen Audio
+        </button>
+      </div>
+    `).join('');
+
+    area.innerHTML = `
+      <div style="margin-bottom:1.5rem;">
+        <h3 style="font-size:1.1rem; font-weight:800; color:#ff007f; margin-bottom:0.85rem;">🗣️ ${langObj.langName} Essential Everyday Phrases</h3>
+        <div class="intel-card-grid">${phrasesHtml}</div>
+      </div>
+
+      <!-- Cultural Etiquette & Customs Guide -->
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:1.25rem;">
+        <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
+          <span>🕌</span> Cultural Etiquette &amp; Social Norms in India
+        </h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
+          <div>
+            <strong style="color:#fff;">👞 Temple &amp; Shrine Entry:</strong><br>
+            Always remove footwear at temple entrances. Wear modest clothing covering shoulders &amp; knees. Ask before photographing inside sanctums.
+          </div>
+          <div>
+            <strong style="color:#fff;">💵 Tipping Culture:</strong><br>
+            Tipping auto drivers is not mandatory (round off fare). At casual dhabas 5-10% is customary. At fine dining, check if service charge is already included.
+          </div>
+          <div>
+            <strong style="color:#fff;">🛍️ Market Bargaining:</strong><br>
+            In street bazaars (like Johari Bazaar or Janpath), respectful bargaining for handicrafts & textiles is expected. Start offer at 60-70% of quoted price.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function speakLingoPhrase(text) {
+    if (!('speechSynthesis' in window)) {
+      alert("Text-to-speech is not supported by your browser.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    // clean bracketed text
+    let cleanText = text.replace(/\([^)]*\)/g, '').trim();
+    let utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'hi-IN';
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // =====================================================================
+  // 📲 DIGITAL SURVIVAL KIT & APPS DIRECTORY
+  // =====================================================================
+  function renderSurvivalKit() {
+    const area = document.getElementById('survival-kit-display-area');
+    if (!area) return;
+
+    const apps = [
+      { name: "IRCTC Rail Connect", category: "Railways", icon: "🚆", desc: "Official Indian Railways app for train seat reservation, live train tracking & PNR status." },
+      { name: "UTS Unreserved Ticketing", category: "Railways & Metro", icon: "🎟️", desc: "Book unreserved train tokens & suburban metro tickets without standing in queues." },
+      { name: "PhonePe / Paytm / Google Pay", category: "UPI Payments", icon: "💳", desc: "Scan any roadside QR code to pay instantly for tea, auto rides, entry tickets & street food." },
+      { name: "Uber / Ola / Rapido", category: "Cabs & Bike Taxis", icon: "🛺", desc: "Book auto-rickshaws, bike taxis, and city cabs with upfront digital fares." },
+      { name: "Google Maps (Offline)", category: "Navigation", icon: "🗺️", desc: "Pre-download offline maps for remote hill stations (Himachal, Ladakh, Northeast India)." },
+      { name: "DigiLocker", category: "Digital Vault", icon: "🪪", desc: "Store government-verified digital copies of Aadhaar, Passport & Driving License." }
+    ];
+
+    const appsHtml = apps.map(a => `
+      <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.4rem;">
+          <div style="font-size:1.6rem;">${a.icon}</div>
+          <div>
+            <h4 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0;">${a.name}</h4>
+            <span style="font-size:0.68rem; font-weight:700; color:#10b981; background:rgba(16,185,129,0.1); padding:0.15rem 0.5rem; border-radius:10px;">${a.category}</span>
+          </div>
+        </div>
+        <p style="font-size:0.82rem; color:#94a3b8; line-height:1.5; margin:0;">${a.desc}</p>
+      </div>
+    `).join('');
+
+    area.innerHTML = `
+      <div style="margin-bottom:1.5rem;">
+        <h3 style="font-size:1.1rem; font-weight:800; color:#10b981; margin-bottom:0.85rem;">📲 Must-Have Travel &amp; Payment Apps</h3>
+        <div class="intel-card-grid">${appsHtml}</div>
+      </div>
+
+      <!-- Foreign & NRI Tourist Survival Guide -->
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.3); border-radius:18px; padding:1.25rem;">
+        <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
+          <span>🌐</span> Foreign &amp; NRI Tourist Essential Survival Tips
+        </h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
+          <div>
+            <strong style="color:#fff;">📲 Airport eSIM / SIM Card:</strong><br>
+            Get a local SIM at Delhi (DEL) or Mumbai (BOM) airport arrivals (Airtel / Jio counters). Passport & e-Visa copy required for instant 15-min activation.
+          </div>
+          <div>
+            <strong style="color:#fff;">💳 UPI Payments for Foreigners:</strong><br>
+            Use <strong>Cheq UPI</strong> or <strong>UPI One World</strong> app to link foreign credit cards and pay via QR codes across India without local bank account.
+          </div>
+          <div>
+            <strong style="color:#fff;">💧 Drinking Water & Hygiene:</strong><br>
+            Drink sealed bottled mineral water (Bisleri, Kinley, Aquafina). Avoid unsealed tap water. Eat at busy street stalls with hot cooked food.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  window.switchTransportMode = switchTransportMode;
+  window.calcCarFuelToll = calcCarFuelToll;
+  window.calcAutoMeter = calcAutoMeter;
+  window.setLingoLanguage = setLingoLanguage;
+  window.speakLingoPhrase = speakLingoPhrase;
+  window.renderSurvivalKit = renderSurvivalKit;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      switchTransportMode('flight');
+      setLingoLanguage('hindi');
+      renderSurvivalKit();
+    } catch(e) {}
+  });
+
 
 })();
