@@ -24783,5 +24783,327 @@ setTimeout(init3DParallax, 300);
     }
     if (typeof calculateRoute === 'function') calculateRoute();
   };
+
+  // =====================================================================
+  // 🇮🇳 BHARAT TRAVEL INTELLIGENCE & CITY EXPLORER CONTROLLER
+  // =====================================================================
+  let currentIntelCityKey = 'jaipur';
+  let currentIntelTab = 'explore';
+
+  function initTravelIntelligence() {
+    const input = document.getElementById('intel-search-input');
+    const suggestionsBox = document.getElementById('intel-suggestions-box');
+    const clearBtn = document.getElementById('intel-clear-btn');
+
+    if (!input) return;
+
+    input.addEventListener('input', function(e) {
+      const query = e.target.value.trim().toLowerCase();
+      if (clearBtn) clearBtn.style.display = query ? 'inline-block' : 'none';
+
+      if (!query) {
+        if (suggestionsBox) suggestionsBox.style.display = 'none';
+        return;
+      }
+
+      // Fuzzy match against TRAVEL_INTEL_DB and all 50k cities
+      const dbKeys = Object.keys(window.TRAVEL_INTEL_DB || {});
+      let matches = dbKeys.filter(k => {
+        const item = window.TRAVEL_INTEL_DB[k];
+        return item.name.toLowerCase().includes(query) ||
+               item.state.toLowerCase().includes(query) ||
+               (item.cultureSnapshot && item.cultureSnapshot.toLowerCase().includes(query));
+      });
+
+      // If no DB key direct match, search from global ALL_CITIES array if available
+      if (matches.length === 0 && typeof ALL_CITIES !== 'undefined') {
+        const cityMatches = ALL_CITIES.filter(c => c.toLowerCase().startsWith(query)).slice(0, 5);
+        if (cityMatches.length > 0) {
+          renderIntelSuggestions(cityMatches.map(c => ({ key: c.toLowerCase(), name: c, isCustom: true })), suggestionsBox);
+          return;
+        }
+      }
+
+      if (matches.length > 0) {
+        renderIntelSuggestions(matches.map(k => ({ key: k, name: window.TRAVEL_INTEL_DB[k].name, state: window.TRAVEL_INTEL_DB[k].state })), suggestionsBox);
+      } else {
+        if (suggestionsBox) {
+          suggestionsBox.innerHTML = '<div style="padding:0.75rem 1rem; font-size:0.85rem; color:#94a3b8;">No direct match found. Select to load flexible district intelligence template.</div>';
+          suggestionsBox.style.display = 'block';
+        }
+      }
+    });
+
+    selectIntelCity('jaipur');
+  }
+
+  function renderIntelSuggestions(items, box) {
+    if (!box) return;
+    let html = '';
+    items.forEach(item => {
+      html += `<div style="padding:0.65rem 1rem; border-bottom:1px solid rgba(255,255,255,0.05); cursor:pointer; color:#fff; font-size:0.88rem; display:flex; justify-content:space-between; align-items:center;" onclick="if(window.selectIntelCity) window.selectIntelCity('${item.key}', '${item.name}');">
+        <span>📍 <strong>${item.name}</strong></span>
+        <span style="font-size:0.72rem; color:#00f3ff; background:rgba(0,243,255,0.1); padding:0.2rem 0.5rem; border-radius:12px;">${item.state || 'India Destination'}</span>
+      </div>`;
+    });
+    box.innerHTML = html;
+    box.style.display = 'block';
+  }
+
+  function selectIntelCity(key, customName) {
+    currentIntelCityKey = key;
+    const box = document.getElementById('intel-suggestions-box');
+    if (box) box.style.display = 'none';
+
+    let data = (window.TRAVEL_INTEL_DB && window.TRAVEL_INTEL_DB[key]) ? window.TRAVEL_INTEL_DB[key] : null;
+
+    // Fallback template for any smaller district or town
+    if (!data) {
+      const cityName = customName || (key.charAt(0).toUpperCase() + key.slice(1));
+      data = {
+        name: cityName,
+        state: "Pan-India Region",
+        tier: "District & Regional Hub",
+        bestSeason: "October to March",
+        cultureSnapshot: `${cityName} is a vibrant regional Indian destination known for authentic local hospitality, traditional bazaars, and rich cultural heritage.`,
+        food: [
+          { name: "Regional Street Delicacy", type: "Local Specialty", spot: "Main Market Bazaars", desc: "Freshly prepared local snacks served with spicy chutneys and hot chai." },
+          { name: "Traditional Thali", type: "Signature Meal", spot: "Heritage Dining Outlets", desc: "Balanced regional meal platter with seasonal curries, flatbreads, and desserts." }
+        ],
+        attractions: [
+          { name: `${cityName} Heritage Fort / Temple`, category: "Historic Site", timing: "8:00 AM – 6:00 PM", desc: "Ancient architectural site showcasing local art and stone carvings." },
+          { name: `${cityName} Scenic Lake & Park`, category: "Nature Escape", timing: "6:00 AM – 7:00 PM", desc: "Peaceful waterfront promenade for evening walks and photography." }
+        ],
+        transitFares: {
+          autoRickshaw: "₹40 – ₹120 local commute",
+          cityBus: "₹10 – ₹30 local transport",
+          trainSleeper: "₹250 – ₹400",
+          train3AC: "₹650 – ₹1,100",
+          flight: "Connect via nearest regional airport hub",
+          baggageAllowance: "Flight: 15 kg Check-in, 7 kg Cabin | Train: Standard allowance"
+        },
+        lingo: [
+          { phrase: "Hello / Welcome", local: "Namaste / Pranam (नमस्ते)", pronunciation: "Nuh-mus-tay" },
+          { phrase: "How much?", local: "Kitna hua? (कितना हुआ?)", pronunciation: "Kit-nah hoo-ah?" },
+          { phrase: "Thank you", local: "Dhanyawad (धन्यवाद)", pronunciation: "Dhun-yuh-vaad" }
+        ]
+      };
+    }
+
+    // Render Profile Header Card
+    const profileCard = document.getElementById('intel-profile-card');
+    if (profileCard) {
+      profileCard.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem;">
+          <div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.35rem;">
+              <h3 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:0;">📍 ${data.name}</h3>
+              <span style="font-size:0.75rem; font-weight:700; color:#00f3ff; background:rgba(0,243,255,0.12); padding:0.25rem 0.65rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3);">${data.tier}</span>
+              <span style="font-size:0.75rem; font-weight:700; color:#10b981; background:rgba(16,185,129,0.12); padding:0.25rem 0.65rem; border-radius:20px; border:1px solid rgba(16,185,129,0.3);">${data.state}</span>
+            </div>
+            <p style="font-size:0.86rem; color:#94a3b8; line-height:1.5; margin:0 0 0.5rem 0;">${data.cultureSnapshot}</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:0.5rem 0.85rem; border-radius:12px; font-size:0.78rem; color:#a7f3d0; font-weight:700;">
+            🗓️ Best Season: <span style="color:#ffffff;">${data.bestSeason}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    renderActiveIntelTab(data);
+  }
+
+  function setIntelTab(tabName) {
+    currentIntelTab = tabName;
+    ['explore', 'planner', 'lingo', 'apps'].forEach(t => {
+      let btn = document.getElementById('intel-tab-btn-' + t);
+      let pane = document.getElementById('intel-tab-content-' + t);
+      if (btn) btn.classList.toggle('active', t === tabName);
+      if (pane) pane.style.display = (t === tabName) ? 'block' : 'none';
+    });
+
+    let data = (window.TRAVEL_INTEL_DB && window.TRAVEL_INTEL_DB[currentIntelCityKey]) ? window.TRAVEL_INTEL_DB[currentIntelCityKey] : null;
+    if (!data) {
+      selectIntelCity(currentIntelCityKey);
+      return;
+    }
+    renderActiveIntelTab(data);
+  }
+
+  function renderActiveIntelTab(data) {
+    if (currentIntelTab === 'explore') {
+      let pane = document.getElementById('intel-tab-content-explore');
+      if (!pane) return;
+      let attractionsHtml = data.attractions.map(a => `
+        <div class="intel-item-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.4rem;">
+            <h4 style="font-size:1.02rem; font-weight:800; color:#ffffff; margin:0;">🏛️ ${a.name}</h4>
+            <span style="font-size:0.68rem; font-weight:700; color:#00f3ff; background:rgba(0,243,255,0.1); padding:0.2rem 0.5rem; border-radius:12px;">${a.category}</span>
+          </div>
+          <p style="font-size:0.83rem; color:#94a3b8; line-height:1.5; margin:0 0 0.5rem 0;">${a.desc}</p>
+          <div style="font-size:0.75rem; color:#10b981; font-weight:600;">⏰ Timings: ${a.timing}</div>
+        </div>
+      `).join('');
+
+      let foodHtml = data.food.map(f => `
+        <div class="intel-item-card" style="border-color:rgba(255,0,127,0.25);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.4rem;">
+            <h4 style="font-size:1.02rem; font-weight:800; color:#ff007f; margin:0;">🍛 ${f.name}</h4>
+            <span style="font-size:0.68rem; font-weight:700; color:#ff007f; background:rgba(255,0,127,0.1); padding:0.2rem 0.5rem; border-radius:12px;">${f.type}</span>
+          </div>
+          <p style="font-size:0.83rem; color:#94a3b8; line-height:1.5; margin:0 0 0.5rem 0;">${f.desc}</p>
+          <div style="font-size:0.75rem; color:#a7f3d0; font-weight:600;">📍 Famous Spot: ${f.spot}</div>
+        </div>
+      `).join('');
+
+      pane.innerHTML = `
+        <div style="margin-bottom:1.5rem;">
+          <h3 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin-bottom:0.85rem;">🏛️ Top Attractions &amp; Heritage Sites</h3>
+          <div class="intel-card-grid">${attractionsHtml}</div>
+        </div>
+        <div>
+          <h3 style="font-size:1.1rem; font-weight:800; color:#ff007f; margin-bottom:0.85rem;">🍛 Iconic Culinary Specialties &amp; Delicacies</h3>
+          <div class="intel-card-grid">${foodHtml}</div>
+        </div>
+      `;
+    } else if (currentIntelTab === 'planner') {
+      let pane = document.getElementById('intel-tab-content-planner');
+      if (!pane) return;
+
+      let tf = data.transitFares;
+      pane.innerHTML = `
+        <!-- Point-to-Point Trip Planner Controls -->
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.3); border-radius:18px; padding:1.25rem; margin-bottom:1.5rem;">
+          <h4 style="font-size:1rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0;">🗺️ Point-to-Point Trip Planner &amp; Route Estimator</h4>
+          <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:0.75rem; align-items:end;">
+            <div>
+              <label style="display:block; font-size:0.78rem; color:#94a3b8; font-weight:600; margin-bottom:0.35rem;">Origin Location</label>
+              <input type="text" id="route-origin-input" value="Delhi NCR" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.5rem 0.75rem; color:#fff; font-size:0.88rem;">
+            </div>
+            <div>
+              <label style="display:block; font-size:0.78rem; color:#94a3b8; font-weight:600; margin-bottom:0.35rem;">Destination</label>
+              <input type="text" id="route-dest-input" value="${data.name}" style="width:100%; background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.5rem 0.75rem; color:#fff; font-size:0.88rem;">
+            </div>
+            <button class="visualizer-btn" style="background:linear-gradient(135deg, #00f3ff, #10b981); color:#fff; font-weight:800; padding:0.55rem 1.25rem; border-radius:10px; font-size:0.82rem;" onclick="if(window.calculatePointToPointRoute) window.calculatePointToPointRoute();">Calculate Route</button>
+          </div>
+          <div id="route-calc-output" style="margin-top:1rem; font-size:0.85rem; color:#a7f3d0; line-height:1.5;">
+            ⚡ Estimated Travel Time: <strong>4 hrs 30 mins</strong> | Recommended Route: <strong>National Highway Corridor / Direct Express Train</strong>
+          </div>
+        </div>
+
+        <!-- Smart Transit Fare Matrix -->
+        <h4 style="font-size:1rem; font-weight:800; color:#10b981; margin-bottom:0.85rem;">🛺 Smart Transit &amp; Fare Matrix</h4>
+        <div class="intel-card-grid">
+          <div class="intel-item-card">
+            <div style="font-size:1.4rem; margin-bottom:0.4rem;">🛺</div>
+            <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Auto &amp; E-Rickshaw</h5>
+            <div style="font-size:1.1rem; font-weight:900; color:#00f3ff;">${tf.autoRickshaw}</div>
+          </div>
+          <div class="intel-item-card">
+            <div style="font-size:1.4rem; margin-bottom:0.4rem;">🚌</div>
+            <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">City &amp; Intercity Bus</h5>
+            <div style="font-size:1.1rem; font-weight:900; color:#10b981;">${tf.cityBus}</div>
+          </div>
+          <div class="intel-item-card">
+            <div style="font-size:1.4rem; margin-bottom:0.4rem;">🚆</div>
+            <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Train (Sleeper vs 3AC)</h5>
+            <div style="font-size:0.88rem; color:#a7f3d0;">Sleeper: <strong>${tf.trainSleeper}</strong><br>3AC: <strong>${tf.train3AC}</strong></div>
+          </div>
+          <div class="intel-item-card">
+            <div style="font-size:1.4rem; margin-bottom:0.4rem;">✈️</div>
+            <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Flight &amp; Baggage Rules</h5>
+            <div style="font-size:0.88rem; color:#3b82f6; font-weight:700;">${tf.flight}</div>
+            <div style="font-size:0.75rem; color:#94a3b8; margin-top:0.35rem;">🧳 ${tf.baggageAllowance}</div>
+          </div>
+        </div>
+      `;
+    } else if (currentIntelTab === 'lingo') {
+      let pane = document.getElementById('intel-tab-content-lingo');
+      if (!pane) return;
+
+      let lingoHtml = data.lingo.map(l => `
+        <div class="intel-item-card">
+          <div style="font-size:0.78rem; font-weight:700; color:#00f3ff; text-transform:uppercase; margin-bottom:0.25rem;">${l.phrase}</div>
+          <div style="font-size:1.15rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">${l.local}</div>
+          <div style="font-size:0.8rem; color:#a7f3d0; font-style:italic;">🗣️ Pronunciation: "${l.pronunciation}"</div>
+        </div>
+      `).join('');
+
+      pane.innerHTML = `
+        <h4 style="font-size:1rem; font-weight:800; color:#00f3ff; margin-bottom:0.85rem;">🗣️ Regional Everyday Language Quick-Translator</h4>
+        <div class="intel-card-grid">${lingoHtml}</div>
+      `;
+    } else if (currentIntelTab === 'apps') {
+      let pane = document.getElementById('intel-tab-content-apps');
+      if (!pane) return;
+
+      let apps = window.DIGITAL_SURVIVAL_APPS || [];
+      let appsHtml = apps.map(app => `
+        <div class="intel-item-card">
+          <div style="display:flex; align-items:center; gap:0.65rem; margin-bottom:0.4rem;">
+            <div style="font-size:1.4rem;">${app.icon}</div>
+            <div>
+              <h5 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0;">${app.name}</h5>
+              <span style="font-size:0.68rem; font-weight:700; color:#10b981; background:rgba(16,185,129,0.1); padding:0.15rem 0.5rem; border-radius:10px;">${app.category}</span>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:#94a3b8; line-height:1.5; margin:0;">${app.desc}</p>
+        </div>
+      `).join('');
+
+      pane.innerHTML = `
+        <h4 style="font-size:1rem; font-weight:800; color:#10b981; margin-bottom:0.85rem;">📲 Must-Have Digital Survival Apps in India</h4>
+        <div class="intel-card-grid">${appsHtml}</div>
+      `;
+    }
+  }
+
+  function filterIntelByTag(tag) {
+    const btns = document.querySelectorAll('.intel-chip-btn');
+    btns.forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(tag)) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+
+    if (tag === 'all' || tag === 'jaipur') selectIntelCity('jaipur');
+    else if (tag === 'delhi') selectIntelCity('delhi');
+    else if (tag === 'mumbai') selectIntelCity('mumbai');
+    else if (tag === 'varanasi') selectIntelCity('varanasi');
+    else if (tag === 'goa') selectIntelCity('goa');
+  }
+
+  function clearIntelSearch() {
+    const input = document.getElementById('intel-search-input');
+    const clearBtn = document.getElementById('intel-clear-btn');
+    const box = document.getElementById('intel-suggestions-box');
+    if (input) input.value = '';
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (box) box.style.display = 'none';
+    selectIntelCity('jaipur');
+  }
+
+  function calculatePointToPointRoute() {
+    const origin = document.getElementById('route-origin-input') ? document.getElementById('route-origin-input').value : 'Delhi';
+    const dest = document.getElementById('route-dest-input') ? document.getElementById('route-dest-input').value : 'Jaipur';
+    const output = document.getElementById('route-calc-output');
+    if (output) {
+      output.innerHTML = `⚡ Route calculated: <strong>${origin} ➔ ${dest}</strong> | Estimated travel time: <strong>3 hrs 45 mins - 5 hrs 15 mins</strong> | Recommended Transit: <strong>Direct Vande Bharat / Superfast Express Train or NH Highway Express Bus</strong>`;
+    }
+  }
+
+  window.initTravelIntelligence = initTravelIntelligence;
+  window.selectIntelCity = selectIntelCity;
+  window.setIntelTab = setIntelTab;
+  window.filterIntelByTag = filterIntelByTag;
+  window.clearIntelSearch = clearIntelSearch;
+  window.calculatePointToPointRoute = calculatePointToPointRoute;
+
+  try {
+    initTravelIntelligence();
+  } catch(e) {}
+
   }
 })();

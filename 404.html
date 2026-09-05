@@ -317,16 +317,77 @@
           <div style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:0.35rem 0.8rem; border-radius:8px; font-size:0.75rem; color:#10b981; font-weight:700;">
             ● Pan-India Active
           </div>
+    <!-- =====================================================================
+         FEATURE #1: BHARAT TRAVEL INTELLIGENCE & CITY EXPLORER
+         ===================================================================== -->
+    <div id="tab-content-travelintel" class="tab-content active" style="margin-bottom:2rem;">
+      <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.9), rgba(2,6,23,0.95)); border:1px solid rgba(0,243,255,0.35); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(0,243,255,0.15);">
+        
+        <!-- Header & Title -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg, #00f3ff, #10b981); display:flex; align-items:center; justify-content:center; font-size:1.4rem; box-shadow:0 0 15px rgba(0,243,255,0.4);">
+              <span>🇮🇳</span>
+            </div>
+            <div>
+              <span style="font-size:0.7rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.12em;">Feature #1 • Travel Intelligence</span>
+              <h2 style="font-size:1.35rem; font-weight:900; color:#ffffff; margin:1px 0 0 0;">Bharat Travel Intelligence &amp; City Explorer</h2>
+            </div>
+          </div>
+
+          <!-- Quick Filter Chips -->
+          <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+            <button class="intel-chip-btn active" onclick="if(window.filterIntelByTag) window.filterIntelByTag('all');">All India</button>
+            <button class="intel-chip-btn" onclick="if(window.filterIntelByTag) window.filterIntelByTag('jaipur');">Heritage (Jaipur)</button>
+            <button class="intel-chip-btn" onclick="if(window.filterIntelByTag) window.filterIntelByTag('delhi');">Capital (Delhi)</button>
+            <button class="intel-chip-btn" onclick="if(window.filterIntelByTag) window.filterIntelByTag('mumbai');">Coastal (Mumbai)</button>
+            <button class="intel-chip-btn" onclick="if(window.filterIntelByTag) window.filterIntelByTag('varanasi');">Spiritual (Varanasi)</button>
+            <button class="intel-chip-btn" onclick="if(window.filterIntelByTag) window.filterIntelByTag('goa');">Beach (Goa)</button>
+          </div>
         </div>
+
+        <!-- High-Contrast Search Bar -->
+        <div style="position:relative; margin-bottom:1.5rem;">
+          <div class="search-input-container" style="background:rgba(2,6,23,0.85); border:2px solid rgba(0,243,255,0.4); border-radius:14px; padding:0.4rem 1rem;">
+            <span style="font-size:1.2rem; color:#00f3ff;">🔍</span>
+            <input type="text" id="intel-search-input" placeholder="Search any Indian city, district, village, state or keyword (e.g. Jaipur, Delhi, Varanasi, Goa, fort, beach)..." autocomplete="off" style="font-size:0.95rem;">
+            <span id="intel-clear-btn" style="cursor:pointer; color:#94a3b8; display:none;" onclick="if(window.clearIntelSearch) window.clearIntelSearch();">✕</span>
+          </div>
+          <div id="intel-suggestions-box" class="suggestions-container" style="display:none; max-height:220px; overflow-y:auto; position:absolute; top:100%; left:0; right:0; z-index:1000;"></div>
+        </div>
+
+        <!-- Selected Location Profile Card -->
+        <div id="intel-profile-card" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:1.25rem; margin-bottom:1.5rem;">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <!-- 4 Interactive Tabs Nav -->
+        <div style="display:flex; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem; margin-bottom:1.25rem; flex-wrap:wrap;">
+          <button id="intel-tab-btn-explore" class="intel-tab-btn active" onclick="if(window.setIntelTab) window.setIntelTab('explore');">🏛️ Explore &amp; Food</button>
+          <button id="intel-tab-btn-planner" class="intel-tab-btn" onclick="if(window.setIntelTab) window.setIntelTab('planner');">🗺️ Trip Route &amp; Planner</button>
+          <button id="intel-tab-btn-lingo" class="intel-tab-btn" onclick="if(window.setIntelTab) window.setIntelTab('lingo');">🗣️ Lingo &amp; Culture</button>
+          <button id="intel-tab-btn-apps" class="intel-tab-btn" onclick="if(window.setIntelTab) window.setIntelTab('apps');">📲 Digital Survival Kit</button>
+        </div>
+
+        <!-- Tab 1: Explore & Food -->
+        <div id="intel-tab-content-explore" class="intel-tab-pane"></div>
+
+        <!-- Tab 2: Trip Route & Planner -->
+        <div id="intel-tab-content-planner" class="intel-tab-pane" style="display:none;"></div>
+
+        <!-- Tab 3: Lingo & Culture -->
+        <div id="intel-tab-content-lingo" class="intel-tab-pane" style="display:none;"></div>
+
+        <!-- Tab 4: Digital Survival Kit -->
+        <div id="intel-tab-content-apps" class="intel-tab-pane" style="display:none;"></div>
+
       </div>
     </div>
-
-
 
     <!-- =====================================================================
          TAB 1: AUTOCOMPLETE ENGINE CONTENT
          ===================================================================== -->
-    <div id="tab-content-engine" class="tab-content active">
+    <div id="tab-content-engine" class="tab-content">
       <div class="dashboard-grid">
         
         <!-- Left Column: Search & Benchmarks -->
@@ -1230,6 +1291,7 @@
   </div>
 
   <!-- Include code modules -->
+  <script src="./travelIntelligence.js?v=110.0.0"></script>
   <script src="./cities.js?v=110.0.0"></script>
   <script src="./trie.js?v=110.0.0"></script>
   <script src="./app.js?v=110.0.0"></script>
