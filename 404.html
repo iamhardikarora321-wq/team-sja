@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Arvora ✨ — India's City Universe & Dev Hub</title>
   <meta name="description" content="Arvora: The next-gen Indian cities universe — blazing-fast Radix Tree autocomplete, interactive state tourism, geoguess spelling game, and database seed exporter. Explore India like never before.">
-  <link rel="stylesheet" href="./index.css?v=90.0.0">
+  <link rel="stylesheet" href="./index.css?v=100.0.0">
 <script>
   window._arvoraPin = "";
   function populateShowcase3DStage() {
@@ -236,7 +236,7 @@
       </div>
 
       <!-- Active Feature Breadcrumb & Search Trigger -->
-      <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin-top:0.65rem; flex-wrap:wrap; gap:0.5rem;">
+      <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin-top:0.65rem; flex-wrap:wrap; gap:0.5rem; position:relative; z-index:100;">
         <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.82rem; color:var(--text-muted); flex-wrap:wrap;">
           <span style="letter-spacing:0.04em; font-weight:600; text-transform:uppercase; font-size:0.7rem;">Arvora</span>
           <span style="opacity:0.4;">/</span>
@@ -246,21 +246,32 @@
             ✦ LIVE DEALS ACTIVE
           </div>
         </div>
-        <div style="display:flex; align-items:center; gap:0.5rem;">
+        
+        <!-- Navbar Anchor Links matching exact section IDs (#bento, #simulator, #impact, #features) -->
+        <nav style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+          <a href="#bento" id="nav-link-bento" class="visualizer-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-primary); font-weight:600; cursor:pointer;" onclick="event.preventDefault(); var el = document.getElementById('bento'); if(el) el.scrollIntoView({ behavior: 'smooth' }); if(window.openShowcaseModal) window.openShowcaseModal();">
+            <span>✨</span> Bento Grid
+          </a>
+          <a href="#simulator" id="nav-link-simulator" class="visualizer-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(6,182,212,0.12); border:1px solid rgba(6,182,212,0.3); color:var(--color-accent); font-weight:600; cursor:pointer;" onclick="event.preventDefault(); if(window.switchTab) window.switchTab('routes'); var el = document.getElementById('simulator'); if(el) el.scrollIntoView({ behavior: 'smooth' });">
+            <span>⚡</span> Simulator
+          </a>
+          <a href="#impact" id="nav-link-impact" class="visualizer-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(168,85,247,0.12); border:1px solid rgba(168,85,247,0.3); color:var(--color-purple); font-weight:600; cursor:pointer;" onclick="event.preventDefault(); var el = document.getElementById('quantum-hero-banner'); if(el) el.scrollIntoView({ behavior: 'smooth' }); if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
+            <span>🌐</span> 3D Impact
+          </a>
           <button id="nav-browse-all-btn" class="visualizer-btn browse-all-trigger" style="display:flex; align-items:center; gap:8px; font-size:0.75rem; padding:0.45rem 0.95rem; border-radius:12px; background:linear-gradient(135deg, rgba(0,243,255,0.25), rgba(157,0,255,0.25)); border:1px solid rgba(0,243,255,0.5); color:#ffffff; font-weight:700; cursor:pointer; box-shadow:0 0 15px rgba(0,243,255,0.3);" onclick="if(window.openShowcaseModal) window.openShowcaseModal();">
             ⚡ Browse All Features
           </button>
           <button id="header-search-trigger" class="visualizer-btn" style="display:flex; align-items:center; gap:8px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);" onclick="if(window.openShowcaseModal) window.openShowcaseModal();">
             <span>🔍</span> Search 40+ Features... <kbd style="background:rgba(255,255,255,0.1); padding:1px 4px; border-radius:3px; font-size:0.65rem; font-family:inherit; margin-left:4px;">Cmd K</kbd>
           </button>
-        </div>
+        </nav>
       </div>
     </header>
 
-    <!-- 🌟 IMPOSSIBLE TO IGNORE: ARVORA QUANTUM HOLOGRAPHIC CITY MATRIX BANNER -->
-    <div id="quantum-hero-banner" class="quantum-banner-wrap" onclick="if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
-      <div class="quantum-banner-glow"></div>
-      <div class="quantum-banner-content">
+    <!-- 🌟 IMPOSSIBLE TO IGNORE: ARVORA QUANTUM HOLOGRAPHIC CITY MATRIX BANNER (ID: impact & quantum-hero) -->
+    <div id="quantum-hero-banner" class="quantum-banner-wrap" style="position:relative; z-index:10;" onclick="if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
+      <div class="quantum-banner-glow" style="pointer-events:none;"></div>
+      <div class="quantum-banner-content" style="position:relative; z-index:20;">
         <div class="quantum-orb-symbol">
           <span class="orb-core"></span>
           <span class="orb-ring ring-1"></span>
@@ -271,9 +282,16 @@
           <h2 class="quantum-title">Launch Arvora 3D Quantum Hologram Studio</h2>
           <p class="quantum-sub">Interactively warp through 15,000 Indian cities in 3D spatial constellation mode with real-time harmonic audio synthesis.</p>
         </div>
-        <button class="quantum-launch-btn" onclick="if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
-          <span>✨ EXPLORE HOLOGRAM</span>
-        </button>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; position:relative; z-index:30;">
+          <!-- Hero CTA 1: Launch Simulator / Simulate Hotel Uplift -->
+          <button id="hero-cta-simulate" class="quantum-launch-btn" style="background:linear-gradient(135deg, rgba(6,182,212,0.9), rgba(59,130,246,0.9)); color:#fff; border:1px solid rgba(255,255,255,0.3); font-weight:700;" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('routes'); var el = document.getElementById('simulator'); if(el) el.scrollIntoView({ behavior: 'smooth' });">
+            <span>🚀 Simulate Hotel Uplift / Launch Simulator</span>
+          </button>
+          <!-- Hero CTA 2: Explore Micro-Stays / Explore Features -->
+          <button id="hero-cta-explore" class="quantum-launch-btn" onclick="event.stopPropagation(); if(window.openShowcaseModal) window.openShowcaseModal();">
+            <span>✨ Explore Micro-Stays / Bento Features</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -354,9 +372,9 @@
       </div>
     </div>
 
-    <!-- Metrics Dashboard Row (Shared) -->
-    <div class="metrics-row">
-      <div class="metric-card highlighted">
+    <!-- Metrics & Bento Grid Features Showcase Row (ID: bento & features) -->
+    <div id="bento" class="metrics-row" style="position:relative; z-index:10;">
+      <div id="features" class="metric-card highlighted" onclick="if(window.openShowcaseModal) window.openShowcaseModal();" style="cursor:pointer;">
         <div class="metric-label">Active Database</div>
         <div id="stat-cities-count" class="metric-value">15,000</div>
         <div class="metric-desc">Cleaned GeoNames Indian cities</div>
@@ -477,14 +495,21 @@
     </div>
 
     <!-- =====================================================================
-         TAB 2: DATABASE SEED EXPORTER (Useful Tool)
+         TAB 2: DATABASE SEED EXPORTER & INTERACTIVE SIMULATOR (ID: simulator & calculator)
          ==================================================================== -->
     <div id="tab-content-routes" class="tab-content">
-      <div class="dashboard-grid">
+      <div id="simulator" class="dashboard-grid">
         
-        <!-- Left Panel: Filters and Configuration Builder -->
-        <div class="panel">
-          <h2 class="panel-title"><span>💻</span> Database Seeding Exporter</h2>
+        <!-- Left Panel: Filters, Simulator Controls & Configuration Builder -->
+        <div class="panel" id="calculator">
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+            <h2 class="panel-title" style="margin-bottom:0; padding-bottom:0; border:none;"><span>💻</span> Database Seeding & Hotel Uplift Simulator</h2>
+            <!-- Simulator Toggle Buttons ("Hoteliers" vs "Travelers") -->
+            <div class="visualizer-controls" style="display:flex; gap:6px;">
+              <button id="sim-mode-hoteliers" class="visualizer-btn active" style="font-size:0.75rem; padding:0.35rem 0.75rem;" onclick="if(window.setSimulatorMode) window.setSimulatorMode('hoteliers');">🏨 Hoteliers View</button>
+              <button id="sim-mode-travelers" class="visualizer-btn" style="font-size:0.75rem; padding:0.35rem 0.75rem;" onclick="if(window.setSimulatorMode) window.setSimulatorMode('travelers');">🧳 Travelers View</button>
+            </div>
+          </div>
           <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
             Configure database seeding filters. Manually add specific cities using autocomplete or filter by states and naming patterns to generate schemas.
           </p>
@@ -1486,8 +1511,8 @@
   </div>
 
   <!-- Include code modules -->
-  <script src="./cities.js?v=90.0.0"></script>
-  <script src="./trie.js?v=90.0.0"></script>
-  <script src="./app.js?v=90.0.0"></script>
+  <script src="./cities.js?v=100.0.0"></script>
+  <script src="./trie.js?v=100.0.0"></script>
+  <script src="./app.js?v=100.0.0"></script>
 </body>
 </html>

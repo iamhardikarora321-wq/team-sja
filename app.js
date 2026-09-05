@@ -24569,5 +24569,17 @@ setTimeout(init3DParallax, 300);
   window.handleDirectUnlock = function() {
     if (typeof closeLockModal === 'function') closeLockModal();
   };
+  window.setSimulatorMode = function(mode) {
+    var hBtn = document.getElementById('sim-mode-hoteliers');
+    var tBtn = document.getElementById('sim-mode-travelers');
+    if (mode === 'hoteliers') {
+      if (hBtn) hBtn.classList.add('active');
+      if (tBtn) tBtn.classList.remove('active');
+    } else {
+      if (tBtn) tBtn.classList.add('active');
+      if (hBtn) hBtn.classList.remove('active');
+    }
+    if (typeof calculateRoute === 'function') calculateRoute();
+  };
   }
 })();

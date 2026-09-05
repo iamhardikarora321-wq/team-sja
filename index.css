@@ -4360,3 +4360,40 @@ html, body {
   font-weight: 600;
   pointer-events: none;
 }
+
+/* ==========================================================================
+   EXPLICIT Z-INDEX & POINTER-EVENTS LAYER SAFETY OVERRIDES
+   ========================================================================== */
+
+/* All background visual effect layers must NEVER block mouse clicks */
+#particle-canvas,
+.ambient-glow-1,
+.ambient-glow-2,
+.quantum-banner-glow,
+.neon-grid-floor,
+.stage-spotlight-left,
+.stage-spotlight-right,
+.lock-orb-ring-1,
+.lock-orb-ring-2,
+.orb-ring,
+.ambient-mesh-bg::before {
+  pointer-events: none !important;
+}
+
+/* Ensure interactive button containers, headers, navbar links, CTAs sit cleanly above meshes */
+button,
+a,
+.visualizer-btn,
+.quantum-launch-btn,
+.island-btn,
+.pin-digit-btn,
+.pack-cat-btn,
+.ptn-mode-btn,
+.nav-grid-card,
+.metric-card,
+header nav,
+.quantum-banner-content {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto !important;
+}
