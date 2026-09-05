@@ -552,8 +552,64 @@
     try { updateVisualizer(); } catch(e) { console.warn('[initializeApp] updateVisualizer error:', e); }
     try { setupGameScoreboard(); } catch(e) { console.warn('[initializeApp] setupGameScoreboard error:', e); }
     try { loadNewGameWord(); } catch(e) { console.warn('[initializeApp] loadNewGameWord error:', e); }
+    try { setupAmbientAuroraCanvas(); } catch(e) { console.warn('[initializeApp] setupAmbientAuroraCanvas error:', e); }
     // Generate initial schema query immediately
     setTimeout(() => { try { generateDatabaseSeed(); } catch(e) {} }, 20);
+  }
+
+  function setupAmbientAuroraCanvas() {
+    let auroraCanvas = document.getElementById('ambient-aurora-canvas');
+    if (!auroraCanvas) return;
+    let actx = auroraCanvas.getContext('2d');
+    
+    function resizeAurora() {
+      if (!auroraCanvas || !auroraCanvas.parentElement) return;
+      auroraCanvas.width = auroraCanvas.parentElement.clientWidth;
+      auroraCanvas.height = auroraCanvas.parentElement.clientHeight;
+    }
+    resizeAurora();
+    window.addEventListener('resize', resizeAurora);
+
+    let t = 0;
+    function renderAurora() {
+      if (!auroraCanvas || !actx) return;
+      actx.clearRect(0, 0, auroraCanvas.width, auroraCanvas.height);
+      t += 0.015;
+
+      let w = auroraCanvas.width;
+      let h = auroraCanvas.height;
+
+      // Draw multi-layered holographic sine wave aurora ribbon
+      for (let layer = 0; layer < 3; layer++) {
+        actx.beginPath();
+        let grad = actx.createLinearGradient(0, 0, w, 0);
+        if (layer === 0) {
+          grad.addColorStop(0, 'rgba(0, 243, 255, 0.25)');
+          grad.addColorStop(0.5, 'rgba(121, 40, 202, 0.3)');
+          grad.addColorStop(1, 'rgba(255, 0, 127, 0.25)');
+        } else if (layer === 1) {
+          grad.addColorStop(0, 'rgba(255, 0, 127, 0.2)');
+          grad.addColorStop(0.5, 'rgba(0, 243, 255, 0.25)');
+          grad.addColorStop(1, 'rgba(168, 85, 247, 0.2)');
+        } else {
+          grad.addColorStop(0, 'rgba(16, 185, 129, 0.2)');
+          grad.addColorStop(0.5, 'rgba(0, 243, 255, 0.2)');
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0.15)');
+        }
+        actx.strokeStyle = grad;
+        actx.lineWidth = 2.5 - layer * 0.5;
+
+        for (let x = 0; x <= w; x += 10) {
+          let y = h / 2 + Math.sin(x * 0.008 + t + layer * 1.2) * (18 + layer * 6) + Math.cos(x * 0.015 - t * 0.8) * 8;
+          if (x === 0) actx.moveTo(x, y);
+          else actx.lineTo(x, y);
+        }
+        actx.stroke();
+      }
+
+      requestAnimationFrame(renderAurora);
+    }
+    renderAurora();
   }
 
   function setupSvg() {

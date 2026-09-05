@@ -303,40 +303,26 @@
   <div id="theme-backdrop" class="sidebar-backdrop" style="display:none;"></div>
 
 
-    <!-- INFINITE DUAL-ROW MARQUEE TICKER (OHHMYDESIGN AGENCY STYLE - HOMEPAGE) -->
-    <div class="marquee-wrapper" style="margin: 1.25rem 0 1.5rem 0;">
-      <!-- Row 1: Left Scroll -->
-      <div class="marquee-row">
-        <div class="marquee-track marquee-track-left">
-          <span class="marquee-pill">🏡 Boutique Hotels</span>
-          <span class="marquee-pill">🌿 Eco-Resorts</span>
-          <span class="marquee-pill">📜 Local Heritage Guilds</span>
-          <span class="marquee-pill">🏕️ Highland Treks</span>
-          <span class="marquee-pill">🍲 Culinary Artisans</span>
-          <span class="marquee-pill">🌄 Off-Peak Stays</span>
-          <span class="marquee-pill">🏡 Boutique Hotels</span>
-          <span class="marquee-pill">🌿 Eco-Resorts</span>
-          <span class="marquee-pill">📜 Local Heritage Guilds</span>
-          <span class="marquee-pill">🏕️ Highland Treks</span>
-          <span class="marquee-pill">🍲 Culinary Artisans</span>
-          <span class="marquee-pill">🌄 Off-Peak Stays</span>
+    <!-- 🌌 INTERACTIVE AMBIENT AURORA NEBULA WAVE CANVAS -->
+    <div id="hero-aurora-wrapper" style="position:relative; width:100%; height:96px; border-radius:18px; margin: 1rem 0 1.5rem 0; overflow:hidden; background:linear-gradient(135deg, rgba(15,23,42,0.85), rgba(2,6,23,0.95)); border:1px solid rgba(0,243,255,0.25); box-shadow:0 0 25px rgba(0,243,255,0.12);">
+      <canvas id="ambient-aurora-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%; display:block; pointer-events:none;"></canvas>
+      <div style="position:relative; z-index:10; display:flex; align-items:center; justify-content:space-between; height:100%; padding:0 1.5rem; flex-wrap:wrap; gap:0.5rem; backdrop-filter:blur(4px);">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <div style="width:38px; height:38px; border-radius:10px; background:linear-gradient(135deg, #00f3ff, #ff007f); display:flex; align-items:center; justify-content:center; font-size:1.15rem; box-shadow:0 0 15px rgba(0,243,255,0.4);">
+            <span>✨</span>
+          </div>
+          <div>
+            <div style="font-size:0.68rem; font-weight:800; color:#00f3ff; letter-spacing:0.12em; text-transform:uppercase;">Arvora Intelligence Engine</div>
+            <h3 style="font-size:0.98rem; font-weight:800; color:#ffffff; margin:1px 0 0 0; letter-spacing:-0.01em;">15,000 Indian Cities Radix Trie Search</h3>
+          </div>
         </div>
-      </div>
-      <!-- Row 2: Right Scroll -->
-      <div class="marquee-row">
-        <div class="marquee-track marquee-track-right">
-          <span class="marquee-pill">🏰 Heritage Homesteads</span>
-          <span class="marquee-pill">🛶 Backwater Cruisers</span>
-          <span class="marquee-pill">🫖 Chai Trail Guides</span>
-          <span class="marquee-pill">🐘 Wilderness Expeditions</span>
-          <span class="marquee-pill">🎨 Craft Co-Ops</span>
-          <span class="marquee-pill">🚲 Eco-Bike Tours</span>
-          <span class="marquee-pill">🏰 Heritage Homesteads</span>
-          <span class="marquee-pill">🛶 Backwater Cruisers</span>
-          <span class="marquee-pill">🫖 Chai Trail Guides</span>
-          <span class="marquee-pill">🐘 Wilderness Expeditions</span>
-          <span class="marquee-pill">🎨 Craft Co-Ops</span>
-          <span class="marquee-pill">🚲 Eco-Bike Tours</span>
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); padding:0.35rem 0.8rem; border-radius:8px; font-size:0.75rem; color:var(--text-secondary); font-weight:600;">
+            ⚡ Avg Lookup: <span style="color:#00f3ff; font-weight:800;" id="hero-stat-speed">0.000ms</span>
+          </div>
+          <div style="background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.3); padding:0.35rem 0.8rem; border-radius:8px; font-size:0.75rem; color:#10b981; font-weight:700;">
+            ● 100% Client-side
+          </div>
         </div>
       </div>
     </div>
