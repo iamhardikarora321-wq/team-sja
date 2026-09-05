@@ -71,6 +71,27 @@
       modal.classList.remove("open", "active");
     }
   };
+  window.showcaseNavLeft = function() {
+    if (typeof activeIndex !== 'undefined' && activeIndex > 0) {
+      activeIndex--;
+      if (typeof render3DCarousel === 'function') render3DCarousel();
+    }
+  };
+  window.showcaseNavRight = function() {
+    if (typeof activeIndex !== 'undefined' && typeof filteredFeatures !== 'undefined' && activeIndex < filteredFeatures.length - 1) {
+      activeIndex++;
+      if (typeof render3DCarousel === 'function') render3DCarousel();
+    }
+  };
+  window.launchActiveFeature = function() {
+    if (typeof activeIndex !== 'undefined' && typeof filteredFeatures !== 'undefined' && filteredFeatures[activeIndex]) {
+      var feat = filteredFeatures[activeIndex];
+      if (typeof window.switchTab === 'function') window.switchTab(feat.id);
+      window.closeShowcaseModal();
+    } else {
+      window.closeShowcaseModal();
+    }
+  };
   function handleDirectUnlock() {
     try {
       sessionStorage.setItem("arvora_session_unlocked", "true");
@@ -1206,7 +1227,7 @@
   <!-- =====================================================================
        🚀 FULL-SCREEN 3D INTERACTIVE FEATURE SHOWCASE STAGE (v34.1.0)
        ===================================================================== -->
-  <div id="showcase-3d-modal" class="showcase-3d-modal" style="display:none;">
+  <div id="showcase-3d-modal" class="showcase-3d-modal" style="display:none;" onclick="if(event.target === this &amp;&amp; window.closeShowcaseModal) window.closeShowcaseModal();">
     <!-- Background Ambient Spotlights & Stage Beams -->
     <div class="showcase-bg-beam-left"></div>
     <div class="showcase-bg-beam-right"></div>
@@ -1214,7 +1235,7 @@
 
     <!-- Top Navigation Header & Search Bar -->
     <div class="showcase-top-bar">
-      <div class="showcase-brand">
+      <div class="showcase-brand" style="cursor:pointer;" onclick="if(window.closeShowcaseModal) window.closeShowcaseModal();">
         <span class="showcase-status-dot"></span>
         <span class="showcase-brand-text">ARVORA · 3D FEATURE SHOWCASE</span>
       </div>
@@ -1225,7 +1246,7 @@
       </div>
 
       <div class="showcase-top-actions">
-        <button id="showcase-close-btn" class="showcase-action-btn" title="Close 3D Stage (ESC)">✕ CLOSE STAGE</button>
+        <button id="showcase-close-btn" class="showcase-action-btn" title="Close 3D Stage (ESC)" onclick="if(window.closeShowcaseModal) window.closeShowcaseModal();">✕ CLOSE STAGE</button>
       </div>
     </div>
 
@@ -1239,8 +1260,8 @@
       </div>
 
       <!-- 3D Navigation Arrows (Left & Right Floating Buttons) -->
-      <button id="showcase-nav-left" class="showcase-nav-btn left" title="Previous Feature">‹</button>
-      <button id="showcase-nav-right" class="showcase-nav-btn right" title="Next Feature">›</button>
+      <button id="showcase-nav-left" class="showcase-nav-btn left" title="Previous Feature" onclick="if(window.showcaseNavLeft) window.showcaseNavLeft();">‹</button>
+      <button id="showcase-nav-right" class="showcase-nav-btn right" title="Next Feature" onclick="if(window.showcaseNavRight) window.showcaseNavRight();">›</button>
 
       <!-- 3D Interactive Carousel Stage -->
       <div id="showcase-3d-stage" class="showcase-3d-stage">
@@ -1273,7 +1294,7 @@
 
       <!-- Action Launcher Button -->
       <div class="showcase-launch-wrap">
-        <button id="showcase-launch-btn" class="showcase-launch-btn">
+        <button id="showcase-launch-btn" class="showcase-launch-btn" onclick="if(window.launchActiveFeature) window.launchActiveFeature();">
           <span>⚡ LAUNCH FEATURE</span>
         </button>
       </div>
