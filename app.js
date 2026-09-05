@@ -23927,36 +23927,59 @@ setTimeout(init3DParallax, 300);
     }
   }
 
-  // Attach 3D Showcase click triggers immediately
+  // Universal Fail-Safe Click Listener for All Site Buttons & Modals
   document.addEventListener('click', function(e) {
-    var trigger = e.target.closest('#header-search-trigger, #island-more-btn, #nav-browse-all-btn');
-    if (trigger) {
+    // 1. Browse All / Feature Search triggers
+    var browseTrigger = e.target.closest('#header-search-trigger, #island-more-btn, #nav-browse-all-btn, .browse-all-trigger');
+    if (browseTrigger) {
       e.preventDefault();
       e.stopPropagation();
       openShowcaseModal();
       return;
     }
 
+    // 2. Showcase Modal Close & Backdrop Click
+    var modal = document.getElementById('showcase-3d-modal');
     if (e.target.closest('#showcase-close-btn')) {
+      e.preventDefault();
+      closeShowcaseModal();
+      return;
+    }
+    if (modal && e.target === modal) {
       closeShowcaseModal();
       return;
     }
 
+    // 3. Showcase Stage Navigation Controls
     if (e.target.closest('#showcase-nav-left')) {
+      e.preventDefault();
       if (activeIndex > 0) activeIndex--;
       render3DCarousel();
       return;
     }
 
     if (e.target.closest('#showcase-nav-right')) {
+      e.preventDefault();
       if (activeIndex < filteredFeatures.length - 1) activeIndex++;
       render3DCarousel();
       return;
     }
 
     if (e.target.closest('#showcase-launch-btn')) {
+      e.preventDefault();
       launchActiveFeature();
       return;
+    }
+
+    // 4. Tab & Feature Navigation Triggers (Any button with data-tab or data-target)
+    var navBtn = e.target.closest('[data-tab], [data-target], .tab-btn, .island-btn, .sidebar-feature-item, .feature-card-compact');
+    if (navBtn) {
+      var targetTab = navBtn.getAttribute('data-tab') || navBtn.getAttribute('data-target') || navBtn.dataset.tab || navBtn.dataset.target;
+      if (targetTab && targetTab !== 'browse') {
+        if (typeof window.switchTab === 'function') {
+          window.switchTab(targetTab);
+        }
+      }
     }
   });
 
