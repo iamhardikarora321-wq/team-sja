@@ -3959,3 +3959,48 @@ header::before {
   left: 140%;
   transition: left 0.65s cubic-bezier(0.19, 1, 0.22, 1);
 }
+
+/* =====================================================================
+   ✨ BENTO GRID CARDS: 3D PERSPECTIVE TILT & SPOTLIGHT GLOW
+   ===================================================================== */
+.panel, .metric-card, .visualizer-card, .benchmark-card, .bento-card, .state-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  will-change: transform;
+}
+
+/* Dynamic Radial Cursor Spotlight Overlay */
+.panel::after, .metric-card::after, .visualizer-card::after, .benchmark-card::after, .bento-card::after, .state-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(13, 153, 255, 0.16), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.panel:hover::after, .metric-card:hover::after, .visualizer-card:hover::after, .benchmark-card:hover::after, .bento-card:hover::after, .state-card:hover::after {
+  opacity: 1;
+}
+
+/* Micro-Interactions on Child Tags & Pills */
+.panel:hover .metric-label,
+.panel:hover .metric-desc,
+.panel:hover .badge,
+.panel:hover .live-status-pill,
+.panel:hover .showcase-card-badge,
+.metric-card:hover .metric-label,
+.visualizer-card:hover .search-icon {
+  transform: translateY(-2.5px) scale(1.05);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (pointer: coarse) {
+  .panel, .metric-card, .visualizer-card, .benchmark-card, .bento-card, .state-card {
+    transform: none !important;
+  }
+}

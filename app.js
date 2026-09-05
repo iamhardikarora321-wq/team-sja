@@ -24041,8 +24041,41 @@ setTimeout(init3DParallax, 300);
     });
   }
 
+  function initBentoTiltAndSpotlight() {
+    const cards = document.querySelectorAll('.panel, .metric-card, .visualizer-card, .benchmark-card, .bento-card, .state-card');
+    cards.forEach(function(card) {
+      if (card.dataset.tiltInitialized) return;
+      card.dataset.tiltInitialized = "true";
+
+      card.addEventListener('mousemove', function(e) {
+        if (window.innerWidth < 768) return;
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+
+        card.style.setProperty('--mouse-x', x + 'px');
+        card.style.setProperty('--mouse-y', y + 'px');
+
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var rotateX = ((y - centerY) / centerY) * -6;
+        var rotateY = ((x - centerX) / centerX) * 6;
+
+        card.style.transform = 'perspective(1000px) rotateX(' + rotateX.toFixed(2) + 'deg) rotateY(' + rotateY.toFixed(2) + 'deg) scale3d(1.01, 1.01, 1.01)';
+      });
+
+      card.addEventListener('mouseleave', function() {
+        card.style.setProperty('--mouse-x', '50%');
+        card.style.setProperty('--mouse-y', '50%');
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+  }
+  window.initBentoTiltAndSpotlight = initBentoTiltAndSpotlight;
+
   try {
     render3DCarousel();
+    initBentoTiltAndSpotlight();
   } catch(e) {}
 
   window.openShowcaseModal = openShowcaseModal;
