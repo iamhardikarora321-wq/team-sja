@@ -248,18 +248,13 @@
           </div>
         </div>
         
-        <!-- Navbar Anchor Links matching exact section IDs (#bento, #simulator, #impact, #features) -->
+        <!-- Header Navigation Controls -->
         <nav style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-          <a href="#bento" id="nav-link-bento" class="visualizer-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-primary); font-weight:600; cursor:pointer;" onclick="event.preventDefault(); var el = document.getElementById('bento'); if(el) el.scrollIntoView({ behavior: 'smooth' }); if(window.openShowcaseModal) window.openShowcaseModal();">
-            <span>✨</span> Bento Grid
-          </a>
-          <a href="#simulator" id="nav-link-simulator" class="visualizer-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(6,182,212,0.12); border:1px solid rgba(6,182,212,0.3); color:var(--color-accent); font-weight:600; cursor:pointer;" onclick="event.preventDefault(); if(window.switchTab) window.switchTab('routes'); var el = document.getElementById('simulator'); if(el) el.scrollIntoView({ behavior: 'smooth' });">
-            <span>⚡</span> Simulator
-          </a>
-          <a href="#impact" id="nav-link-impact" class="visualizer-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(168,85,247,0.12); border:1px solid rgba(168,85,247,0.3); color:var(--color-purple); font-weight:600; cursor:pointer;" onclick="event.preventDefault(); var el = document.getElementById('quantum-hero-banner'); if(el) el.scrollIntoView({ behavior: 'smooth' }); if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
-            <span>🌐</span> 3D Impact
-          </a>
-          <button id="nav-browse-all-btn" class="visualizer-btn browse-all-trigger" style="display:flex; align-items:center; gap:8px; font-size:0.75rem; padding:0.45rem 0.95rem; border-radius:12px; background:linear-gradient(135deg, rgba(0,243,255,0.25), rgba(157,0,255,0.25)); border:1px solid rgba(0,243,255,0.5); color:#ffffff; font-weight:700; cursor:pointer; box-shadow:0 0 15px rgba(0,243,255,0.3);" onclick="if(window.openShowcaseModal) window.openShowcaseModal();">
+          <!-- Compact & Unique 3D Quantum Studio Launch Pill Button -->
+          <button id="hero-cta-launch-3d" class="visualizer-btn" style="display:inline-flex; align-items:center; gap:6px; font-size:0.78rem; padding:0.45rem 1rem; border-radius:20px; background:linear-gradient(135deg, #00f3ff, #7928ca, #ff007f); color:#ffffff; font-weight:800; border:1px solid rgba(255,255,255,0.4); box-shadow:0 0 18px rgba(0,243,255,0.5); cursor:pointer; text-transform:uppercase; letter-spacing:0.04em;" onclick="event.stopPropagation(); if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
+            <span>🚀 3D Quantum Studio</span>
+          </button>
+          <button id="nav-browse-all-btn" class="visualizer-btn browse-all-trigger" style="display:flex; align-items:center; gap:8px; font-size:0.75rem; padding:0.45rem 0.95rem; border-radius:12px; background:linear-gradient(135deg, rgba(0,243,255,0.2), rgba(157,0,255,0.2)); border:1px solid rgba(0,243,255,0.4); color:#ffffff; font-weight:700; cursor:pointer;" onclick="if(window.openShowcaseModal) window.openShowcaseModal();">
             ⚡ Browse All Features
           </button>
           <button id="header-search-trigger" class="visualizer-btn" style="display:flex; align-items:center; gap:8px; font-size:0.75rem; padding:0.45rem 0.85rem; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);" onclick="if(window.openShowcaseModal) window.openShowcaseModal();">
@@ -268,29 +263,6 @@
         </nav>
       </div>
     </header>
-
-    <!-- 🌟 IMPOSSIBLE TO IGNORE: ARVORA QUANTUM HOLOGRAPHIC CITY MATRIX BANNER (ID: impact & quantum-hero) -->
-    <div id="quantum-hero-banner" class="quantum-banner-wrap" style="position:relative; z-index:10;" onclick="if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
-      <div class="quantum-banner-glow" style="pointer-events:none;"></div>
-      <div class="quantum-banner-content" style="position:relative; z-index:20;">
-        <div class="quantum-orb-symbol">
-          <span class="orb-core"></span>
-          <span class="orb-ring ring-1"></span>
-          <span class="orb-ring ring-2"></span>
-        </div>
-        <div class="quantum-banner-text">
-          <div class="quantum-tag">✦ IMPOSSIBLE TO IGNORE • 3D SPATIAL CITY MATRIX</div>
-          <h2 class="quantum-title">Launch Arvora 3D Quantum Hologram Studio</h2>
-          <p class="quantum-sub">Interactively warp through 15,000 Indian cities in 3D spatial constellation mode with real-time harmonic audio synthesis.</p>
-        </div>
-        <div style="display:flex; justify-content:center; width:100%; margin-top:0.85rem; position:relative; z-index:30;">
-          <!-- Single Prominent Launch Button -->
-          <button id="hero-cta-launch-3d" class="quantum-launch-btn" style="background:linear-gradient(135deg, #00f3ff, #7928ca, #ff007f); color:#ffffff; border:1px solid rgba(255,255,255,0.5); font-weight:900; font-size:1.05rem; padding:0.9rem 2.2rem; border-radius:16px; box-shadow:0 0 35px rgba(0,243,255,0.6), 0 0 15px rgba(255,0,127,0.4); text-transform:uppercase; letter-spacing:0.05em; cursor:pointer;" onclick="event.stopPropagation(); if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
-            <span>🚀 LAUNCH ARVORA 3D QUANTUM HOLOGRAM STUDIO</span>
-          </button>
-        </div>
-      </div>
-    </div>
 
 
   <!-- SIDEBAR FEATURE DRAWER -->
@@ -369,32 +341,7 @@
       </div>
     </div>
 
-    <!-- Metrics & Bento Grid Features Showcase Row (ID: bento & features) -->
-    <div id="bento" class="metrics-row" style="position:relative; z-index:10;">
-      <div id="features" class="metric-card highlighted" onclick="if(window.openShowcaseModal) window.openShowcaseModal();" style="cursor:pointer;">
-        <div class="metric-label">Active Database</div>
-        <div id="stat-cities-count" class="metric-value">15,000</div>
-        <div class="metric-desc">Cleaned GeoNames Indian cities</div>
-      </div>
-      
-      <div class="metric-card">
-        <div class="metric-label">Radix Compression</div>
-        <div id="stat-node-reduction" class="metric-value">0.0%</div>
-        <div class="metric-desc">Fewer nodes than standard Trie</div>
-      </div>
 
-      <div class="metric-card">
-        <div class="metric-label">Engine Build Time</div>
-        <div id="stat-build-time" class="metric-value">0.00 ms</div>
-        <div class="metric-desc">Trie construction latency</div>
-      </div>
-
-      <div class="metric-card" id="card-latency">
-        <div class="metric-label">Lookup Speed</div>
-        <div id="stat-lookup-time" class="metric-value">0.000 ms</div>
-        <div class="metric-desc">Average prefix query time</div>
-      </div>
-    </div>
 
     <!-- =====================================================================
          TAB 1: AUTOCOMPLETE ENGINE CONTENT
@@ -491,129 +438,7 @@
       </div>
     </div>
 
-    <!-- =====================================================================
-         TAB 2: DATABASE SEED EXPORTER & INTERACTIVE SIMULATOR (ID: simulator & calculator)
-         ==================================================================== -->
-    <div id="tab-content-routes" class="tab-content">
-      <div id="simulator" class="dashboard-grid">
-        
-        <!-- Left Panel: Filters, Simulator Controls & Configuration Builder -->
-        <div class="panel" id="calculator">
-          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-            <h2 class="panel-title" style="margin-bottom:0; padding-bottom:0; border:none;"><span>💻</span> Database Seeding & Hotel Uplift Simulator</h2>
-            <!-- Simulator Toggle Buttons ("Hoteliers" vs "Travelers") -->
-            <div class="visualizer-controls" style="display:flex; gap:6px;">
-              <button id="sim-mode-hoteliers" class="visualizer-btn active" style="font-size:0.75rem; padding:0.35rem 0.75rem;" onclick="if(window.setSimulatorMode) window.setSimulatorMode('hoteliers');">🏨 Hoteliers View</button>
-              <button id="sim-mode-travelers" class="visualizer-btn" style="font-size:0.75rem; padding:0.35rem 0.75rem;" onclick="if(window.setSimulatorMode) window.setSimulatorMode('travelers');">🧳 Travelers View</button>
-            </div>
-          </div>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
-            Configure database seeding filters. Manually add specific cities using autocomplete or filter by states and naming patterns to generate schemas.
-          </p>
 
-          <!-- manual Select Input with autocomplete -->
-          <div style="position: relative; margin-bottom: 1.25rem;">
-            <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; font-weight: 500;">Add Specific City</label>
-            <div class="search-input-container">
-              <span class="search-icon">🔍</span>
-              <input type="text" id="route-destination" placeholder="Search and add a city... (e.g. kolkata)" autocomplete="off">
-            </div>
-            <div id="dropdown-destination" class="suggestions-container">
-              <div class="suggestions-header">
-                <span>Suggestions (Top 5)</span>
-                <span id="logistics-suggestions-metrics">0 matches</span>
-              </div>
-              <ul id="list-destination" class="suggestions-list"></ul>
-            </div>
-          </div>
-
-          <!-- Filter Configuration Fields -->
-          <div class="export-filter-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; font-weight: 500;">Filter by State</label>
-              <select id="export-state-filter" style="width:100%; background: rgba(2, 6, 23, 0.85); border: 2px solid var(--card-border); border-radius: var(--radius-sm); padding: 0.5rem; color: var(--text-primary); font-family: inherit;">
-                <option value="ALL">-- All States --</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="West Bengal">West Bengal</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Kerala">Kerala</option>
-              </select>
-            </div>
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; font-weight: 500;">Naming Suffix</label>
-              <input type="text" id="export-name-pattern" placeholder="e.g. pur, abad, garh" style="width:100%; background: rgba(2, 6, 23, 0.85); border: 2px solid var(--card-border); border-radius: var(--radius-sm); padding: 0.5rem; color: var(--text-primary); font-family: inherit;">
-            </div>
-          </div>
-
-          <!-- Format type and limits -->
-          <div class="export-filter-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; font-weight: 500;">Output Format</label>
-              <select id="export-format" style="width:100%; background: rgba(2, 6, 23, 0.85); border: 2px solid var(--card-border); border-radius: var(--radius-sm); padding: 0.5rem; color: var(--text-primary); font-family: inherit;">
-                <option value="json">JSON Array</option>
-                <option value="sql_postgres">SQL (PostgreSQL)</option>
-                <option value="sql_mysql">SQL (MySQL)</option>
-                <option value="csv">CSV Dataset</option>
-              </select>
-            </div>
-            <div>
-              <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.4rem; font-weight: 500;">Export Limit</label>
-              <input type="number" id="package-weight" min="5" max="1000" step="5" value="25" style="width:100%; background: rgba(2, 6, 23, 0.85); border: 2px solid var(--card-border); border-radius: var(--radius-sm); padding: 0.5rem; color: var(--text-primary); font-family: inherit;">
-            </div>
-          </div>
-
-          <!-- Metrics summary for selected seeds -->
-          <div id="route-results-card" class="benchmark-card" style="border-color: rgba(6, 182, 212, 0.35);">
-            <div class="benchmark-title" style="color: var(--color-accent); font-size: 1rem; margin-bottom: 0.75rem;">
-              <span>📝 Export Statistics</span>
-            </div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-              <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
-                <span>📂 Selected Cities Count:</span> <span id="logistics-cost" style="color: var(--color-success); font-weight:600;">25 cities</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
-                <span>🐘 Estimated SQL Size:</span> <span id="logistics-zip" style="color: var(--text-primary); font-weight:500;">1.8 KB</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
-                <span>🛠️ Schema table name:</span> <span style="color: var(--color-purple); font-weight:500; font-family: var(--font-mono); font-size:0.8rem;">indian_cities_directory</span>
-              </div>
-              <div style="display:flex; justify-content:space-between;">
-                <span>⚙️ Character Encoding:</span> <span style="color: var(--text-muted); font-family: var(--font-mono); font-size:0.75rem;">UTF-8</span>
-              </div>
-            </div>
-          </div>
-          
-          <button id="btn-calc-route" class="visualizer-btn" onclick="if(window.calculateRoute) window.calculateRoute();" style="width: 100%; background: var(--color-accent); border-color: var(--color-accent); color: var(--bg-primary); font-weight: 600; padding: 0.75rem; margin-top: 1rem;">
-            Generate Seed Schema
-          </button>
-        </div>
-
-        <!-- Right Panel: Live Code Syntax Viewer -->
-        <div class="panel visualizer-card">
-          <div class="visualizer-header">
-            <h2 class="panel-title" style="margin-bottom: 0; padding-bottom: 0; border: none;">
-              <span>⚡</span> Schema Code Output
-            </h2>
-            <div class="visualizer-controls">
-              <button id="btn-copy-seed" class="visualizer-btn active" onclick="if(window.copySeedData) window.copySeedData();">Copy Code</button>
-              <button id="btn-download-seed" class="visualizer-btn" onclick="if(window.downloadSeedData) window.downloadSeedData();" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--color-success);">Download</button>
-            </div>
-          </div>
-          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
-            Copy the generated INSERT script or JSON array directly into your database schema seeds.
-          </p>
-          <div class="svg-container" style="background: #020617; border-color: rgba(6, 182, 212, 0.2); display: flex; flex-direction: column; overflow: hidden;">
-            <pre style="margin: 0; padding: 1.25rem; overflow: auto; flex-grow: 1; font-family: var(--font-mono); font-size: 0.82rem; color: #a5f3fc; line-height: 1.6; white-space: pre-wrap;" id="export-code-block"></pre>
-          </div>
-        </div>
-
-      </div>
-    </div>
 
     <!-- =====================================================================
          TAB 3: GEOGUESS SPELLING GAME (Inbuilt Game)
