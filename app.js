@@ -1215,12 +1215,14 @@
     }
     
     window._currentActiveTab = tabId;
+
+    // HIDE ALL TABS FIRST
     const tabs = document.querySelectorAll(".tab-content");
     tabs.forEach(tab => {
-      tab.classList.add("active");
-      tab.style.setProperty("display", "block", "important");
-      tab.style.opacity = "1";
-      tab.style.visibility = "visible";
+      tab.classList.remove("active");
+      tab.style.setProperty("display", "none", "important");
+      tab.style.opacity = "0";
+      tab.style.visibility = "hidden";
     });
 
     let activeTab = document.getElementById("tab-content-" + tabId);
@@ -1228,12 +1230,17 @@
       if (['game', 'quiz', 'guess'].some(k => tabId.includes(k))) tabId = 'game';
       else if (['trip', 'budget', 'pack', 'plan', 'itinerary'].some(k => tabId.includes(k))) tabId = 'trip';
       else if (['roam', 'discover', 'explore'].some(k => tabId.includes(k))) tabId = 'roam';
-      else if (['travel', 'showcase', '3d', 'map'].some(k => tabId === k || k === '3d' && tabId.includes('3d'))) tabId = 'travel';
+      else if (['travel', 'showcase', '3d', 'map'].some(k => tabId === k || (k === '3d' && tabId.includes('3d')))) tabId = 'travel';
       else tabId = 'travelintel';
       activeTab = document.getElementById("tab-content-" + tabId);
     }
 
+    // SHOW ONLY THE SELECTED ACTIVE TAB
     if (activeTab) {
+      activeTab.classList.add("active");
+      activeTab.style.setProperty("display", "block", "important");
+      activeTab.style.opacity = "1";
+      activeTab.style.visibility = "visible";
       activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -29418,6 +29425,89 @@ class HackathonGuide {
       });
     }
   }
+
+  function syncGlobalLocation(locIdOrName) {
+    if (!locIdOrName) return;
+    const raw = locIdOrName.toString().trim().toLowerCase();
+    
+    // 1. Resolve Location ID & Data
+    let locObj = null;
+    if (typeof resolveLocation === 'function') {
+      locObj = resolveLocation(raw);
+    }
+    if (!locObj && typeof ALL_INDIAN_LOCATIONS !== 'undefined') {
+      locObj = ALL_INDIAN_LOCATIONS.find(l => l && (l.id === raw || (l.name && l.name.toLowerCase() === raw) || (l.name && l.name.toLowerCase().includes(raw))));
+    }
+    
+    const locId = locObj ? locObj.id : (['jaipur', 'delhi', 'mumbai', 'varanasi', 'goa', 'kochi', 'leh'].includes(raw) ? raw : 'jaipur');
+    const cityName = locObj ? locObj.name : (raw.charAt(0).toUpperCase() + raw.slice(1));
+    const stateName = locObj ? locObj.state : 'India';
+
+    console.log('[Universal Sync] Synchronizing all features to:', cityName, stateName, `(${locId})`);
+
+    // 2. Feature 1: Nexora ROAM
+    if (window.ROAM && typeof window.ROAM.setLocation === 'function' && window._syncing !== true) {
+      window._syncing = true;
+      try { window.ROAM.setLocation(locId); } catch(e) {}
+      window._syncing = false;
+    }
+
+    // 3. Feature 2: Bharat Travel Intelligence
+    if (typeof window.selectIntelCity === 'function') {
+      try { window.selectIntelCity(locId); } catch(e) {}
+    }
+    if (typeof window.filterIntelByTag === 'function') {
+      try { window.filterIntelByTag(locId); } catch(e) {}
+    }
+
+    // 4. Feature 3: Radix Trie Search & Visualizer
+    const searchInput = document.getElementById("city-search");
+    if (searchInput && searchInput.value !== cityName) {
+      searchInput.value = cityName;
+      try { searchInput.dispatchEvent(new Event('input', { bubbles: true })); } catch(e) {}
+    }
+
+    // 5. Feature 6: State Showcase
+    const stateCards = document.querySelectorAll('.state-card, [data-state]');
+    stateCards.forEach(el => {
+      const s = el.dataset.state || el.getAttribute('data-state');
+      if (s && stateName.toLowerCase().includes(s.toLowerCase())) {
+        el.classList.add('active');
+      }
+    });
+
+    // 6. Feature 7: Trip Planner Inputs
+    const routeDest = document.getElementById('route-dest-input');
+    if (routeDest) {
+      routeDest.value = cityName;
+    }
+    const plannerDest = document.getElementById('planner-destination-input');
+    if (plannerDest) {
+      plannerDest.value = cityName;
+    }
+
+    // 7. Update HUD Header & Dynamic Island Pills
+    const activePill = document.getElementById('active-location-pill');
+    if (activePill) {
+      activePill.innerHTML = `
+        <span class="location-indicator-dot" style="width:8px; height:8px; border-radius:50%; background:#00f3ff; box-shadow:0 0 10px #00f3ff; display:inline-block;"></span>
+        <span>${cityName.toUpperCase()} • ${stateName.toUpperCase()}</span>
+      `;
+    }
+
+    const islandLabel = document.getElementById('island-compact-label');
+    if (islandLabel) {
+      islandLabel.textContent = `Arvora · ${cityName} (${stateName}) Active 🗺️`;
+    }
+
+    const breadcrumb = document.getElementById('active-feature-breadcrumb');
+    if (breadcrumb) {
+      breadcrumb.textContent = `Active Destination: ${cityName}, ${stateName}`;
+    }
+  }
+
+  window.syncGlobalLocation = syncGlobalLocation;
+  window.selectGlobalCity = syncGlobalLocation;
 
   window.RoamApplication = RoamApplication;
   document.addEventListener('DOMContentLoaded', () => {

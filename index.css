@@ -1044,8 +1044,8 @@ header {
 .dynamic-island:hover,
 .dynamic-island.is-expanded {
   height: 60px;
-  width: 660px;
-  max-width: 95vw;
+  width: 780px;
+  max-width: 96vw;
   border-radius: 16px;
   background: rgba(10, 10, 15, 0.97);
   border-color: rgba(255, 255, 255, 0.15);
