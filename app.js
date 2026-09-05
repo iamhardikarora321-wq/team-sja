@@ -2450,17 +2450,206 @@
     return cleaned;
   }
 
-  // Coordinates hasher
+  // Comprehensive Indian City & Village Aliases
+  const CITY_ALIASES = {
+    "ddn": "dehradun", "dehradoon": "dehradun",
+    "delhi": "delhi", "ndls": "delhi", "new delhi": "delhi", "dli": "delhi",
+    "jpr": "jaipur", "jaipore": "jaipur",
+    "bom": "mumbai", "bombay": "mumbai", "mum": "mumbai",
+    "blr": "bengaluru", "blre": "bengaluru", "bangalore": "bengaluru",
+    "maa": "chennai", "madras": "chennai",
+    "ccu": "kolkata", "calcutta": "kolkata",
+    "hyd": "hyderabad", "secunderabad": "hyderabad",
+    "amd": "ahmedabad", "ahmedbad": "ahmedabad",
+    "pnq": "pune", "poona": "pune",
+    "lko": "lucknow",
+    "vns": "varanasi", "kashi": "varanasi", "banaras": "varanasi",
+    "agr": "agra", "atq": "amritsar", "sxr": "srinagar", "bpl": "bhopal",
+    "pat": "patna", "cok": "kochi", "cochin": "kochi", "gau": "guwahati",
+    "bbi": "bhubaneswar", "jdh": "jodhpur", "udr": "udaipur", "st": "surat",
+    "idr": "indore", "ixc": "chandigarh", "slv": "shimla", "gurgaon": "gurugram"
+  };
+
+  // Real-world coordinates database for Indian cities, towns & hill stations
+  const GLOBAL_CITY_COORDS = {
+    "delhi": {lat: 28.6139, lng: 77.2090},
+    "mumbai": {lat: 19.0760, lng: 72.8777},
+    "bengaluru": {lat: 12.9716, lng: 77.5946},
+    "chennai": {lat: 13.0827, lng: 80.2707},
+    "kolkata": {lat: 22.5726, lng: 88.3639},
+    "hyderabad": {lat: 17.3850, lng: 78.4867},
+    "ahmedabad": {lat: 23.0225, lng: 72.5714},
+    "pune": {lat: 18.5204, lng: 73.8567},
+    "jaipur": {lat: 26.9124, lng: 75.7873},
+    "lucknow": {lat: 26.8467, lng: 80.9462},
+    "dehradun": {lat: 30.3165, lng: 78.0322},
+    "mussoorie": {lat: 30.4598, lng: 78.0644},
+    "rishikesh": {lat: 30.0869, lng: 78.2676},
+    "haridwar": {lat: 29.9457, lng: 78.1642},
+    "nainital": {lat: 29.3803, lng: 79.4636},
+    "pantnagar": {lat: 29.0222, lng: 79.4908},
+    "haldwani": {lat: 29.2183, lng: 79.5130},
+    "roorkee": {lat: 29.8543, lng: 77.8880},
+    "agra": {lat: 27.1767, lng: 78.0081},
+    "amritsar": {lat: 31.6340, lng: 74.8723},
+    "srinagar": {lat: 34.0837, lng: 74.7973},
+    "bhopal": {lat: 23.2599, lng: 77.4126},
+    "patna": {lat: 25.5941, lng: 85.1376},
+    "kochi": {lat: 9.9312, lng: 76.2673},
+    "guwahati": {lat: 26.1445, lng: 91.7362},
+    "bhubaneswar": {lat: 20.2961, lng: 85.8245},
+    "coimbatore": {lat: 11.0168, lng: 76.9558},
+    "varanasi": {lat: 25.3176, lng: 82.9739},
+    "jodhpur": {lat: 26.2389, lng: 73.0243},
+    "udaipur": {lat: 24.5854, lng: 73.7125},
+    "jaisalmer": {lat: 26.9157, lng: 70.9083},
+    "bikaner": {lat: 28.0229, lng: 73.3119},
+    "kota": {lat: 25.2138, lng: 75.8648},
+    "alwar": {lat: 27.5530, lng: 76.6346},
+    "ajmer": {lat: 26.4499, lng: 74.6399},
+    "surat": {lat: 21.1702, lng: 72.8311},
+    "indore": {lat: 22.7196, lng: 75.8577},
+    "mysuru": {lat: 12.2958, lng: 76.6394},
+    "ooty": {lat: 11.4102, lng: 76.6950},
+    "shimla": {lat: 31.1048, lng: 77.1734},
+    "manali": {lat: 32.2432, lng: 77.1892},
+    "dharamshala": {lat: 32.2190, lng: 76.3234},
+    "darjeeling": {lat: 27.0410, lng: 88.2663},
+    "panaji": {lat: 15.4909, lng: 73.8278},
+    "madurai": {lat: 9.9252, lng: 78.1198},
+    "gwalior": {lat: 26.2183, lng: 78.1828},
+    "nagpur": {lat: 21.1458, lng: 79.0882},
+    "raipur": {lat: 21.2514, lng: 81.6296},
+    "ranchi": {lat: 23.3441, lng: 85.3096},
+    "chandigarh": {lat: 30.7333, lng: 76.7794},
+    "leh": {lat: 34.1526, lng: 77.5771},
+    "jammu": {lat: 32.7266, lng: 74.8570},
+    "noida": {lat: 28.5355, lng: 77.3910},
+    "gurugram": {lat: 28.4595, lng: 77.0266},
+    "faridabad": {lat: 28.4089, lng: 77.3178},
+    "ghaziabad": {lat: 28.6692, lng: 77.4538},
+    "meerut": {lat: 28.9845, lng: 77.7064},
+    "bareilly": {lat: 28.3670, lng: 79.4304},
+    "moradabad": {lat: 28.8386, lng: 78.7733},
+    "kanpur": {lat: 26.4499, lng: 80.3319},
+    "ayodhya": {lat: 26.7922, lng: 82.1998},
+    "gorakhpur": {lat: 26.7606, lng: 83.3732},
+    "mathura": {lat: 27.4924, lng: 77.6737},
+    "vrindavan": {lat: 27.5804, lng: 77.7006},
+    "aligarh": {lat: 27.8974, lng: 78.0880},
+    "prayagraj": {lat: 25.4358, lng: 81.8463},
+    "allahabad": {lat: 25.4358, lng: 81.8463},
+    "ludhiana": {lat: 30.9010, lng: 75.8573},
+    "jalandhar": {lat: 31.3260, lng: 75.5762},
+    "patiala": {lat: 30.3398, lng: 76.3869},
+    "bathinda": {lat: 30.2110, lng: 74.9455},
+    "hisar": {lat: 29.1492, lng: 75.7217},
+    "rohtak": {lat: 28.8955, lng: 76.6066},
+    "panipat": {lat: 29.3909, lng: 76.9635},
+    "karnal": {lat: 29.6857, lng: 76.9905},
+    "ambala": {lat: 30.3782, lng: 76.7767},
+    "mangalore": {lat: 12.9141, lng: 74.8560},
+    "hubli": {lat: 15.3647, lng: 75.1240},
+    "belgaum": {lat: 15.8497, lng: 74.4977},
+    "tirupati": {lat: 13.6288, lng: 79.4192},
+    "vijayawada": {lat: 16.5062, lng: 80.6480},
+    "visakhapatnam": {lat: 17.6868, lng: 83.2185},
+    "vizag": {lat: 17.6868, lng: 83.2185},
+    "thiruvananthapuram": {lat: 8.5241, lng: 76.9366},
+    "trivandrum": {lat: 8.5241, lng: 76.9366},
+    "kozhikode": {lat: 11.2588, lng: 75.7804},
+    "thrissur": {lat: 10.5276, lng: 76.2144},
+    "kollam": {lat: 8.8932, lng: 76.6141},
+    "puducherry": {lat: 11.9416, lng: 79.8083},
+    "salem": {lat: 11.6643, lng: 78.1460},
+    "tiruchirappalli": {lat: 10.7905, lng: 78.7047},
+    "trichy": {lat: 10.7905, lng: 78.7047},
+    "tirunelveli": {lat: 8.7139, lng: 77.7567},
+    "vellore": {lat: 12.9165, lng: 79.1325},
+    "jamshedpur": {lat: 22.8046, lng: 86.2029},
+    "dhanbad": {lat: 23.7957, lng: 86.4304},
+    "bokaro": {lat: 23.6693, lng: 86.1511},
+    "siliguri": {lat: 26.7271, lng: 88.3953},
+    "asansol": {lat: 23.6889, lng: 86.9661},
+    "durgapur": {lat: 23.5204, lng: 87.3119},
+    "cuttack": {lat: 20.4625, lng: 85.8828},
+    "puri": {lat: 19.8135, lng: 85.8312},
+    "rourkela": {lat: 22.2604, lng: 84.8536},
+    "shillong": {lat: 25.5788, lng: 91.8933},
+    "gangtok": {lat: 27.3389, lng: 88.6065},
+    "imphal": {lat: 24.8170, lng: 93.9368},
+    "aizawl": {lat: 23.7271, lng: 92.7176},
+    "agartala": {lat: 23.8315, lng: 91.2868},
+    "kohima": {lat: 25.6751, lng: 94.1086},
+    "itanagar": {lat: 27.0844, lng: 93.6053},
+    "dibrugarh": {lat: 27.4728, lng: 94.9120},
+    "silchar": {lat: 24.8333, lng: 92.7789},
+    "jorhat": {lat: 26.7509, lng: 94.2037},
+    "tezpur": {lat: 26.6528, lng: 92.7926},
+    "tawang": {lat: 27.5861, lng: 91.8594},
+    "kaziranga": {lat: 26.5775, lng: 93.1711},
+    "port blair": {lat: 11.6234, lng: 92.7265},
+    "kavaratti": {lat: 10.5669, lng: 72.6420}
+  };
+
   function getCityCoords(cityName) {
-    let hash = 0;
-    for (let i = 0; i < cityName.length; i++) {
-      hash = cityName.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    hash = Math.abs(hash);
+    if (!cityName) return { lat: 28.6139, lng: 77.2090 };
+    let lower = cityName.trim().toLowerCase();
     
-    const lat = 8.4 + (hash % 280) / 10;
-    const lng = 68.7 + ((hash >> 4) % 270) / 10;
-    return { lat, lng };
+    if (CITY_ALIASES[lower]) lower = CITY_ALIASES[lower];
+    if (GLOBAL_CITY_COORDS[lower]) return GLOBAL_CITY_COORDS[lower];
+
+    const keys = Object.keys(GLOBAL_CITY_COORDS);
+    const matchedKey = keys.find(k => lower.includes(k) || k.includes(lower));
+    if (matchedKey) return GLOBAL_CITY_COORDS[matchedKey];
+
+    // State & region anchor fallbacks for villages and smaller towns
+    let baseLat = 20.5937, baseLng = 78.9629;
+    if (lower.includes("uttarakhand") || lower.includes("garhwal") || lower.includes("kumaon") || lower.includes("uk") || lower.includes("ddn")) {
+      baseLat = 30.1; baseLng = 78.5;
+    } else if (lower.includes("rajasthan") || lower.includes("raj") || lower.includes("marwar")) {
+      baseLat = 26.9; baseLng = 74.8;
+    } else if (lower.includes("up") || lower.includes("uttar pradesh") || lower.includes("purvanchal")) {
+      baseLat = 26.8; baseLng = 81.0;
+    } else if (lower.includes("mp") || lower.includes("madhya pradesh")) {
+      baseLat = 23.2; baseLng = 77.5;
+    } else if (lower.includes("maharashtra") || lower.includes("mh") || lower.includes("konkan")) {
+      baseLat = 19.5; baseLng = 74.5;
+    } else if (lower.includes("kerala") || lower.includes("kl")) {
+      baseLat = 10.5; baseLng = 76.5;
+    } else if (lower.includes("karnataka") || lower.includes("ka")) {
+      baseLat = 14.5; baseLng = 75.8;
+    } else if (lower.includes("tamil") || lower.includes("tn")) {
+      baseLat = 11.0; baseLng = 78.5;
+    } else if (lower.includes("bengal") || lower.includes("wb")) {
+      baseLat = 23.5; baseLng = 87.8;
+    } else if (lower.includes("punjab") || lower.includes("pb")) {
+      baseLat = 31.0; baseLng = 75.5;
+    } else if (lower.includes("haryana") || lower.includes("hr")) {
+      baseLat = 29.2; baseLng = 76.3;
+    } else if (lower.includes("himachal") || lower.includes("hp")) {
+      baseLat = 31.8; baseLng = 77.2;
+    }
+
+    let hash = 0;
+    for (let i = 0; i < lower.length; i++) hash = lower.charCodeAt(i) + ((hash << 5) - hash);
+    hash = Math.abs(hash);
+
+    const latOffset = ((hash % 100) - 50) / 100;
+    const lngOffset = (((hash >> 3) % 100) - 50) / 100;
+
+    return {
+      lat: Number((baseLat + latOffset).toFixed(4)),
+      lng: Number((baseLng + lngOffset).toFixed(4))
+    };
+  }
+
+  function haversineKm(c1, c2) {
+    const R = 6371;
+    const dLat = (c2.lat - c1.lat) * Math.PI / 180;
+    const dLng = (c2.lng - c1.lng) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(c1.lat * Math.PI / 180) * Math.cos(c2.lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
   // Geo-jurisdiction builder (District, State, PIN)
@@ -5458,80 +5647,73 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
   // TAB 14: TRANSIT & ROUTE SOLVER
   // =====================================================================
 
-  const CITY_COORDS = {
-    "delhi": {lat: 28.6, lng: 77.2}, "mumbai": {lat: 19.07, lng: 72.87},
-    "bengaluru": {lat: 12.97, lng: 77.6}, "chennai": {lat: 13.08, lng: 80.27},
-    "kolkata": {lat: 22.57, lng: 88.36}, "hyderabad": {lat: 17.38, lng: 78.47},
-    "ahmedabad": {lat: 23.03, lng: 72.58}, "pune": {lat: 18.52, lng: 73.86},
-    "jaipur": {lat: 26.91, lng: 75.79}, "lucknow": {lat: 26.85, lng: 80.95},
-    "agra": {lat: 27.18, lng: 78.01}, "amritsar": {lat: 31.63, lng: 74.87},
-    "srinagar": {lat: 34.08, lng: 74.80}, "bhopal": {lat: 23.26, lng: 77.41},
-    "patna": {lat: 25.61, lng: 85.14}, "kochi": {lat: 9.93, lng: 76.26},
-    "guwahati": {lat: 26.14, lng: 91.74}, "bhubaneswar": {lat: 20.30, lng: 85.84},
-    "coimbatore": {lat: 11.01, lng: 76.97}, "varanasi": {lat: 25.32, lng: 83.0},
-    "jodhpur": {lat: 26.30, lng: 73.02}, "udaipur": {lat: 24.58, lng: 73.69},
-    "surat": {lat: 21.17, lng: 72.83}, "indore": {lat: 22.72, lng: 75.85},
-    "mysuru": {lat: 12.30, lng: 76.64}, "ooty": {lat: 11.41, lng: 76.70},
-    "shimla": {lat: 31.10, lng: 77.17}, "rishikesh": {lat: 30.08, lng: 78.32},
-    "dehradun": {lat: 30.32, lng: 78.04}, "manali": {lat: 32.26, lng: 77.19},
-    "dharamshala": {lat: 32.22, lng: 76.32}, "darjeeling": {lat: 27.04, lng: 88.26},
-    "haridwar": {lat: 29.94, lng: 78.16}, "panaji": {lat: 15.50, lng: 73.83},
-    "madurai": {lat: 9.93, lng: 78.12}, "gwalior": {lat: 26.22, lng: 78.18},
-    "nagpur": {lat: 21.15, lng: 79.09}, "raipur": {lat: 21.25, lng: 81.63},
-    "ranchi": {lat: 23.34, lng: 85.31}, "chandigarh": {lat: 30.73, lng: 76.78},
-    "leh": {lat: 34.16, lng: 77.58}, "jammu": {lat: 32.73, lng: 74.87},
-  };
-
-  function getCityCoords(cityName) {
-    const lower = cityName.trim().toLowerCase();
-    if (CITY_COORDS[lower]) return CITY_COORDS[lower];
-    // Deterministic fallback
-    let hash = 0;
-    for (let i = 0; i < lower.length; i++) hash = lower.charCodeAt(i) + ((hash << 5) - hash);
-    hash = Math.abs(hash);
-    return {
-      lat: 8.4 + (hash % 280) / 10,
-      lng: 68.7 + ((hash >> 4) % 270) / 10
-    };
-  }
-
-  function haversineKm(c1, c2) {
-    const R = 6371;
-    const dLat = (c2.lat - c1.lat) * Math.PI / 180;
-    const dLng = (c2.lng - c1.lng) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos(c1.lat * Math.PI / 180) * Math.cos(c2.lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  }
+  const CITY_COORDS = GLOBAL_CITY_COORDS;
 
   function computeRoute(start, end, mode) {
     const c1 = getCityCoords(start);
     const c2 = getCityCoords(end);
     const straightKm = haversineKm(c1, c2);
-    // Road/rail distance is roughly 1.3x straight-line
-    let dist = Math.round(straightKm * (mode === "flight" ? 1.05 : 1.3));
-    if (dist < 10) dist = 10;
 
-    const speeds = { flight: 720, train: 85, drive: 60, bus: 50 };
-    const costPerKm = { flight: 5.5, train: 1.1, drive: 4.2, bus: 0.85 };
-    const co2PerKm = { flight: 0.255, train: 0.041, drive: 0.192, bus: 0.089 };
+    const isLocalRoute = straightKm <= 35;
+    const roadDist = Math.max(isLocalRoute ? Math.round(straightKm * 1.15) : Math.round(straightKm * 1.25), 3);
+    const flightDist = Math.round(straightKm * 1.05);
+    const trainDist = Math.round(straightKm * 1.22);
 
-    const speed = speeds[mode] || 80;
-    const durationH = dist / speed;
-    const hours = Math.floor(durationH);
-    const minutes = Math.round((durationH - hours) * 60);
-    const cost = Math.round(dist * (costPerKm[mode] || 1.5) * (mode === "flight" ? 1 : 1));
-    const carbon = (dist * (co2PerKm[mode] || 0.1)).toFixed(1);
+    let dist = roadDist;
+    if (mode === "flight") dist = flightDist;
+    else if (mode === "train") dist = trainDist;
 
-    // Intermediate checkpoints (simulate via state midpoints)
+    let hours = 0, minutes = 0, cost = 0, carbon = 0;
+
+    if (mode === "flight") {
+      const airHours = dist / 550;
+      const totalHours = airHours + 1.5; // +1.5h airport check-in, security & baggage overhead
+      hours = Math.floor(totalHours);
+      minutes = Math.round((totalHours - hours) * 60);
+      cost = Math.round(2800 + dist * 4.5);
+      carbon = (dist * 0.255).toFixed(1);
+    } else if (mode === "train") {
+      const trainHours = (dist / 65) + 0.5; // +0.5h station buffer
+      hours = Math.floor(trainHours);
+      minutes = Math.round((trainHours - hours) * 60);
+      cost = Math.round(120 + dist * 1.45);
+      carbon = (dist * 0.041).toFixed(1);
+    } else if (mode === "bus") {
+      const busHours = dist / 50;
+      hours = Math.floor(busHours);
+      minutes = Math.round((busHours - hours) * 60);
+      cost = Math.round(100 + dist * 1.75);
+      carbon = (dist * 0.089).toFixed(1);
+    } else if (mode === "auto" || mode === "rickshaw") {
+      if (isLocalRoute) {
+        const autoHours = dist / 25; // 25 km/h local auto speed
+        hours = Math.floor(autoHours);
+        minutes = Math.round((autoHours - hours) * 60);
+        cost = Math.round(30 + dist * 15); // Base ₹30 + ₹15/km
+      } else {
+        const autoHours = 0.75;
+        hours = Math.floor(autoHours);
+        minutes = 45;
+        cost = Math.round(280); // Local station transfer auto fare
+      }
+      carbon = (dist * 0.065).toFixed(1);
+    } else { // drive / cab
+      const driveHours = dist / 60;
+      hours = Math.floor(driveHours);
+      minutes = Math.round((driveHours - hours) * 60);
+      cost = Math.round(150 + dist * 12.5);
+      carbon = (dist * 0.192).toFixed(1);
+    }
+
+    // Intermediate checkpoints (find actual named cities along the route)
     const checkpoints = [];
-    const intermediateCount = dist > 800 ? 3 : (dist > 300 ? 2 : 1);
+    const intermediateCount = dist > 800 ? 3 : (dist > 300 ? 2 : (dist > 80 ? 1 : 0));
     for (let i = 1; i <= intermediateCount; i++) {
       const frac = i / (intermediateCount + 1);
       const lat = c1.lat + (c2.lat - c1.lat) * frac;
       const lng = c1.lng + (c2.lng - c1.lng) * frac;
-      // Find nearest named checkpoint
       let nearest = null, nearestDist = Infinity;
-      Object.entries(CITY_COORDS).forEach(([name, coords]) => {
+      Object.entries(GLOBAL_CITY_COORDS).forEach(([name, coords]) => {
         const d = Math.sqrt((coords.lat - lat) ** 2 + (coords.lng - lng) ** 2);
         if (d < nearestDist && name !== start.toLowerCase() && name !== end.toLowerCase()) {
           nearestDist = d;
@@ -5541,7 +5723,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       if (nearest) checkpoints.push(nearest);
     }
 
-    return { dist, hours, minutes, cost, carbon, c1, c2, checkpoints };
+    return { dist, hours, minutes, cost, carbon, c1, c2, checkpoints, isLocalRoute };
   }
 
   function latLngToSVG(lat, lng, svgW, svgH) {
@@ -25460,7 +25642,7 @@ setTimeout(init3DParallax, 300);
   // SMART HYBRID SEARCH, UNIVERSAL SPOTLIGHT & CITY SPOTLIGHT HUB SYSTEM
   // =====================================================================
 
-  const CITY_ALIASES = {
+  const SPOTLIGHT_CITY_ALIASES = {
     'calcutta': 'kolkata', 'bombay': 'mumbai', 'madras': 'chennai', 'banaras': 'varanasi',
     'kashi': 'varanasi', 'poona': 'pune', 'bangalore': 'bengaluru', 'gurgaon': 'gurugram',
     'trivandrum': 'thiruvananthapuram', 'baroda': 'vadodara', 'cawnpore': 'kanpur',
