@@ -4475,3 +4475,304 @@ header nav,
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
 }
+
+/* =====================================================================
+   NEXORA ROAM — EXPANSIVE PREMIUM LAYOUT & RESPONSIVENESS
+   ===================================================================== */
+#tab-content-roam {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto 2.5rem auto;
+  box-sizing: border-box;
+}
+
+.roam-platform-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.99)) !important;
+  border: 1px solid rgba(0, 243, 255, 0.35) !important;
+  border-radius: 24px !important;
+  padding: 2.25rem 2rem !important;
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.8), 0 0 45px rgba(0, 243, 255, 0.15) !important;
+}
+
+.mode-view {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1rem;
+}
+
+.mode-view.active {
+  display: block !important;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Spatial Search Bar Container */
+.spatial-search-container {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.spatial-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.spatial-search-input {
+  width: 100%;
+  background: rgba(2, 6, 23, 0.9);
+  border: 2px solid rgba(0, 243, 255, 0.4);
+  border-radius: 14px;
+  padding: 0.9rem 1.25rem 0.9rem 3.2rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.spatial-search-input:focus {
+  outline: none;
+  border-color: #00f3ff;
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.3);
+}
+
+.search-shortcut-hint {
+  position: absolute;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #00f3ff;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.search-quick-chips {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.quick-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-chip:hover, .quick-chip.active {
+  background: rgba(0, 243, 255, 0.15);
+  border-color: rgba(0, 243, 255, 0.4);
+  color: #00f3ff;
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.25);
+}
+
+/* Place Identity Panel */
+.place-identity-panel {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 20px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+  box-sizing: border-box;
+}
+
+.place-identity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.place-region-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #00f3ff;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.place-name {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 2px 0 4px 0;
+}
+
+.place-atmosphere-tag {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.cultural-dna-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.dna-card {
+  background: rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+}
+
+.dna-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #00f3ff;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dna-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.dna-list li {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.dna-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #00f3ff;
+}
+
+/* Discover Filter & Cards */
+.discover-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.discover-filter-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.discover-filter-btn:hover, .discover-filter-btn.active {
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.2), rgba(121, 40, 202, 0.2));
+  border-color: rgba(0, 243, 255, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+.discover-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.discover-card {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 190px;
+  transition: all 0.25s ease;
+}
+
+.discover-card:hover {
+  border-color: rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 243, 255, 0.15);
+  transform: translateY(-3px);
+}
+
+.discover-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.discover-city-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.discover-state-name {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.discover-tagline {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 0.65rem;
+  line-height: 1.4;
+}
+
+.discover-action-btn {
+  width: 100%;
+  margin-top: 1rem;
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  color: #00f3ff;
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.discover-action-btn:hover {
+  background: #00f3ff;
+  color: #020617;
+  box-shadow: 0 0 18px rgba(0, 243, 255, 0.4);
+}
