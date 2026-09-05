@@ -2308,7 +2308,7 @@
       });
 
       // Enter key triggers adding the city if it's a valid prefix
-      routeDestination.addEventListener("keydown", (e) => {
+      if (routeDestination) routeDestination.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           const val = routeDestination.value.trim().toLowerCase();
           const resolved = resolveCityInput(val);
@@ -2604,7 +2604,7 @@
         }
       });
 
-      gameGuessInput.addEventListener("keydown", (e) => {
+      if (gameGuessInput) gameGuessInput.addEventListener("keydown", (e) => {
         if (e.key === "Enter") checkAnswer();
       });
     }
@@ -2823,7 +2823,7 @@
       });
     }
   }
-  setupPatternSearch();
+  try { setupPatternSearch(); } catch(e) { console.warn('[setupPatternSearch] error:', e); }
 
   // =====================================================================
   // TAB 5: CITY ANALYTICS
@@ -2969,13 +2969,15 @@
     const scannerCitiesList = document.getElementById('scanner-cities-list');
     const btnScanCopy = document.getElementById('btn-scan-copy');
 
+    if (!btnScan) return;
+
     // Build a fast lookup Set from CITIES_DATA
     const citySet = new Set(CITIES_DATA.map(c => c.toLowerCase()));
 
-    btnScan.addEventListener('click', () => {
-      const text = scannerInput.value;
+    if (btnScan) btnScan.addEventListener('click', () => {
+      const text = scannerInput ? scannerInput.value : '';
       if (!text.trim()) {
-        scannerOutput.innerHTML = '<span style="color:var(--text-muted);">Please paste some text first.</span>';
+        if (scannerOutput) scannerOutput.innerHTML = '<span style="color:var(--text-muted);">Please paste some text first.</span>';
         return;
       }
 
@@ -3002,10 +3004,10 @@
 
       const t1 = performance.now();
 
-      scannerStats.style.display = 'block';
-      scanWordCount.textContent = wordCount.toLocaleString();
-      scanCityCount.textContent = foundCities.size.toLocaleString();
-      scanTime.textContent = `${(t1 - t0).toFixed(2)} ms`;
+      if (scannerStats) scannerStats.style.display = 'block';
+      if (scanWordCount) scanWordCount.textContent = wordCount.toLocaleString();
+      if (scanCityCount) scanCityCount.textContent = foundCities.size.toLocaleString();
+      if (scanTime) scanTime.textContent = `${(t1 - t0).toFixed(2)} ms`;
 
       // Highlighted output: wrap city matches in <mark>
       let highlighted = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -3017,42 +3019,49 @@
           `<mark style="background:rgba(6,182,212,0.3); color:var(--color-accent); border-radius:3px; padding:0 2px;">${match}</mark>`
         );
       });
-      scannerOutput.innerHTML = highlighted || '<span style="color:var(--text-muted);">No text provided.</span>';
+      if (scannerOutput) scannerOutput.innerHTML = highlighted || '<span style="color:var(--text-muted);">No text provided.</span>';
 
       // City list tags
-      scannerCitiesList.innerHTML = '';
-      if (foundCities.size === 0) {
-        scannerCitiesList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">No Indian cities detected in this text.</span>';
-        btnScanCopy.style.display = 'none';
-      } else {
-        [...foundCities].sort().forEach(city => {
-          const tag = document.createElement('span');
-          tag.textContent = city.replace(/\b\w/g, c => c.toUpperCase());
-          tag.style.cssText = 'background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); border-radius:999px; padding:0.2rem 0.65rem; font-size:0.8rem; color:var(--color-success); white-space:nowrap;';
-          scannerCitiesList.appendChild(tag);
-        });
-        btnScanCopy.style.display = 'block';
+      if (scannerCitiesList) {
+        scannerCitiesList.innerHTML = '';
+        if (foundCities.size === 0) {
+          scannerCitiesList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">No Indian cities detected in this text.</span>';
+          if (btnScanCopy) btnScanCopy.style.display = 'none';
+        } else {
+          [...foundCities].sort().forEach(city => {
+            const tag = document.createElement('span');
+            tag.textContent = city.replace(/\b\w/g, c => c.toUpperCase());
+            tag.style.cssText = 'background:rgba(16,185,129,0.12); border:1px solid rgba(16,185,129,0.35); border-radius:999px; padding:0.2rem 0.65rem; font-size:0.8rem; color:var(--color-success); white-space:nowrap;';
+            scannerCitiesList.appendChild(tag);
+          });
+          if (btnScanCopy) btnScanCopy.style.display = 'block';
+        }
       }
     });
 
-    btnScanClear.addEventListener('click', () => {
-      scannerInput.value = '';
-      scannerOutput.innerHTML = '<span style="color:var(--text-muted);">Highlighted text will appear here after scanning...</span>';
-      scannerCitiesList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">No cities detected yet.</span>';
-      scannerStats.style.display = 'none';
-      btnScanCopy.style.display = 'none';
-    });
-
-    btnScanCopy.addEventListener('click', () => {
-      const cityTags = scannerCitiesList.querySelectorAll('span');
-      const cityText = [...cityTags].map(t => t.textContent).join(', ');
-      navigator.clipboard.writeText(cityText).then(() => {
-        btnScanCopy.textContent = '✅ Copied!';
-        setTimeout(() => { btnScanCopy.textContent = '📋 Copy City List'; }, 2000);
+    if (btnScanClear) {
+      btnScanClear.addEventListener('click', () => {
+        if (scannerInput) scannerInput.value = '';
+        if (scannerOutput) scannerOutput.innerHTML = '<span style="color:var(--text-muted);">Highlighted text will appear here after scanning...</span>';
+        if (scannerCitiesList) scannerCitiesList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">No cities detected yet.</span>';
+        if (scannerStats) scannerStats.style.display = 'none';
+        if (btnScanCopy) btnScanCopy.style.display = 'none';
       });
-    });
+    }
+
+    if (btnScanCopy) {
+      btnScanCopy.addEventListener('click', () => {
+        if (!scannerCitiesList) return;
+        const cityTags = scannerCitiesList.querySelectorAll('span');
+        const cityText = [...cityTags].map(t => t.textContent).join(', ');
+        navigator.clipboard.writeText(cityText).then(() => {
+          btnScanCopy.textContent = '✅ Copied!';
+          setTimeout(() => { btnScanCopy.textContent = '📋 Copy City List'; }, 2000);
+        });
+      });
+    }
   }
-  setupTextScanner();
+  try { setupTextScanner(); } catch(e) { console.warn('[setupTextScanner] error:', e); }
 
   // =====================================================================
   // TAB 7: GEOGRAPHY & TRAVEL HUB
@@ -3071,29 +3080,34 @@
     const quizDiff = document.getElementById('quiz-diff');
     const btnQuizNext = document.getElementById('btn-quiz-next');
     
-    quizDiff.addEventListener('change', () => {
-      quizStreak = 0;
-      safeText('quiz-streak', '0');
-      generateQuizQuestion();
-    });
+    if (quizDiff) {
+      quizDiff.addEventListener('change', () => {
+        quizStreak = 0;
+        safeText('quiz-streak', '0');
+        generateQuizQuestion();
+      });
+    }
 
-    btnQuizNext.addEventListener('click', () => {
-      generateQuizQuestion();
-      btnQuizNext.style.display = 'none';
-      safeText('quiz-feedback', '');
-    });
+    if (btnQuizNext) {
+      btnQuizNext.addEventListener('click', () => {
+        generateQuizQuestion();
+        btnQuizNext.style.display = 'none';
+        safeText('quiz-feedback', '');
+      });
+    }
 
     generateQuizQuestion();
-    setupRoutePlanner();
+    try { setupRoutePlanner(); } catch(e) {}
   }
 
   function generateQuizQuestion() {
-    const diff = document.getElementById('quiz-diff').value;
+    const quizDiffElem = document.getElementById('quiz-diff');
+    const diff = quizDiffElem ? quizDiffElem.value : 'easy';
     const questionText = document.getElementById('quiz-question');
     const optionsContainer = document.getElementById('quiz-options');
     const feedback = document.getElementById('quiz-feedback');
-    feedback.textContent = '';
-    optionsContainer.innerHTML = '';
+    if (feedback) feedback.textContent = '';
+    if (optionsContainer) optionsContainer.innerHTML = '';
 
     // Pick a random city
     const randomCity = CITIES_DATA[Math.floor(Math.random() * CITIES_DATA.length)];
@@ -3203,7 +3217,7 @@
     const dropEnd = document.getElementById('dropdown-route-end');
     const btnGen = document.getElementById('btn-generate-route');
 
-    rStart.addEventListener('input', (e) => {
+    if (rStart) rStart.addEventListener('input', (e) => {
       const q = e.target.value.trim().toLowerCase();
       if (q.length > 0) {
         dropStart.style.display = 'block';
@@ -3216,7 +3230,7 @@
       }
     });
 
-    rEnd.addEventListener('input', (e) => {
+    if (rEnd) rEnd.addEventListener('input', (e) => {
       const q = e.target.value.trim().toLowerCase();
       if (q.length > 0) {
         dropEnd.style.display = 'block';
@@ -3229,7 +3243,7 @@
       }
     });
 
-    btnGen.addEventListener('click', () => {
+    if (btnGen) btnGen.addEventListener('click', () => {
       const startCity = rStart.value.trim().toLowerCase();
       const endCity = rEnd.value.trim().toLowerCase();
 
@@ -4082,7 +4096,7 @@
       });
 
       // Press Enter to add city stop directly!
-      tripCityInput.addEventListener('keydown', (e) => {
+      if (tripCityInput) tripCityInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
           if (tripCityDropdown) tripCityDropdown.style.display = 'none';
@@ -4482,7 +4496,7 @@
     const customAddBtn = document.getElementById('pack-custom-add-btn');
     const customInput = document.getElementById('pack-custom-input');
     if (customAddBtn && customInput) {
-      customAddBtn.addEventListener('click', () => {
+      if (customAddBtn) customAddBtn.addEventListener('click', () => {
         const val = customInput.value.trim();
         if (!val) return;
         packingState['custom'].push({ label: val, checked: false });
@@ -4490,7 +4504,7 @@
         renderPackingItems();
         savePackingToStorage();
       });
-      customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') customAddBtn.click(); });
+      if (customInput) customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') customAddBtn.click(); });
     }
 
     renderPackingItems();
@@ -4874,7 +4888,7 @@
       STATES_LIST.sort().forEach(state => {
         stateFilter.innerHTML += `<option value="${state}">${state}</option>`;
       });
-      stateFilter.addEventListener("change", (e) => {
+      if (stateFilter) stateFilter.addEventListener("change", (e) => {
         activeFestivalState = e.target.value;
         renderFestivals();
       });
@@ -6056,7 +6070,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       }
 
       checklistContainer.querySelectorAll(".checklist-toggle-wrapper").forEach(wrapper => {
-        wrapper.addEventListener("click", () => {
+        if (wrapper) wrapper.addEventListener("click", () => {
           const id = wrapper.dataset.id;
           weatherPackedStates[id] = !weatherPackedStates[id];
           playTone(450, "triangle", 0.05, 0.1);
@@ -6096,7 +6110,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     });
 
     if (customAddBtn && customText) {
-      customAddBtn.addEventListener("click", () => {
+      if (customAddBtn) customAddBtn.addEventListener("click", () => {
         const text = customText.value.trim();
         if (text.length < 1) return;
         weatherCustomItems.push(text);
@@ -6104,7 +6118,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         playTone(700, "sine", 0.05, 0.12);
         renderChecklist();
       });
-      customText.addEventListener("keydown", e => {
+      if (customText) customText.addEventListener("keydown", e => {
         if (e.key === "Enter") {
           customAddBtn.click();
         }
@@ -6467,7 +6481,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     if (companionAddBtn && companionInput) {
-      companionAddBtn.addEventListener("click", () => {
+      if (companionAddBtn) companionAddBtn.addEventListener("click", () => {
         const name = companionInput.value.trim();
         if (name.length < 1) return;
         if (splitterMembers.includes(name)) {
@@ -6480,7 +6494,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         renderCompanions();
         recalculateSplitLedger();
       });
-      companionInput.addEventListener("keydown", e => {
+      if (companionInput) companionInput.addEventListener("keydown", e => {
         if (e.key === "Enter") {
           companionAddBtn.click();
         }
@@ -6582,7 +6596,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     if (expAddBtn && expDesc && expAmount && expPaidSelect) {
-      expAddBtn.addEventListener("click", () => {
+      if (expAddBtn) expAddBtn.addEventListener("click", () => {
         const desc = expDesc.value.trim();
         const amt = parseFloat(expAmount.value) || 0;
         const paidBy = expPaidSelect.value;
@@ -7732,7 +7746,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         }
       });
 
-      input.addEventListener("keypress", e => {
+      if (input) input.addEventListener("keypress", e => {
         if (e.key === "Enter") {
           const val = input.value.trim();
           const resolved = resolveCityInput(val);
@@ -7950,7 +7964,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         }
       });
 
-      input.addEventListener("keypress", e => {
+      if (input) input.addEventListener("keypress", e => {
         if (e.key === "Enter") {
           const val = input.value.trim();
           const resolved = resolveCityInput(val);
@@ -8098,7 +8112,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         }
       });
 
-      input.addEventListener("keypress", e => {
+      if (input) input.addEventListener("keypress", e => {
         if (e.key === "Enter") {
           const val = input.value.trim();
           const resolved = resolveCityInput(val);
@@ -8153,7 +8167,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       }).join("");
 
       spotsGrid.querySelectorAll(".photo-spot-checkbox").forEach(box => {
-        box.addEventListener("change", e => {
+        if (box) box.addEventListener("change", e => {
           const name = e.target.dataset.name;
           photoCheckedLandmarks[name] = e.target.checked;
           
@@ -8216,7 +8230,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         }
       });
 
-      input.addEventListener("keypress", e => {
+      if (input) input.addEventListener("keypress", e => {
         if (e.key === "Enter") {
           const val = input.value.trim();
           const resolved = resolveCityInput(val);
@@ -8342,7 +8356,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         }
       });
 
-      input.addEventListener("keypress", e => {
+      if (input) input.addEventListener("keypress", e => {
         if (e.key === "Enter") {
           const val = input.value.trim();
           const resolved = resolveCityInput(val);
@@ -8536,7 +8550,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       }).join("");
 
       listContainer.querySelectorAll(".smartpacker-checkbox").forEach(box => {
-        box.addEventListener("change", e => {
+        if (box) box.addEventListener("change", e => {
           const idx = parseInt(e.target.dataset.idx);
           smartPackerListItems[idx].packed = e.target.checked;
           
@@ -9216,7 +9230,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       }).join("");
 
       list.querySelectorAll(".vault-offline-toggle").forEach(box => {
-        box.addEventListener("change", e => {
+        if (box) box.addEventListener("change", e => {
           const idx = parseInt(e.target.dataset.idx);
           vaultDocuments[idx].offline = e.target.checked;
           playTone(e.target.checked ? 850 : 450, "sine", 0.05, 0.08);
@@ -9515,7 +9529,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     // Rail icon click handlers
     if (rail) {
       rail.querySelectorAll('.rail-icon').forEach(icon => {
-        icon.addEventListener('click', () => {
+        if (icon) icon.addEventListener('click', () => {
           const cat = icon.dataset.cat;
           if (isOpen && currentCat === cat) {
             closeDrawer();
@@ -9924,7 +9938,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       const cityInput = document.getElementById('sunclock-city-input');
       const suggestBox = document.getElementById('sunclock-suggestions');
       if (cityInput && suggestBox) {
-        cityInput.addEventListener('input', () => {
+        if (cityInput) cityInput.addEventListener('input', () => {
           const q = cityInput.value.trim().toLowerCase();
           if (q.length < 2) { suggestBox.style.display = 'none'; return; }
           const matches = Object.keys(CITY_COORDS).filter(c => c.toLowerCase().startsWith(q)).slice(0, 6);
@@ -10222,7 +10236,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
         return inFinder || onTiming;
       }
 
-      generateBtn.addEventListener('click', () => {
+      if (generateBtn) generateBtn.addEventListener('click', () => {
         const raw = document.getElementById('qr-input-value').value.trim();
         if (!raw) { alert('Please enter a value to encode.'); return; }
         const data = buildQRData(currentType, raw);
@@ -10508,12 +10522,12 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultCard = document.getElementById("claim-result-card");
 
     if (typeMedical && typeTheft) {
-      typeMedical.addEventListener("change", () => {
+      if (typeMedical) typeMedical.addEventListener("change", () => {
         playSelectSound();
         medOptions.style.display = "flex";
         theftOptions.style.display = "none";
       });
-      typeTheft.addEventListener("change", () => {
+      if (typeTheft) typeTheft.addEventListener("change", () => {
         playSelectSound();
         medOptions.style.display = "none";
         theftOptions.style.display = "flex";
@@ -10820,7 +10834,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       updateCount();
 
       container.querySelectorAll(".track-checkbox").forEach(box => {
-        box.addEventListener("change", e => {
+        if (box) box.addEventListener("change", e => {
           const idx = parseInt(e.target.dataset.idx);
           const tracks = TRACKS[currentVibe] || [];
           if (e.target.checked) {
@@ -11036,7 +11050,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const container = document.getElementById("medkit-checklist-container");
 
     if (buildBtn && container) {
-      buildBtn.addEventListener("click", () => {
+      if (buildBtn) buildBtn.addEventListener("click", () => {
         playSelectSound();
         const profile = profileSel.value;
         const duration = durationSel.value;
@@ -11133,7 +11147,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultCard = document.getElementById("diet-result-card");
 
     if (genBtn && resultCard) {
-      genBtn.addEventListener("click", () => {
+      if (genBtn) genBtn.addEventListener("click", () => {
         playSelectSound();
         const pref = prefSel.value;
         const lang = langSel.value;
@@ -11180,7 +11194,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const amountInput = document.getElementById("upi-mock-amount");
 
     if (simulateBtn && resultBox) {
-      simulateBtn.addEventListener("click", () => {
+      if (simulateBtn) simulateBtn.addEventListener("click", () => {
         playSelectSound();
         const merchant = merchantInput.value.trim() || "Local Vendor";
         const amt = amountInput.value.trim() || "10";
@@ -11214,7 +11228,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("coach-result-container");
 
     if (findBtn && resultBox) {
-      findBtn.addEventListener("click", () => {
+      if (findBtn) findBtn.addEventListener("click", () => {
         playSelectSound();
         const seatNo = parseInt(seatInput.value);
         const cls = classSelect.value;
@@ -11302,7 +11316,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const amtInput = document.getElementById("forex-atm-amount");
 
     if (simBtn && screen) {
-      simBtn.addEventListener("click", () => {
+      if (simBtn) simBtn.addEventListener("click", () => {
         playSelectSound();
         const amt = parseInt(amtInput.value) || 10000;
         const exchangeRate = 83.5; // 1 USD = 83.5 INR
@@ -11396,7 +11410,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("permits-result-container");
 
     if (checkBtn && resultBox) {
-      checkBtn.addEventListener("click", () => {
+      if (checkBtn) checkBtn.addEventListener("click", () => {
         playSelectSound();
         const zone = zoneSel.value;
         const citizen = citizenSel.value;
@@ -11486,7 +11500,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("spicemenu-result-container");
 
     if (transBtn && resultBox) {
-      transBtn.addEventListener("click", () => {
+      if (transBtn) transBtn.addEventListener("click", () => {
         playSelectSound();
         const term = termSel.value;
         const data = MENU_DB[term] || {};
@@ -11567,7 +11581,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("scamcheck-result-container");
 
     if (verifyBtn && resultBox) {
-      verifyBtn.addEventListener("click", () => {
+      if (verifyBtn) verifyBtn.addEventListener("click", () => {
         playSelectSound();
         const scenario = scenarioSel.value;
         const data = SCAMS_DB[scenario] || {};
@@ -11613,7 +11627,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("altitude-result-container");
 
     if (calculateBtn && resultBox) {
-      calculateBtn.addEventListener("click", () => {
+      if (calculateBtn) calculateBtn.addEventListener("click", () => {
         playSelectSound();
         const zoneKey = zoneSel.value;
         const ascent = ascentSel.value;
@@ -11683,7 +11697,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     };
 
     if (simBtn && resultBox) {
-      simBtn.addEventListener("click", () => {
+      if (simBtn) simBtn.addEventListener("click", () => {
         playSelectSound();
         const price = parseInt(priceInput.value) || 1000;
         const catKey = catSelect.value;
@@ -11774,7 +11788,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("monumentphoto-result-container");
 
     if (checkBtn && resultBox) {
-      checkBtn.addEventListener("click", () => {
+      if (checkBtn) checkBtn.addEventListener("click", () => {
         playSelectSound();
         const sight = sightSel.value;
         const info = DATA[sight] || {};
@@ -11870,7 +11884,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("monsoonrisk-result-container");
 
     if (checkBtn && resultBox) {
-      checkBtn.addEventListener("click", () => {
+      if (checkBtn) checkBtn.addEventListener("click", () => {
         playSelectSound();
         const reg = regSel.value;
         const month = monthSel.value;
@@ -11948,7 +11962,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("waterrisk-result-container");
 
     if (checkBtn && resultBox) {
-      checkBtn.addEventListener("click", () => {
+      if (checkBtn) checkBtn.addEventListener("click", () => {
         playSelectSound();
         const src = sourceSel.value;
         const data = SOURCES[src] || {};
@@ -12027,7 +12041,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     const resultBox = document.getElementById("templeetiquette-result-container");
 
     if (checkBtn && resultBox) {
-      checkBtn.addEventListener("click", () => {
+      if (checkBtn) checkBtn.addEventListener("click", () => {
         playSelectSound();
         const type = typeSel.value;
         const info = DATA[type] || {};
@@ -12368,7 +12382,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       }
     };
 
-    btnStart.addEventListener("click", () => {
+    if (btnStart) btnStart.addEventListener("click", () => {
       initAudio();
       if (liveTrainInterval) clearInterval(liveTrainInterval);
       
@@ -12440,7 +12454,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
 
     if (!btnCalc || !resultCard) return;
 
-    btnCalc.addEventListener("click", () => {
+    if (btnCalc) btnCalc.addEventListener("click", () => {
       initAudio();
       const amount = parseFloat(amountInput ? amountInput.value : 0) || 0;
       const rate = parseFloat(catSel ? catSel.value : 18) || 18;
@@ -12514,7 +12528,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
       byd_atto: { name: "BYD Atto 3", cap: 60.48, rate: 0.20 }
     };
 
-    btnCalc.addEventListener("click", () => {
+    if (btnCalc) btnCalc.addEventListener("click", () => {
       initAudio();
       const modelKey = modelSel ? modelSel.value : "nexon";
       const kwSpeed = parseFloat(kwSel ? kwSel.value : 25) || 25;
@@ -12718,7 +12732,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderRegion();
-    regSel.addEventListener("change", renderRegion);
+    if (regSel) regSel.addEventListener("change", renderRegion);
   }
 
   // =====================================================================
@@ -12789,7 +12803,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
 
     if (!btnCalc || !resultCard) return;
 
-    btnCalc.addEventListener("click", () => {
+    if (btnCalc) btnCalc.addEventListener("click", () => {
       initAudio();
       const tariff = parseFloat(tariffInput ? tariffInput.value : 0) || 0;
       const nights = parseFloat(nightsInput ? nightsInput.value : 1) || 1;
@@ -12987,7 +13001,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
 
     if (!btnCalc || !resultCard) return;
 
-    btnCalc.addEventListener("click", () => {
+    if (btnCalc) btnCalc.addEventListener("click", () => {
       initAudio();
       const dist = parseFloat(distInput ? distInput.value : 0) || 0;
       const days = parseFloat(daysInput ? daysInput.value : 1) || 1;
@@ -13096,7 +13110,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderAQI();
-    sel.addEventListener("change", renderAQI);
+    if (sel) sel.addEventListener("change", renderAQI);
   }
 
   // =====================================================================
@@ -13194,7 +13208,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
 
     if (!btnStart || !resultCard) return;
 
-    btnStart.addEventListener("click", () => {
+    if (btnStart) btnStart.addEventListener("click", () => {
       initAudio();
       if (tatkalTimerInterval) clearInterval(tatkalTimerInterval);
 
@@ -13311,7 +13325,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
 
     if (!btnCalc || !resultCard) return;
 
-    btnCalc.addEventListener("click", () => {
+    if (btnCalc) btnCalc.addEventListener("click", () => {
       initAudio();
       const amount = parseFloat(amountInput ? amountInput.value : 0) || 0;
       const cardType = cardSel ? cardSel.value : "standard_credit";
@@ -13416,7 +13430,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderTickets();
-    sel.addEventListener("change", renderTickets);
+    if (sel) sel.addEventListener("change", renderTickets);
   }
 
   // =====================================================================
@@ -13462,7 +13476,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderAltitude();
-    sel.addEventListener("change", renderAltitude);
+    if (sel) sel.addEventListener("change", renderAltitude);
   }
 
   // =====================================================================
@@ -13571,7 +13585,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderFastag();
-    sel.addEventListener("change", renderFastag);
+    if (sel) sel.addEventListener("change", renderFastag);
   }
 
   // =====================================================================
@@ -13684,7 +13698,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderHealth();
-    sel.addEventListener("change", renderHealth);
+    if (sel) sel.addEventListener("change", renderHealth);
   }
 
   // =====================================================================
@@ -13729,7 +13743,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderSocket();
-    sel.addEventListener("change", renderSocket);
+    if (sel) sel.addEventListener("change", renderSocket);
   }
 
   // =====================================================================
@@ -13775,7 +13789,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
     }
 
     renderCloakroom();
-    sel.addEventListener("change", renderCloakroom);
+    if (sel) sel.addEventListener("change", renderCloakroom);
   }
 
   // =====================================================================
@@ -13840,7 +13854,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
 
     if (!btnCalc || !resultCard) return;
 
-    btnCalc.addEventListener("click", () => {
+    if (btnCalc) btnCalc.addEventListener("click", () => {
       initAudio();
       const city = citySel ? citySel.value : "mumbai";
       const dist = parseFloat(kmInput ? kmInput.value : 0) || 0;
@@ -24930,7 +24944,7 @@ setTimeout(init3DParallax, 300);
 
     if (!input) return;
 
-    input.addEventListener('input', function(e) {
+    if (input) input.addEventListener('input', function(e) {
       const query = e.target.value.trim().toLowerCase();
       if (clearBtn) clearBtn.style.display = query ? 'inline-block' : 'none';
 
