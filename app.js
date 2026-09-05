@@ -24129,6 +24129,269 @@ setTimeout(init3DParallax, 300);
   }
   window.initScrollRevealsAndCounters = initScrollRevealsAndCounters;
 
+  // =====================================================================
+  // 🌟 IMPOSSIBLE TO IGNORE: 3D QUANTUM HOLOGRAM SPATIAL ENGINE & AUDIO SYNTH
+  // =====================================================================
+  var quantumAudioCtx = null;
+  var isQuantumAudioOn = true;
+  var quantumAnimFrame = null;
+  var quantumNodes = [];
+  var quantumRotX = 0, quantumRotY = 0;
+  var isDraggingQuantum = false;
+  var lastMouseX = 0, lastMouseY = 0;
+  var selectedQuantumCity = null;
+
+  function initQuantumAudio() {
+    if (!quantumAudioCtx && typeof AudioContext !== 'undefined') {
+      quantumAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
+
+  function playHologramTone(freq) {
+    if (!isQuantumAudioOn) return;
+    try {
+      initQuantumAudio();
+      if (!quantumAudioCtx) return;
+      if (quantumAudioCtx.state === 'suspended') {
+        quantumAudioCtx.resume();
+      }
+      var osc = quantumAudioCtx.createOscillator();
+      var gain = quantumAudioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq || 440, quantumAudioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, quantumAudioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, quantumAudioCtx.currentTime + 0.4);
+      osc.connect(gain);
+      gain.connect(quantumAudioCtx.destination);
+      osc.start();
+      osc.stop(quantumAudioCtx.currentTime + 0.4);
+    } catch(e) {}
+  }
+
+  function toggleQuantumAudio() {
+    isQuantumAudioOn = !isQuantumAudioOn;
+    var icon = document.getElementById('quantum-audio-icon');
+    var txt = document.getElementById('quantum-audio-text');
+    if (icon) icon.textContent = isQuantumAudioOn ? '🔊' : '🔇';
+    if (txt) txt.textContent = isQuantumAudioOn ? 'Audio Synth ON' : 'Audio Synth OFF';
+  }
+
+  function openQuantumHologramModal() {
+    var modal = document.getElementById('quantum-hologram-modal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+    initQuantumSpatialSphere();
+  }
+
+  function closeQuantumHologramModal() {
+    var modal = document.getElementById('quantum-hologram-modal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    if (quantumAnimFrame) cancelAnimationFrame(quantumAnimFrame);
+  }
+
+  function initQuantumSpatialSphere() {
+    var canvas = document.getElementById('quantum-hologram-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+
+    quantumNodes = [];
+    var dataset = (window.INDIAN_CITIES && window.INDIAN_CITIES.length > 0) ? window.INDIAN_CITIES : [
+      { name: "Mumbai", state: "Maharashtra", district: "Mumbai City", lat: 19.07, lng: 72.87 },
+      { name: "Delhi", state: "Delhi", district: "New Delhi", lat: 28.61, lng: 77.20 },
+      { name: "Bengaluru", state: "Karnataka", district: "Bengaluru Urban", lat: 12.97, lng: 77.59 },
+      { name: "Kolkata", state: "West Bengal", district: "Kolkata", lat: 22.57, lng: 88.36 },
+      { name: "Hyderabad", state: "Telangana", district: "Hyderabad", lat: 17.38, lng: 78.48 }
+    ];
+
+    var total = Math.min(350, dataset.length);
+    var radius = Math.min(canvas.width, canvas.height) * 0.35;
+
+    for (var i = 0; i < total; i++) {
+      var phi = Math.acos(-1 + (2 * i) / total);
+      var theta = Math.sqrt(total * Math.PI) * phi;
+      var city = dataset[i % dataset.length];
+
+      quantumNodes.push({
+        x: radius * Math.cos(theta) * Math.sin(phi),
+        y: radius * Math.sin(theta) * Math.sin(phi),
+        z: radius * Math.cos(phi),
+        city: city,
+        index: i + 1,
+        color: i % 3 === 0 ? '#00f3ff' : (i % 3 === 1 ? '#ff007f' : '#a855f7')
+      });
+    }
+
+    canvas.onmousedown = function(e) {
+      isDraggingQuantum = true;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    };
+    window.onmousemove = function(e) {
+      if (!isDraggingQuantum) return;
+      var dx = e.clientX - lastMouseX;
+      var dy = e.clientY - lastMouseY;
+      quantumRotY += dx * 0.005;
+      quantumRotX += dy * 0.005;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    };
+    window.onmouseup = function() { isDraggingQuantum = false; };
+
+    canvas.onclick = function(e) {
+      var rect = canvas.getBoundingClientRect();
+      var mx = e.clientX - rect.left;
+      var my = e.clientY - rect.top;
+      var cx = canvas.width / 2;
+      var cy = canvas.height / 2;
+
+      var closest = null;
+      var minD = 25;
+
+      quantumNodes.forEach(function(node) {
+        var cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
+        var cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
+
+        var x1 = node.x * cosY - node.z * sinY;
+        var z1 = node.z * cosY + node.x * sinY;
+        var y1 = node.y * cosX - z1 * sinX;
+        var z2 = z1 * cosX + node.y * sinX;
+
+        var scale = 400 / (400 + z2);
+        var px = cx + x1 * scale;
+        var py = cy + y1 * scale;
+
+        var dist = Math.hypot(mx - px, my - py);
+        if (dist < minD && z2 > -150) {
+          minD = dist;
+          closest = node;
+        }
+      });
+
+      if (closest) {
+        selectQuantumNode(closest);
+      }
+    };
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var cx = canvas.width / 2;
+      var cy = canvas.height / 2;
+
+      if (!isDraggingQuantum) {
+        quantumRotY += 0.003;
+      }
+
+      var cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
+      var cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
+
+      var projected = quantumNodes.map(function(node) {
+        var x1 = node.x * cosY - node.z * sinY;
+        var z1 = node.z * cosY + node.x * sinY;
+        var y1 = node.y * cosX - z1 * sinX;
+        var z2 = z1 * cosX + node.y * sinX;
+
+        var scale = 450 / (450 + z2);
+        return {
+          px: cx + x1 * scale,
+          py: cy + y1 * scale,
+          pz: z2,
+          scale: scale,
+          node: node
+        };
+      });
+
+      projected.sort(function(a, b) { return a.pz - b.pz; });
+
+      ctx.lineWidth = 0.5;
+      for (var i = 0; i < projected.length; i += 4) {
+        var p1 = projected[i];
+        var p2 = projected[(i + 1) % projected.length];
+        if (p1.pz > -150 && p2.pz > -150) {
+          ctx.strokeStyle = 'rgba(0, 243, 255, ' + (0.12 * p1.scale) + ')';
+          ctx.beginPath();
+          ctx.moveTo(p1.px, p1.py);
+          ctx.lineTo(p2.px, p2.py);
+          ctx.stroke();
+        }
+      }
+
+      projected.forEach(function(p) {
+        var alpha = Math.max(0.1, (p.pz + 300) / 600);
+        ctx.fillStyle = p.node.color;
+        ctx.shadowColor = p.node.color;
+        ctx.shadowBlur = p.pz > 0 ? 15 : 4;
+
+        var size = Math.max(2, 4 * p.scale);
+        ctx.beginPath();
+        ctx.arc(p.px, p.py, size, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (p.node === selectedQuantumCity) {
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(p.px, p.py, size + 6, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      });
+
+      quantumAnimFrame = requestAnimationFrame(draw);
+    }
+
+    if (quantumAnimFrame) cancelAnimationFrame(quantumAnimFrame);
+    draw();
+  }
+
+  function selectQuantumNode(pNode) {
+    selectedQuantumCity = pNode;
+    playHologramTone(300 + (pNode.index % 20) * 30);
+
+    var card = document.getElementById('quantum-city-card');
+    if (!card) return;
+    card.style.display = 'block';
+
+    var cName = document.getElementById('dossier-city-name');
+    var sBadge = document.getElementById('dossier-state-badge');
+    var dist = document.getElementById('dossier-district');
+    var lat = document.getElementById('dossier-lat');
+    var lng = document.getElementById('dossier-lng');
+    var idx = document.getElementById('dossier-idx');
+
+    if (cName) cName.textContent = pNode.city.name || "Indian City";
+    if (sBadge) sBadge.textContent = pNode.city.state || "INDIA";
+    if (dist) dist.textContent = pNode.city.district || "Central District";
+    if (lat) lat.textContent = (pNode.city.lat || 20.0).toFixed(4) + '° N';
+    if (lng) lng.textContent = (pNode.city.lng || 78.0).toFixed(4) + '° E';
+    if (idx) idx.textContent = '#' + pNode.index + ' / 15,000';
+  }
+
+  function warpRandomCity() {
+    if (!quantumNodes || quantumNodes.length === 0) return;
+    var rand = quantumNodes[Math.floor(Math.random() * quantumNodes.length)];
+    selectQuantumNode(rand);
+  }
+
+  function jumpToCityFromQuantum() {
+    if (!selectedQuantumCity) return;
+    closeQuantumHologramModal();
+    var input = document.getElementById('city-input');
+    if (input) {
+      input.value = selectedQuantumCity.city.name || '';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  window.openQuantumHologramModal = openQuantumHologramModal;
+  window.closeQuantumHologramModal = closeQuantumHologramModal;
+  window.toggleQuantumAudio = toggleQuantumAudio;
+  window.warpRandomCity = warpRandomCity;
+  window.jumpToCityFromQuantum = jumpToCityFromQuantum;
+
   try {
     render3DCarousel();
     initBentoTiltAndSpotlight();
