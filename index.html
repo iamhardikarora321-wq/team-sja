@@ -16,34 +16,26 @@
   function populateShowcase3DStage() {
     var stage = document.getElementById('showcase-3d-stage');
     if (!stage) return;
-    if (stage.children.length > 0 && stage.querySelector('.showcase-card-3d')) return;
     var defaultFeatures = [
-      { id: 'engine', title: 'Pan-India Destination & Stay Search', category: 'Core Engine', icon: '🔍', desc: 'Sub-millisecond Radix Trie search for 50,000+ towns, heritage sites & homestays.' },
-      { id: 'tourism', title: 'Hotelier & Homestay Booking Hub', category: 'Hospitality', icon: '🏨', desc: 'Direct booking portal empowering tier-2/3 hoteliers without aggregator commissions.' },
-      { id: 'trip', title: 'Travel Corridor & Itinerary Planner', category: 'Travel Guide', icon: '🗺️', desc: 'Plan custom itineraries, track multi-modal stops, and estimate travel budgets.' },
+      { id: 'engine', title: 'Pan-India Destination & Stay Search', category: 'Core Engine', icon: '🔍', desc: 'Sub-millisecond Radix Trie search for 50,000+ towns, heritage sites & homestays across all 36 States & UTs.' },
+      { id: 'tourism', title: 'Hotelier & Homestay Booking Hub', category: 'Hospitality', icon: '🏨', desc: 'Direct booking portal empowering tier-2/3 hoteliers without 20-30% aggregator commissions.' },
+      { id: 'trip', title: 'Travel Corridor & Itinerary Planner', category: 'Travel Guide', icon: '🗺️', desc: 'Plan custom itineraries, track multi-modal transit stops, and estimate travel budgets.' },
       { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Culture Quiz', icon: '🎮', desc: 'Gamified exploration of Indian regional culture, food, and historical sites.' }
     ];
     var html = '';
     defaultFeatures.forEach(function(feat, idx) {
-      var offset = idx;
-      var absOffset = Math.abs(offset);
-      if (absOffset > 4) return;
-      var translateX = offset * 220;
-      var translateZ = offset === 0 ? 180 : (absOffset * -130);
-      var rotateY = offset * -24;
-      var opacity = offset === 0 ? 1 : Math.max(0.2, 1 - absOffset * 0.25);
-      html += '<div class="showcase-card-3d' + (offset === 0 ? ' active' : '') + '" style="transform:translateX(' + translateX + 'px) translateZ(' + translateZ + 'px) rotateY(' + rotateY + 'deg); opacity:' + opacity + '; z-index:' + (100 - absOffset) + ';" onclick="if(window.switchTab) window.switchTab(\'' + feat.id + '\'); if(window.closeShowcaseModal) window.closeShowcaseModal();">' +
-        '<div style="display:flex; justify-content:space-between; align-items:flex-start;">' +
-        '  <div class="showcase-card-icon">' + feat.icon + '</div>' +
-        '  <span class="showcase-card-badge">' + feat.category + '</span>' +
+      html += '<div class="showcase-card-3d" style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.25); border-radius:16px; padding:1.25rem; cursor:pointer; transition:all 0.2s ease;" onclick="if(window.switchTab) window.switchTab(\'' + feat.id + '\'); if(window.closeShowcaseModal) window.closeShowcaseModal();">' +
+        '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">' +
+        '  <div style="font-size:1.8rem;">' + feat.icon + '</div>' +
+        '  <span class="showcase-card-badge" style="background:rgba(0,243,255,0.12); color:#00f3ff; font-weight:700; font-size:0.7rem; padding:0.25rem 0.6rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3);">' + feat.category + '</span>' +
         '</div>' +
         '<div>' +
-        '  <h3 class="showcase-card-title">' + feat.title + '</h3>' +
-        '  <p class="showcase-card-desc">' + feat.desc + '</p>' +
+        '  <h3 class="showcase-card-title" style="font-size:1.05rem; font-weight:800; color:#fff; margin:0 0 0.4rem 0;">' + feat.title + '</h3>' +
+        '  <p class="showcase-card-desc" style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5; margin:0 0 1rem 0;">' + feat.desc + '</p>' +
         '</div>' +
         '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.75rem; font-size:0.75rem; color:#00f3ff; font-weight:700;">' +
-        '  <span>⚡ CLICK TO SELECT</span>' +
-        '  <span>#' + (idx < 9 ? '0' : '') + (idx + 1) + '</span>' +
+        '  <span>⚡ CLICK TO LAUNCH TAB</span>' +
+        '  <span>#' + (idx + 1) + '</span>' +
         '</div>' +
         '</div>';
     });
@@ -54,6 +46,7 @@
     var modal = document.getElementById("showcase-3d-modal");
     if (modal) {
       populateShowcase3DStage();
+      modal.style.display = "flex";
       modal.style.setProperty("display", "flex", "important");
       modal.style.setProperty("z-index", "999999999", "important");
       modal.style.setProperty("opacity", "1", "important");
@@ -64,6 +57,7 @@
   window.closeShowcaseModal = function() {
     var modal = document.getElementById("showcase-3d-modal");
     if (modal) {
+      modal.style.display = "none";
       modal.style.setProperty("display", "none", "important");
       modal.classList.remove("open", "active");
     }
@@ -1153,6 +1147,36 @@
         <div class="quantum-hud-footer">
           <span>🌌 DRAG TO ROTATE 3D SPHERE • SCROLL TO ZOOM IN/OUT • CLICK STAR NODE TO WARP TO CITY</span>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       ⚡ 3D SHOWCASE FEATURE MODAL (Browse All Features)
+       ===================================================================== -->
+  <div id="showcase-3d-modal" class="quantum-modal-overlay" style="display:none; background:rgba(2,6,23,0.92); backdrop-filter:blur(16px); z-index:999999999; position:fixed; inset:0;">
+    <div style="max-width:980px; width:92%; max-height:90vh; overflow-y:auto; margin:4vh auto; background:linear-gradient(135deg, rgba(15,23,42,0.98), rgba(2,6,23,0.98)); border:1px solid rgba(0,243,255,0.4); border-radius:24px; padding:2rem; box-shadow:0 0 60px rgba(0,243,255,0.25); color:#ffffff; font-family:Inter, sans-serif; position:relative;">
+      
+      <button onclick="if(window.closeShowcaseModal) window.closeShowcaseModal();" style="position:absolute; top:1.25rem; right:1.25rem; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+
+      <div style="display:flex; align-items:center; gap:0.85rem; margin-bottom:1.5rem;">
+        <span style="font-size:2rem;">⚡</span>
+        <div>
+          <div style="font-size:0.75rem; font-weight:800; color:#00f3ff; letter-spacing:0.12em; text-transform:uppercase;">Arvora Tourism Engine • Core Features Matrix</div>
+          <h2 style="font-size:1.5rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Pan-India Tourism &amp; Hospitality Features</h2>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div id="showcase-3d-stage" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+        <!-- Dynamically populated by populateShowcase3DStage() -->
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.75rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.25rem;">
+        <button class="visualizer-btn" style="background:linear-gradient(135deg, #00f3ff, #7928ca); color:#fff; font-weight:800; padding:0.65rem 1.5rem; border-radius:12px; font-size:0.85rem;" onclick="if(window.closeShowcaseModal) window.closeShowcaseModal();">
+          ✕ CLOSE WINDOW
+        </button>
       </div>
 
     </div>
