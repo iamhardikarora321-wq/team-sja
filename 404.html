@@ -283,18 +283,10 @@
           <h2 class="quantum-title">Launch Arvora 3D Quantum Hologram Studio</h2>
           <p class="quantum-sub">Interactively warp through 15,000 Indian cities in 3D spatial constellation mode with real-time harmonic audio synthesis.</p>
         </div>
-        <div style="display:flex; gap:0.65rem; flex-wrap:wrap; position:relative; z-index:30;">
-          <!-- Hero CTA 1: Launch Arvora 3D Quantum Hologram Studio -->
-          <button id="hero-cta-launch-3d" class="quantum-launch-btn" style="background:linear-gradient(135deg, #00f3ff, #ff007f); color:#ffffff; border:1px solid rgba(255,255,255,0.4); font-weight:800; box-shadow:0 0 25px rgba(0,243,255,0.5); transform:scale(1.02);" onclick="event.stopPropagation(); if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
-            <span>🚀 Launch Arvora 3D Quantum Hologram Studio</span>
-          </button>
-          <!-- Hero CTA 2: Launch Simulator -->
-          <button id="hero-cta-simulate" class="quantum-launch-btn" style="background:linear-gradient(135deg, rgba(6,182,212,0.9), rgba(59,130,246,0.9)); color:#fff; border:1px solid rgba(255,255,255,0.3); font-weight:700;" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('routes'); var el = document.getElementById('simulator'); if(el) el.scrollIntoView({ behavior: 'smooth' });">
-            <span>⚡ Launch Simulator</span>
-          </button>
-          <!-- Hero CTA 3: Bento Features -->
-          <button id="hero-cta-explore" class="quantum-launch-btn" onclick="event.stopPropagation(); if(window.openShowcaseModal) window.openShowcaseModal();">
-            <span>✨ Bento Features</span>
+        <div style="display:flex; justify-content:center; width:100%; margin-top:0.85rem; position:relative; z-index:30;">
+          <!-- Single Prominent Launch Button -->
+          <button id="hero-cta-launch-3d" class="quantum-launch-btn" style="background:linear-gradient(135deg, #00f3ff, #7928ca, #ff007f); color:#ffffff; border:1px solid rgba(255,255,255,0.5); font-weight:900; font-size:1.05rem; padding:0.9rem 2.2rem; border-radius:16px; box-shadow:0 0 35px rgba(0,243,255,0.6), 0 0 15px rgba(255,0,127,0.4); text-transform:uppercase; letter-spacing:0.05em; cursor:pointer;" onclick="event.stopPropagation(); if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
+            <span>🚀 LAUNCH ARVORA 3D QUANTUM HOLOGRAM STUDIO</span>
           </button>
         </div>
       </div>
@@ -1473,11 +1465,14 @@
           <h2 class="hud-title">Arvora 15,000 City Constellation</h2>
         </div>
         <div class="quantum-hud-right">
+          <button id="quantum-autopilot-btn" class="hud-action-btn" onclick="if(window.toggleQuantumAutopilot) window.toggleQuantumAutopilot();">
+            <span id="quantum-autopilot-icon">🎥</span> <span id="quantum-autopilot-text">Autopilot Tour</span>
+          </button>
           <button id="quantum-audio-btn" class="hud-action-btn" onclick="if(window.toggleQuantumAudio) window.toggleQuantumAudio();">
             <span id="quantum-audio-icon">🔊</span> <span id="quantum-audio-text">Audio Synth ON</span>
           </button>
           <button id="quantum-warp-btn" class="hud-action-btn primary" onclick="if(window.warpRandomCity) window.warpRandomCity();">
-            <span>🚀 Hyper-Warp Random City</span>
+            <span>🚀 Hyper-Warp City</span>
           </button>
           <button class="quantum-close-btn" onclick="if(window.closeQuantumHologramModal) window.closeQuantumHologramModal();">✕</button>
         </div>

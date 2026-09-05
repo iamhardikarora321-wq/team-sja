@@ -24162,6 +24162,16 @@ setTimeout(init3DParallax, 300);
     } catch(e) {}
   }
 
+  let isQuantumAutopilotOn = true;
+
+  function toggleQuantumAutopilot() {
+    isQuantumAutopilotOn = !isQuantumAutopilotOn;
+    let icon = document.getElementById('quantum-autopilot-icon');
+    let txt = document.getElementById('quantum-autopilot-text');
+    if (icon) icon.textContent = isQuantumAutopilotOn ? '🎥' : '⏸️';
+    if (txt) txt.textContent = isQuantumAutopilotOn ? 'Autopilot ON' : 'Autopilot OFF';
+  }
+
   function toggleQuantumAudio() {
     isQuantumAudioOn = !isQuantumAudioOn;
     let icon = document.getElementById('quantum-audio-icon');
@@ -24198,31 +24208,51 @@ setTimeout(init3DParallax, 300);
       { name: "Delhi", state: "Delhi", district: "New Delhi", lat: 28.61, lng: 77.20 },
       { name: "Bengaluru", state: "Karnataka", district: "Bengaluru Urban", lat: 12.97, lng: 77.59 },
       { name: "Kolkata", state: "West Bengal", district: "Kolkata", lat: 22.57, lng: 88.36 },
-      { name: "Hyderabad", state: "Telangana", district: "Hyderabad", lat: 17.38, lng: 78.48 }
+      { name: "Hyderabad", state: "Telangana", district: "Hyderabad", lat: 17.38, lng: 78.48 },
+      { name: "Chennai", state: "Tamil Nadu", district: "Chennai", lat: 13.08, lng: 80.27 },
+      { name: "Ahmedabad", state: "Gujarat", district: "Ahmedabad", lat: 23.02, lng: 72.57 },
+      { name: "Pune", state: "Maharashtra", district: "Pune", lat: 18.52, lng: 73.85 },
+      { name: "Jaipur", state: "Rajasthan", district: "Jaipur", lat: 26.91, lng: 75.78 },
+      { name: "Surat", state: "Gujarat", district: "Surat", lat: 21.17, lng: 72.83 }
     ];
 
-    let total = Math.min(350, dataset.length);
-    let radius = Math.min(canvas.width, canvas.height) * 0.35;
+    let total = Math.min(120, dataset.length);
+    let radius = Math.min(canvas.width, canvas.height) * 0.28;
 
     for (let i = 0; i < total; i++) {
       let phi = Math.acos(-1 + (2 * i) / total);
       let theta = Math.sqrt(total * Math.PI) * phi;
       let city = dataset[i % dataset.length];
 
+      let nx = Math.cos(theta) * Math.sin(phi);
+      let ny = Math.sin(theta) * Math.sin(phi);
+      let nz = Math.cos(phi);
+
+      let pillarHeight = 35 + (i % 7) * 12;
+
       quantumNodes.push({
-        x: radius * Math.cos(theta) * Math.sin(phi),
-        y: radius * Math.sin(theta) * Math.sin(phi),
-        z: radius * Math.cos(phi),
+        baseX: radius * nx,
+        baseY: radius * ny,
+        baseZ: radius * nz,
+        topX: (radius + pillarHeight) * nx,
+        topY: (radius + pillarHeight) * ny,
+        topZ: (radius + pillarHeight) * nz,
+        nx: nx,
+        ny: ny,
+        nz: nz,
         city: city,
         index: i + 1,
-        color: i % 3 === 0 ? '#00f3ff' : (i % 3 === 1 ? '#ff007f' : '#a855f7')
+        height: pillarHeight,
+        color: i % 4 === 0 ? '#00f3ff' : (i % 4 === 1 ? '#ff007f' : (i % 4 === 2 ? '#a855f7' : '#10b981'))
       });
     }
 
-    let quantumFocalDistance = 450;
+    let quantumFocalDistance = 480;
+    let animTime = 0;
+
     canvas.onwheel = function(e) {
       e.preventDefault();
-      quantumFocalDistance = Math.max(200, Math.min(900, quantumFocalDistance + e.deltaY * 0.5));
+      quantumFocalDistance = Math.max(220, Math.min(950, quantumFocalDistance + e.deltaY * 0.5));
     };
 
     canvas.onmousedown = function(e) {
@@ -24268,23 +24298,23 @@ setTimeout(init3DParallax, 300);
       let cy = canvas.height / 2;
 
       let closest = null;
-      let minD = 25;
+      let minD = 30;
 
       quantumNodes.forEach(function(node) {
         let cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
         let cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
 
-        let x1 = node.x * cosY - node.z * sinY;
-        let z1 = node.z * cosY + node.x * sinY;
-        let y1 = node.y * cosX - z1 * sinX;
-        let z2 = z1 * cosX + node.y * sinX;
+        let tx1 = node.topX * cosY - node.topZ * sinY;
+        let tz1 = node.topZ * cosY + node.topX * sinY;
+        let ty1 = node.topY * cosX - tz1 * sinX;
+        let tz2 = tz1 * cosX + node.topY * sinX;
 
-        let scale = 400 / (400 + z2);
-        let px = cx + x1 * scale;
-        let py = cy + y1 * scale;
+        let scale = quantumFocalDistance / (quantumFocalDistance + tz2);
+        let px = cx + tx1 * scale;
+        let py = cy + ty1 * scale;
 
         let dist = Math.hypot(mx - px, my - py);
-        if (dist < minD && z2 > -150) {
+        if (dist < minD && tz2 > -180) {
           minD = dist;
           closest = node;
         }
@@ -24299,62 +24329,146 @@ setTimeout(init3DParallax, 300);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       let cx = canvas.width / 2;
       let cy = canvas.height / 2;
+      animTime += 0.02;
 
-      if (!isDraggingQuantum) {
-        quantumRotY += 0.003;
+      if (isQuantumAutopilotOn && !isDraggingQuantum) {
+        quantumRotY += 0.004;
+        quantumRotX = Math.sin(animTime * 0.3) * 0.25;
       }
 
       let cosY = Math.cos(quantumRotY), sinY = Math.sin(quantumRotY);
       let cosX = Math.cos(quantumRotX), sinX = Math.sin(quantumRotX);
 
-      let projected = quantumNodes.map(function(node) {
-        let x1 = node.x * cosY - node.z * sinY;
-        let z1 = node.z * cosY + node.x * sinY;
-        let y1 = node.y * cosX - z1 * sinX;
-        let z2 = z1 * cosX + node.y * sinX;
+      // 1. Render 3D Wireframe Globe Rings
+      ctx.lineWidth = 1;
+      let globeRings = [-0.6, -0.3, 0, 0.3, 0.6];
+      globeRings.forEach(function(ringLat) {
+        let rRadius = radius * Math.cos(Math.asin(ringLat));
+        let rY = radius * ringLat;
 
-        let scale = quantumFocalDistance / (quantumFocalDistance + z2);
+        ctx.strokeStyle = ringLat === 0 ? 'rgba(0, 243, 255, 0.35)' : 'rgba(255, 255, 255, 0.1)';
+        ctx.beginPath();
+        let stepCount = 36;
+        for (let s = 0; s <= stepCount; s++) {
+          let ang = (s / stepCount) * Math.PI * 2;
+          let rx = rRadius * Math.cos(ang);
+          let rz = rRadius * Math.sin(ang);
+
+          let x1 = rx * cosY - rz * sinY;
+          let z1 = rz * cosY + rx * sinY;
+          let y1 = rY * cosX - z1 * sinX;
+          let z2 = z1 * cosX + rY * sinX;
+
+          if (z2 > -radius) {
+            let scale = quantumFocalDistance / (quantumFocalDistance + z2);
+            let px = cx + x1 * scale;
+            let py = cy + y1 * scale;
+            if (s === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+        }
+        ctx.stroke();
+      });
+
+      // 2. Project 3D City Towers
+      let projectedTowers = quantumNodes.map(function(node) {
+        // Base coordinate
+        let bx1 = node.baseX * cosY - node.baseZ * sinY;
+        let bz1 = node.baseZ * cosY + node.baseX * sinY;
+        let by1 = node.baseY * cosX - bz1 * sinX;
+        let bz2 = bz1 * cosX + node.baseY * sinX;
+
+        // Top coordinate
+        let tx1 = node.topX * cosY - node.topZ * sinY;
+        let tz1 = node.topZ * cosY + node.topX * sinY;
+        let ty1 = node.topY * cosX - tz1 * sinX;
+        let tz2 = tz1 * cosX + node.topY * sinX;
+
+        let baseScale = quantumFocalDistance / (quantumFocalDistance + bz2);
+        let topScale = quantumFocalDistance / (quantumFocalDistance + tz2);
+
         return {
-          px: cx + x1 * scale,
-          py: cy + y1 * scale,
-          pz: z2,
-          scale: scale,
+          bpx: cx + bx1 * baseScale,
+          bpy: cy + by1 * baseScale,
+          bpz: bz2,
+          tpx: cx + tx1 * topScale,
+          tpy: cy + ty1 * topScale,
+          tpz: tz2,
+          topScale: topScale,
           node: node
         };
       });
 
-      projected.sort(function(a, b) { return a.pz - b.pz; });
+      projectedTowers.sort(function(a, b) { return a.tpz - b.tpz; });
 
-      ctx.lineWidth = 0.5;
-      for (let i = 0; i < projected.length; i += 4) {
-        let p1 = projected[i];
-        let p2 = projected[(i + 1) % projected.length];
-        if (p1.pz > -150 && p2.pz > -150) {
-          ctx.strokeStyle = 'rgba(0, 243, 255, ' + (0.12 * p1.scale) + ')';
+      // 3. Render 3D Trade Arcs between neighboring towers
+      for (let i = 0; i < projectedTowers.length; i += 6) {
+        let t1 = projectedTowers[i];
+        let t2 = projectedTowers[(i + 2) % projectedTowers.length];
+        if (t1.tpz > -100 && t2.tpz > -100) {
+          ctx.strokeStyle = 'rgba(0, 243, 255, 0.25)';
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.moveTo(p1.px, p1.py);
-          ctx.lineTo(p2.px, p2.py);
+          ctx.moveTo(t1.tpx, t1.tpy);
+          let midX = (t1.tpx + t2.tpx) / 2;
+          let midY = (t1.tpy + t2.tpy) / 2 - 30;
+          ctx.quadraticCurveTo(midX, midY, t2.tpx, t2.tpy);
           ctx.stroke();
+
+          // Pulse dot traveling arc
+          let tParam = (animTime * 0.5 + i) % 1;
+          let pulseX = Math.pow(1 - tParam, 2) * t1.tpx + 2 * (1 - tParam) * tParam * midX + Math.pow(tParam, 2) * t2.tpx;
+          let pulseY = Math.pow(1 - tParam, 2) * t1.tpy + 2 * (1 - tParam) * tParam * midY + Math.pow(tParam, 2) * t2.tpy;
+          ctx.fillStyle = '#00f3ff';
+          ctx.shadowColor = '#00f3ff';
+          ctx.shadowBlur = 10;
+          ctx.beginPath();
+          ctx.arc(pulseX, pulseY, 3, 0, Math.PI * 2);
+          ctx.fill();
         }
       }
 
-      projected.forEach(function(p) {
-        let alpha = Math.max(0.1, (p.pz + 300) / 600);
-        ctx.fillStyle = p.node.color;
-        ctx.shadowColor = p.node.color;
-        ctx.shadowBlur = p.pz > 0 ? 15 : 4;
+      // 4. Render Architectural 3D City Light Towers
+      projectedTowers.forEach(function(t) {
+        if (t.tpz < -220) return;
 
-        let size = Math.max(2, 4 * p.scale);
+        let alpha = Math.max(0.15, (t.tpz + 280) / 560);
+        ctx.strokeStyle = t.node.color;
+        ctx.shadowColor = t.node.color;
+        ctx.shadowBlur = t.tpz > 0 ? 18 : 6;
+        ctx.lineWidth = Math.max(1.5, 3.5 * t.topScale);
+
+        // Vertical light pillar body
         ctx.beginPath();
-        ctx.arc(p.px, p.py, size, 0, Math.PI * 2);
+        ctx.moveTo(t.bpx, t.bpy);
+        ctx.lineTo(t.tpx, t.tpy);
+        ctx.stroke();
+
+        // Neon Top Cap Glowing Node
+        ctx.fillStyle = t.node.color;
+        let capRadius = Math.max(3, 6 * t.topScale);
+        ctx.beginPath();
+        ctx.arc(t.tpx, t.tpy, capRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        if (p.node === selectedQuantumCity) {
+        // Selected halo indicator
+        if (t.node === selectedQuantumCity) {
           ctx.strokeStyle = '#ffffff';
-          ctx.lineWidth = 2;
+          ctx.lineWidth = 2.5;
+          ctx.shadowColor = '#ffffff';
+          ctx.shadowBlur = 25;
           ctx.beginPath();
-          ctx.arc(p.px, p.py, size + 6, 0, Math.PI * 2);
+          ctx.arc(t.tpx, t.tpy, capRadius + 8, 0, Math.PI * 2);
           ctx.stroke();
+        }
+
+        // City Label in 3D space for front-facing prominent cities
+        if (t.tpz > 30 && t.node.index <= 12) {
+          ctx.font = '700 ' + Math.max(10, Math.round(12 * t.topScale)) + 'px Inter, sans-serif';
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowColor = '#000000';
+          ctx.shadowBlur = 4;
+          ctx.fillText(t.node.city.name || 'City', t.tpx + 10, t.tpy + 4);
         }
       });
 
@@ -24408,6 +24522,7 @@ setTimeout(init3DParallax, 300);
   window.openQuantumHologramModal = openQuantumHologramModal;
   window.closeQuantumHologramModal = closeQuantumHologramModal;
   window.toggleQuantumAudio = toggleQuantumAudio;
+  window.toggleQuantumAutopilot = toggleQuantumAutopilot;
   window.warpRandomCity = warpRandomCity;
   window.jumpToCityFromQuantum = jumpToCityFromQuantum;
 
