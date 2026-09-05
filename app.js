@@ -24975,10 +24975,7 @@ setTimeout(init3DParallax, 300);
     const suggestionsBox = document.getElementById('intel-suggestions-box');
     const clearBtn = document.getElementById('intel-clear-btn');
 
-    if (!input) return;
-
-    if (input) {
-      input.addEventListener('keydown', function(e) {
+    input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
           e.preventDefault();
           const query = input.value.trim();
@@ -25035,10 +25032,9 @@ setTimeout(init3DParallax, 300);
           suggestionsBox.innerHTML = `<div style="padding:0.75rem 1rem; font-size:0.85rem; color:#00f3ff; cursor:pointer;" onclick="if(window.selectIntelCity) window.selectIntelCity('${query.toLowerCase()}', '${capQuery}');">
             📍 Explore <strong>"${capQuery}"</strong> Regional Hub & Intelligence ➔
           </div>`;
-          suggestionsBox.style.display = 'block';
         }
-      });
-    }
+      }
+    });
 
     selectIntelCity('jaipur');
   }
@@ -25832,5 +25828,5 @@ setTimeout(init3DParallax, 300);
     initTravelIntelligence();
     renderRoamModeData('discover');
   } catch(e) {}
-
+}
 })();
