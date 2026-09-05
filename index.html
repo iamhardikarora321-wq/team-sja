@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Arvora ✨ — India's City Universe & Dev Hub</title>
   <meta name="description" content="Arvora: The next-gen Indian cities universe — blazing-fast Radix Tree autocomplete, interactive state tourism, geoguess spelling game, and database seed exporter. Explore India like never before.">
-  <link rel="stylesheet" href="./index.css?v=70.0.0">
+  <link rel="stylesheet" href="./index.css?v=80.0.0">
 <script>
   window._arvoraPin = "";
   function populateShowcase3DStage() {
@@ -271,7 +271,7 @@
           <h2 class="quantum-title">Launch Arvora 3D Quantum Hologram Studio</h2>
           <p class="quantum-sub">Interactively warp through 15,000 Indian cities in 3D spatial constellation mode with real-time harmonic audio synthesis.</p>
         </div>
-        <button class="quantum-launch-btn">
+        <button class="quantum-launch-btn" onclick="if(window.openQuantumHologramModal) window.openQuantumHologramModal();">
           <span>✨ EXPLORE HOLOGRAM</span>
         </button>
       </div>
@@ -283,7 +283,7 @@
     <!-- Drawer header -->
     <div class="drawer-header">
       <span id="drawer-category-title" class="drawer-title">🔍 Search Features</span>
-      <button id="drawer-close-btn" class="drawer-close-btn" title="Close (ESC)">✕</button>
+      <button id="drawer-close-btn" class="drawer-close-btn" title="Close (ESC)" onclick="if(window.closeDrawer) window.closeDrawer();">✕</button>
     </div>
     <!-- Search input (always visible in Spotlight modal) -->
     <div id="drawer-search-section" style="padding:0.5rem 0.75rem; border-bottom:1px solid rgba(255,255,255,0.06);">
@@ -304,7 +304,7 @@
         <span style="font-size:1.1rem;">🎨</span>
         <span class="drawer-title" style="font-size:0.9rem; color:var(--text-primary);">Arvora Theme Studio</span>
       </div>
-      <button id="theme-modal-close-btn" class="drawer-close-btn" title="Close (ESC)">✕</button>
+      <button id="theme-modal-close-btn" class="drawer-close-btn" title="Close (ESC)" onclick="if(window.closeThemeModal) window.closeThemeModal();">✕</button>
     </div>
     <div style="padding:0.65rem 1rem; font-size:0.75rem; color:var(--text-secondary); border-bottom:1px solid rgba(255,255,255,0.06); background:rgba(255,255,255,0.02);">
       Select any of the 16 luminescent aesthetic color suites below. Every theme dynamically updates the ambient nebulas, glow accents, card borders, and brand typography gradients.
@@ -441,7 +441,7 @@
               <div>Avg Speed: <span id="stress-avg-speed" style="color: var(--color-accent); font-weight: bold;">0.000 ms</span></div>
               <div>Throughput: <span id="stress-throughput" style="color: var(--color-success); font-weight: bold;">0 ops/s</span></div>
             </div>
-            <button id="btn-stress-test" class="visualizer-btn" style="width: 100%; background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.4); color: var(--color-purple); font-weight: 600; padding: 0.6rem; border-radius: var(--radius-sm);">
+            <button id="btn-stress-test" class="visualizer-btn" onclick="if(window.runStressTest) window.runStressTest();" style="width: 100%; background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.4); color: var(--color-purple); font-weight: 600; padding: 0.6rem; border-radius: var(--radius-sm);">
               Run 10,000 Lookup Stress Test
             </button>
           </div>
@@ -454,8 +454,8 @@
               <span>🌿</span> Radix Tree Visualizer
             </h2>
             <div class="visualizer-controls">
-              <button id="btn-mode-playground" class="visualizer-btn active">Playground Tree</button>
-              <button id="btn-mode-search" class="visualizer-btn">Search Path</button>
+              <button id="btn-mode-playground" class="visualizer-btn active" onclick="if(window.setEngineMode) window.setEngineMode('playground');">Playground Tree</button>
+              <button id="btn-mode-search" class="visualizer-btn" onclick="if(window.setEngineMode) window.setEngineMode('search');">Search Path</button>
             </div>
           </div>
           <p id="visualizer-description" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
@@ -468,8 +468,8 @@
 
           <div id="playground-form-container" class="playground-form">
             <input type="text" id="playground-input" placeholder="Type a custom word (e.g. 'cart', 'category', 'cat')..." autocomplete="off">
-            <button id="playground-btn-insert">Insert Word</button>
-            <button id="playground-btn-reset" class="visualizer-btn" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: rgb(239, 68, 68);">Reset</button>
+            <button id="playground-btn-insert" onclick="if(window.insertPlaygroundCity) window.insertPlaygroundCity();">Insert Word</button>
+            <button id="playground-btn-reset" class="visualizer-btn" onclick="if(window.resetPlaygroundTrie) window.resetPlaygroundTrie();" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: rgb(239, 68, 68);">Reset</button>
           </div>
         </div>
 
@@ -566,7 +566,7 @@
             </div>
           </div>
           
-          <button id="btn-calc-route" class="visualizer-btn" style="width: 100%; background: var(--color-accent); border-color: var(--color-accent); color: var(--bg-primary); font-weight: 600; padding: 0.75rem; margin-top: 1rem;">
+          <button id="btn-calc-route" class="visualizer-btn" onclick="if(window.calculateRoute) window.calculateRoute();" style="width: 100%; background: var(--color-accent); border-color: var(--color-accent); color: var(--bg-primary); font-weight: 600; padding: 0.75rem; margin-top: 1rem;">
             Generate Seed Schema
           </button>
         </div>
@@ -578,8 +578,8 @@
               <span>⚡</span> Schema Code Output
             </h2>
             <div class="visualizer-controls">
-              <button id="btn-copy-seed" class="visualizer-btn active">Copy Code</button>
-              <button id="btn-download-seed" class="visualizer-btn" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--color-success);">Download</button>
+              <button id="btn-copy-seed" class="visualizer-btn active" onclick="if(window.copySeedData) window.copySeedData();">Copy Code</button>
+              <button id="btn-download-seed" class="visualizer-btn" onclick="if(window.downloadSeedData) window.downloadSeedData();" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--color-success);">Download</button>
             </div>
           </div>
           <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
@@ -616,7 +616,7 @@
           <div class="benchmark-card" style="margin-bottom: 1.5rem; border-color: var(--card-border); background: rgba(2, 6, 23, 0.45);">
             <div style="font-weight: 500; font-size: 0.85rem; color: var(--text-secondary); display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
               <span>💡 Clues Revealed</span>
-              <button id="game-btn-reveal-clue" class="visualizer-btn" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Reveal Next Clue</button>
+              <button id="game-btn-reveal-clue" class="visualizer-btn" onclick="if(window.revealGameClue) window.revealGameClue();" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Reveal Next Clue</button>
             </div>
             <div id="game-clue-text" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
               - Clue 1: Click button to reveal first letter clue...
@@ -640,8 +640,8 @@
 
           <!-- Control buttons -->
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.75rem;">
-            <button id="game-btn-submit" class="visualizer-btn" style="background: var(--color-primary); border-color: var(--color-primary); color: white; font-weight: 600; padding: 0.75rem;">Submit Answer</button>
-            <button id="game-btn-skip" class="visualizer-btn" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); padding: 0.75rem;">Skip</button>
+            <button id="game-btn-submit" class="visualizer-btn" onclick="if(window.submitGameGuess) window.submitGameGuess();" style="background: var(--color-primary); border-color: var(--color-primary); color: white; font-weight: 600; padding: 0.75rem;">Submit Answer</button>
+            <button id="game-btn-skip" class="visualizer-btn" onclick="if(window.skipGameQuestion) window.skipGameQuestion();" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); padding: 0.75rem;">Skip</button>
           </div>
         </div>
 
@@ -769,10 +769,10 @@
         <div style="margin-bottom: 1rem;">
           <label style="display:block; font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.4rem; font-weight:500;">Match Mode</label>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <button class="ptn-mode-btn visualizer-btn active" data-mode="contains" id="ptn-mode-contains">Contains</button>
-            <button class="ptn-mode-btn visualizer-btn" data-mode="starts" id="ptn-mode-starts">Starts With</button>
-            <button class="ptn-mode-btn visualizer-btn" data-mode="ends" id="ptn-mode-ends">Ends With</button>
-            <button class="ptn-mode-btn visualizer-btn" data-mode="exact" id="ptn-mode-exact">Exact</button>
+            <button class="ptn-mode-btn visualizer-btn active" data-mode="contains" id="ptn-mode-contains" onclick="if(window.setPtnMode) window.setPtnMode('contains');">Contains</button>
+            <button class="ptn-mode-btn visualizer-btn" data-mode="starts" id="ptn-mode-starts" onclick="if(window.setPtnMode) window.setPtnMode('starts');">Starts With</button>
+            <button class="ptn-mode-btn visualizer-btn" data-mode="ends" id="ptn-mode-ends" onclick="if(window.setPtnMode) window.setPtnMode('ends');">Ends With</button>
+            <button class="ptn-mode-btn visualizer-btn" data-mode="exact" id="ptn-mode-exact" onclick="if(window.setPtnMode) window.setPtnMode('exact');">Exact</button>
           </div>
         </div>
 
@@ -795,7 +795,7 @@
           </div>
         </div>
 
-        <button id="btn-ptn-search" class="visualizer-btn" style="width:100%; background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:600; padding:0.75rem;">Search Cities</button>
+        <button id="btn-ptn-search" class="visualizer-btn" onclick="if(window.executePtnSearch) window.executePtnSearch();" style="width:100%; background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:600; padding:0.75rem;">Search Cities</button>
 
         <div id="ptn-stats" class="benchmark-card" style="margin-top:1rem; border-color:rgba(6,182,212,0.35); display:none;">
           <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">
@@ -808,7 +808,7 @@
           </div>
         </div>
 
-        <button id="btn-ptn-export" class="visualizer-btn" style="width:100%; margin-top:0.75rem; background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3); color:var(--color-success); display:none;">⬇ Export Matches as TXT</button>
+        <button id="btn-ptn-export" class="visualizer-btn" onclick="if(window.exportPtnResults) window.exportPtnResults();" style="width:100%; margin-top:0.75rem; background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3); color:var(--color-success); display:none;">⬇ Export Matches as TXT</button>
       </div>
 
       <!-- Right: Results -->
@@ -890,8 +890,8 @@
           <textarea id="scanner-input" rows="12" placeholder="Paste any text here... e.g. 'The train from Mumbai to Delhi via Agra passes through Mathura and Kanpur before reaching its destination.'" style="width:100%; background:rgba(2,6,23,0.85); border:2px solid var(--card-border); border-radius:var(--radius-sm); padding:0.75rem; color:var(--text-primary); font-family:inherit; font-size:0.9rem; line-height:1.6; resize:vertical;"></textarea>
         </div>
 
-        <button id="btn-scan" class="visualizer-btn" style="width:100%; background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:600; padding:0.75rem;">🔍 Scan for Cities</button>
-        <button id="btn-scan-clear" class="visualizer-btn" style="width:100%; margin-top:0.5rem; background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#f87171;">Clear</button>
+        <button id="btn-scan" class="visualizer-btn" onclick="if(window.executeTextScan) window.executeTextScan();" style="width:100%; background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:600; padding:0.75rem;">🔍 Scan for Cities</button>
+        <button id="btn-scan-clear" class="visualizer-btn" onclick="if(window.clearTextScan) window.clearTextScan();" style="width:100%; margin-top:0.5rem; background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#f87171;">Clear</button>
 
         <div id="scanner-stats" class="benchmark-card" style="margin-top:1rem; display:none; border-color:rgba(6,182,212,0.35);">
           <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.8;">
@@ -916,7 +916,7 @@
             <span style="color:var(--text-muted); font-size:0.85rem;">No cities detected yet.</span>
           </div>
         </div>
-        <button id="btn-scan-copy" class="visualizer-btn" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3); color:var(--color-success); display:none;">📋 Copy City List</button>
+        <button id="btn-scan-copy" class="visualizer-btn" onclick="if(window.copyTextScan) window.copyTextScan();" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3); color:var(--color-success); display:none;">📋 Copy City List</button>
       </div>
 
     </div>
@@ -964,7 +964,7 @@
 
         <div id="quiz-feedback" style="margin-top:1rem; text-align:center; font-size:0.95rem; font-weight:600; min-height:1.5rem;"></div>
 
-        <button id="btn-quiz-next" class="visualizer-btn" style="width:100%; margin-top:1rem; background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:600; display:none;">Next Question ➡️</button>
+        <button id="btn-quiz-next" class="visualizer-btn" onclick="if(window.nextQuizQuestion) window.nextQuizQuestion();" style="width:100%; margin-top:1rem; background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:600; display:none;">Next Question ➡️</button>
       </div>
 
       <!-- Right Column: Virtual Route Planner -->
@@ -999,7 +999,7 @@
           </div>
         </div>
 
-        <button id="btn-generate-route" class="visualizer-btn" style="width:100%; background:var(--color-primary); border-color:var(--color-primary); color:var(--text-primary); font-weight:600;">Calculate Virtual Route</button>
+        <button id="btn-generate-route" class="visualizer-btn" onclick="if(window.generateTripRoute) window.generateTripRoute();" style="width:100%; background:var(--color-primary); border-color:var(--color-primary); color:var(--text-primary); font-weight:600;">Calculate Virtual Route</button>
 
         <!-- Map & Travel Stats Output -->
         <div id="travel-output" style="display:none; flex-direction:column; gap:1rem;">
@@ -1199,9 +1199,9 @@
             <p style="color:var(--text-secondary); font-size:0.95rem;">Plan your perfect India trip — add cities, set dates, build your day-by-day itinerary and export it.</p>
           </div>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <button id="trip-btn-copy" class="visualizer-btn" style="background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.35); color:var(--color-success); font-weight:600;">📋 Copy Itinerary</button>
-            <button id="trip-btn-download" class="visualizer-btn" style="background:rgba(6,182,212,0.12); border-color:rgba(6,182,212,0.35); color:var(--color-accent); font-weight:600;">⬇️ Download .txt</button>
-            <button id="trip-btn-reset" class="visualizer-btn" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#f87171; font-weight:600;">🔄 New Trip</button>
+            <button id="trip-btn-copy" class="visualizer-btn" onclick="if(window.copyTripPlan) window.copyTripPlan();" style="background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.35); color:var(--color-success); font-weight:600;">📋 Copy Itinerary</button>
+            <button id="trip-btn-download" class="visualizer-btn" onclick="if(window.downloadTripPlan) window.downloadTripPlan();" style="background:rgba(6,182,212,0.12); border-color:rgba(6,182,212,0.35); color:var(--color-accent); font-weight:600;">⬇️ Download .txt</button>
+            <button id="trip-btn-reset" class="visualizer-btn" onclick="if(window.resetTripPlanner) window.resetTripPlanner();" style="background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:#f87171; font-weight:600;">🔄 New Trip</button>
           </div>
         </div>
 
@@ -1242,7 +1242,7 @@
                   <div id="trip-city-list"></div>
                 </div>
               </div>
-              <button id="trip-btn-add-city" class="visualizer-btn" style="background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:700; padding:0.6rem 1.25rem;">➕ Add Stop</button>
+              <button id="trip-btn-add-city" class="visualizer-btn" onclick="if(window.addTripStop) window.addTripStop();" style="background:var(--color-accent); border-color:var(--color-accent); color:var(--bg-primary); font-weight:700; padding:0.6rem 1.25rem;">➕ Add Stop</button>
             </div>
             <p id="trip-city-error" style="color:#f87171; font-size:0.8rem; margin-top:0.5rem; display:none;">Please search and select a city first.</p>
           </div>
@@ -1314,12 +1314,12 @@
 
             <!-- Category Tabs -->
             <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1rem;">
-              <button class="pack-cat-btn active" data-cat="clothes">👗 Clothes</button>
-              <button class="pack-cat-btn" data-cat="docs">💼 Docs</button>
-              <button class="pack-cat-btn" data-cat="medical">💊 Medical</button>
-              <button class="pack-cat-btn" data-cat="electronics">📱 Tech</button>
-              <button class="pack-cat-btn" data-cat="toiletries">🧴 Toiletries</button>
-              <button class="pack-cat-btn" data-cat="custom">➕ Custom</button>
+              <button class="pack-cat-btn active" data-cat="clothes" onclick="if(window.switchPackCat) window.switchPackCat('clothes');">👗 Clothes</button>
+              <button class="pack-cat-btn" data-cat="docs" onclick="if(window.switchPackCat) window.switchPackCat('docs');">💼 Docs</button>
+              <button class="pack-cat-btn" data-cat="medical" onclick="if(window.switchPackCat) window.switchPackCat('medical');">💊 Medical</button>
+              <button class="pack-cat-btn" data-cat="electronics" onclick="if(window.switchPackCat) window.switchPackCat('electronics');">📱 Tech</button>
+              <button class="pack-cat-btn" data-cat="toiletries" onclick="if(window.switchPackCat) window.switchPackCat('toiletries');">🧴 Toiletries</button>
+              <button class="pack-cat-btn" data-cat="custom" onclick="if(window.switchPackCat) window.switchPackCat('custom');">➕ Custom</button>
             </div>
 
             <!-- Items list -->
@@ -1329,7 +1329,7 @@
               <div style="display:flex; gap:0.5rem;">
                 <input type="text" id="pack-custom-input" placeholder="Add custom item..." autocomplete="off"
                   style="flex:1; background:rgba(2,6,23,0.85); border:1px solid var(--card-border); border-radius:var(--radius-sm); padding:0.4rem 0.7rem; color:var(--text-primary); font-family:inherit; font-size:0.85rem;">
-                <button id="pack-custom-add-btn" class="visualizer-btn" style="padding:0.4rem 0.75rem; font-size:0.8rem;">➕</button>
+                <button id="pack-custom-add-btn" class="visualizer-btn" onclick="if(window.addCustomPackItem) window.addCustomPackItem();" style="padding:0.4rem 0.75rem; font-size:0.8rem;">➕</button>
               </div>
              </div>
            </div>
@@ -1486,8 +1486,8 @@
   </div>
 
   <!-- Include code modules -->
-  <script src="./cities.js?v=70.0.0"></script>
-  <script src="./trie.js?v=70.0.0"></script>
-  <script src="./app.js?v=70.0.0"></script>
+  <script src="./cities.js?v=80.0.0"></script>
+  <script src="./trie.js?v=80.0.0"></script>
+  <script src="./app.js?v=80.0.0"></script>
 </body>
 </html>

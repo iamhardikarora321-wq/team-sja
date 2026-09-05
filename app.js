@@ -24392,6 +24392,163 @@ setTimeout(init3DParallax, 300);
   window.warpRandomCity = warpRandomCity;
   window.jumpToCityFromQuantum = jumpToCityFromQuantum;
 
+  // =====================================================================
+  // 🌟 UNIVERSAL BUTTON & HANDLER WINDOW EXPORTS
+  // =====================================================================
+  if (typeof closeDrawer === 'function') window.closeDrawer = closeDrawer;
+  if (typeof openThemeModal === 'function') window.openThemeModal = openThemeModal;
+  if (typeof closeThemeModal === 'function') window.closeThemeModal = closeThemeModal;
+
+  window.toggleSound = function() {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+      initAudio();
+      if (islandAudioBtn) islandAudioBtn.textContent = "🔊";
+      playSuccessSound();
+    } else {
+      if (islandAudioBtn) islandAudioBtn.textContent = "🔇";
+    }
+  };
+
+  window.toggleLock = function() {
+    if (typeof openLockModal === 'function') openLockModal();
+  };
+
+  window.runStressTest = function() {
+    if (btnStressTest) btnStressTest.click();
+  };
+
+  window.setEngineMode = function(mode) {
+    if (mode === 'playground') {
+      if (btnModePlayground) btnModePlayground.click();
+    } else {
+      if (btnModeSearch) btnModeSearch.click();
+    }
+  };
+
+  window.insertPlaygroundCity = function() {
+    if (btnInsertPlayground) btnInsertPlayground.click();
+  };
+
+  window.resetPlaygroundTrie = function() {
+    if (btnResetPlayground) btnResetPlayground.click();
+  };
+
+  window.calculateRoute = function() {
+    const btn = document.getElementById("btn-calc-route");
+    if (btn) btn.click();
+  };
+
+  window.copySeedData = function() {
+    const btn = document.getElementById("btn-copy-seed");
+    if (btn) btn.click();
+  };
+
+  window.downloadSeedData = function() {
+    const btn = document.getElementById("btn-download-seed");
+    if (btn) btn.click();
+  };
+
+  window.revealGameClue = function() {
+    const btn = document.getElementById("game-btn-reveal-clue");
+    if (btn) btn.click();
+  };
+
+  window.submitGameGuess = function() {
+    const btn = document.getElementById("game-btn-submit");
+    if (btn) btn.click();
+  };
+
+  window.skipGameQuestion = function() {
+    const btn = document.getElementById("game-btn-skip");
+    if (btn) btn.click();
+  };
+
+  window.setPtnMode = function(mode) {
+    const btn = document.getElementById("ptn-mode-" + mode);
+    if (btn) btn.click();
+  };
+
+  window.executePtnSearch = function() {
+    const btn = document.getElementById("btn-ptn-search");
+    if (btn) btn.click();
+  };
+
+  window.exportPtnResults = function() {
+    const btn = document.getElementById("btn-ptn-export");
+    if (btn) btn.click();
+  };
+
+  window.executeTextScan = function() {
+    const btn = document.getElementById("btn-scan");
+    if (btn) btn.click();
+  };
+
+  window.clearTextScan = function() {
+    const btn = document.getElementById("btn-scan-clear");
+    if (btn) btn.click();
+  };
+
+  window.copyTextScan = function() {
+    const btn = document.getElementById("btn-scan-copy");
+    if (btn) btn.click();
+  };
+
+  window.nextQuizQuestion = function() {
+    const btn = document.getElementById("btn-quiz-next");
+    if (btn) btn.click();
+  };
+
+  window.generateTripRoute = function() {
+    const btn = document.getElementById("btn-generate-route");
+    if (btn) btn.click();
+  };
+
+  window.copyTripPlan = function() {
+    const btn = document.getElementById("trip-btn-copy");
+    if (btn) btn.click();
+  };
+
+  window.downloadTripPlan = function() {
+    const btn = document.getElementById("trip-btn-download");
+    if (btn) btn.click();
+  };
+
+  window.resetTripPlanner = function() {
+    const btn = document.getElementById("trip-btn-reset");
+    if (btn) btn.click();
+  };
+
+  window.addTripStop = function() {
+    const btn = document.getElementById("trip-btn-add-city");
+    if (btn) btn.click();
+  };
+
+  window.switchPackCat = function(cat) {
+    const btns = document.querySelectorAll('.pack-cat-btn');
+    btns.forEach(b => {
+      if (b.getAttribute('data-cat') === cat) b.click();
+    });
+  };
+
+  window.addCustomPackItem = function() {
+    const btn = document.getElementById("pack-custom-add-btn");
+    if (btn) btn.click();
+  };
+
+  // =====================================================================
+  // 🌟 UNIVERSAL DELEGATION CLICK LISTENER
+  // =====================================================================
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('button, [role="button"], .visualizer-btn, .island-btn, .action-btn, .pack-cat-btn, .ptn-mode-btn');
+    if (!btn) return;
+
+    var targetTab = btn.getAttribute('data-target') || btn.getAttribute('data-tab');
+    if (targetTab && typeof window.switchTab === 'function') {
+      window.switchTab(targetTab);
+    }
+  }, true);
+
   try {
     render3DCarousel();
     initBentoTiltAndSpotlight();
