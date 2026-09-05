@@ -23718,13 +23718,7 @@ setTimeout(init3DParallax, 300);
 /* =====================================================================
    🚀 FULL-SCREEN 3D INTERACTIVE CAROUSEL STAGE ENGINE (v34.1.0)
    ===================================================================== */
-  const DEFAULT_SHOWCASE_FEATURES = [
-    { id: 'engine', title: 'Radix Trie Search Engine', category: 'Core Engine', icon: '🔍', desc: 'High-performance memory-efficient DFS lookup on Indian city dataset.' },
-    { id: 'routes', title: 'Logistics & Route Seed Exporter', category: 'Data & Logistics', icon: '📦', desc: 'Export structured JSON/SQL seed data with state filtering.' },
-    { id: 'game', title: 'Geoguess City Spelling Game', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
-    { id: 'tourism', title: 'State Tourism Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, and culture across all Indian states.' },
-    { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🗺️', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' }
-  ];
+
 
   function buildAllFeaturesList() {
     var list = [];
