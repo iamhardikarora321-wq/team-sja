@@ -23680,6 +23680,14 @@ setTimeout(init3DParallax, 300);
 /* =====================================================================
    🚀 FULL-SCREEN 3D INTERACTIVE CAROUSEL STAGE ENGINE (v34.1.0)
    ===================================================================== */
+  const DEFAULT_SHOWCASE_FEATURES = [
+    { id: 'engine', title: 'Radix Trie Search Engine', category: 'Core Engine', icon: '🔍', desc: 'High-performance memory-efficient DFS lookup on Indian city dataset.' },
+    { id: 'routes', title: 'Logistics & Route Seed Exporter', category: 'Data & Logistics', icon: '📦', desc: 'Export structured JSON/SQL seed data with state filtering.' },
+    { id: 'game', title: 'Geoguess City Spelling Game', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
+    { id: 'tourism', title: 'State Tourism Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, and culture across all Indian states.' },
+    { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🗺️', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' }
+  ];
+
   function buildAllFeaturesList() {
     var list = [];
     var seen = new Set();
@@ -23735,7 +23743,7 @@ setTimeout(init3DParallax, 300);
       });
     } catch(e) {}
 
-    return list;
+    return list.length > 0 ? list : DEFAULT_SHOWCASE_FEATURES.slice();
   }
 
   var FEATURES = buildAllFeaturesList();
@@ -23744,32 +23752,31 @@ setTimeout(init3DParallax, 300);
 
   function openShowcaseModal() {
     var modal = document.getElementById('showcase-3d-modal');
-    if (!modal) {
-      if (typeof window.openDrawer === 'function') window.openDrawer('search');
-      return;
-    }
+    if (!modal) return;
     if (typeof window.closeDrawer === 'function') window.closeDrawer();
     
     var allFeats = buildAllFeaturesList();
-    if (allFeats.length > 0) {
-      FEATURES = allFeats;
-      var searchInput = document.getElementById('showcase-search-input');
-      var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
-      if (q) {
-        filteredFeatures = FEATURES.filter(function(f) {
-          return f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
-        });
-      } else {
-        filteredFeatures = FEATURES.slice();
-      }
+    FEATURES = allFeats.length > 0 ? allFeats : DEFAULT_SHOWCASE_FEATURES.slice();
+    
+    var searchInput = document.getElementById('showcase-search-input');
+    var q = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    if (q) {
+      filteredFeatures = FEATURES.filter(function(f) {
+        return f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
+      });
+    } else {
+      filteredFeatures = FEATURES.slice();
     }
     modal.style.setProperty('display', 'flex', 'important');
     modal.style.setProperty('z-index', '999999999', 'important');
     modal.style.setProperty('opacity', '1', 'important');
     modal.style.setProperty('visibility', 'visible', 'important');
+    modal.classList.add('open', 'active');
 
     render3DCarousel();
     var sInput = document.getElementById('showcase-search-input');
+    if (sInput) sInput.focus();
+  }
     if (sInput) {
       setTimeout(function() { sInput.focus(); }, 80);
     }
