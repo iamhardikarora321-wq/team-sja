@@ -28722,6 +28722,169 @@ class HackathonGuide {
     `;
   }
 
+  
+  // =====================================================================
+  // 🧭 MAKEMYTRIP & REDBUS DOOR-TO-DOOR ROUTE, TIME, DISTANCE & FARE ESTIMATOR
+  // =====================================================================
+  function setQuickRoute(from, to) {
+    const fInput = document.getElementById('route-from-input');
+    const tInput = document.getElementById('route-to-input');
+    if (fInput) fInput.value = from;
+    if (tInput) tInput.value = to;
+    calculateDoorToDoorRoute();
+  }
+
+  function calculateDoorToDoorRoute() {
+    const fInput = document.getElementById('route-from-input');
+    const tInput = document.getElementById('route-to-input');
+    const resultsArea = document.getElementById('door-to-door-results-area');
+    if (!resultsArea) return;
+
+    let fromName = (fInput && fInput.value.trim()) ? fInput.value.trim() : 'Delhi';
+    let toName = (tInput && tInput.value.trim()) ? tInput.value.trim() : 'Jaipur';
+
+    if (fromName.toLowerCase() === toName.toLowerCase()) {
+      alert("Source and Destination cities must be different!");
+      return;
+    }
+
+    const c1 = (typeof getCityCoords === 'function') ? getCityCoords(fromName) : { lat: 28.6139, lng: 77.2090 };
+    const c2 = (typeof getCityCoords === 'function') ? getCityCoords(toName) : { lat: 26.9124, lng: 75.7873 };
+
+    // Calculate direct air & road distance
+    const airDist = Math.max(75, Math.round(Math.sqrt(Math.pow(c1.lat - c2.lat, 2) + Math.pow(c1.lng - c2.lng, 2)) * 111.3));
+    const roadDist = Math.round(airDist * 1.22);
+
+    // Flight calculation
+    const flightHrs = Math.floor(airDist / 550);
+    const flightMins = Math.round(((airDist % 550) / 550) * 60) || 45;
+    const flightDurationStr = flightHrs > 0 ? `${flightHrs}h ${flightMins}m` : `${flightMins}m`;
+    const flightFareMin = Math.round(2200 + airDist * 4.2);
+    const flightFareMax = Math.round(4500 + airDist * 6.5);
+
+    // Bus calculation
+    const busHrs = Math.floor(roadDist / 52);
+    const busMins = Math.round(((roadDist % 52) / 52) * 60);
+    const busDurationStr = `${busHrs}h ${busMins}m`;
+    const busSleeperFare = Math.round(450 + roadDist * 1.6);
+    const busSeaterFare = Math.round(300 + roadDist * 1.1);
+
+    // Train calculation
+    const trainHrs = Math.floor(roadDist / 68);
+    const trainMins = Math.round(((roadDist % 68) / 68) * 60);
+    const trainDurationStr = `${trainHrs}h ${trainMins}m`;
+    const trainVandeFare = Math.round(650 + roadDist * 2.2);
+    const train3ACFare = Math.round(380 + roadDist * 1.3);
+    const trainSLFare = Math.round(180 + roadDist * 0.45);
+
+    // Car Fuel & Toll calculation
+    const carHrs = Math.floor(roadDist / 60);
+    const carMins = Math.round(((roadDist % 60) / 60) * 60);
+    const carDurationStr = `${carHrs}h ${carMins}m`;
+    const fuelLiters = (roadDist / 16).toFixed(1);
+    const fuelCost = Math.round((roadDist / 16) * 96);
+    const tollCost = Math.round(roadDist * 1.15);
+    const cabSedanFare = Math.round(roadDist * 12.5);
+
+    resultsArea.style.display = 'block';
+    resultsArea.innerHTML = `
+      <!-- Route Overview Bar -->
+      <div style="background:rgba(2,6,23,0.85); border:1px solid rgba(0,243,255,0.3); border-radius:14px; padding:0.85rem 1.1rem; margin-bottom:1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+        <div>
+          <div style="font-size:0.72rem; font-weight:800; color:#00f3ff; text-transform:uppercase;">CALCULATED ROUTE</div>
+          <div style="font-size:1.15rem; font-weight:900; color:#fff;">📍 ${fromName.toUpperCase()} ➔ ${toName.toUpperCase()}</div>
+        </div>
+        <div style="display:flex; gap:1.25rem; font-size:0.85rem; color:#cbd5e1; flex-wrap:wrap;">
+          <div>🛫 Air Distance: <strong style="color:#00f3ff;">${airDist} km</strong></div>
+          <div>🛣️ Driving Road: <strong style="color:#10b981;">${roadDist} km</strong></div>
+          <div>⚡ Fastest Option: <strong style="color:#f472b6;">${flightDurationStr} Flight</strong></div>
+        </div>
+      </div>
+
+      <!-- 4 Vehicle Mode Comparison Cards Grid -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+        
+        <!-- 1. Aeroplane Flight -->
+        <div class="intel-item-card" style="border-color:rgba(0,243,255,0.4); background:rgba(15,23,42,0.85);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.4rem;">✈️</span>
+              <strong style="color:#fff; font-size:0.95rem;">Aeroplane Flight</strong>
+            </div>
+            <span style="background:rgba(0,243,255,0.15); color:#00f3ff; font-weight:800; padding:2px 8px; border-radius:10px; font-size:0.72rem;">FASTEST</span>
+          </div>
+          <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+            ⏱️ <strong>Flight Time:</strong> ${flightDurationStr} Non-stop<br>
+            💰 <strong>MakeMyTrip Fare:</strong> <strong style="color:#00f3ff; font-size:1rem;">₹${flightFareMin.toLocaleString('en-IN')} – ₹${flightFareMax.toLocaleString('en-IN')}</strong><br>
+            🛫 <strong>Carriers:</strong> IndiGo, Air India, Akasa Air<br>
+            🧳 <strong>Baggage:</strong> 15 kg Check-in + 7 kg Cabin
+          </div>
+        </div>
+
+        <!-- 2. Intercity Bus (RedBus) -->
+        <div class="intel-item-card" style="border-color:rgba(16,185,129,0.4); background:rgba(15,23,42,0.85);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.4rem;">🚌</span>
+              <strong style="color:#fff; font-size:0.95rem;">Intercity Bus (RedBus)</strong>
+            </div>
+            <span style="background:rgba(16,185,129,0.15); color:#10b981; font-weight:800; padding:2px 8px; border-radius:10px; font-size:0.72rem;">OVERNIGHT</span>
+          </div>
+          <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+            ⏱️ <strong>Drive Duration:</strong> ${busDurationStr}<br>
+            🛌 <strong>AC Sleeper Berth:</strong> <strong style="color:#10b981; font-size:1rem;">₹${busSleeperFare.toLocaleString('en-IN')}</strong><br>
+            💺 <strong>Volvo Seater:</strong> <strong style="color:#a7f3d0;">₹${busSeaterFare.toLocaleString('en-IN')}</strong><br>
+            🚌 <strong>Operators:</strong> State RTCs &amp; Private Volvo Multi-Axle
+          </div>
+        </div>
+
+        <!-- 3. Express Train (IRCTC) -->
+        <div class="intel-item-card" style="border-color:rgba(168,85,247,0.4); background:rgba(15,23,42,0.85);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.4rem;">🚆</span>
+              <strong style="color:#fff; font-size:0.95rem;">Express Railways (IRCTC)</strong>
+            </div>
+            <span style="background:rgba(168,85,247,0.15); color:#c084fc; font-weight:800; padding:2px 8px; border-radius:10px; font-size:0.72rem;">BEST VALUE</span>
+          </div>
+          <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+            ⏱️ <strong>Rail Travel Time:</strong> ${trainDurationStr}<br>
+            🚄 <strong>Vande Bharat CC:</strong> <strong style="color:#c084fc; font-size:1rem;">₹${trainVandeFare.toLocaleString('en-IN')}</strong><br>
+            🛌 <strong>3AC Tier:</strong> <strong style="color:#e9d5ff;">₹${train3ACFare.toLocaleString('en-IN')}</strong> | <strong>SL:</strong> ₹${trainSLFare.toLocaleString('en-IN')}<br>
+            ⚡ <strong>Tatkal Quota:</strong> AC 10:00 AM / SL 11:00 AM
+          </div>
+        </div>
+
+        <!-- 4. Personal Car / Outstation Cab -->
+        <div class="intel-item-card" style="border-color:rgba(255,0,127,0.4); background:rgba(15,23,42,0.85);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.4rem;">🚗</span>
+              <strong style="color:#fff; font-size:0.95rem;">Car / Outstation Cab</strong>
+            </div>
+            <span style="background:rgba(255,0,127,0.15); color:#ff007f; font-weight:800; padding:2px 8px; border-radius:10px; font-size:0.72rem;">DOOR TO DOOR</span>
+          </div>
+          <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+            ⏱️ <strong>Road Time:</strong> ${carDurationStr} (${roadDist} km)<br>
+            ⛽ <strong>Fuel Expense:</strong> ₹${fuelCost.toLocaleString('en-IN')} (${fuelLiters}L @ ₹96/L)<br>
+            🛣️ <strong>FASTag Tolls:</strong> ₹${tollCost}<br>
+            🚕 <strong>Outstation Cab:</strong> <strong style="color:#ff007f; font-size:0.95rem;">₹${cabSedanFare.toLocaleString('en-IN')}</strong> (Sedan)
+          </div>
+        </div>
+
+      </div>
+    `;
+  }
+
+  window.setQuickRoute = setQuickRoute;
+  window.calculateDoorToDoorRoute = calculateDoorToDoorRoute;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      setTimeout(() => { calculateDoorToDoorRoute(); }, 150);
+    } catch(e) {}
+  });
+
   window.switchTransportMode = switchTransportMode;
   window.calcCarFuelToll = calcCarFuelToll;
   window.calcAutoMeter = calcAutoMeter;

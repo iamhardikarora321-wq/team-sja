@@ -392,6 +392,63 @@
           </div>
         </div>
 
+        
+        <!-- Interactive MakeMyTrip & RedBus Door-to-Door Route, Time, Distance & Fare Estimator -->
+        <div class="intel-item-card" style="background:linear-gradient(145deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)); border:2px solid rgba(0,243,255,0.45); border-radius:20px; padding:1.5rem; margin-bottom:1.75rem; box-shadow:0 15px 35px rgba(0,0,0,0.6);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
+            <div>
+              <span style="font-size:0.72rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.12em;">MakeMyTrip, RedBus &amp; IRCTC Door-to-Door Travel Engine</span>
+              <h3 style="font-size:1.25rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">🔍 Intercity Route, Time, Distance &amp; Actual Fare Estimator</h3>
+            </div>
+            <span style="font-size:0.78rem; color:#a7f3d0; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:0.3rem 0.75rem; border-radius:14px; font-weight:800;">
+              ⚡ Real-World Tariff Database
+            </span>
+          </div>
+
+          <!-- Origin & Destination Inputs -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; align-items:end; margin-bottom:1rem;">
+            
+            <!-- Origin (From) -->
+            <div>
+              <label style="display:block; font-size:0.78rem; font-weight:700; color:#94a3b8; text-transform:uppercase; margin-bottom:0.4rem;">From (Origin City)</label>
+              <div style="position:relative;">
+                <input type="text" id="route-from-input" value="Delhi" placeholder="Enter origin city (e.g. Delhi, Jaipur, Mumbai)..." style="width:100%; background:rgba(2,6,23,0.85); border:1px solid rgba(0,243,255,0.4); border-radius:12px; padding:0.65rem 0.85rem; color:#fff; font-size:0.95rem; font-weight:600; outline:none;" autocomplete="off">
+              </div>
+            </div>
+
+            <!-- Destination (To) -->
+            <div>
+              <label style="display:block; font-size:0.78rem; font-weight:700; color:#94a3b8; text-transform:uppercase; margin-bottom:0.4rem;">To (Destination City)</label>
+              <div style="position:relative;">
+                <input type="text" id="route-to-input" value="Jaipur" placeholder="Enter destination city (e.g. Jaipur, Varanasi, Goa)..." style="width:100%; background:rgba(2,6,23,0.4); border:1px solid rgba(0,243,255,0.4); border-radius:12px; padding:0.65rem 0.85rem; color:#fff; font-size:0.95rem; font-weight:600; outline:none;" autocomplete="off">
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div>
+              <button class="visualizer-btn" style="width:100%; background:linear-gradient(135deg, #00f3ff, #7928ca); border:none; color:#ffffff; font-weight:900; padding:0.7rem 1.2rem; border-radius:12px; font-size:0.9rem; cursor:pointer; text-transform:uppercase; letter-spacing:0.04em;" onclick="if(window.calculateDoorToDoorRoute) window.calculateDoorToDoorRoute();">
+                Calculate Route &amp; Fares ⚡
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Quick City Pair Chips -->
+          <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; font-size:0.75rem; margin-bottom:1rem;">
+            <span style="color:#94a3b8; font-weight:700;">Popular Routes:</span>
+            <button class="intel-chip-btn" onclick="if(window.setQuickRoute) window.setQuickRoute('Delhi', 'Jaipur');">DEL ➔ JAI</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickRoute) window.setQuickRoute('Delhi', 'Mumbai');">DEL ➔ BOM</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickRoute) window.setQuickRoute('Mumbai', 'Goa');">BOM ➔ GOI</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickRoute) window.setQuickRoute('Delhi', 'Varanasi');">DEL ➔ VNS</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickRoute) window.setQuickRoute('Bengaluru', 'Chennai');">BLR ➔ MAA</button>
+          </div>
+
+          <!-- Route Results Container -->
+          <div id="door-to-door-results-area" style="display:none; border-top:1px solid rgba(255,255,255,0.1); padding-top:1.25rem;">
+            <!-- Dynamically rendered by calculateDoorToDoorRoute() -->
+          </div>
+        </div>
+
         <!-- 5 Separated Transport Mode Tabs -->
         <div style="display:flex; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.85rem; margin-bottom:1.5rem; flex-wrap:wrap;">
           <button id="transport-tab-btn-flight" class="intel-tab-btn active" onclick="if(window.switchTransportMode) window.switchTransportMode('flight');">✈️ Aeroplane &amp; Flights</button>
