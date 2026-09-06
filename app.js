@@ -2805,8 +2805,224 @@
     renderStateGrid();
   };
 
+  let activeTourismTheme = 'all';
+
+  window.filterTourismTheme = function(themeKey, btnEl) {
+    activeTourismTheme = themeKey || 'all';
+    document.querySelectorAll('#tourism-theme-pills .theme-pill').forEach(p => {
+      p.style.background = 'rgba(255,255,255,0.05)';
+      p.style.color = '#94a3b8';
+      p.style.borderColor = 'rgba(255,255,255,0.1)';
+      p.classList.remove('active');
+    });
+    if (btnEl) {
+      btnEl.style.background = 'rgba(0,243,255,0.2)';
+      btnEl.style.color = '#00f3ff';
+      btnEl.style.borderColor = 'rgba(0,243,255,0.5)';
+      btnEl.classList.add('active');
+    }
+    renderStateGrid();
+  };
+
   window.filterTourismStates = function(query) {
-    renderStateGrid(query);
+    const q = (query || "").trim();
+    renderStateGrid(q);
+    renderTourismPlaceDropdown(q);
+  };
+
+  window.selectTourismSearchEnter = function(query) {
+    const q = (query || "").trim();
+    if (!q) return;
+    const dropdown = document.getElementById("tourism-place-dropdown");
+    if (dropdown) dropdown.style.display = "none";
+
+    // Check top match or use query directly
+    const matches = getPanIndiaPlaceSuggestions(q, 1);
+    if (matches.length > 0) {
+      selectTourismPlace(matches[0].name);
+    } else {
+      selectTourismPlace(q);
+    }
+  };
+
+  function getPanIndiaPlaceSuggestions(query, limit = 12) {
+    const q = query.toLowerCase().trim();
+    if (!q) return [];
+    
+    const results = [];
+    const seen = new Set();
+
+    // 1. Check States/UTs first
+    const allStates = Object.keys(TOURISM_DATABASE).concat(STATES_LIST);
+    for (let st of allStates) {
+      if (st.toLowerCase().includes(q)) {
+        seen.add(st.toLowerCase());
+        const data = TOURISM_DATABASE[st] || {};
+        results.push({
+          name: st,
+          type: 'state',
+          subtitle: `State / UT • Capital: ${data.capital || 'Regional Center'}`,
+          icon: '🏛️'
+        });
+        if (results.length >= limit) return results;
+      }
+    }
+
+    // 2. Check Travel Intel DB
+    const db = window.TRAVEL_INTEL_DB || {};
+    for (let k in db) {
+      const item = db[k];
+      if (item.name.toLowerCase().includes(q) || item.state.toLowerCase().includes(q) || (item.cultureSnapshot && item.cultureSnapshot.toLowerCase().includes(q))) {
+        if (!seen.has(item.name.toLowerCase())) {
+          seen.add(item.name.toLowerCase());
+          results.push({
+            name: item.name,
+            type: 'destination',
+            subtitle: `${item.state} • ${item.type || 'Travel Destination'}`,
+            icon: '📍'
+          });
+          if (results.length >= limit) return results;
+        }
+      }
+    }
+
+    // 3. Famous Landmark / Theme Spot Presets
+    const THEME_SPOTS = [
+      { name: "Manali", state: "Himachal Pradesh", type: "Hill Station", icon: "🏔️" },
+      { name: "Coorg", state: "Karnataka", type: "Coffee Hills & Valleys", icon: "☕" },
+      { name: "Wayanad", state: "Kerala", type: "Eco Rainforest & Spices", icon: "🍃" },
+      { name: "Kedarnath", state: "Uttarakhand", type: "Sacred Himalayan Shrine", icon: "🛕" },
+      { name: "Hampi", state: "Karnataka", type: "UNESCO Ruins & Boulders", icon: "🗿" },
+      { name: "Tawang", state: "Arunachal Pradesh", type: "Monastery & Snow Peaks", icon: "🏔️" },
+      { name: "Munnar", state: "Kerala", type: "Tea Gardens & Mist", icon: "🍃" },
+      { name: "Spiti Valley", state: "Himachal Pradesh", type: "Cold Desert Trans-Himalaya", icon: "🌌" },
+      { name: "Varanasi", state: "Uttar Pradesh", type: "Ancient Sacred Ghats", icon: "🛕" },
+      { name: "Ooty", state: "Tamil Nadu", type: "Nilgiri Mountain Rail & Tea", icon: "🚂" },
+      { name: "Udaipur", state: "Rajasthan", type: "City of Lakes & Palaces", icon: "⛵" },
+      { name: "Agra", state: "Uttar Pradesh", type: "Taj Mahal & Mughal Fort", icon: "🕌" },
+      { name: "Golden Temple (Amritsar)", state: "Punjab", type: "Sacred Golden Shrine", icon: "🪯" },
+      { name: "Kolkata", state: "West Bengal", type: "City of Joy & Heritage", icon: "🎨" },
+      { name: "Khajuraho", state: "Madhya Pradesh", type: "UNESCO Temple Sculpture", icon: "🏛️" },
+      { name: "Jaisalmer", state: "Rajasthan", type: "Golden Fort & Thar Sand Dunes", icon: "🐪" },
+      { name: "Shillong", state: "Meghalaya", type: "Scotland of the East", icon: "🌧️" },
+      { name: "Gokarna", state: "Karnataka", type: "Om Beach & Coastal Cliffs", icon: "🏖️" },
+      { name: "Kovalam", state: "Kerala", type: "Lighthouse Beach", icon: "🌊" },
+      { name: "Srinagar", state: "Jammu and Kashmir", type: "Dal Lake Shikara & Gardens", icon: "🚣" },
+      { name: "Kanyakumari", state: "Tamil Nadu", type: "Triconfluence Ocean Cape", icon: "🌅" }
+    ];
+
+    for (let spot of THEME_SPOTS) {
+      if (spot.name.toLowerCase().includes(q) || spot.state.toLowerCase().includes(q)) {
+        if (!seen.has(spot.name.toLowerCase())) {
+          seen.add(spot.name.toLowerCase());
+          results.push({
+            name: spot.name,
+            type: 'spot',
+            subtitle: `${spot.state} • ${spot.type}`,
+            icon: spot.icon
+          });
+          if (results.length >= limit) return results;
+        }
+      }
+    }
+
+    // 4. Search 15,000+ CITIES_DATA
+    const cityList = (typeof CITIES_DATA !== 'undefined') ? CITIES_DATA : (window.CITIES_DATA || []);
+    for (let i = 0; i < cityList.length; i++) {
+      const city = cityList[i];
+      if (city.toLowerCase().includes(q)) {
+        if (!seen.has(city.toLowerCase())) {
+          seen.add(city.toLowerCase());
+          const coords = getCityCoords(city);
+          const facts = computeLogisticsFacts(city, coords, 0.5);
+          results.push({
+            name: capitalizeWord(city),
+            type: 'city',
+            subtitle: `${facts.district} Dist., ${facts.state} • PIN ${facts.zipCode}`,
+            icon: '📍'
+          });
+          if (results.length >= limit) return results;
+        }
+      }
+    }
+
+    return results;
+  }
+
+  function renderTourismPlaceDropdown(searchQuery) {
+    const dropdown = document.getElementById("tourism-place-dropdown");
+    if (!dropdown) return;
+
+    const q = searchQuery.trim();
+    if (q.length < 2) {
+      dropdown.style.display = "none";
+      dropdown.innerHTML = "";
+      return;
+    }
+
+    const suggestions = getPanIndiaPlaceSuggestions(q, 10);
+    if (suggestions.length === 0) {
+      dropdown.style.display = "block";
+      dropdown.innerHTML = `
+        <div style="padding:1rem; text-align:center; color:#94a3b8;">
+          <div style="font-size:1.2rem; margin-bottom:0.2rem;">🔍</div>
+          <div style="font-size:0.85rem; font-weight:700; color:#fff;">Search place "${q}"</div>
+          <div style="font-size:0.75rem; color:#00f3ff; margin-top:0.4rem; cursor:pointer;" onclick="selectTourismPlace('${q.replace(/'/g, "\'")}');">
+            ⚡ Generate Universal Intelligence Profile for "${capitalizeWord(q)}" ➔
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    let html = `
+      <div style="padding:0.4rem 1rem 0.3rem 1rem; font-size:0.7rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.1em; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center;">
+        <span>PAN-INDIA PLACES &amp; DESTINATIONS FOUND (${suggestions.length})</span>
+        <span style="font-size:0.65rem; color:#94a3b8;">Click any to view full intelligence</span>
+      </div>
+    `;
+
+    suggestions.forEach(item => {
+      const safeName = item.name.replace(/'/g, "\'");
+      html += `
+        <div onclick="selectTourismPlace('${safeName}');" style="padding:0.65rem 1rem; border-bottom:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:background 0.15s ease;" onmouseenter="this.style.background='rgba(0,243,255,0.1)';" onmouseleave="this.style.background='transparent';">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span style="font-size:1.3rem;">${item.icon}</span>
+            <div>
+              <div style="font-size:0.92rem; font-weight:800; color:#ffffff;">${item.name}</div>
+              <div style="font-size:0.76rem; color:#94a3b8;">${item.subtitle}</div>
+            </div>
+          </div>
+          <span style="font-size:0.72rem; font-weight:700; color:#00f3ff; background:rgba(0,243,255,0.12); border:1px solid rgba(0,243,255,0.3); border-radius:10px; padding:0.2rem 0.5rem;">Explore ➔</span>
+        </div>
+      `;
+    });
+
+    dropdown.innerHTML = html;
+    dropdown.style.display = "block";
+  }
+
+  window.selectTourismPlace = function(placeName) {
+    const dropdown = document.getElementById("tourism-place-dropdown");
+    if (dropdown) dropdown.style.display = "none";
+
+    const searchInput = document.getElementById("tourism-state-search");
+    if (searchInput) searchInput.value = "";
+
+    // Check if it's a State / UT name
+    const allStates = Object.keys(TOURISM_DATABASE).concat(STATES_LIST);
+    const matchState = allStates.find(st => st.toLowerCase() === placeName.toLowerCase());
+    
+    if (matchState) {
+      loadStateDetails(matchState);
+      // Highlight state btn in grid if visible
+      document.querySelectorAll("#tourism-state-grid .state-btn").forEach(b => {
+        if (b.textContent.includes(matchState)) b.classList.add("active");
+        else b.classList.remove("active");
+      });
+    } else {
+      renderUniversalPlaceCard(placeName);
+    }
   };
 
   function renderStateGrid(searchQuery) {
@@ -2821,15 +3037,34 @@
     const filtered = uniqueStates.filter(st => {
       const data = TOURISM_DATABASE[st] || {};
       const matchRegion = (activeTourismRegion === 'all' || data.region === activeTourismRegion);
+      
+      let matchTheme = true;
+      if (activeTourismTheme !== 'all') {
+        const themeText = (st + " " + (data.capital || "") + " " + (data.tagline || "") + " " + (data.desc || "")).toLowerCase();
+        if (activeTourismTheme === 'hill') matchTheme = themeText.includes('hill') || themeText.includes('mountain') || themeText.includes('valley') || themeText.includes('himalaya');
+        else if (activeTourismTheme === 'spiritual') matchTheme = themeText.includes('shrine') || themeText.includes('ghat') || themeText.includes('sacred') || themeText.includes('temple') || themeText.includes('pilgrim');
+        else if (activeTourismTheme === 'heritage') matchTheme = themeText.includes('heritage') || themeText.includes('fort') || themeText.includes('unesco') || themeText.includes('palace') || themeText.includes('maharaja');
+        else if (activeTourismTheme === 'beach') matchTheme = themeText.includes('beach') || themeText.includes('coastal') || themeText.includes('sea') || themeText.includes('island') || themeText.includes('backwater');
+        else if (activeTourismTheme === 'wildlife') matchTheme = themeText.includes('wildlife') || themeText.includes('sanctuary') || themeText.includes('tiger') || themeText.includes('forest') || themeText.includes('eco');
+        else if (activeTourismTheme === 'offbeat') matchTheme = themeText.includes('offbeat') || themeText.includes('desert') || themeText.includes('tribe') || themeText.includes('village');
+      }
+
       const matchQuery = !q || st.toLowerCase().includes(q) || 
                          (data.capital && data.capital.toLowerCase().includes(q)) || 
                          (data.desc && data.desc.toLowerCase().includes(q)) ||
                          (data.tagline && data.tagline.toLowerCase().includes(q));
-      return matchRegion && matchQuery;
+      return matchRegion && matchTheme && matchQuery;
     });
 
     if (filtered.length === 0) {
-      stateGrid.innerHTML = '<div style="grid-column:1/-1; color:#f87171; font-weight:700; padding:1rem; text-align:center;">No matching state or union territory found</div>';
+      stateGrid.innerHTML = `
+        <div style="grid-column:1/-1; color:#94a3b8; font-weight:700; padding:1.25rem; text-align:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:14px;">
+          🔍 No state matched "${q}". <br>
+          <span style="font-size:0.8rem; color:#00f3ff; margin-top:0.4rem; display:inline-block; cursor:pointer;" onclick="selectTourismPlace('${q.replace(/'/g, "\'")}');">
+            Click here to open Universal Intelligence Profile for "${capitalizeWord(q)}" ➔
+          </span>
+        </div>
+      `;
       return;
     }
 
@@ -2857,6 +3092,262 @@
 
       stateGrid.appendChild(btn);
     });
+  }
+
+  // =====================================================================
+  // UNIVERSAL UNRESTRICTED PLACE INTELLIGENCE CARD GENERATOR
+  // =====================================================================
+  function renderUniversalPlaceCard(placeName) {
+    const viewContainer = document.getElementById("tourism-active-state-view");
+    if (!viewContainer) return;
+
+    const capPlace = capitalizeWord(placeName.trim());
+    const coords = getCityCoords(placeName);
+    const facts = computeLogisticsFacts(placeName, coords, 0.5);
+    const stateName = facts.state;
+    const stateData = TOURISM_DATABASE[stateName] || {};
+    
+    // Check if we have curated intel in TRAVEL_INTEL_DB
+    const db = window.TRAVEL_INTEL_DB || {};
+    const intelData = db[placeName.toLowerCase()] || null;
+
+    // Detect place category & terrain
+    const pLower = placeName.toLowerCase();
+    let category = "📍 Destination & Cultural Center";
+    let icon = "🌅";
+
+    if (pLower.includes("manali") || pLower.includes("munnar") || pLower.includes("ooty") || pLower.includes("coorg") || pLower.includes("wayanad") || pLower.includes("shimla") || pLower.includes("darjeeling") || pLower.includes("spiti") || pLower.includes("shillong") || pLower.includes("tawang") || pLower.includes("gulmarg") || pLower.includes("leh") || pLower.includes("kodaikanal") || pLower.includes("nainital") || pLower.includes("mussoorie")) {
+      category = "🏔️ Alpine Hill Station & Valley";
+      icon = "🏔️";
+    } else if (pLower.includes("varanasi") || pLower.includes("kedarnath") || pLower.includes("haridwar") || pLower.includes("rishikesh") || pLower.includes("amritsar") || pLower.includes("tirupati") || pLower.includes("puri") || pLower.includes("ayodhya") || pLower.includes("rameshwaram") || pLower.includes("madurai") || pLower.includes("dwarka") || pLower.includes("shirdi") || pLower.includes("bodh gaya")) {
+      category = "🛕 Sacred Pilgrimage & Historic Ghats";
+      icon = "🛕";
+    } else if (pLower.includes("goa") || pLower.includes("kovalam") || pLower.includes("varkala") || pLower.includes("gokarna") || pLower.includes("havelock") || pLower.includes("pondicherry") || pLower.includes("diu") || pLower.includes("alibaug") || pLower.includes("kanyakumari")) {
+      category = "🏖️ Tropical Coastal Haven";
+      icon = "🏖️";
+    } else if (pLower.includes("hampi") || pLower.includes("agra") || pLower.includes("khajuraho") || pLower.includes("jaipur") || pLower.includes("jodhpur") || pLower.includes("udaipur") || pLower.includes("ajanta") || pLower.includes("ellora") || pLower.includes("konark") || pLower.includes("jaisalmer") || pLower.includes("orchha")) {
+      category = "🏰 UNESCO World Heritage Citadel";
+      icon = "🏰";
+    } else if (pLower.includes("corbett") || pLower.includes("kaziranga") || pLower.includes("ranthambore") || pLower.includes("sundarbans") || pLower.includes("gir") || pLower.includes("periyar") || pLower.includes("bandipur")) {
+      category = "🌿 Eco Wilderness & Wildlife Reserve";
+      icon = "🌿";
+    } else if (pLower.includes("mumbai") || pLower.includes("delhi") || pLower.includes("bengaluru") || pLower.includes("kolkata") || pLower.includes("chennai") || pLower.includes("hyderabad") || pLower.includes("pune") || pLower.includes("ahmedabad")) {
+      category = "🏙️ Cultural & Commercial Metropolis";
+      icon = "🏙️";
+    }
+
+    // Build Attractions List
+    let attractions = [];
+    if (intelData && intelData.attractions) {
+      attractions = intelData.attractions;
+    } else if (stateData.attractions && stateData.attractions.length > 0) {
+      attractions = [
+        { name: `${capPlace} Main Citadel & Viewpoint`, icon: icon, category: "Landmark", desc: `Historic landmark of ${capPlace} offering panoramic views of ${facts.district} district and regional architecture.` },
+        { name: `${capPlace} Cultural Center & Heritage Square`, icon: "🏛️", category: "Heritage", desc: `Traditional town square featuring local craftsmanship, historic structures, and community gatherings.` },
+        ...stateData.attractions.slice(0, 2)
+      ];
+    } else {
+      attractions = [
+        { name: `${capPlace} Heritage Citadel & Promenade`, icon: icon, category: "Landmark", desc: `Iconic focal point of ${capPlace} featuring historical architecture and scenic surrounding vistas.` },
+        { name: `${capPlace} Nature Trail & Eco Reserve`, icon: "🌿", category: "Nature", desc: `Pristine natural ecosystem, river trails, and native flora in ${facts.state}.` },
+        { name: `${capPlace} Sacred Shrine & Temple Ghats`, icon: "🛕", category: "Spiritual", desc: `Ancient sacred sanctuary revered by locals and pilgrims across ${facts.state}.` }
+      ];
+    }
+
+    // Build Foods List
+    let foods = [];
+    if (intelData && intelData.foods) {
+      foods = intelData.foods;
+    } else if (stateData.foods && stateData.foods.length > 0) {
+      foods = stateData.foods;
+    } else {
+      foods = [
+        { name: `${capPlace} Regional Thali Special`, desc: `Authentic regional thali featuring traditional curries, freshly baked breads, and local chutneys of ${stateName}.` },
+        { name: `${capPlace} Street Food & Savory Snacks`, desc: `Freshly prepared local savory delicacies served with aromatic spiced dips and piping hot chai.` }
+      ];
+    }
+
+    // Build Markets List
+    let markets = [];
+    if (intelData && intelData.markets) {
+      markets = intelData.markets;
+    } else if (stateData.markets && stateData.markets.length > 0) {
+      markets = stateData.markets;
+    } else {
+      markets = [
+        { name: `${capPlace} Central Heritage Bazaar`, icon: "🛍️", desc: `Bustling local market famous for handcrafted souvenirs, handloomed textiles, and regional spices.` }
+      ];
+    }
+
+    // Weather & AQI Simulation
+    const tempC = Math.floor(Math.random() * 8 + 22);
+    const aqi = Math.floor(Math.random() * 50 + 35);
+    const crowdLevel = (Math.random() > 0.5) ? '🟢 Optimal (Low Crowd)' : '🟡 Balanced Flow';
+
+    // HTML Construction
+    let attractionsHTML = attractions.map(att => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.2); border-radius:14px; padding:0.9rem 1.1rem; display:flex; gap:0.85rem; align-items:flex-start;">
+        <div style="font-size:1.6rem; filter:drop-shadow(0 0 6px rgba(0,243,255,0.4));">${att.icon || icon}</div>
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+            <h4 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0;">${att.name}</h4>
+            <span style="font-size:0.68rem; font-weight:700; color:#00f3ff; background:rgba(0,243,255,0.1); border:1px solid rgba(0,243,255,0.3); border-radius:12px; padding:0.15rem 0.5rem; text-transform:uppercase;">${att.category || 'Sight'}</span>
+          </div>
+          <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${att.desc}</p>
+        </div>
+      </div>
+    `).join('');
+
+    let marketsHTML = markets.map(mk => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.25); border-radius:14px; padding:0.9rem 1.1rem; display:flex; gap:0.85rem; align-items:flex-start;">
+        <div style="font-size:1.6rem;">${mk.icon || '🛍️'}</div>
+        <div style="flex:1;">
+          <h4 style="font-size:0.95rem; font-weight:800; color:#f59e0b; margin:0 0 0.25rem 0;">${mk.name}</h4>
+          <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${mk.desc}</p>
+        </div>
+      </div>
+    `).join('');
+
+    let foodsHTML = foods.map(fd => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.95rem; font-weight:800; color:#10b981; margin-bottom:0.25rem; display:flex; align-items:center; gap:0.4rem;">
+          <span>🍲</span> ${fd.name}
+        </div>
+        <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${fd.desc}</p>
+      </div>
+    `).join('');
+
+    viewContainer.innerHTML = `
+      <!-- Active Place Banner -->
+      <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)); border:1px solid rgba(0,243,255,0.4); border-radius:22px; padding:1.75rem; box-shadow:0 12px 35px rgba(0,0,0,0.5);">
+        
+        <!-- Top Breadcrumb & Badge Bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.85rem;">
+          <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.82rem; color:#94a3b8; font-weight:600;">
+            <span style="color:#00f3ff; cursor:pointer;" onclick="loadStateDetails('${stateName}');">🏛️ ${stateName}</span>
+            <span>➔</span>
+            <span>📍 ${facts.district} District</span>
+            <span>➔</span>
+            <strong style="color:#fff;">${capPlace}</strong>
+          </div>
+
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+            <span style="background:rgba(0,243,255,0.15); color:#00f3ff; font-weight:800; font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3);">
+              ${category}
+            </span>
+            <span style="background:rgba(16,185,129,0.15); color:#10b981; font-weight:800; font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:20px; border:1px solid rgba(16,185,129,0.3);">
+              PIN: ${facts.zipCode}
+            </span>
+          </div>
+        </div>
+
+        <!-- Main Title Header -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.25rem; margin-bottom:1.5rem;">
+          <div>
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.4rem;">
+              <span style="font-size:2.2rem; filter:drop-shadow(0 0 10px rgba(0,243,255,0.4));">${icon}</span>
+              <div>
+                <h3 style="font-size:1.95rem; font-weight:900; color:#fff; margin:0; letter-spacing:-0.02em;">${capPlace}</h3>
+                <div style="font-size:0.88rem; color:#00f3ff; font-weight:700; margin-top:2px;">
+                  📍 ${facts.district} District • ${stateName} • Coords: ${coords.lat.toFixed(4)}°N, ${coords.lng.toFixed(4)}°E
+                </div>
+              </div>
+            </div>
+            <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin:0.5rem 0 0 0; max-width:880px;">
+              ${intelData && intelData.cultureSnapshot ? intelData.cultureSnapshot : `${capPlace} is a prominent destination in ${facts.district} district, ${stateName}. Known for its distinct local heritage, vibrant markets, regional culinary masterworks, and pristine surrounding landscapes.`}
+            </p>
+          </div>
+
+          <!-- Quick Metrics Panel -->
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.6rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:0.85rem 1.1rem; min-width:240px;">
+            <div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Weather</div>
+              <div style="font-size:0.95rem; color:#10b981; font-weight:900; margin-top:2px;">🌤️ ${tempC}°C • AQI ${aqi}</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Crowd Risk</div>
+              <div style="font-size:0.88rem; color:#00f3ff; font-weight:800; margin-top:2px;">${crowdLevel}</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Best Season</div>
+              <div style="font-size:0.88rem; color:#f59e0b; font-weight:800; margin-top:2px;">Oct – Mar</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Language</div>
+              <div style="font-size:0.88rem; color:#c084fc; font-weight:800; margin-top:2px;">${stateData.language || 'Hindi & Local'}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Column Detailed Information Grid -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.25rem; margin-bottom:1.5rem;">
+          
+          <!-- Sights -->
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <h4 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🌅</span> Top Landmarks &amp; Attractions in ${capPlace}
+            </h4>
+            ${attractionsHTML}
+          </div>
+
+          <!-- Bazaars -->
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <h4 style="font-size:1.05rem; font-weight:800; color:#f59e0b; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🛍️</span> Local Crafts &amp; Shopping Markets
+            </h4>
+            ${marketsHTML}
+          </div>
+
+          <!-- Foods -->
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <h4 style="font-size:1.05rem; font-weight:800; color:#10b981; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🍲</span> Regional Cuisine &amp; Street Foods
+            </h4>
+            ${foodsHTML}
+          </div>
+
+        </div>
+
+        <!-- Transit, Budget & Action Bar -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem; background:rgba(0,243,255,0.04); border:1px solid rgba(0,243,255,0.2); border-radius:16px; padding:1.25rem;">
+          
+          <!-- Transit -->
+          <div>
+            <div style="font-size:0.75rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;">🚆 Transit &amp; Access</div>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
+              <div>✈️ <strong>Nearest Airport:</strong> ${stateData.capital || 'Regional'} Airport</div>
+              <div>🚆 <strong>Rail Junction:</strong> ${capPlace} Railway Station</div>
+              <div>🚌 <strong>Highway:</strong> Direct NH connectivity</div>
+            </div>
+          </div>
+
+          <!-- Est Budget -->
+          <div>
+            <div style="font-size:0.75rem; font-weight:800; color:#10b981; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;">💰 Daily Travel Budget</div>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
+              <div>🪙 <strong>Budget:</strong> ₹1,500 – ₹2,200 / day</div>
+              <div>🏨 <strong>Mid-Range:</strong> ₹3,800 – ₹5,500 / day</div>
+              <div>✨ <strong>Luxury Haveli:</strong> ₹10,000+ / day</div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div style="display:flex; flex-direction:column; gap:0.5rem; justify-content:center;">
+            <button onclick="if(window.switchTab) { window.switchTab('travel'); const re = document.getElementById('route-end'); if(re){ re.value='${capPlace}'; re.dispatchEvent(new Event('input', {bubbles:true})); } }" style="background:linear-gradient(135deg, #00f3ff, #0284c7); border:none; color:#020617; font-weight:800; padding:0.6rem 1rem; border-radius:12px; font-size:0.85rem; cursor:pointer; text-align:center;">
+              🚗 Plan Route to ${capPlace}
+            </button>
+            <button onclick="if(window.switchTab) { window.switchTab('trip'); const ci = document.getElementById('trip-city-input'); if(ci){ ci.value='${capPlace}'; } if(window.addTripStop) window.addTripStop(); }" style="background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); color:#fff; font-weight:700; padding:0.55rem 1rem; border-radius:12px; font-size:0.83rem; cursor:pointer; text-align:center;">
+              🗃️ Add ${capPlace} to Trip Planner
+            </button>
+            <button onclick="loadStateDetails('${stateName}');" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:#94a3b8; font-weight:600; padding:0.45rem 1rem; border-radius:12px; font-size:0.78rem; cursor:pointer; text-align:center;">
+              🏛️ View ${stateName} State Showcase
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    `;
   }
 
   function loadStateDetails(stateName) {

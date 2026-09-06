@@ -1101,8 +1101,22 @@
         <!-- Search Bar & Region Filter Tabs -->
         <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.25rem;">
           <div style="position:relative; width:100%;">
-            <input type="text" id="tourism-state-search" placeholder="🔍 Search any state, capital, monument, dish, craft market or city (e.g. Rajasthan, Hawa Mahal, Misal Pav, Coorg, Wayanad)..." style="width:100%; padding:0.85rem 1.25rem 0.85rem 2.75rem; background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); border-radius:14px; color:#fff; font-size:0.95rem; outline:none; transition:all 0.2s;" oninput="if(window.filterTourismStates) window.filterTourismStates(this.value);">
+            <input type="text" id="tourism-state-search" placeholder="🔍 Search any place in India — cities, towns, hill stations, temples, forts, dishes or bazaars (e.g. Manali, Coorg, Wayanad, Kedarnath, Hampi, Tawang, Munnar, Spiti, Varanasi, Ooty, Udaipur)..." style="width:100%; padding:0.85rem 1.25rem 0.85rem 2.75rem; background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.35); border-radius:14px; color:#fff; font-size:0.95rem; outline:none; transition:all 0.2s;" oninput="if(window.filterTourismStates) window.filterTourismStates(this.value);" onkeydown="if(event.key==='Enter' && window.selectTourismSearchEnter) window.selectTourismSearchEnter(this.value);" autocomplete="off">
             <span style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:#00f3ff; font-size:1.1rem;">🔍</span>
+            
+            <!-- Universal Pan-India Live Autocomplete Dropdown -->
+            <div id="tourism-place-dropdown" style="display:none; position:absolute; left:0; top:100%; width:100%; z-index:300; background:rgba(15,23,42,0.98); border:1px solid rgba(0,243,255,0.4); border-radius:14px; box-shadow:0 15px 35px rgba(0,0,0,0.6); max-height:360px; overflow-y:auto; margin-top:0.4rem; padding:0.5rem 0;"></div>
+          </div>
+
+          <!-- Quick Theme Filter Pills -->
+          <div id="tourism-theme-pills" style="display:flex; flex-wrap:wrap; gap:0.45rem;">
+            <button class="theme-pill active" onclick="if(window.filterTourismTheme) window.filterTourismTheme('all', this);" style="background:rgba(0,243,255,0.2); color:#00f3ff; border:1px solid rgba(0,243,255,0.5); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">⚡ All 36 States &amp; UTs</button>
+            <button class="theme-pill" onclick="if(window.filterTourismTheme) window.filterTourismTheme('hill', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🏔️ Hill Stations &amp; Valleys</button>
+            <button class="theme-pill" onclick="if(window.filterTourismTheme) window.filterTourismTheme('spiritual', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🛕 Sacred Shrines &amp; Ghats</button>
+            <button class="theme-pill" onclick="if(window.filterTourismTheme) window.filterTourismTheme('heritage', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🏰 UNESCO Heritage &amp; Forts</button>
+            <button class="theme-pill" onclick="if(window.filterTourismTheme) window.filterTourismTheme('beach', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🏖️ Coastal Beaches</button>
+            <button class="theme-pill" onclick="if(window.filterTourismTheme) window.filterTourismTheme('wildlife', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🌿 Eco Wilderness</button>
+            <button class="theme-pill" onclick="if(window.filterTourismTheme) window.filterTourismTheme('offbeat', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">💎 Offbeat Gems</button>
           </div>
 
           <!-- Region Pills -->
