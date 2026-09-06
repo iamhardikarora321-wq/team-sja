@@ -1,6 +1,6 @@
 
   // =====================================================================
-  // 🌟 ARVORA 9 CORE WORKING FEATURE CATALOG
+  // 🌟 ARVORA CORE WORKING & 3D FEATURE CATALOG
   // =====================================================================
   const ARVORA_MASTER_180_FEATURES = {
     hubs: [
@@ -12,7 +12,9 @@
       { id: 'tourism',     icon: '🏛️', name: 'State Tourism Directory', title: 'State Tourism Directory', category: 'State Tourism', desc: 'Explore top attractions, authentic cuisine, homestays, and culture across all 36 Indian States & UTs.' },
       { id: 'trip',        icon: '🧳', name: 'Interactive Trip Planner', title: 'Interactive Trip Planner', category: 'Trip Planning', desc: 'Plan custom itineraries, track multi-modal transit stops, and calculate travel budgets.' },
       { id: 'game',        icon: '🎮', name: 'Geoguess Heritage & Culture Quiz', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', desc: 'Gamified exploration of Indian regional culture, food, and historical sites.' },
-      { id: 'travel',      icon: '🌐', name: 'India Geography & Travel Matrix Hub', title: 'India Geography & Travel Matrix Hub', category: 'Geography Hub', desc: '15,000 city inter-city distance matrix, district boundaries, and postal PIN code finder.' }
+      { id: 'travel',      icon: '🌐', name: 'India Geography & Travel Matrix Hub', title: 'India Geography & Travel Matrix Hub', category: 'Geography Hub', desc: '15,000 city inter-city distance matrix, district boundaries, and postal PIN code finder.' },
+      { id: 'constellation', icon: '🌌', name: '3D Holographic City Constellation Studio', title: '3D Holographic City Constellation Studio', category: '3D Spatial Engine', desc: 'Interactive 3D spatial particle constellation visualizing 15,000+ Indian cities in real-time 3D orbit.' },
+      { id: 'theme',        icon: '🎨', name: '16-Palette Quantum Theme Studio', title: '16-Palette Quantum Theme Studio', category: 'Visual Customization', desc: 'Customize Arvora visual appearance with 16 dynamic HSL palettes (Aurora, Saffron, Himalayan, Synthwave, etc.).' }
     ]
   };
   window.ARVORA_ALL_FEATURES = ARVORA_MASTER_180_FEATURES;
@@ -862,6 +864,162 @@
   function updateTransform() {
     if (!svgViewport) return;
     svgViewport.setAttribute("transform", `translate(${translateX}, ${translateY}) scale(${scale})`);
+  }
+
+  function updateVisualizer() {
+    if (!svgViewport) return;
+    let treeData = null;
+    if (typeof visualizerMode !== 'undefined' && visualizerMode === 'playground') {
+      if (typeof playgroundTrie !== 'undefined' && playgroundTrie) {
+        treeData = playgroundTrie.exportToJSON();
+      }
+    } else {
+      const query = (typeof searchInput !== 'undefined' && searchInput && searchInput.value) ? searchInput.value.trim().toLowerCase() : '';
+      if (!query) {
+        treeData = { label: "root", isEnd: false, children: [] };
+      } else if (typeof radixTrie !== 'undefined' && radixTrie) {
+        treeData = radixTrie.exportSubtreeToJSON(query);
+        if (!treeData) {
+          treeData = { label: "root (no matches)", isEnd: false, children: [] };
+        }
+      }
+    }
+    drawTree(treeData);
+  }
+
+  function drawTree(treeData) {
+    if (!svgViewport) return;
+    svgViewport.innerHTML = "";
+    if (!treeData) return;
+
+    let nextX = 0;
+    function calculateGrid(node, depth = 0) {
+      node.depth = depth;
+      if (!node.children || node.children.length === 0) {
+        node.xIndex = nextX;
+        nextX++;
+        return;
+      }
+      node.children.forEach(child => calculateGrid(child, depth + 1));
+      
+      const firstChildX = node.children[0].xIndex;
+      const lastChildX = node.children[node.children.length - 1].xIndex;
+      node.xIndex = (firstChildX + lastChildX) / 2;
+    }
+    
+    calculateGrid(treeData);
+
+    const spacingX = 140;
+    const spacingY = 130;
+    
+    function mapCoords(node) {
+      node.cx = node.xIndex * spacingX;
+      node.cy = node.depth * spacingY;
+      if (node.children) {
+        node.children.forEach(mapCoords);
+      }
+    }
+    mapCoords(treeData);
+
+    const linksGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    const nodesGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    
+    svgViewport.appendChild(linksGroup);
+    svgViewport.appendChild(nodesGroup);
+
+    function drawLinks(node) {
+      if (!node.children) return;
+      
+      node.children.forEach(child => {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const pathData = `M ${node.cx} ${node.cy} C ${node.cx} ${(node.cy + child.cy)/2}, ${child.cx} ${(node.cy + child.cy)/2}, ${child.cx} ${child.cy}`;
+        
+        path.setAttribute("d", pathData);
+        path.setAttribute("class", "link");
+        
+        if (typeof visualizerMode !== 'undefined' && visualizerMode === 'search' && child.label !== "") {
+          path.classList.add("highlighted");
+        }
+        
+        linksGroup.appendChild(path);
+
+        if (child.label) {
+          const midX = (node.cx + child.cx) / 2;
+          const midY = (node.cy + child.cy) / 2;
+          
+          const labelGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          
+          text.setAttribute("x", midX);
+          text.setAttribute("y", midY);
+          text.setAttribute("class", "edge-text");
+          text.textContent = child.label;
+          
+          labelGroup.appendChild(rect);
+          labelGroup.appendChild(text);
+          linksGroup.appendChild(labelGroup);
+          
+          const textBBox = text.getBBox ? text.getBBox() : { width: child.label.length * 7, height: 14 };
+          rect.setAttribute("x", midX - textBBox.width / 2 - 4);
+          rect.setAttribute("y", midY - 8);
+          rect.setAttribute("width", textBBox.width + 8);
+          rect.setAttribute("height", 16);
+          rect.setAttribute("class", "edge-text-bg");
+        }
+        
+        drawLinks(child);
+      });
+    }
+
+    function drawNodes(node) {
+      const nodeG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      nodeG.setAttribute("class", `node ${node.isEnd ? 'is-end' : ''}`);
+      
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", node.cx);
+      circle.setAttribute("cy", node.cy);
+      circle.setAttribute("r", "14");
+      
+      if (typeof visualizerMode !== 'undefined' && visualizerMode === 'search' && node.label !== "root") {
+        circle.classList.add("highlighted");
+      }
+      
+      nodeG.appendChild(circle);
+
+      if (node.label === "root" || !node.label) {
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", node.cx);
+        text.setAttribute("y", node.cy + 30);
+        text.setAttribute("text-anchor", "middle");
+        text.textContent = node.label || "root";
+        nodeG.appendChild(text);
+      } else if (node.isEnd) {
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", node.cx);
+        dot.setAttribute("cy", node.cy);
+        dot.setAttribute("r", "4");
+        dot.setAttribute("fill", "var(--color-success)");
+        nodeG.appendChild(dot);
+      }
+      
+      circle.addEventListener("mouseenter", () => {
+        circle.setAttribute("r", "17");
+        if (typeof playHoverSound === 'function') playHoverSound();
+      });
+      circle.addEventListener("mouseleave", () => {
+        circle.setAttribute("r", "14");
+      });
+
+      nodesGroup.appendChild(nodeG);
+      
+      if (node.children) {
+        node.children.forEach(drawNodes);
+      }
+    }
+
+    drawLinks(treeData);
+    drawNodes(treeData);
   }
 
   function buildTries(citiesArray) {
@@ -22287,7 +22445,9 @@ setTimeout(init3DParallax, 300);
       tourism: 'State Tourism Directory',
       trip: 'Interactive Trip Planner',
       game: 'Geoguess Heritage & Culture Quiz',
-      travel: 'India Geography & Travel Matrix'
+      travel: 'India Geography & Travel Matrix',
+      constellation: '3D Spatial Engine',
+      theme: 'Visual Customization'
     };
 
     let source = window.ARVORA_ALL_FEATURES || ARVORA_MASTER_180_FEATURES;
@@ -22298,7 +22458,7 @@ setTimeout(init3DParallax, 300);
           items.forEach(function(f) {
             if (f && f.id && !seen.has(f.id)) {
               seen.add(f.id);
-              let catName = catNameMap[catKey] || catKey.toUpperCase();
+              let catName = f.category || catNameMap[catKey] || catKey.toUpperCase();
               list.push({
                 id: f.id,
                 title: f.name || f.title || f.id,
