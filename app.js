@@ -209,43 +209,139 @@
   // =====================================================================
   // 🛡️ BULLETPROOF GLOBAL WINDOW REGISTRY (EXPOSED BEFORE DOM READY)
   // =====================================================================
-  window.switchTab = function(tabId) {
+    window.switchTab = function(tabId) {
     if (!tabId) return;
-    if (tabId === 'travel' || tabId === 'stateshowcase' || tabId === 'state' || tabId === 'states' || tabId === 'tourism') {
-      if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
+
+    // 1. Close open modals/drawers
+    if (typeof window.closeShowcaseModal === 'function') window.closeShowcaseModal();
+    if (typeof window.closeFeatureDetailModal === 'function') window.closeFeatureDetailModal();
+    if (typeof window.closeDrawer === 'function') window.closeDrawer();
+
+    let cleanId = tabId.toString().trim().toLowerCase();
+
+    // 2. Special Action Modals
+    if (cleanId === 'theme' || cleanId === 'themestudio') {
+      if (typeof window.openThemeModal === 'function') window.openThemeModal();
+      return;
     }
-    if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
-    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine' || tabId === 'pattern' || tabId === 'analytics' || tabId === 'scanner' || tabId === 'routes') tabId = 'roam';
-    if (tabId === 'transithub' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'roadtrip' || tabId === 'rickshaw' || tabId === 'bagcalc' || tabId === 'transitbooking') tabId = 'transport';
-    if (tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety' || tabId === 'vault') tabId = 'survival';
-    if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
-    if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
-    if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';
-    if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'apps' || tabId === 'digitalsurvival') tabId = 'survival';
-    if (tabId === 'transport' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'transithub') tabId = 'transport';
-    window._currentActiveTab = tabId;
-    const tabs = document.querySelectorAll(".tab-content");
+    if (cleanId === 'constellation' || cleanId === 'matrix3d' || cleanId === 'hologram') {
+      if (typeof window.openQuantumHologramModal === 'function') window.openQuantumHologramModal();
+      return;
+    }
+    if (cleanId === 'reset' || cleanId === 'hardreset') {
+      if (typeof window.performHardReset === 'function') window.performHardReset();
+      return;
+    }
+
+    // 3. Resolve parent tab container and specific sub-mode
+    let targetTabId = 'travelintel';
+
+    // Domain A: Transport & Mobility (5-Mode Estimator)
+    if (['transport', 'transithub', 'transit', 'fares', 'bus', 'car', 'auto', 'aeroplane', 'flight', 'train', 'roadtrip', 'rickshaw', 'bagcalc', 'transitbooking', 'cabestimator', 'fastagcalc', 'evcharge', 'evrouter', 'seat', 'metro', 'airport', 'routesolver', 'fuelcost', 'pnrpredict', 'tatkal', 'baggage', 'airportcode', 'sleeperbus', 'vande', 'ferry', 'carrental', 'bikebook', 'stationcode', 'retiringroom', 'coachlocator', 'highwaydhabas', 'tollfree', 'parking'].includes(cleanId)) {
+      targetTabId = 'transport';
+      let mode = 'flight';
+      if (['bus', 'busguide', 'intercity', 'sleeperbus'].some(k => cleanId.includes(k))) mode = 'bus';
+      else if (['car', 'roadtrip', 'cab', 'fastag', 'fuel', 'rental', 'dhabas', 'parking', 'tollfree'].some(k => cleanId.includes(k))) mode = 'car';
+      else if (['auto', 'rickshaw', 'erickshaw'].some(k => cleanId.includes(k))) mode = 'auto';
+      else if (['train', 'rail', 'pnr', 'irctc', 'seat', 'coach', 'tatkal', 'vande', 'stationcode', 'retiringroom', 'coachlocator'].some(k => cleanId.includes(k))) mode = 'train';
+      
+      if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
+    }
+    // Domain B: Travel Intelligence & City Explorer
+    else if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'overcrowding', 'peakbalancer', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
+      targetTabId = 'travelintel';
+      let subTab = 'explore';
+      if (['attractions', 'sightseeing', 'monument', 'photospots', 'heritage'].some(k => cleanId.includes(k))) subTab = 'attractions';
+      else if (['food', 'culinary', 'delicacies', 'dhabas', 'cuisine'].some(k => cleanId.includes(k))) subTab = 'culinary';
+      else if (['planner', 'routecalc', 'scenicroutes', 'distance'].some(k => cleanId.includes(k))) subTab = 'planner';
+      
+      if (typeof window.setIntelTab === 'function') window.setIntelTab(subTab);
+    }
+    // Domain C: Nexora ROAM Destination Intelligence
+    else if (['roam', 'discover', 'market', 'control', 'impact', 'reroute', 'loadmap'].includes(cleanId)) {
+      targetTabId = 'roam';
+      let mode = 'discover';
+      if (['explore', 'reroute', 'loadmap'].some(k => cleanId.includes(k))) mode = 'explore';
+      else if (cleanId.includes('market')) mode = 'market';
+      else if (cleanId.includes('control')) mode = 'control';
+      else if (cleanId.includes('impact')) mode = 'impact';
+      
+      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode(mode);
+    }
+    // Domain D: Culture, Lingo & Audio Translator
+    else if (['lingo', 'culture', 'lingo-culture', 'translator', 'audio', 'etiquette', 'phrases', 'hindi', 'bengali', 'tamil', 'marathi', 'telugu', 'gujarati', 'kannada', 'malayalam', 'punjabi', 'odia', 'bargain', 'tipping', 'templedress', 'foodetiquette', 'festivals', 'handicrafts', 'music', 'dance', 'architecture', 'cuisineglossary', 'streetfoodsafe', 'tea', 'artisanworkshops', 'heritagecrafts', 'localcustoms'].includes(cleanId)) {
+      targetTabId = 'lingo';
+      const langMap = { hindi:'hi', bengali:'bn', tamil:'ta', marathi:'mr', telugu:'te', gujarati:'gu', kannada:'kn', malayalam:'ml', punjabi:'pa', odia:'or' };
+      if (langMap[cleanId]) {
+        let selectEl = document.getElementById('lingo-lang-select');
+        if (selectEl) {
+          selectEl.value = langMap[cleanId];
+          selectEl.dispatchEvent(new Event('change'));
+        }
+      }
+    }
+    // Domain E: Digital Survival Kit & SOS
+    else if (['survival', 'survival-kit', 'apps', 'digitalsurvival', 'appguide', 'emergency', 'safety', 'vault', 'sos', 'helpline', 'upi', 'simguide', 'solosafety', 'stomach', 'foodsafety', 'scamadvisor', 'nriguide', 'visainfo', 'heatwave', 'monsoonsafety', 'highaltitude', 'embassy', 'travelinsurance', 'lostfound', 'cybersecurity', 'atm', 'pharmacy', 'bloodbank', 'snakebite', 'beachsafety', 'nighttravel', 'scamrates', 'policepost', 'digitalcopies'].includes(cleanId)) {
+      targetTabId = 'survival';
+    }
+    // Domain F: State Tourism & Hotelier Hub
+    else if (['tourism', 'stateshowcase', 'state', 'states', 'showcase', 'hotel', 'homestay', 'resort', 'delhitourism', 'mumbaitourism', 'jaipurtourism', 'keralatourism', 'varanasitourism', 'goatourism', 'punetourism', 'bengalurutourism', 'kolkatatourism', 'chennaitourism', 'hyderabadtourism', 'shimlatourism', 'rishikeshtourism', 'amritsartourism', 'agratourism', 'udaipurtourism', 'jodhpurtourism', 'mysoretourism', 'darjeelingtourism', 'shillongtourism', 'ladakhtourism', 'andamantourism', 'kazirangatourism', 'hampitourism', 'maduraitourism', 'pondicherrytourism'].includes(cleanId)) {
+      targetTabId = 'tourism';
+      const stateNameMap = {
+        delhitourism: 'Delhi', mumbaitourism: 'Maharashtra', jaipurtourism: 'Rajasthan',
+        keralatourism: 'Kerala', varanasitourism: 'Uttar Pradesh', goatourism: 'Goa',
+        punetourism: 'Maharashtra', bengalurutourism: 'Karnataka', kolkatatourism: 'West Bengal',
+        chennaitourism: 'Tamil Nadu', hyderabadtourism: 'Telangana', shimlatourism: 'Himachal Pradesh',
+        rishikeshtourism: 'Uttarakhand', amritsartourism: 'Punjab', agratourism: 'Uttar Pradesh',
+        udaipurtourism: 'Rajasthan', jodhpurtourism: 'Rajasthan', mysoretourism: 'Karnataka',
+        darjeelingtourism: 'West Bengal', shillongtourism: 'Meghalaya', ladakhtourism: 'Jammu & Kashmir',
+        andamantourism: 'Andaman & Nicobar Islands', kazirangatourism: 'Assam', hampitourism: 'Karnataka',
+        maduraitourism: 'Tamil Nadu', pondicherrytourism: 'Puducherry'
+      };
+      let targetState = stateNameMap[cleanId];
+      if (targetState && typeof window.selectStateTourism === 'function') {
+        window.selectStateTourism(targetState);
+      }
+    }
+    // Domain G: Trip Planner & Itinerary
+    else if (['trip', 'tripplanner', 'itinerary', 'budget', 'pack', 'plan', 'notes', 'smartpacker', 'tracker'].includes(cleanId)) {
+      targetTabId = 'trip';
+      if (cleanId === 'pack' || cleanId === 'smartpacker') {
+        if (typeof window.switchPackCat === 'function') window.switchPackCat('clothes');
+      }
+    }
+    // Domain H: Geoguess Game
+    else if (['game', 'geoguess', 'gameplay', 'quiz', 'guess', 'spelling'].includes(cleanId)) {
+      targetTabId = 'game';
+    }
+    // Domain I: Geography Hub
+    else if (['travel', 'geography', 'matrix', 'distance', 'map', 'pincode', 'converter', 'socket', 'timezone', 'shopping', 'localizer', 'voice', 'sleep', 'altitude', 'language', 'dialcode', 'rto', 'circuit', 'offline'].includes(cleanId)) {
+      targetTabId = 'travel';
+    }
+    else {
+      let directEl = document.getElementById('tab-content-' + cleanId);
+      if (directEl) targetTabId = cleanId;
+    }
+
+    let activeTab = document.getElementById('tab-content-' + targetTabId);
+    if (!activeTab) activeTab = document.getElementById('tab-content-travelintel');
+
+    window._currentActiveTab = targetTabId;
+
+    const tabs = document.querySelectorAll('.tab-content');
     tabs.forEach(tab => {
-      tab.classList.remove("active");
-      tab.style.display = "none";
+      tab.classList.remove('active');
+      tab.style.setProperty('display', 'none', 'important');
+      tab.style.opacity = '0';
+      tab.style.visibility = 'hidden';
     });
-    let activeTab = document.getElementById("tab-content-" + tabId);
-    if (!activeTab) {
-      if (tabId.includes('route') || tabId.includes('export') || tabId.includes('data') || tabId.includes('solver')) tabId = 'routes';
-      else if (tabId.includes('game') || tabId.includes('quiz') || tabId.includes('guess')) tabId = 'game';
-      else if (tabId.includes('tour') || tabId.includes('state') || tabId.includes('guide') || tabId.includes('travel')) tabId = 'tourism';
-      else if (tabId.includes('trip') || tabId.includes('pack') || tabId.includes('plan') || tabId.includes('budget')) tabId = 'trip';
-      else tabId = 'tourism';
-      activeTab = document.getElementById("tab-content-" + tabId);
-    }
+
     if (activeTab) {
-      activeTab.classList.add("active");
-      activeTab.style.display = "block";
-    }
-    // Update breadcrumb
-    const breadcrumb = document.getElementById('active-feature-breadcrumb');
-    if (breadcrumb) {
-      breadcrumb.textContent = tabId.toUpperCase() + ' MATRIX';
+      activeTab.classList.add('active');
+      activeTab.style.setProperty('display', 'block', 'important');
+      activeTab.style.opacity = '1';
+      activeTab.style.visibility = 'visible';
+      activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
