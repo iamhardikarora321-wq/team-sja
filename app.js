@@ -3277,6 +3277,116 @@
     }
   };
 
+  
+  function computeLogisticsFacts(cityName, coords, weight) {
+    if (!cityName) cityName = "India";
+    let hash = 0;
+    const cLower = cityName.trim().toLowerCase();
+    for (let i = 0; i < cLower.length; i++) {
+      hash = cLower.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    hash = Math.abs(hash);
+
+    const KNOWN_MAP = {
+      "kolkata": { state: "West Bengal", district: "Kolkata District", zip: "700001" },
+      "howrah": { state: "West Bengal", district: "Howrah District", zip: "711101" },
+      "darjeeling": { state: "West Bengal", district: "Darjeeling District", zip: "734101" },
+      "siliguri": { state: "West Bengal", district: "Darjeeling District", zip: "734001" },
+      "mumbai": { state: "Maharashtra", district: "Mumbai City District", zip: "400001" },
+      "pune": { state: "Maharashtra", district: "Pune District", zip: "411001" },
+      "nagpur": { state: "Maharashtra", district: "Nagpur District", zip: "440001" },
+      "delhi": { state: "Delhi", district: "Central Delhi District", zip: "110001" },
+      "new delhi": { state: "Delhi", district: "New Delhi District", zip: "110001" },
+      "bengaluru": { state: "Karnataka", district: "Bengaluru Urban", zip: "560001" },
+      "bangalore": { state: "Karnataka", district: "Bengaluru Urban", zip: "560001" },
+      "mysuru": { state: "Karnataka", district: "Mysuru District", zip: "570001" },
+      "coorg": { state: "Karnataka", district: "Kodagu District", zip: "571201" },
+      "hampi": { state: "Karnataka", district: "Vijayanagara District", zip: "583239" },
+      "chennai": { state: "Tamil Nadu", district: "Chennai District", zip: "600001" },
+      "ooty": { state: "Tamil Nadu", district: "Nilgiris District", zip: "643001" },
+      "madurai": { state: "Tamil Nadu", district: "Madurai District", zip: "625001" },
+      "hyderabad": { state: "Telangana", district: "Hyderabad District", zip: "500001" },
+      "jaipur": { state: "Rajasthan", district: "Jaipur District", zip: "302001" },
+      "udaipur": { state: "Rajasthan", district: "Udaipur District", zip: "313001" },
+      "jodhpur": { state: "Rajasthan", district: "Jodhpur District", zip: "342001" },
+      "jaisalmer": { state: "Rajasthan", district: "Jaisalmer District", zip: "345001" },
+      "manali": { state: "Himachal Pradesh", district: "Kullu District", zip: "175131" },
+      "shimla": { state: "Himachal Pradesh", district: "Shimla District", zip: "171001" },
+      "dharamshala": { state: "Himachal Pradesh", district: "Kangra District", zip: "176215" },
+      "wayanad": { state: "Kerala", district: "Wayanad District", zip: "673121" },
+      "munnar": { state: "Kerala", district: "Idukki District", zip: "685612" },
+      "kochi": { state: "Kerala", district: "Ernakulam District", zip: "682001" },
+      "trivandrum": { state: "Kerala", district: "Thiruvananthapuram", zip: "695001" },
+      "thiruvananthapuram": { state: "Kerala", district: "Thiruvananthapuram", zip: "695001" },
+      "alleppey": { state: "Kerala", district: "Alappuzha District", zip: "688001" },
+      "varanasi": { state: "Uttar Pradesh", district: "Varanasi District", zip: "221001" },
+      "agra": { state: "Uttar Pradesh", district: "Agra District", zip: "282001" },
+      "lucknow": { state: "Uttar Pradesh", district: "Lucknow District", zip: "226001" },
+      "ayodhya": { state: "Uttar Pradesh", district: "Ayodhya District", zip: "224123" },
+      "goa": { state: "Goa", district: "North Goa", zip: "403001" },
+      "panaji": { state: "Goa", district: "North Goa", zip: "403001" },
+      "srinagar": { state: "Jammu & Kashmir", district: "Srinagar District", zip: "190001" },
+      "leh": { state: "Ladakh", district: "Leh District", zip: "194101" },
+      "gangtok": { state: "Sikkim", district: "East Sikkim", zip: "737101" },
+      "shillong": { state: "Meghalaya", district: "East Khasi Hills", zip: "793001" },
+      "tawang": { state: "Arunachal Pradesh", district: "Tawang District", zip: "790104" },
+      "imphal": { state: "Manipur", district: "Imphal West", zip: "795001" },
+      "aizawl": { state: "Mizoram", district: "Aizawl District", zip: "796001" },
+      "kohima": { state: "Nagaland", district: "Kohima District", zip: "797001" },
+      "agartala": { state: "Tripura", district: "West Tripura", zip: "799001" },
+      "guwahati": { state: "Assam", district: "Kamrup Metropolitan", zip: "781001" },
+      "dispur": { state: "Assam", district: "Kamrup Metropolitan", zip: "781006" },
+      "patna": { state: "Bihar", district: "Patna District", zip: "800001" },
+      "bhopal": { state: "Madhya Pradesh", district: "Bhopal District", zip: "462001" },
+      "indore": { state: "Madhya Pradesh", district: "Indore District", zip: "452001" },
+      "gwalior": { state: "Madhya Pradesh", district: "Gwalior District", zip: "474001" },
+      "bhubaneswar": { state: "Odisha", district: "Khurda District", zip: "751001" },
+      "puri": { state: "Odisha", district: "Puri District", zip: "752001" },
+      "ranchi": { state: "Jharkhand", district: "Ranchi District", zip: "834001" },
+      "raipur": { state: "Chhattisgarh", district: "Raipur District", zip: "492001" },
+      "ahmedabad": { state: "Gujarat", district: "Ahmedabad District", zip: "380001" },
+      "surat": { state: "Gujarat", district: "Surat District", zip: "395001" },
+      "vadodara": { state: "Gujarat", district: "Vadodara District", zip: "390001" },
+      "chandigarh": { state: "Chandigarh", district: "Chandigarh District", zip: "160001" },
+      "amritsar": { state: "Punjab", district: "Amritsar District", zip: "143001" },
+      "ludhiana": { state: "Punjab", district: "Ludhiana District", zip: "141001" },
+      "dehradun": { state: "Uttarakhand", district: "Dehradun District", zip: "248001" },
+      "haridwar": { state: "Uttarakhand", district: "Haridwar District", zip: "249401" },
+      "rishikesh": { state: "Uttarakhand", district: "Dehradun District", zip: "249201" },
+      "kedarnath": { state: "Uttarakhand", district: "Rudraprayag District", zip: "246445" }
+    };
+
+    if (KNOWN_MAP[cLower]) {
+      return KNOWN_MAP[cLower];
+    }
+
+    const STATES_LIST_LOCAL = [
+      "Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "West Bengal",
+      "Uttar Pradesh", "Gujarat", "Rajasthan", "Kerala", "Telangana",
+      "Haryana", "Punjab", "Bihar", "Madhya Pradesh", "Andhra Pradesh",
+      "Odisha", "Assam", "Jammu and Kashmir", "Goa", "Himachal Pradesh",
+      "Uttarakhand", "Jharkhand", "Chhattisgarh", "Meghalaya", "Sikkim"
+    ];
+    const DISTRICTS_SUFFIX = ["District", "West District", "East District", "Central District", "Rural District"];
+
+    const state = STATES_LIST_LOCAL[hash % STATES_LIST_LOCAL.length];
+    const district = capitalizeWord(cityName) + " " + DISTRICTS_SUFFIX[(hash >> 2) % DISTRICTS_SUFFIX.length];
+
+    let firstDigit = 8;
+    if (["Delhi", "Haryana", "Punjab", "Jammu and Kashmir", "Himachal Pradesh", "Uttarakhand"].includes(state)) firstDigit = 1;
+    else if (["Uttar Pradesh"].includes(state)) firstDigit = 2;
+    else if (["Gujarat", "Rajasthan", "Goa"].includes(state)) firstDigit = 3;
+    else if (["Maharashtra", "Madhya Pradesh", "Chhattisgarh"].includes(state)) firstDigit = 4;
+    else if (["Andhra Pradesh", "Telangana", "Karnataka"].includes(state)) firstDigit = 5;
+    else if (["Tamil Nadu", "Kerala"].includes(state)) firstDigit = 6;
+    else if (["West Bengal", "Odisha", "Assam", "Meghalaya", "Sikkim", "Jharkhand", "Bihar"].includes(state)) firstDigit = 7;
+
+    const zipCode = firstDigit.toString() + (10000 + (hash % 89999)).toString().slice(1);
+
+    return { zipCode, state, district };
+  }
+
+
   function getPanIndiaPlaceSuggestions(query, limit = 12) {
     const q = query.toLowerCase().trim();
     if (!q) return [];
@@ -3434,30 +3544,46 @@
     dropdown.style.display = "block";
   }
 
-  window.selectTourismPlace = function(placeName) {
+    window.selectTourismPlace = function(placeName) {
     const dropdown = document.getElementById("tourism-place-dropdown");
     if (dropdown) dropdown.style.display = "none";
 
     const searchInput = document.getElementById("tourism-state-search");
     if (searchInput) searchInput.value = "";
 
-    // Check if it's a State / UT name
+    const pTrim = (placeName || "").trim();
+    if (!pTrim) return;
+
+    // Check if it's a State / UT name directly
     const allStates = Object.keys(TOURISM_DATABASE).concat(STATES_LIST);
-    const matchState = allStates.find(st => st.toLowerCase() === placeName.toLowerCase());
-    
+    const matchState = allStates.find(st => st.toLowerCase() === pTrim.toLowerCase());
+
     if (matchState) {
+      activeState = matchState;
       loadStateDetails(matchState);
-      // Highlight state btn in grid if visible
       document.querySelectorAll("#tourism-state-grid .state-btn").forEach(b => {
         if (b.textContent.includes(matchState)) b.classList.add("active");
         else b.classList.remove("active");
       });
     } else {
-      renderUniversalPlaceCard(placeName);
+      // Find parent state for city/destination
+      const coords = getCityCoords(pTrim);
+      const facts = computeLogisticsFacts(pTrim, coords, 0.5);
+      const parentState = facts.state;
+
+      if (parentState && TOURISM_DATABASE[parentState]) {
+        activeState = parentState;
+        loadStateDetails(parentState);
+        document.querySelectorAll("#tourism-state-grid .state-btn").forEach(b => {
+          if (b.textContent.includes(parentState)) b.classList.add("active");
+          else b.classList.remove("active");
+        });
+      }
+      renderUniversalPlaceCard(pTrim);
     }
   };
 
-  function renderStateGrid(searchQuery) {
+    function renderStateGrid(searchQuery) {
     const stateGrid = document.getElementById("tourism-state-grid");
     if (!stateGrid) return;
     stateGrid.innerHTML = "";
@@ -3481,16 +3607,31 @@
         else if (activeTourismTheme === 'offbeat') matchTheme = themeText.includes('offbeat') || themeText.includes('desert') || themeText.includes('tribe') || themeText.includes('village');
       }
 
-      const matchQuery = !q || st.toLowerCase().includes(q) || 
+      let matchQuery = !q || st.toLowerCase().includes(q) || 
                          (data.capital && data.capital.toLowerCase().includes(q)) || 
                          (data.desc && data.desc.toLowerCase().includes(q)) ||
                          (data.tagline && data.tagline.toLowerCase().includes(q));
+
+      if (!matchQuery && q) {
+        if (data.attractions && data.attractions.some(a => a.name.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q))) matchQuery = true;
+        if (!matchQuery && data.markets && data.markets.some(m => m.name.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q))) matchQuery = true;
+        if (!matchQuery && data.foods && data.foods.some(f => f.name.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q))) matchQuery = true;
+        if (!matchQuery && window.TRAVEL_INTEL_DB) {
+          const intel = window.TRAVEL_INTEL_DB[q];
+          if (intel && intel.state && intel.state.toLowerCase() === st.toLowerCase()) matchQuery = true;
+        }
+        if (!matchQuery) {
+          const facts = computeLogisticsFacts(q, {lat:0, lng:0}, 0.5);
+          if (facts && facts.state && facts.state.toLowerCase() === st.toLowerCase()) matchQuery = true;
+        }
+      }
+
       return matchRegion && matchTheme && matchQuery;
     });
 
     if (filtered.length === 0) {
       stateGrid.innerHTML = `
-        <div style="grid-column:1/-1; color:#94a3b8; font-weight:700; padding:1.25rem; text-align:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:14px;">
+        <div style="grid-column:1/-1; color:#94a3b8; font-weight:700; padding:1.25rem; text-align:center; background:rgba(255,255,255,0.02); border:1px solid rgba(0,243,255,0.06); border-radius:14px;">
           🔍 No state matched "${q}". <br>
           <span style="font-size:0.8rem; color:#00f3ff; margin-top:0.4rem; display:inline-block; cursor:pointer;" onclick="selectTourismPlace('${q.replace(/'/g, "\'")}');">
             Click here to open Universal Intelligence Profile for "${capitalizeWord(q)}" ➔
