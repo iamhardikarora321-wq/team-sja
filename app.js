@@ -25623,7 +25623,7 @@ setTimeout(init3DParallax, 300);
   // Bind Keyboard Listeners for Spotlight & Enter Key Navigation
   document.addEventListener('keydown', function(e) {
     // Cmd+K or Ctrl+K or '/' shortcut to open Spotlight
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    if (false && (e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
       openSpotlightModal();
       return;
