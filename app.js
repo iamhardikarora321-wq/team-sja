@@ -1195,21 +1195,53 @@
   window.switchTab = switchTab;
   function switchTab(tabId) {
     if (!tabId) return;
-    
-    // Alias mapping for features
-    if (tabId === 'travel' || tabId === 'stateshowcase' || tabId === 'state' || tabId === 'states' || tabId === 'tourism') {
-      if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
+
+    // Direct Sub-Mode & Feature Routing
+    if (tabId === 'travelintel' || tabId === 'explore' || tabId === 'food' || tabId === 'culinary' || tabId === 'attractions') {
+      tabId = 'travelintel';
+      if (typeof window.setIntelTab === 'function') window.setIntelTab('explore');
     }
-    if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
-    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine' || tabId === 'pattern' || tabId === 'analytics' || tabId === 'scanner' || tabId === 'routes') tabId = 'roam';
-    if (tabId === 'transithub' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'roadtrip' || tabId === 'rickshaw' || tabId === 'bagcalc' || tabId === 'transitbooking') tabId = 'transport';
-    if (tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety' || tabId === 'vault') tabId = 'survival';
-    if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
-    if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
-    if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';
-    if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'apps' || tabId === 'digitalsurvival') tabId = 'survival';
-    if (tabId === 'transport' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'transithub') tabId = 'transport';
-    
+    else if (tabId === 'planner' || tabId === 'routecalc') {
+      tabId = 'travelintel';
+      if (typeof window.setIntelTab === 'function') window.setIntelTab('planner');
+    }
+    else if (tabId === 'roam' || tabId === 'discover' || tabId === 'market' || tabId === 'control' || tabId === 'impact' || tabId === 'reroute' || tabId === 'loadmap' || tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine' || tabId === 'pattern' || tabId === 'analytics' || tabId === 'scanner' || tabId === 'routes') {
+      let mode = 'discover';
+      if (['explore', 'reroute', 'loadmap'].some(k => tabId.includes(k))) mode = 'explore';
+      else if (tabId.includes('market')) mode = 'market';
+      else if (tabId.includes('control')) mode = 'control';
+      else if (tabId.includes('impact')) mode = 'impact';
+      tabId = 'roam';
+      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode(mode);
+    }
+    else if (tabId === 'transport' || tabId === 'transithub' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'roadtrip' || tabId === 'rickshaw' || tabId === 'bagcalc' || tabId === 'transitbooking' || tabId === 'cabestimator' || tabId === 'fastagcalc' || tabId === 'evcharge' || tabId === 'evrouter' || tabId === 'seat' || tabId === 'metro' || tabId === 'airport' || tabId === 'routesolver') {
+      let mode = 'flight';
+      if (['bus', 'busguide', 'intercity'].some(k => tabId.includes(k))) mode = 'bus';
+      else if (['car', 'roadtrip', 'cab', 'fastag', 'fuel', 'rental'].some(k => tabId.includes(k))) mode = 'car';
+      else if (['auto', 'rickshaw', 'erickshaw'].some(k => tabId.includes(k))) mode = 'auto';
+      else if (['train', 'rail', 'pnr', 'irctc', 'seat', 'coach', 'tatkal'].some(k => tabId.includes(k))) mode = 'train';
+      tabId = 'transport';
+      if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
+    }
+    else if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture' || tabId === 'translator' || tabId === 'audio' || tabId === 'etiquette' || tabId === 'phrases') {
+      tabId = 'lingo';
+    }
+    else if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'apps' || tabId === 'digitalsurvival' || tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety' || tabId === 'vault' || tabId === 'sos' || tabId === 'helpline' || tabId === 'upi' || tabId === 'simguide') {
+      tabId = 'survival';
+    }
+    else if (tabId === 'tourism' || tabId === 'stateshowcase' || tabId === 'state' || tabId === 'states' || tabId === 'showcase' || tabId === 'hotel' || tabId === 'homestay' || tabId === 'resort') {
+      tabId = 'tourism';
+    }
+    else if (tabId === 'trip' || tabId === 'tripplanner' || tabId === 'itinerary' || tabId === 'budget' || tabId === 'pack' || tabId === 'plan' || tabId === 'notes') {
+      tabId = 'trip';
+    }
+    else if (tabId === 'game' || tabId === 'geoguess' || tabId === 'gameplay' || tabId === 'quiz' || tabId === 'guess' || tabId === 'spelling') {
+      tabId = 'game';
+    }
+    else if (tabId === 'travel' || tabId === 'geography' || tabId === 'matrix' || tabId === 'distance' || tabId === 'map') {
+      tabId = 'travel';
+    }
+
     window._currentActiveTab = tabId;
 
     // HIDE ALL TABS FIRST
@@ -1223,12 +1255,8 @@
 
     let activeTab = document.getElementById("tab-content-" + tabId);
     if (!activeTab) {
-      if (['game', 'quiz', 'guess'].some(k => tabId.includes(k))) tabId = 'game';
-      else if (['trip', 'budget', 'pack', 'plan', 'itinerary'].some(k => tabId.includes(k))) tabId = 'trip';
-      else if (['roam', 'discover', 'explore'].some(k => tabId.includes(k))) tabId = 'roam';
-      else if (['travel', 'showcase', '3d', 'map'].some(k => tabId === k || (k === '3d' && tabId.includes('3d')))) tabId = 'travel';
-      else tabId = 'travelintel';
-      activeTab = document.getElementById("tab-content-" + tabId);
+      tabId = 'travelintel';
+      activeTab = document.getElementById("tab-content-travelintel");
     }
 
     // SHOW ONLY THE SELECTED ACTIVE TAB
@@ -1250,659 +1278,9 @@
       }
     });
 
-    // Dynamically update the floating taskbar (Dynamic Island) label with current feature name!
     if (typeof updateDynamicIslandTitle === 'function') {
       updateDynamicIslandTitle(tabId);
     }
-
-    // Close 3D Modal & Sidebar Drawer if open
-    if (typeof window.closeShowcaseModal === 'function') {
-      window.closeShowcaseModal();
-    }
-    if (typeof window.closeDrawer === 'function') {
-      window.closeDrawer();
-    }
-
-    // Auto-scroll directly to the target tab content!
-    if (activeTab) {
-      setTimeout(function() {
-        activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 60);
-    }
-
-    try {
-    if (tabId === 'adventuregenz') {
-      if (typeof initAdventureGenz === 'function') initAdventureGenz();
-    }
-    if (tabId === 'airport') {
-      if (typeof initAirport === 'function') initAirport();
-    }
-    if (tabId === 'airportsecurity') {
-      if (typeof initAirportSecurity === 'function') initAirportSecurity();
-    }
-    if (tabId === 'airquality') {
-      if (typeof initAirQuality === 'function') initAirQuality();
-    }
-    if (tabId === 'altitude') {
-      if (typeof initAltitude === 'function') initAltitude();
-    }
-    if (tabId === 'altitudeprofiler') {
-      if (typeof initAltitudeProfiler === 'function') initAltitudeProfiler();
-    }
-    if (tabId === 'analytics') {
-      if (typeof renderAnalytics === 'function') renderAnalytics();
-    }
-    if (tabId === 'appguide') {
-      if (typeof initAppGuide === 'function') initAppGuide();
-    }
-    if (tabId === 'artisanchai') {
-      if (typeof initArtisanChai === 'function') initArtisanChai();
-    }
-    if (tabId === 'artisangelato') {
-      if (typeof initArtisanGelato === 'function') initArtisanGelato();
-    }
-    if (tabId === 'atm') {
-      if (typeof initAtmAdvisor === 'function') initAtmAdvisor();
-    }
-    if (tabId === 'atmcash') {
-      if (typeof initAtmCash === 'function') initAtmCash();
-    }
-    if (tabId === 'axethrowing') {
-      if (typeof initAxeThrowing === 'function') initAxeThrowing();
-    }
-    if (tabId === 'ayurveda') {
-      if (typeof initAyurveda === 'function') initAyurveda();
-    }
-    if (tabId === 'backpackerhostel') {
-      if (typeof initBackpackerHostel === 'function') initBackpackerHostel();
-    }
-    if (tabId === 'bagcalc') {
-      if (typeof initBagCalc === 'function') initBagCalc();
-    }
-    if (tabId === 'baggage') {
-      if (typeof initBaggageCalculator === 'function') initBaggageCalculator();
-    }
-    if (tabId === 'bargain') {
-      if (typeof initBargain === 'function') initBargain();
-    }
-    if (tabId === 'boardgamecafe') {
-      if (typeof initBoardGameCafe === 'function') initBoardGameCafe();
-    }
-    if (tabId === 'bobafinder') {
-      if (typeof initBobaFinder === 'function') initBobaFinder();
-    }
-    if (tabId === 'boulderinggym') {
-      if (typeof initBoulderingGym === 'function') initBoulderingGym();
-    }
-    if (tabId === 'budget') {
-      if (typeof initBudget === 'function') initBudget();
-    }
-    if (tabId === 'busguide') {
-      if (typeof initBusGuide === 'function') initBusGuide();
-    }
-    if (tabId === 'cabestimator') {
-      if (typeof initCabEstimator === 'function') initCabEstimator();
-    }
-    if (tabId === 'capsulehotel') {
-      if (typeof initCapsuleHotel === 'function') initCapsuleHotel();
-    }
-    if (tabId === 'chaiguide') {
-      if (typeof initChaiGuide === 'function') initChaiGuide();
-    }
-    if (tabId === 'charginghub') {
-      if (typeof initChargingHub === 'function') initChargingHub();
-    }
-    if (tabId === 'cleantoilet') {
-      if (typeof initCleanToilet === 'function') initCleanToilet();
-    }
-    if (tabId === 'cloakroom') {
-      if (typeof initCloakroom === 'function') initCloakroom();
-    }
-    if (tabId === 'coach') {
-      if (typeof initCoach === 'function') initCoach();
-    }
-    if (tabId === 'comedyclubs') {
-      if (typeof initComedyClubs === 'function') initComedyClubs();
-    }
-    if (tabId === 'compare') {
-      if (typeof initCompare === 'function') initCompare();
-    }
-    if (tabId === 'coworkingdesk') {
-      if (typeof initCoworkingDesk === 'function') initCoworkingDesk();
-    }
-    if (tabId === 'culinary') {
-      if (typeof initCulinary === 'function') initCulinary();
-    }
-    if (tabId === 'culture') {
-      if (typeof initCulture === 'function') initCulture();
-    }
-    if (tabId === 'currency') {
-      if (typeof initCurrencyConverter === 'function') initCurrencyConverter();
-    }
-    if (tabId === 'customs') {
-      if (typeof initCustoms === 'function') initCustoms();
-    }
-    if (tabId === 'customworkshop') {
-      if (typeof initCustomWorkshop === 'function') initCustomWorkshop();
-    }
-    if (tabId === 'datasaver') {
-      if (typeof initDataSaver === 'function') initDataSaver();
-    }
-    if (tabId === 'diet') {
-      if (typeof initDiet === 'function') initDiet();
-    }
-    if (tabId === 'discovery') {
-      if (typeof initDiscovery === 'function') initDiscovery();
-    }
-    if (tabId === 'docservices') {
-      if (typeof initDocServices === 'function') initDocServices();
-    }
-    if (tabId === 'driveincinema') {
-      if (typeof initDriveInCinema === 'function') initDriveInCinema();
-    }
-    if (tabId === 'ecotravel') {
-      if (typeof initEcoTravel === 'function') initEcoTravel();
-    }
-    if (tabId === 'emergency') {
-      if (typeof initEmergency === 'function') initEmergency();
-    }
-    if (tabId === 'emergencyhealth') {
-      if (typeof initEmergencyHealth === 'function') initEmergencyHealth();
-    }
-    if (tabId === 'engine') {
-      if (typeof initializeApp === 'function') initializeApp();
-    }
-    if (tabId === 'escaperoom') {
-      if (typeof initEscapeRoom === 'function') initEscapeRoom();
-    }
-    if (tabId === 'esimchecker') {
-      if (typeof initEsimChecker === 'function') initEsimChecker();
-    }
-    if (tabId === 'evcharge') {
-      if (typeof initEvCharge === 'function') initEvCharge();
-    }
-    if (tabId === 'evisa') {
-      if (typeof initEvisa === 'function') initEvisa();
-    }
-    if (tabId === 'evrouter') {
-      if (typeof initEvRouter === 'function') initEvRouter();
-    }
-    if (tabId === 'fastagcalc') {
-      if (typeof initFastagCalc === 'function') initFastagCalc();
-    }
-    if (tabId === 'festival') {
-      if (typeof initFestival === 'function') initFestival();
-    }
-    if (tabId === 'festivals') {
-      if (typeof initFestivals === 'function') initFestivals();
-    }
-    if (tabId === 'filmcamera') {
-      if (typeof initFilmCamera === 'function') initFilmCamera();
-    }
-    if (tabId === 'folkdance') {
-      if (typeof initFolkDance === 'function') initFolkDance();
-    }
-    if (tabId === 'food') {
-      if (typeof initFood === 'function') initFood();
-    }
-    if (tabId === 'foodsafety') {
-      if (typeof initFoodSafety === 'function') initFoodSafety();
-    }
-    if (tabId === 'forex') {
-      if (typeof initForex === 'function') initForex();
-    }
-    if (tabId === 'forexcalc') {
-      if (typeof initForexCalc === 'function') initForexCalc();
-    }
-    if (tabId === 'game') {
-      if (typeof initQuiz === 'function') initQuiz();
-    }
-    if (tabId === 'genzslang') {
-      if (typeof initGenzSlang === 'function') initGenzSlang();
-    }
-    if (tabId === 'genzsplit') {
-      if (typeof initGenzSplit === 'function') initGenzSplit();
-    }
-    if (tabId === 'genzspotlight') {
-      if (typeof initGenzSpotlight === 'function') initGenzSpotlight();
-    }
-    if (tabId === 'genzvibes') {
-      if (typeof initGenzVibes === 'function') initGenzVibes();
-    }
-    if (tabId === 'gitagguide') {
-      if (typeof initGiTagGuide === 'function') initGiTagGuide();
-    }
-    if (tabId === 'gokarting') {
-      if (typeof initGokarting === 'function') initGokarting();
-    }
-    if (tabId === 'gstcalc') {
-      if (typeof initGstCalc === 'function') initGstCalc();
-    }
-    if (tabId === 'gympassgenz') {
-      if (typeof initGymPassGenz === 'function') initGymPassGenz();
-    }
-    if (tabId === 'health') {
-      if (typeof initHealthHub === 'function') initHealthHub();
-    }
-    if (tabId === 'hotelgst') {
-      if (typeof initHotelGst === 'function') initHotelGst();
-    }
-    if (tabId === 'icebathhub') {
-      if (typeof initIceBathHub === 'function') initIceBathHub();
-    }
-    if (tabId === 'insurance') {
-      if (typeof initInsurance === 'function') initInsurance();
-    }
-    if (tabId === 'irctc') {
-      if (typeof initIrctc === 'function') initIrctc();
-    }
-    if (tabId === 'landmarks') {
-      if (typeof initLandmarks === 'function') initLandmarks();
-    }
-    if (tabId === 'lasertagarena') {
-      if (typeof initLaserTagArena === 'function') initLaserTagArena();
-    }
-    if (tabId === 'laundryspot') {
-      if (typeof initLaundrySpot === 'function') initLaundrySpot();
-    }
-    if (tabId === 'legal') {
-      if (typeof initLegal === 'function') initLegal();
-    }
-    if (tabId === 'livegigs') {
-      if (typeof initLiveGigs === 'function') initLiveGigs();
-    }
-    if (tabId === 'livelocation') {
-      if (typeof initLiveLocation === 'function') initLiveLocation();
-    }
-    if (tabId === 'livetrain') {
-      if (typeof initLiveTrain === 'function') initLiveTrain();
-    }
-    if (tabId === 'localizer') {
-      if (typeof initLocalizer === 'function') initLocalizer();
-    }
-    if (tabId === 'localspeak') {
-      if (typeof initLocalSpeak === 'function') initLocalSpeak();
-    }
-    if (tabId === 'luggagestorage') {
-      if (typeof initLuggageStorage === 'function') initLuggageStorage();
-    }
-    if (tabId === 'matchabar') {
-      if (typeof initMatchaBar === 'function') initMatchaBar();
-    }
-    if (tabId === 'medical') {
-      if (typeof initMedical === 'function') initMedical();
-    }
-    if (tabId === 'medkit') {
-      if (typeof initMedkit === 'function') initMedkit();
-    }
-    if (tabId === 'medtranslator') {
-      if (typeof initMedTranslator === 'function') initMedTranslator();
-    }
-    if (tabId === 'metro') {
-      if (typeof initMetro === 'function') initMetro();
-    }
-    if (tabId === 'monsoonrisk') {
-      if (typeof initMonsoonRisk === 'function') initMonsoonRisk();
-    }
-    if (tabId === 'monumentphoto') {
-      if (typeof initMonumentPhoto === 'function') initMonumentPhoto();
-    }
-    if (tabId === 'monumenttickets') {
-      if (typeof initMonumentTickets === 'function') initMonumentTickets();
-    }
-    if (tabId === 'naturetrails') {
-      if (typeof initNatureTrails === 'function') initNatureTrails();
-    }
-    if (tabId === 'neonbowling') {
-      if (typeof initNeonBowling === 'function') initNeonBowling();
-    }
-    if (tabId === 'nightchemist') {
-      if (typeof initNightChemist === 'function') initNightChemist();
-    }
-    if (tabId === 'nightlifegenz') {
-      if (typeof initNightlifeGenz === 'function') initNightlifeGenz();
-    }
-    if (tabId === 'nightmarket') {
-      if (typeof initNightMarket === 'function') initNightMarket();
-    }
-    if (tabId === 'notes') {
-      if (typeof initTravelNotes === 'function') initTravelNotes();
-    }
-    if (tabId === 'pattern') {
-      if (typeof setupPatternSearch === 'function') setupPatternSearch();
-    }
-    if (tabId === 'permits') {
-      if (typeof initPermits === 'function') initPermits();
-    }
-    if (tabId === 'petfriendly') {
-      if (typeof initPetFriendly === 'function') initPetFriendly();
-    }
-    if (tabId === 'photo') {
-      if (typeof initPhoto === 'function') initPhoto();
-    }
-    if (tabId === 'photobooth') {
-      if (typeof initPhotoBooth === 'function') initPhotoBooth();
-    }
-    if (tabId === 'photohub') {
-      if (typeof initPhotoHub === 'function') initPhotoHub();
-    }
-    if (tabId === 'playlist') {
-      if (typeof initPlaylist === 'function') initPlaylist();
-    }
-    if (tabId === 'plugsockets') {
-      if (typeof initPlugSockets === 'function') initPlugSockets();
-    }
-    if (tabId === 'pnrpredict') {
-      if (typeof initPnrPredictor === 'function') initPnrPredictor();
-    }
-    if (tabId === 'pnrrefund') {
-      if (typeof initPnrRefund === 'function') initPnrRefund();
-    }
-    if (tabId === 'pocketwifi') {
-      if (typeof initPocketWifi === 'function') initPocketWifi();
-    }
-    if (tabId === 'podcaststudio') {
-      if (typeof initPodcastStudio === 'function') initPodcastStudio();
-    }
-    if (tabId === 'popupevents') {
-      if (typeof initPopupEvents === 'function') initPopupEvents();
-    }
-    if (tabId === 'potterystudio') {
-      if (typeof initPotteryStudio === 'function') initPotteryStudio();
-    }
-    if (tabId === 'powerbankswap') {
-      if (typeof initPowerBankSwap === 'function') initPowerBankSwap();
-    }
-    if (tabId === 'prasad') {
-      if (typeof initPrasad === 'function') initPrasad();
-    }
-    if (tabId === 'puncturerepair') {
-      if (typeof initPunctureRepair === 'function') initPunctureRepair();
-    }
-    if (tabId === 'qrcode') {
-      if (typeof initQRGenerator === 'function') initQRGenerator();
-    }
-    if (tabId === 'rickshaw') {
-      if (typeof initRickshawCalc === 'function') initRickshawCalc();
-    }
-    if (tabId === 'rickshawmeter') {
-      if (typeof initRickshawMeter === 'function') initRickshawMeter();
-    }
-    if (tabId === 'roadtrip') {
-      if (typeof initRoadtrip === 'function') initRoadtrip();
-    }
-    if (tabId === 'routes') {
-      if (typeof initRouteSolver === 'function') initRouteSolver();
-    }
-    if (tabId === 'routesolver') {
-      if (typeof initRouteSolver === 'function') initRouteSolver();
-    }
-    if (tabId === 'safety') {
-      if (typeof initSafety === 'function') initSafety();
-    }
-    if (tabId === 'scamcheck') {
-      if (typeof initScamCheck === 'function') initScamCheck();
-    }
-    if (tabId === 'scanner') {
-      if (typeof initQRGenerator === 'function') initQRGenerator();
-    }
-    if (tabId === 'scooterrental') {
-      if (typeof initScooterRental === 'function') initScooterRental();
-    }
-    if (tabId === 'scubagenz') {
-      if (typeof initScubaGenz === 'function') initScubaGenz();
-    }
-    if (tabId === 'seat') {
-      if (typeof initSeat === 'function') initSeat();
-    }
-    if (tabId === 'shopping') {
-      if (typeof initShoppingGuide === 'function') initShoppingGuide();
-    }
-    if (tabId === 'signalprofiler') {
-      if (typeof initSignalProfiler === 'function') initSignalProfiler();
-    }
-    if (tabId === 'signalsimplified') {
-      if (typeof initSignalSimplified === 'function') initSignalSimplified();
-    }
-    if (tabId === 'simadvisor') {
-      if (typeof initSimAdvisor === 'function') initSimAdvisor();
-    }
-    if (tabId === 'simguide') {
-      if (typeof initSimGuide === 'function') initSimGuide();
-    }
-    if (tabId === 'skateparks') {
-      if (typeof initSkateparks === 'function') initSkateparks();
-    }
-    if (tabId === 'sleep') {
-      if (typeof initSleepGuide === 'function') initSleepGuide();
-    }
-    if (tabId === 'smartpacker') {
-      if (typeof initSmartPacker === 'function') initSmartPacker();
-    }
-    if (tabId === 'sneakerculture') {
-      if (typeof initSneakerCulture === 'function') initSneakerCulture();
-    }
-    if (tabId === 'socket') {
-      if (typeof initSocketGuide === 'function') initSocketGuide();
-    }
-    if (tabId === 'solosafety') {
-      if (typeof initSoloSafety === 'function') initSoloSafety();
-    }
-    if (tabId === 'spicemenu') {
-      if (typeof initSpiceMenu === 'function') initSpiceMenu();
-    }
-    if (tabId === 'splitter') {
-      if (typeof initSplitter === 'function') initSplitter();
-    }
-    if (tabId === 'stationwifi') {
-      if (typeof initStationWifi === 'function') initStationWifi();
-    }
-    if (tabId === 'stomach') {
-      if (typeof initStomachAdvisor === 'function') initStomachAdvisor();
-    }
-    if (tabId === 'streetart') {
-      if (typeof initStreetArt === 'function') initStreetArt();
-    }
-    if (tabId === 'sunclock') {
-      if (typeof initSunClock === 'function') initSunClock();
-    }
-    if (tabId === 'suppaddle') {
-      if (typeof initSupPaddle === 'function') initSupPaddle();
-    }
-    if (tabId === 'tatkalhelper') {
-      if (typeof initTatkalHelper === 'function') initTatkalHelper();
-    }
-    if (tabId === 'templeetiquette') {
-      if (typeof initTempleEtiquette === 'function') initTempleEtiquette();
-    }
-    if (tabId === 'terrariumshop') {
-      if (typeof initTerrariumShop === 'function') initTerrariumShop();
-    }
-    if (tabId === 'thriftmap') {
-      if (typeof initThriftMap === 'function') initThriftMap();
-    }
-    if (tabId === 'tidesafety') {
-      if (typeof initTideSafety === 'function') initTideSafety();
-    }
-    if (tabId === 'tipguide') {
-      if (typeof initTipGuide === 'function') initTipGuide();
-    }
-    if (tabId === 'tourism') {
-      if (typeof initTourism === 'function') initTourism();
-    }
-    if (tabId === 'tracker') {
-      if (typeof initTracker === 'function') initTracker();
-    }
-    if (tabId === 'train') {
-      if (typeof initTrain === 'function') initTrain();
-    }
-    if (tabId === 'trainluggage') {
-      if (typeof initTrainLuggage === 'function') initTrainLuggage();
-    }
-    if (tabId === 'trainsocket') {
-      if (typeof initTrainSocket === 'function') initTrainSocket();
-    }
-    if (tabId === 'trampolinepark') {
-      if (typeof initTrampolinePark === 'function') initTrampolinePark();
-    }
-    if (tabId === 'transit') {
-      if (typeof initTransit === 'function') initTransit();
-    }
-    if (tabId === 'transitbooking') {
-      if (typeof initTransitHub === 'function') initTransitHub();
-    }
-    if (tabId === 'travel') {
-      if (typeof initQuiz === 'function') initQuiz();
-    }
-    if (tabId === 'trip') {
-      if (typeof initTripPlanner === 'function') initTripPlanner();
-    }
-    if (tabId === 'unesco') {
-      if (typeof initUnesco === 'function') initUnesco();
-    }
-    if (tabId === 'upi') {
-      if (typeof initUpi === 'function') initUpi();
-    }
-    if (tabId === 'upiguide') {
-      if (typeof initUpiGuide === 'function') initUpiGuide();
-    }
-    if (tabId === 'vault') {
-      if (typeof initVault === 'function') initVault();
-    }
-    if (tabId === 'veganindia') {
-      if (typeof initVeganIndia === 'function') initVeganIndia();
-    }
-    if (tabId === 'visa') {
-      if (typeof initVisaAdvisor === 'function') initVisaAdvisor();
-    }
-    if (tabId === 'voice') {
-      if (typeof initVoiceTranslator === 'function') initVoiceTranslator();
-    }
-    if (tabId === 'voltage') {
-      if (typeof initVoltage === 'function') initVoltage();
-    }
-    if (tabId === 'waterrefill') {
-      if (typeof initWaterRefill === 'function') initWaterRefill();
-    }
-    if (tabId === 'waterrisk') {
-      if (typeof initWaterRisk === 'function') initWaterRisk();
-    }
-    if (tabId === 'weather') {
-      if (typeof initWeather === 'function') initWeather();
-    }
-    if (tabId === 'wellnessretreat') {
-      if (typeof initWellnessRetreat === 'function') initWellnessRetreat();
-    }
-    if (tabId === 'workcafe') {
-      if (typeof initWorkCafe === 'function') initWorkCafe();
-    }
-    if (tabId === 'ziplinegenz') {
-      if (typeof initZiplineGenz === 'function') initZiplineGenz();
-    }
-    } catch(e) {
-      console.warn("Tab module init non-fatal warning:", e);
-    }
-
-    // Update active highlight on sidebar rail icon
-    const railIcons = document.querySelectorAll(".rail-icon[data-cat]");
-    if (railIcons.length) {
-      // Map tabs to categories
-      const catMap = {
-        engine:  ['engine', 'routes', 'game', 'pattern', 'analytics', 'scanner'],
-        routing: ['travel', 'tourism', 'trip', 'routesolver', 'culinary', 'transitbooking', 'evrouter', 'localizer', 'simadvisor', 'visa', 'socket', 'atm', 'sleep', 'pnrpredict', 'currency', 'rickshaw', 'bagcalc', 'appguide', 'livetrain', 'gstcalc', 'roadtrip', 'evcharge', 'busguide', 'hotelgst', 'tatkalhelper', 'forexcalc', 'fastagcalc', 'trainsocket', 'cloakroom', 'rickshawmeter', 'pnrrefund', 'cabestimator', 'trainluggage', 'workcafe', 'backpackerhostel', 'scooterrental', 'capsulehotel', 'pocketwifi', 'charginghub', 'waterrefill', 'coworkingdesk', 'luggagestorage', 'atmcash', 'laundryspot', 'puncturerepair', 'transit', 'seat', 'metro', 'airport', 'evisa', 'voltage', 'irctc', 'train', 'coach', 'forex'],
-        safety:  ['safety', 'health', 'emergency', 'splitter', 'solosafety', 'vault', 'simguide', 'customs', 'legal', 'insurance', 'medical', 'scamcheck', 'altitude', 'monsoonrisk', 'waterrisk', 'ayurveda', 'signalprofiler', 'airquality', 'altitudeprofiler', 'tidesafety', 'emergencyhealth', 'datasaver', 'upiguide', 'signalsimplified', 'airportsecurity', 'medtranslator', 'plugsockets', 'stationwifi', 'livelocation', 'ecotravel', 'powerbankswap', 'petfriendly', 'esimchecker', 'genzsplit', 'naturetrails', 'nightchemist', 'cleantoilet', 'docservices', 'medkit', 'permits', 'upi'],
-        culture: ['discovery', 'festivals', 'compare', 'budget', 'landmarks', 'tracker', 'notes', 'baggage', 'photohub', 'shopping', 'foodsafety', 'smartpacker', 'voice', 'stomach', 'weather', 'sunclock', 'qrcode', 'culture', 'festival', 'food', 'spicemenu', 'bargain', 'monumentphoto', 'templeetiquette', 'localspeak', 'tipguide', 'unesco', 'prasad', 'chaiguide', 'folkdance', 'monumenttickets', 'gitagguide', 'genzspotlight', 'genzvibes', 'genzslang', 'livegigs', 'veganindia', 'thriftmap', 'adventuregenz', 'bobafinder', 'nightlifegenz', 'filmcamera', 'wellnessretreat', 'streetart', 'nightmarket', 'popupevents', 'artisanchai', 'skateparks', 'driveincinema', 'sneakerculture', 'comedyclubs', 'gokarting', 'ziplinegenz', 'neonbowling', 'suppaddle', 'scubagenz', 'escaperoom', 'trampolinepark', 'lasertagarena', 'boardgamecafe', 'axethrowing', 'podcaststudio', 'photobooth', 'customworkshop', 'potterystudio', 'terrariumshop', 'gympassgenz', 'boulderinggym', 'icebathhub', 'matchabar', 'artisangelato', 'photo', 'playlist', 'diet']
-      };
-
-      let foundCat = 'engine';
-      for (const [cat, tabList] of Object.entries(catMap)) {
-        if (tabList.includes(tabId)) {
-          foundCat = cat;
-          break;
-        }
-      }
-      railIcons.forEach(r => {
-        if (r.dataset.cat === foundCat) {
-          r.classList.add("active");
-        } else {
-          r.classList.remove("active");
-        }
-      });
-    }
-
-    // Update Island pill state
-    const islandBtns = document.querySelectorAll(".island-btn[data-target]");
-    islandBtns.forEach(btn => {
-      if (btn.dataset.target === tabId) {
-        btn.classList.add("active");
-      } else {
-        btn.classList.remove("active");
-      }
-    });
-
-    // Update Quick Dock breadcrumb badge
-    const badge = document.getElementById("active-tab-badge");
-    if (badge) {
-      const names = {
-        engine: 'Engine', routes: 'DB Seed Exporter', game: 'Geoguess Spelling Game',
-        pattern: 'Pattern Search', analytics: 'City Analytics', scanner: 'Text Scanner',
-        travel: 'Geography & Travel Hub', tourism: 'State Showcase', trip: 'Trip Planner',
-        routesolver: 'Transit Solver', transit: 'Transit Hub', seat: 'Train Seat Maps',
-        metro: 'Metro Planner', airport: 'Airport Navigator', evisa: 'e-Visa Calculator',
-        voltage: 'Voltage Adapter', atm: 'ATM & DCC Advisor', irctc: 'IRCTC Waitlist Engine',
-        train: 'Train Coach Comfort', currency: 'Currency Converter', rickshaw: 'Rickshaw Fare Calc',
-        bagcalc: 'Airline Baggage Calc', upi: 'Foreigner UPI Guide', coach: 'Railway Coach Layout',
-        forex: 'Forex DCC ATM Simulator', appguide: 'India Travel Apps Guide', livetrain: 'Train Live Status',
-        gstcalc: 'GST Tax Refund Calc', roadtrip: 'Roadtrip & Taxi Calc', evcharge: 'EV Charge & Plug Calc',
-        busguide: 'Interstate Sleeper Bus', hotelgst: 'Hotel GST Tax Checker', tatkalhelper: 'Tatkal Booking Speed Helper',
-        forexcalc: 'Forex FX Markup Calculator', fastagcalc: 'Expressway FASTag Toll Calc', trainsocket: 'Train Coach Power & Wi-Fi',
-        cloakroom: 'Railway Cloakroom Finder', rickshawmeter: 'Auto Meter & Night Surge', pnrrefund: 'IRCTC Refund & TDR Calculator',
-        cabestimator: 'Airport Taxi vs Cab Estimator', trainluggage: 'IRCTC Train Luggage Allowance',
-        safety: 'Health & Customs Safety', customs: 'Customs & Duty', legal: 'Legal & Rights',
-        insurance: 'Travel Insurance', medical: 'Medical Locator', emergency: 'Emergency Contacts',
-        solosafety: 'Solo Safety Advisor', vault: 'Document Vault', simguide: 'SIM Card & Data Guide',
-        medkit: 'Travel Medical Kit', permits: 'State Travel Permits', scamcheck: 'Tourist Scam Checker',
-        altitude: 'Altitude Sickness Advisor', monsoonrisk: 'Monsoon Risk Planner', waterrisk: 'Drinking Water Safety Advisor',
-        ayurveda: 'Ayurveda Travel Wellness', signalprofiler: 'Remote Network Profiler', airquality: 'Air Quality & AQI Tracker',
-        altitudeprofiler: 'Altitude AMS Risk Profiler', tidesafety: 'Coastal Tide & Swimming Advisor', emergencyhealth: '24/7 Pharmacy & Blood Bank',
-        datasaver: 'Offline Maps & Data Saver', upiguide: 'Tourist UPI Payment Setup', signalsimplified: 'Remote Hill Station Network',
-        airportsecurity: 'Airport Cabin Security Limits', medtranslator: 'OTC Medicine Salt Translator', plugsockets: 'Hotel Plug Socket Guide',
-        stationwifi: 'Station RailWire Wi-Fi OTP', livelocation: 'Night Safety & Live Location',
-        culture: 'Culture Explorer', festival: 'Festival Calendar', food: 'Regional Cuisine',
-        foodsafety: 'Street Food Safety', photo: 'Photo Hub', shopping: 'Souvenir & Craft',
-        notes: 'Travel Notes Journal', smartpacker: 'Smart Packer', voice: 'Speech Translator',
-        stomach: 'Stomach Safety', weather: 'Weather Advisor', sunclock: 'Sunrise & Sunset',
-        qrcode: 'QR Code Generator', playlist: 'Travel Vibe Playlist', diet: 'Dietary Translator',
-        spicemenu: 'Curry & Spice Translator', bargain: 'Street Bargaining Simulator', monumentphoto: 'Monument Golden Hour Advisor',
-        templeetiquette: 'Religious Sights Etiquette Guide', localspeak: 'Local Speak Phrasebook (TTS)', tipguide: 'Tipping Culture Guide',
-        unesco: 'UNESCO Heritage Sights', prasad: 'Temple Prasad Guide', chaiguide: 'Chai & Tea Culture Guide',
-        folkdance: 'Folk Dance & Culture Arts', monumenttickets: 'Monument ASI Ticket Calc', gitagguide: 'GI Tag Craft Authenticity',
-        genzspotlight: 'Gen Z Aesthetic Spot & Reels', workcafe: 'Specialty Coffee & Workation', backpackerhostel: 'Backpacker Social Hostels',
-        ecotravel: 'Eco-Conscious Travel', genzvibes: 'Sunset Vibes & Music Playlists', powerbankswap: 'Power Bank Rental Kiosk Swap',
-        scooterrental: 'Rental Scooter & Bike Tariff', genzslang: 'Urban Gen Z Slang Decoder', livegigs: 'Indie Music Gigs & Festivals',
-        veganindia: 'Vegan & Plant-Based Food', thriftmap: 'Thrift Store & Flea Market', adventuregenz: 'Bouldering & Water Surfing',
-        petfriendly: 'Pet-Friendly Travel & Trains', bobafinder: 'Matcha & Boba Bubble Tea', nightlifegenz: 'Nightlife & Silent Discos',
-        genzsplit: 'Group UPI Bill Splitter', filmcamera: '35mm Film Camera & X-Ray Guide', capsulehotel: 'Airport Capsule & Sleeping Pods',
-        wellnessretreat: 'Sunset Yoga & Sound Healing', esimchecker: 'Tourist eSIM & Roaming Packs', streetart: 'Street Art & Mural Walking Tours',
-        nightmarket: 'Street Food Night Markets', popupevents: 'Flea Popups & Art Exhibitions', naturetrails: 'Silent Beach & Nature Trails',
-        artisanchai: 'Artisan Kulhad Chai Spots', pocketwifi: 'Portable 5G Pocket Wi-Fi Dongle', skateparks: 'Skateparks & Roller Skating Rinks',
-        driveincinema: 'Drive-In & Rooftop Outdoor Cinema', sneakerculture: 'Streetwear Sneaker Drops & Care', comedyclubs: 'Stand-Up Comedy Clubs & Open Mics',
-        gokarting: 'Electric Go-Karting & Drift Tracks', ziplinegenz: 'High-Altitude Zipline & River Crossing', neonbowling: 'Neon Glow Bowling & Arcade Lounges',
-        suppaddle: 'Stand-Up Paddleboarding & Kayak', scubagenz: 'Scuba Diving & Coral Snorkeling', escaperoom: 'Cyberpunk & Mystery Escape Rooms',
-        trampolinepark: 'Trampoline Gravity Park & Foam Pit', lasertagarena: 'Tactical Sci-Fi Laser Tag Arena', boardgamecafe: 'Artisan Board Game Cafes & Strategy',
-        axethrowing: 'Target Axe Throwing Arena', podcaststudio: 'Content Creator Podcast & Audio Booth', photobooth: 'Korean Y2K Selfie Photo Booths',
-        customworkshop: 'Sneaker Painting & Rug Tufting', potterystudio: 'Ceramic Wheel Pottery Studio', terrariumshop: 'Bonsai & Plant Terrarium Workshop',
-        gympassgenz: 'Flexible Day-Pass Gyms & CrossFit', boulderinggym: 'Indoor Bouldering & Lead Climbing', icebathhub: 'Ice Bath & Cold Plunge Recovery',
-        matchabar: 'Ceremonial Matcha Bar & Tonics', artisangelato: 'Artisan Gelato & Sourdough Cones', nightchemist: '24-Hour Emergency Pharmacy & Supplies',
-        charginghub: 'High-Speed 65W PD Charging Kiosks', waterrefill: 'Clean RO Water ATM & Refill Station', coworkingdesk: 'Flexible Day-Pass Coworking Desks',
-        luggagestorage: 'Luggage Storage & Cloakrooms', docservices: '24/7 Color Print & Document Scan', atmcash: 'Reliable ATMs with Cash Reserves',
-        laundryspot: 'Express Laundromat & Wash Service', cleantoilet: 'Clean Public Restrooms & Washrooms', puncturerepair: '24/7 Tyre Puncture & Road Assist'
-      };
-      badge.textContent = names[tabId] || tabId.toUpperCase();
-    }
-
-    // Auto-scroll window to top on tab transition
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // =====================================================================
@@ -9478,192 +8856,31 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
   function initSidebarNav() {
     const FEATURES = {
       engine: [
-        { id: 'travelintel', icon: '🗺️', name: 'Bharat Travel Intelligence & City Explorer', desc: 'Explore top attractions, cuisine, transit & digital survival tools.' },
-        { id: 'roam',        icon: '🧭', name: 'Nexora ROAM Destination Intelligence', desc: 'Dynamic crowd balancer, load maps & smart rerouting.' },
-        { id: 'transport',   icon: '✈️', name: 'Bharat Multi-Mode Transport Matrix', desc: 'Separated 5-mode fare estimator for Flight, Bus, Car, Auto, Train.' },
-        { id: 'lingo',       icon: '🗣️', name: 'Bharat Lingo & Cultural Audio Matrix', desc: 'Text-to-speech audio translator for 10 regional Indian languages.' },
-        { id: 'survival',    icon: '📲', name: 'Digital Survival Kit & SOS Center', desc: 'Speed-dial emergency hotlines & essential travel apps.' },
-        { id: 'routes',      icon: '💻', name: 'Database Seed Exporter', desc: 'Generate SQL/JSON dataset inserts for backend.' },
-        { id: 'game',      icon: '🎮', name: 'Geoguess Spelling Game', desc: 'Interactive anagram game to guess Indian towns.' },
-        { id: 'pattern',   icon: '🔠', name: 'Pattern Search',         desc: 'Fuzzy matching, suffixes, and character wildcards.' },
-        { id: 'analytics', icon: '📊', name: 'City Analytics',         desc: 'Length distributions & trie node allocations.' },
-        { id: 'scanner',   icon: '📋', name: 'Text Scanner',           desc: 'Regex document analyzer with OCR simulators.' },
+        { id: 'travelintel', icon: '🗺️', name: 'Bharat Travel Intelligence & City Explorer', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
+        { id: 'roam',        icon: '🧭', name: 'Nexora ROAM Destination Intelligence', desc: 'Living destination load map, crowd balancer & smart rerouting.' },
+        { id: 'tourism',     icon: '🏛️', name: 'State Tourism & Hotelier Hub', desc: 'Virtual tour, state guides, homestays & hotelier portal.' },
+        { id: 'trip',        icon: '🧳', name: 'Interactive Trip Planner & Itinerary', desc: 'Custom itinerary builder, multi-stop corridor planner & budget calculator.' },
+        { id: 'game',        icon: '🎮', name: 'Geoguess Heritage & Culture Quiz', desc: 'Gamified Indian geography & cultural trivia quiz.' },
+        { id: 'travel',      icon: '🌐', name: 'India Geography & Distance Hub', desc: 'Distance matrix calculator, state search & coordinate locator.' }
       ],
       routing: [
-        { id: 'transitbooking', icon: '🎫', name: 'Transit & Booking Hub', desc: 'Find flight/train schedules, PNR seat maps & road trips.' },
-        { id: 'evrouter',       icon: '⚡', name: 'EV Corridor & Charging', desc: 'Highway fast chargers, charging slots & range estimators.' },
-        { id: 'localizer',      icon: '📍', name: 'City Localizer & Zones', desc: 'Explore city zones, localities, pin codes & district info.' },
-        { id: 'simadvisor',     icon: '📶', name: 'SIM & Connectivity Advisor', desc: 'Compare Jio, Airtel, Vi, BSNL plans for travelers.' },
-        { id: 'visa',           icon: '🛂', name: 'Visa & Entry Requirements', desc: 'Tourist visa rules, e-Visa fees & required documents.' },
-        { id: 'socket',         icon: '🔌', name: 'Socket & Electrical Guide', desc: 'Voltage, plug types (D, M, C) & adapter advice.' },
-        { id: 'sleep',          icon: '😴', name: 'Sleep & Rest Guide', desc: 'Station retiring rooms, airport pods & quiet hotel zones.' },
-        { id: 'pnrpredict',     icon: '🎫', name: 'PNR & Waitlist Predictor', desc: 'Predict IRCTC confirmation odds for waitlisted tickets.' },
-        { id: 'travel',      icon: '🗺️', name: 'Geography & Travel Hub', desc: 'Distance calculators and coordinate search.' },
-        { id: 'tourism',     icon: '🏛️', name: 'State Showcase',         desc: 'Tourism guides and travel logs per Indian state.' },
-        { id: 'trip',        icon: '🗃️', name: 'Trip Planner',           desc: 'Build detailed multi-stop travel itineraries.' },
-        { id: 'routesolver', icon: '🛣️', name: 'Transit Solver',         desc: 'SVG path visualizer with toll/fuel estimators.' },
-        { id: 'transit',     icon: '🚌', name: 'Transit Hub',            desc: 'Bus, auto, and shared cab fare estimators.' },
-        { id: 'seat',        icon: '🚃', name: 'Train Seat Maps',        desc: 'Sleeper/AC coach comfort maps with tier ratings.' },
-        { id: 'metro',       icon: '🚇', name: 'Metro Planner',          desc: 'City metro line navigator with interchange guide.' },
-        { id: 'airport',     icon: '✈️', name: 'Airport Navigator',      desc: 'Terminal maps and airline status dashboard.' },
-        { id: 'evisa',       icon: '🛂', name: 'e-Visa Calculator',      desc: 'India visa type selector with fee breakdowns.' },
-        { id: 'voltage',     icon: '🔌', name: 'Voltage Adapter',        desc: 'Regional socket types and rated voltage guide.' },
-        { id: 'atm',         icon: '💳', name: 'ATM & DCC Advisor',      desc: 'Avoid dynamic currency conversion traps abroad.' },
-        { id: 'irctc',       icon: '🎫', name: 'IRCTC Waitlist Engine',  desc: 'Predict waitlist confirmation probabilities.' },
-        { id: 'train',       icon: '🚂', name: 'Train Coach Comfort',    desc: 'Sleeper vs AC tier comparison and booking tips.' },
-        { id: 'currency',    icon: '🏦', name: 'Currency Converter',     desc: 'INR ↔ 25 currencies offline — flip & history.' },
-        { id: 'rickshaw',    icon: '🛺', name: 'Rickshaw Fare Calc',     desc: 'City-specific auto tariff rates and night surcharge.' },
-        { id: 'bagcalc',     icon: '✈️', name: 'Airline Baggage Calc',   desc: 'IndiGo, Air India, SpiceJet allowances + excess fees.' },
-        { id: 'upi',         icon: '📱', name: 'Foreigner UPI Guide',    desc: 'Setup guide & simulated QR scanner for digital wallets.' },
-        { id: 'coach',       icon: '🚃', name: 'Railway Coach Layout',   desc: 'Identify berth positions (Upper, Side Lower) & seat maps.' },
-        { id: 'forex',       icon: '🏦', name: 'Forex DCC ATM Simulator', desc: 'DCC trap simulator to avoid markup conversion fees.' },
-        { id: 'appguide',    icon: '📱', name: 'India Travel Apps Guide',  desc: 'Essential apps for transit, food, payments, and safety.' },
-        { id: 'livetrain',   icon: '🚆', name: 'Train Live Status',        desc: 'Simulated live train tracker, speed, platform & station ETAs.' },
-        { id: 'gstcalc',     icon: '🧾', name: 'GST Tax Refund Calc',     desc: 'Calculate shopping GST (5-28%) & airport refund eligibility.' },
-        { id: 'roadtrip',    icon: '🚗', name: 'Roadtrip & Taxi Calc',     desc: 'Estimate fuel, FASTag tolls, state permits & rental costs.' },
-        { id: 'evcharge',    icon: '⚡', name: 'EV Charge & Plug Calc',    desc: 'CCS2 & Type 2 chargers on highways with 20-80% charge times.' },
-        { id: 'busguide',    icon: '🚌', name: 'Interstate Sleeper Bus',   desc: 'Compare private AC sleeper buses & upper vs lower berths.' },
-        { id: 'hotelgst',    icon: '🧾', name: 'Hotel GST Tax Checker',   desc: 'Calculate 0-18% hotel GST slabs and service charge rules.' },
-        { id: 'tatkalhelper', icon: '🎟️', name: 'Tatkal Booking Speed Helper', desc: 'Precision 10:00 AM & 11:00 AM IRCTC Tatkal timer & tips.' },
-        { id: 'forexcalc',   icon: '🧾', name: 'Forex FX Markup Calculator', desc: 'Calculate hidden FX markup fees (3.5% vs 0%) & ATM loss.' },
-        { id: 'fastagcalc',   icon: '🚗', name: 'Expressway FASTag Toll Calc', desc: 'FASTag toll charges, speed limits & highway helplines.' },
-        { id: 'trainsocket',  icon: '🔌', name: 'Train Coach Power & Wi-Fi',   desc: 'Charging sockets by train class & RailWire Wi-Fi.' },
-        { id: 'cloakroom',    icon: '🎒', name: 'Railway Cloakroom Finder',    desc: 'Station luggage lockers, padlock rules & ₹15/day rates.' },
-        { id: 'rickshawmeter',icon: '🛺', name: 'Auto Meter & Night Surge',    desc: 'Calculate official RTO auto meter fares & night rates.' },
-        { id: 'pnrrefund',    icon: '🚆', name: 'IRCTC Refund & TDR Calculator', desc: 'Cancellation fee rules (48h, 12h, 4h) & TDR delay claims.' },
-        { id: 'cabestimator', icon: '🚕', name: 'Airport Taxi vs Cab Estimator', desc: 'Prepaid airport taxi counters vs Uber/Ola fare comparison.' },
-        { id: 'trainluggage', icon: '🎒', name: 'IRCTC Train Luggage Allowance', desc: 'Free luggage weight limits by AC/SL coach & excess fees.' }
-      ],
-      safety: [
-        { id: 'health',         icon: '🏥', name: 'Health & Vaccine Hub', desc: 'Immunization recommendations, water safety & clinics.' },
-        { id: 'splitter',       icon: '👥', name: 'Travel Expense Splitter', desc: 'Track shared trip expenses & calculate equal shares.' },
-        { id: 'safety',    icon: '🛡️', name: 'Health & Customs Safety', desc: 'Vaccine advisories and border customs rules.' },
-        { id: 'customs',   icon: '🛃', name: 'Customs & Duty',          desc: 'Duty-free limits and restricted items guide.' },
-        { id: 'legal',     icon: '⚖️', name: 'Legal & Rights',          desc: 'Know your rights and emergency legal helplines.' },
-        { id: 'insurance', icon: '📑', name: 'Travel Insurance',        desc: 'Policy comparison for trip and medical cover.' },
-        { id: 'medical',   icon: '🏥', name: 'Medical Locator',         desc: 'Nearest hospitals, clinics, and pharmacies.' },
-        { id: 'emergency', icon: '🆘', name: 'Emergency Contacts',      desc: 'National distress numbers and embassy contacts.' },
-        { id: 'solosafety',icon: 'bb', name: 'Solo Safety Advisor',     desc: 'Safety tips and resources for solo travelers.' },
-        { id: 'vault',     icon: '📲', name: 'Document Vault',          desc: 'Secure checklist and document backup tracker.' },
-        { id: 'simguide',  icon: '📡', name: 'SIM Card & Data Guide',   desc: 'Compare Jio, Airtel, Vi, BSNL — tourist SIM info.' },
-        { id: 'medkit',    icon: '💊', name: 'Travel Medical Kit',      desc: 'Checklist builder for essential OTC travel medicines.' },
-        { id: 'permits',   icon: '🛂', name: 'State Travel Permits',    desc: 'Check permits (ILP & PAP) required for border zones.' },
-        { id: 'scamcheck', icon: '🛡️', name: 'Tourist Scam Checker',    desc: 'Verify common tourist scams and get safety advice.' },
-        { id: 'altitude',  icon: '🏔️', name: 'Altitude Sickness Advisor', desc: 'Acclimatization calculator and safety guidelines.' },
-        { id: 'monsoonrisk', icon: '🌧️', name: 'Monsoon Risk Planner',   desc: 'Assess travel safety, landslide, and flood risks by region and month.' },
-        { id: 'waterrisk', icon: '💧', name: 'Drinking Water Safety Advisor', desc: 'Contamination indices for tap water, raw ice, and recovery steps.' },
-        { id: 'ayurveda',  icon: '🌿', name: 'Ayurveda Travel Wellness', desc: 'Natural Indian herbal remedies for travel fatigue, heat & digestion.' },
-        { id: 'signalprofiler', icon: '📶', name: 'Remote Network Profiler', desc: '4G/5G mobile signals & workation viability in hill stations.' },
-        { id: 'airquality', icon: '🛰️', name: 'Air Quality & AQI Tracker', desc: 'Real-time AQI, PM2.5 levels & mask advisories by city.' },
-        { id: 'altitudeprofiler', icon: '⛰️', name: 'Altitude AMS Risk Profiler', desc: 'AMS risk index, oxygen recommendations & acclimatization schedules.' },
-        { id: 'tidesafety', icon: '🥥', name: 'Coastal Tide & Swimming Advisor', desc: 'Beach safety levels, rip currents & high tide warnings.' },
-        { id: 'emergencyhealth', icon: '🏥', name: '24/7 Pharmacy & Blood Bank', desc: '24-hour pharmacies, blood bank helplines & 108 ambulance.' },
-        { id: 'datasaver', icon: '📱', name: 'Offline Maps & Data Saver',    desc: 'Google Maps offline setup, 112 India SOS & battery saver.' },
-        { id: 'upiguide',  icon: '📱', name: 'Tourist UPI Payment Setup',   desc: 'UPI One World / Cheq wallet for international travelers.' },
-        { id: 'signalsimplified', icon: '📶', name: 'Remote Hill Station Network', desc: 'Jio, Airtel & BSNL hill coverage + J&K postpaid rule.' },
-        { id: 'airportsecurity', icon: '🧳', name: 'Airport Cabin Security Limits', desc: 'BCAS 100ml liquid limit, power bank & banned items.' },
-        { id: 'medtranslator',   icon: '💊', name: 'OTC Medicine Salt Translator', desc: 'Translate generic salt names to Indian pharmacy brands.' },
-        { id: 'plugsockets',     icon: '🔌', name: 'Hotel Plug Socket Guide',       desc: 'Type D (5A) & Type M (15A) sockets + voltage guide.' },
-        { id: 'stationwifi',     icon: '📶', name: 'Station RailWire Wi-Fi OTP',    desc: 'OTP connection steps & speed limits on 6,000+ stations.' },
-        { id: 'livelocation',    icon: '🛡️', name: 'Night Safety & Live Location',  desc: 'WhatsApp live share, Uber ride status & 112 SOS.' }
+        { id: 'transport',   icon: '✈️', name: 'Bharat Multi-Mode Transport Matrix', desc: 'Separated 5-mode transport estimator for Flight, Bus, Car, Auto, Train.' },
+        { id: 'flight',      icon: '🛫', name: 'Aeroplane & Flight Estimator', desc: 'Domestic flight corridors, airport codes & baggage policy breakdown.' },
+        { id: 'bus',         icon: '🚌', name: 'Intercity & City Bus Matrix', desc: 'Volvo AC sleeper vs seater fares, RTC state stands & city bus tariffs.' },
+        { id: 'car',         icon: '🚗', name: 'Car, Taxi & Fuel / FASTag Calculator', desc: 'Calculate trip fuel liters, fuel cost in ₹, highway FASTag tolls & cab rates.' },
+        { id: 'auto',        icon: '🛺', name: 'Auto Rickshaw Meter & Night Surge', desc: 'Official RTO auto meter tariff estimator with 25% night surcharge.' },
+        { id: 'train',       icon: '🚆', name: 'Express Railways & PNR Guide', desc: 'Vande Bharat, 3AC vs Sleeper, Tatkal booking clock & IRCTC luggage rules.' }
       ],
       culture: [
-        { id: 'discovery',      icon: '✨', name: 'City Discovery & Gems', desc: 'Uncover off-beat attractions & local viewpoints.' },
-        { id: 'festivals',      icon: '🎉', name: 'Festivals Calendar', desc: 'Dates, regional traditions & celebrations across India.' },
-        { id: 'compare',        icon: '⚖️', name: 'City Comparator Tool', desc: 'Compare population, weather & attractions between 2 cities.' },
-        { id: 'budget',         icon: '💰', name: 'Trip Budget Estimator', desc: 'Calculate daily lodging, dining, transit & sight budgets.' },
-        { id: 'culinary',       icon: '🍛', name: 'Culinary Heritage Guide', desc: 'Iconic state dishes, sweet treats & spice levels.' },
-        { id: 'landmarks',      icon: '🏛️', name: 'Historic Landmarks & Forts', desc: 'Palaces, forts, temples & UNESCO world heritage sites.' },
-        { id: 'tracker',        icon: '📍', name: 'Journey Route Tracker', desc: 'Log visited cities, milestones & visualize travel routes.' },
-        { id: 'baggage',        icon: '🧳', name: 'Luggage & Packing Checklist', desc: 'Luggage weight tracker & packing checklist.' },
-        { id: 'photohub',       icon: '📸', name: 'Monument Photography Guide', desc: 'Best photo spots, golden hour & camera rules.' },
-        { id: 'culture',      icon: '🎭', name: 'Culture Explorer',    desc: 'Regional festivals, traditions, and dress codes.' },
-        { id: 'festival',     icon: '🎉', name: 'Festival Calendar',   desc: 'Upcoming regional events and public holidays.' },
-        { id: 'food',         icon: '🍛', name: 'Regional Cuisine',    desc: 'Signature dishes and food experiences by state.' },
-        { id: 'foodsafety',   icon: '🥗', name: 'Street Food Safety',  desc: 'Tap water index and local beverage catalogues.' },
-        { id: 'photo',        icon: '📸', name: 'Photo Hub',           desc: 'Log camera shots of famous architectural monuments.' },
-        { id: 'shopping',     icon: '🛍️', name: 'Souvenir & Craft',   desc: 'Authenticity checks for Pashmina wool and real silk.' },
-        { id: 'notes',        icon: '📒', name: 'Travel Notes Journal', desc: 'Capture and export travel memories.' },
-        { id: 'smartpacker',  icon: '📅', name: 'Smart Packer',        desc: 'Dynamic gear checklist generator by duration.' },
-        { id: 'voice',        icon: '🗣️', name: 'Speech Translator',   desc: 'Vocal translations in regional Indian dialects.' },
-        { id: 'stomach',      icon: '🧘', name: 'Stomach Safety',      desc: 'Diet options and Ayurvedic herbal remedies.' },
-        { id: 'weather',      icon: '🌤️', name: 'Weather Advisor',     desc: 'Pack planning by season and regional climate.' },
-        { id: 'sunclock',     icon: '🌅', name: 'Sunrise & Sunset',     desc: 'Astronomical sun times for any Indian city.' },
-        { id: 'qrcode',       icon: '🔲', name: 'QR Code Generator',   desc: 'Generate QR for URL, UPI, phone — download PNG.' },
-        { id: 'playlist',     icon: '🎵', name: 'Travel Vibe Playlist', desc: 'Curate trending Indian songs by your journey style.' },
-        { id: 'diet',         icon: '🍽️', name: 'Dietary Translator',   desc: 'Generate waiter allergy translation cards (Hindi, Tamil, etc.).' },
-        { id: 'spicemenu',    icon: '🍛', name: 'Curry & Spice Translator', desc: 'Decode Indian menu terms, spice levels, and allergens.' },
-        { id: 'bargain',      icon: '🛍️', name: 'Street Bargaining Simulator', desc: 'Interactive negotiation guide and street market price checker.' },
-        { id: 'monumentphoto', icon: '📸', name: 'Monument Golden Hour Advisor', desc: 'Optimize photography timings and camera rules for sights.' },
-        { id: 'templeetiquette', icon: '🕌', name: 'Religious Sights Etiquette Guide', desc: 'Customs, dress codes, shoe drop protocols, and offerings rules.' },
-        { id: 'localspeak',   icon: '🗣️', name: 'Local Speak Phrasebook (TTS)', desc: 'Pronounce day-to-day survival phrases with built-in voice synthesis.' },
-        { id: 'tipguide',     icon: '💰', name: 'Tipping Culture Guide',       desc: 'When, how much, and whether to tip across every India scenario.' },
-        { id: 'unesco',       icon: '🏰', name: 'UNESCO Heritage Sights',     desc: 'Monuments, ancient caves, national parks & visitor guides.' },
-        { id: 'prasad',       icon: '🕉️', name: 'Temple Prasad Guide',        desc: 'Ingredients, shelf-life & booking for sacred temple offerings.' },
-        { id: 'chaiguide',    icon: '🍵', name: 'Chai & Tea Culture Guide',   desc: 'Explore regional Indian tea recipes, spices & street snacks.' },
-        { id: 'folkdance',   icon: '💃', name: 'Folk Dance & Culture Arts',   desc: 'Kathakali, Bhangra, Garba & regional performance guides.' },
-        { id: 'monumenttickets', icon: '🏰', name: 'Monument ASI Ticket Calc', desc: 'Official entry ticket prices, camera rules & closure days.' },
-        { id: 'gitagguide',   icon: '🛍️', name: 'GI Tag Craft Authenticity', desc: 'Verify real Pashmina, Kanjeevaram & Banarasi silk crafts.' },
-        { id: 'genzspotlight', icon: '📸', name: 'Gen Z Aesthetic Spot & Reels', desc: 'Instagram photo spots, golden hour lights & camera filters.' },
-        { id: 'workcafe',      icon: '☕', name: 'Specialty Coffee & Workation', desc: 'Laptop-friendly cafes (Blue Tokai, Third Wave) + Wi-Fi.' },
-        { id: 'backpackerhostel', icon: '🎒', name: 'Backpacker Social Hostels', desc: 'Zostel & Hosteller dorm rates, events & female safety.' },
-        { id: 'ecotravel',     icon: '🌱', name: 'Eco-Conscious Travel',        desc: 'Carbon footprint calculator, water refill & green stays.' },
-        { id: 'genzvibes',     icon: '🎵', name: 'Sunset Vibes & Music Playlists', desc: 'Curated Indie-Indian Spotify playlists for roadtrips & chill.' },
-        { id: 'powerbankswap', icon: '⚡', name: 'Power Bank Rental Kiosk Swap', desc: 'Rent fast-charge power banks at cafes, airports & metros.' },
-        { id: 'scooterrental', icon: '🛵', name: 'Rental Scooter & Bike Tariff', desc: 'Scooter & Himalayan rental rates in Goa, Leh, Manali & Pondy.' },
-        { id: 'genzslang',     icon: '💬', name: 'Urban Gen Z Slang Decoder',   desc: 'Bambaiya, Delhi scene & Bengaluru macha street lingo.' },
-        { id: 'livegigs',      icon: '🎟️', name: 'Indie Music Gigs & Festivals', desc: 'Live indie concerts, flea markets, NH7 & comedy show finder.' },
-        { id: 'veganindia',    icon: '🥗', name: 'Vegan & Plant-Based Food',    desc: 'Oat milk cafes, pure-veg spots & dairy-free Indian dishes.' },
-        { id: 'thriftmap',     icon: '🛍️', name: 'Thrift Store & Flea Market',  desc: 'Sarojini, Hill Road & Anjuna vintage Y2K thrifting.' },
-        { id: 'adventuregenz', icon: '🧗', name: 'Bouldering & Water Surfing',  desc: 'Hampi rock climbing, Varkala surf & Rishikesh kayaking.' },
-        { id: 'petfriendly',   icon: '🐶', name: 'Pet-Friendly Travel & Trains', desc: '1st AC train pet booking, pet cafes & Zostel Pets.' },
-        { id: 'bobafinder',    icon: '🍵', name: 'Matcha & Boba Bubble Tea',   desc: 'Ceremonial matcha lattes & tapioca pearl boba spots.' },
-        { id: 'nightlifegenz', icon: '🪩', name: 'Nightlife & Silent Discos',   desc: 'Speakeasies, rooftop lounges & Palolem silent headphones.' },
-        { id: 'genzsplit',     icon: '💸', name: 'Group UPI Bill Splitter',     desc: 'Split group trip costs, tips & taxes with instant per-head math.' },
-        { id: 'filmcamera',    icon: '📸', name: '35mm Film Camera & X-Ray Guide', desc: 'Analog film stocks, developing labs & CT scanner safety.' },
-        { id: 'capsulehotel',  icon: '😴', name: 'Airport Capsule & Sleeping Pods', desc: 'Snooze At My Space, Urbanpod rates & lounge pass access.' },
-        { id: 'wellnessretreat', icon: '🧘', name: 'Sunset Yoga & Sound Healing', desc: 'Rishikesh rooftop yoga, Tibetan singing bowls & retreats.' },
-        { id: 'esimchecker',   icon: '📱', name: 'Tourist eSIM & Roaming Packs', desc: 'Airalo, Nomad, Jio eSIM & Airtel digital SIM activation.' },
-        { id: 'streetart',     icon: '🎨', name: 'Street Art & Mural Walking Tours', desc: 'Lodhi Art District Delhi, Bandra & Fort Kochi murals.' },
-        { id: 'nightmarket',   icon: '🥟', name: 'Street Food Night Markets',   desc: 'Sarafa Indore, Law Garden Ahmedabad & Majnu Ka Tilla.' },
-        { id: 'popupevents',   icon: '🎪', name: 'Flea Popups & Art Exhibitions', desc: 'Artisan bazaars, vinyl swaps & design pop-up events.' },
-        { id: 'naturetrails',  icon: '🌱', name: 'Silent Beach & Nature Trails', desc: 'Gokarna cliff walks, Cubbon Park & mangrove kayaking.' },
-        { id: 'artisanchai',   icon: '🍵', name: 'Artisan Kulhad Chai Spots',    desc: 'Kashmiri Kahwa, organic spice chai & tea houses.' },
-        { id: 'pocketwifi',    icon: '📶', name: 'Portable 5G Pocket Wi-Fi Dongle', desc: 'Rent 5G JioFi & Airtel pocket Wi-Fi routers for roadtrips.' },
-        { id: 'skateparks',    icon: '🛹', name: 'Skateparks & Roller Skating Rinks', desc: 'Desert Dolphin, Cave BLR & Carter Road skate parks.' },
-        { id: 'driveincinema', icon: '🎬', name: 'Drive-In & Rooftop Outdoor Cinema', desc: 'Sunset Cinema Club drive-in theaters & wireless headphones.' },
-        { id: 'sneakerculture', icon: '👟', name: 'Streetwear Sneaker Drops & Care', desc: 'VegNonVeg, Superkicks, Mainstreet & sneaker restoration.' },
-        { id: 'comedyclubs',   icon: '🎙️', name: 'Stand-Up Comedy Clubs & Open Mics', desc: 'The Habitat Mumbai, Canvas Comedy & CounterCulture BLR.' },
-        { id: 'gokarting',     icon: '🏎️', name: 'Go-Karting & Electric Drift', desc: 'Smaaash Mumbai, Red Riders BLR & Arpora Goa circuits.' },
-        { id: 'ziplinegenz',   icon: '🧗', name: 'High-Ropes & Zip-Line Adventure', desc: 'Flying Fox Rishikesh, Neemrana & Della Lonavala zip lines.' },
-        { id: 'neonbowling',   icon: '🎳', name: 'Neon Cosmic Bowling & Arcades', desc: 'Smaaash cosmic glow bowling, Timezone & Shott arcades.' },
-        { id: 'suppaddle',     icon: '🏄', name: 'SUP Paddleboarding & Kayaking', desc: 'Sunrise SUP in Goa, Varkala & Mulki Karnataka rivers.' },
-        { id: 'scubagenz',     icon: '🤿', name: 'Scuba Diving Reefs & Snorkeling', desc: 'Grand Island Goa, Havelock Andaman & Netrani Island reefs.' },
-        { id: 'escaperoom',    icon: '🧩', name: 'Escape Rooms & Mystery Games', desc: '60-min mystery rooms (Mystery Rooms, Breakout India).' },
-        { id: 'trampolinepark', icon: '🤸', name: 'Trampoline Parks & Foam Pits', desc: 'Bounce Inc, SkyJumper foam pits & slam dunk courts.' },
-        { id: 'lasertagarena', icon: '🎯', name: 'Laser Tag & Paintball Arenas', desc: 'Neon laser tag arenas & tactical paintball combat.' },
-        { id: 'boardgamecafe', icon: '☕', name: 'Board Game Cafes & Tabletop',   desc: '200+ tabletop board games & Game Master assistance.' },
-        { id: 'axethrowing',   icon: '🪓', name: 'Axe Throwing & Rage Rooms',    desc: 'Target axe throwing lanes & smash rage rooms for stress.' },
-        { id: 'podcaststudio', icon: '🎙️', name: 'Podcast Studios & Sound Booths', desc: 'Acoustic podcast recording studios with Shure SM7B mics.' },
-        { id: 'photobooth',    icon: '📸', name: 'Vintage Y2K Photo Booth Kiosks', desc: 'Korean 4-cut strip photo booths & digital QR soft copies.' },
-        { id: 'customworkshop', icon: '🎨', name: 'Custom Sneaker & Denim DIY',     desc: 'DIY acrylic sneaker customizer studios & denim upcycling.' },
-        { id: 'potterystudio', icon: '🪴', name: 'Ceramic Pottery Wheel Studios', desc: 'Pottery wheel spinning classes & clay kiln firing services.' },
-        { id: 'terrariumshop', icon: '🌱', name: 'Terrarium Workshops & Plant Cafes', desc: 'Build glass moss terrariums at botanical plant cafes.' },
-        { id: 'gympassgenz',   icon: '🏋️', name: '24/7 Gym Pass & Drop-In Fitness', desc: 'Cult.fit Pass, Anytime Fitness 24/7 & Gold\'s Gym drop-ins.' },
-        { id: 'boulderinggym', icon: '🧗', name: 'Bouldering Gyms & Climbing Walls', desc: 'Indoor bouldering gyms, crash pad & climbing shoe rentals.' },
-        { id: 'icebathhub',    icon: '🧊', name: 'Ice Bath & Cold Plunge Hydrotherapy', desc: '4°C ice bath cold plunge tubs & infrared sauna recovery.' },
-        { id: 'matchabar',     icon: '🍵', name: 'Ceremonial Matcha & Whisked Lattes', desc: 'Whisked Japanese ceremonial-grade matcha & oat milk.' },
-        { id: 'artisangelato', icon: '🍦', name: 'Artisanal Gelato & Micro-Creamery', desc: 'Small-batch Italian gelaterias, sorbets & soft serve.' },
-        { id: 'nightchemist',  icon: '🏥', name: '24/7 Emergency Night Chemists',  desc: 'Round-the-clock 24h pharmacies & emergency medicine.' },
-        { id: 'charginghub',   icon: '🔌', name: 'Universal Laptop Charging Desks', desc: 'Fast 65W Type-C charge hubs & power bank kiosks.' },
-        { id: 'waterrefill',   icon: '💧', name: 'Clean RO Water Refill ATMs',    desc: 'Public RO water ATMs (₹1/liter) & cafe refills.' },
-        { id: 'coworkingdesk', icon: '💼', name: '24/7 Co-Working Flexi Desks',    desc: 'Day passes & 24/7 desks (WeWork, Awfis, Innov8).' },
-        { id: 'luggagestorage', icon: '🧳', name: 'Luggage Storage & Cloakrooms',  desc: 'Railway cloakrooms (₹30/day) & airport bag drops.' },
-        { id: 'docservices',   icon: '📋', name: 'Passport Photo & Document Hub',  desc: 'Instant passport photos, notary & Aadhaar photocopy.' },
-        { id: 'atmcash',       icon: '🏧', name: 'ATM Locator & Forex Exchange',   desc: 'Zero-fee ATMs, withdrawal limits & RBI forex counters.' },
-        { id: 'laundryspot',   icon: '👕', name: 'Laundry & Express Dry Cleaning',  desc: 'Same-day wash & fold pickup (UClean, Wassup) per-kg.' },
-        { id: 'cleantoilet',   icon: '🚻', name: 'Clean Restroom & Toilet Finder', desc: 'Sulabh complexes, e-toilets & mall restroom guides.' },
-        { id: 'puncturerepair', icon: '🛥️', name: 'Bike Puncture & Roadside Repair', desc: 'Tyre puncture shops, petrol bunk mechanics & helpline.' }
+        { id: 'lingo',       icon: '🗣️', name: 'Bharat Lingo & Cultural Audio Matrix', desc: 'Text-to-Speech audio translator for 10 regional Indian languages.' },
+        { id: 'etiquette',   icon: '🕌', name: 'Temple & Social Etiquette Guide', desc: 'Footwear etiquette, tipping rules across dhabas vs fine dining, & bazaar bargaining.' },
+        { id: 'phrases',     icon: '💬', name: 'Everyday Market & Travel Phrases', desc: 'Regional phrases for shopping, cabs, food & greetings.' }
+      ],
+      safety: [
+        { id: 'survival',    icon: '📲', name: 'Digital Survival Kit & SOS Center', desc: 'Speed-dial emergency hotlines, essential travel apps, & foreign tourist guide.' },
+        { id: 'sos',         icon: '🚨', name: 'Pan-India Emergency SOS Speed-Dial', desc: 'Direct dial 112 National Emergency, 100 Police, 108 Medical, 1363 Tourist Helpline.' },
+        { id: 'apps',        icon: '📱', name: 'Essential Indian Travel Apps Directory', desc: 'IRCTC Rail Connect, UTS, PhonePe/Paytm UPI, Uber/Ola, Google Maps, DigiLocker.' },
+        { id: 'upi',         icon: '💳', name: 'NRI & Foreign Tourist UPI & SIM Guide', desc: 'Airport eSIM activation & Cheq UPI for international credit cards.' }
       ]
     };
     window.ARVORA_ALL_FEATURES = FEATURES;
