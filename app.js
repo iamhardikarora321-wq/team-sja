@@ -2,7 +2,37 @@
   // =====================================================================
   // 🌟 ARVORA CORE WORKING & 3D FEATURE CATALOG
   // =====================================================================
-      const ARVORA_MASTER_180_FEATURES = {
+        // =====================================================================
+  // 🌐 GLOBAL UTILITIES (capitalizeWord, getCityCoords, computeLogisticsFacts, safeText)
+  // =====================================================================
+  function capitalizeWord(word) {
+    if (!word) return "";
+    return String(word).split(" ").map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : "").join(" ");
+  }
+  window.capitalizeWord = capitalizeWord;
+
+  function getCityCoords(cityName) {
+    if (!cityName) return { lat: 20.5937, lng: 78.9629 };
+    let hash = 0;
+    const cStr = String(cityName).trim().toLowerCase();
+    for (let i = 0; i < cStr.length; i++) {
+      hash = cStr.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    hash = Math.abs(hash);
+    
+    const lat = 8.4 + (hash % 280) / 10;
+    const lng = 68.7 + ((hash >> 4) % 270) / 10;
+    return { lat, lng };
+  }
+  window.getCityCoords = getCityCoords;
+
+  function safeText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+  window.safeText = safeText;
+
+    const ARVORA_MASTER_180_FEATURES = {
     roam: [
       { id: 'discover', name: 'Discover Destination Load & Spatial Heatmaps', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting.' },
       { id: 'roam-plan', name: 'Plan Dynamic Travel Itinerary Matrix', title: 'Plan Dynamic Travel Itinerary Matrix', category: 'Smart Travel', categoryKey: 'roam', icon: '📅', desc: 'AI-assisted dynamic itinerary generator and smart destination schedule balancer.' },
