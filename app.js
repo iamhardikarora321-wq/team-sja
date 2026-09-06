@@ -1513,8 +1513,16 @@
 
     let activeTab = document.getElementById("tab-content-" + tabId);
     if (!activeTab) {
-      tabId = 'travelintel';
-      activeTab = document.getElementById("tab-content-travelintel");
+      const parentTabMap = {
+        flight:'transport', bus:'transport', car:'transport', auto:'transport', train:'transport', aeroplane:'transport', roadtrip:'transport', rickshaw:'transport', bagcalc:'transport', transitbooking:'transport', cabestimator:'transport', fastagcalc:'transport', evcharge:'transport', evrouter:'transport', seat:'transport', metro:'transport', airport:'transport', routesolver:'transport', fuelcost:'transport', pnrpredict:'transport', tatkal:'transport', baggage:'transport', airportcode:'transport', sleeperbus:'transport', vande:'transport', ferry:'transport', carrental:'transport', bikebook:'transport', stationcode:'transport', retiringroom:'transport', coachlocator:'transport', highwaydhabas:'transport', tollfree:'transport', parking:'transport',
+        hindi:'lingo', bengali:'lingo', tamil:'lingo', marathi:'lingo', telugu:'lingo', gujarati:'lingo', kannada:'lingo', malayalam:'lingo', punjabi:'lingo', odia:'lingo', culture:'lingo', translator:'audio', etiquette:'lingo', phrases:'lingo', bargain:'lingo', tipping:'lingo', templedress:'lingo', foodetiquette:'lingo', festivals:'lingo', handicrafts:'lingo', music:'lingo', dance:'lingo', architecture:'lingo', cuisineglossary:'lingo', streetfoodsafe:'lingo', tea:'lingo', artisanworkshops:'lingo', heritagecrafts:'lingo', localcustoms:'lingo',
+        delhitourism:'tourism', mumbaitourism:'tourism', jaipurtourism:'tourism', keralatourism:'tourism', varanasitourism:'tourism', goatourism:'tourism', punetourism:'tourism', bengalurutourism:'tourism', kolkatatourism:'tourism', chennaitourism:'tourism', hyderabadtourism:'tourism', shimlatourism:'tourism', rishikeshtourism:'tourism', amritsartourism:'tourism', agratourism:'tourism', udaipurtourism:'tourism', jodhpurtourism:'tourism', mysoretourism:'tourism', darjeelingtourism:'tourism', shillongtourism:'tourism', ladakhtourism:'tourism', andamantourism:'tourism', kazirangatourism:'tourism', hampitourism:'tourism', maduraitourism:'tourism', pondicherrytourism:'tourism', states:'tourism', hotel:'tourism', homestay:'tourism',
+        sos:'survival', apps:'survival', upi:'survival', emergency:'survival', vault:'survival', helpline:'survival', simguide:'survival', solosafety:'survival', stomach:'survival', foodsafety:'survival', scamadvisor:'survival', nriguide:'survival', visainfo:'survival', heatwave:'survival', monsoonsafety:'survival', highaltitude:'survival', embassy:'survival', travelinsurance:'survival', lostfound:'survival', cybersecurity:'survival', atm:'survival', pharmacy:'survival', bloodbank:'survival', snakebite:'survival', beachsafety:'survival', nighttravel:'survival', scamrates:'survival', policepost:'survival', digitalcopies:'survival',
+        itinerary:'trip', budget:'trip', pack:'trip', notes:'trip', smartpacker:'trip', tracker:'trip',
+        geography:'travel', matrix:'travel', distance:'travel', map:'travel', pincode:'travel', converter:'travel', socket:'travel', timezone:'travel', shopping:'travel', localizer:'travel', voice:'travel', sleep:'travel', altitude:'travel', language:'travel', dialcode:'travel', rto:'travel', circuit:'travel', offline:'travel'
+      };
+      let fallbackId = parentTabMap[cleanId] || 'travelintel';
+      activeTab = document.getElementById("tab-content-" + fallbackId);
     }
 
     window._currentActiveTab = tabId;
