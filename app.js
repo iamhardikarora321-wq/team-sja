@@ -15,7 +15,9 @@
       if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
     }
     if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
-    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine') tabId = 'roam';
+    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine' || tabId === 'pattern' || tabId === 'analytics' || tabId === 'scanner' || tabId === 'routes') tabId = 'roam';
+    if (tabId === 'transithub' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'roadtrip' || tabId === 'rickshaw' || tabId === 'bagcalc' || tabId === 'transitbooking') tabId = 'transport';
+    if (tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety' || tabId === 'vault') tabId = 'survival';
     if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
     if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
     if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';
@@ -151,28 +153,16 @@
     "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra",
     "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
     "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
-  ];
-
-    var DEFAULT_SHOWCASE_FEATURES = [
+  ];    var DEFAULT_SHOWCASE_FEATURES = [
       { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', icon: '🗺️', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
       { id: 'roam', title: 'Nexora ROAM Destination Intelligence', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
       { id: 'transport', title: 'Bharat Multi-Mode Transport & Tariff Hub', category: 'Transit & Fares', icon: '✈️', desc: 'Separated 5-mode transport estimator for Flights, Buses, Cars, Auto meter, and Railways.' },
       { id: 'lingo', title: 'Bharat Lingo & Cultural Etiquette Matrix', category: 'Culture & Audio', icon: '🗣️', desc: 'Interactive Text-to-Speech audio translator for 10 regional Indian languages & temple etiquette.' },
       { id: 'survival', title: 'Digital Survival Kit & SOS Center', category: 'Safety & Apps', icon: '📲', desc: 'Speed-dial emergency helplines, essential travel apps, and NRI/foreign tourist guide.' },
-      { id: 'routes', title: 'Logistics & Route Seed Exporter', category: 'Data & Logistics', icon: '📦', desc: 'Export structured JSON/SQL seed data with state filtering.' },
-      { id: 'game', title: 'Geoguess City Spelling Game', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
       { id: 'tourism', title: 'State Tourism Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, and culture across all Indian states.' },
-      { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🗺️', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' },
-      { id: 'pattern', title: 'Pattern & Suffix Search', category: 'Search Tool', icon: '🔠', desc: 'Filter cities by suffix, prefix, or length constraints.' },
-      { id: 'analytics', title: '15K City Data Analytics', category: 'Analytics', icon: '📊', desc: 'Visual metrics, length distributions, and start letter frequencies.' },
-      { id: 'scanner', title: 'Indian City Text Scanner', category: 'Text Scanner', icon: '📋', desc: 'Scan any document or news article to detect all Indian city mentions.' },
-      { id: 'transitbooking', title: 'Transit Booking & Route Hub', category: 'Transit & Travel', icon: '🎫', desc: 'Book IRCTC train tickets, Intercity Volvo buses & flight status.' },
-      { id: 'foodsafety', title: 'Street Food Hygiene Advisor', category: 'Food & Health', icon: '🛡️', desc: 'FSSAI hygiene ratings, mineral water checks & tummy safety.' },
-      { id: 'vault', title: 'Encrypted Offline Document Vault', category: 'Security Vault', icon: '📲', desc: 'Store encrypted passports, driving licenses & booking PDFs offline.' },
-      { id: 'notes', title: 'Offline Travel Journal & Notes', category: 'Journal & Notes', icon: '📒', desc: 'Log travel memories, hotel pin codes & itinerary checklists.' },
-      { id: 'emergency', title: '24/7 Emergency Helplines', category: 'Safety & SOS', icon: '🆘', desc: 'Direct dial 112 Police, Tourist Helpline 1363 & Ambulance 108.' },
-      { id: 'weather', title: 'Live City Weather Forecast', category: 'Weather', icon: '🌤️', desc: 'Real-time temperature, AQI index & monsoon weather alerts.' },
-      { id: 'atmcash', title: 'Zero-Fee ATM & Forex Finder', category: 'Finances', icon: '🏧', desc: 'Locate 24/7 ATMs, currency exchange desks & cash points.' }
+      { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🧳', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' },
+      { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
+      { id: 'travel', title: 'India Geography & Travel Hub', category: 'Geography', icon: '🌐', desc: 'Distance matrix calculator, state search, and coordinate locator.' }
     ];
 
   // --- HARD RESET & UNFREEZE RECOVERY ---
@@ -1211,7 +1201,9 @@
       if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
     }
     if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
-    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine') tabId = 'roam';
+    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine' || tabId === 'pattern' || tabId === 'analytics' || tabId === 'scanner' || tabId === 'routes') tabId = 'roam';
+    if (tabId === 'transithub' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'roadtrip' || tabId === 'rickshaw' || tabId === 'bagcalc' || tabId === 'transitbooking') tabId = 'transport';
+    if (tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety' || tabId === 'vault') tabId = 'survival';
     if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
     if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
     if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';

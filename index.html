@@ -15,10 +15,15 @@
   window._arvoraPin = "";
   function populateShowcase3DStage() {
     var stage = document.getElementById('showcase-3d-stage');
-    if (!stage) return;
-    var defaultFeatures = [      { id: 'tourism', title: 'Hotelier & Homestay Booking Hub', category: 'Hospitality', icon: '🏨', desc: 'Direct booking portal empowering tier-2/3 hoteliers without 20-30% aggregator commissions.' },
-      { id: 'trip', title: 'Travel Corridor & Itinerary Planner', category: 'Travel Guide', icon: '🗺️', desc: 'Plan custom itineraries, track multi-modal transit stops, and estimate travel budgets.' },
-      { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Culture Quiz', icon: '🎮', desc: 'Gamified exploration of Indian regional culture, food, and historical sites.' }
+    if (!stage) return;    var defaultFeatures = [
+      { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', icon: '🗺️', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
+      { id: 'roam', title: 'Nexora ROAM Destination Intelligence', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
+      { id: 'transport', title: 'Bharat Multi-Mode Transport & Tariff Hub', category: 'Transit & Fares', icon: '✈️', desc: 'Separated 5-mode transport estimator for Flights, Buses, Cars, Auto meter, and Railways.' },
+      { id: 'lingo', title: 'Bharat Lingo & Cultural Etiquette Matrix', category: 'Culture & Audio', icon: '🗣️', desc: 'Interactive Text-to-Speech audio translator for 10 regional Indian languages & temple etiquette.' },
+      { id: 'survival', title: 'Digital Survival Kit & SOS Center', category: 'Safety & Apps', icon: '📲', desc: 'Speed-dial emergency helplines, essential travel apps, and NRI/foreign tourist guide.' },
+      { id: 'tourism', title: 'State Tourism Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, and culture across all Indian states.' },
+      { id: 'trip', title: 'Interactive Trip Planner', category: 'Trip Planning', icon: '🧳', desc: 'Plan custom itineraries, track stops, and calculate travel budgets.' },
+      { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', icon: '🎮', desc: 'Gamified exploration of Indian regional culture, food, and historical sites.' }
     ];
     var html = '';
     defaultFeatures.forEach(function(feat, idx) {
