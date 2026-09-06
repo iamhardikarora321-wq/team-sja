@@ -1520,16 +1520,17 @@
   // =====================================================================
 
   function updateVisualizer() {
+    if (!svgViewport) return;
     let treeData = null;
     
     if (visualizerMode === 'playground') {
-      treeData = playgroundTrie.exportToJSON();
+      treeData = playgroundTrie ? playgroundTrie.exportToJSON() : null;
     } else {
-      const query = searchInput.value.trim().toLowerCase();
+      const query = (searchInput && searchInput.value) ? searchInput.value.trim().toLowerCase() : "";
       if (!query) {
         treeData = { label: "root", isEnd: false, children: [] };
       } else {
-        treeData = radixTrie.exportSubtreeToJSON(query);
+        treeData = radixTrie ? radixTrie.exportSubtreeToJSON(query) : null;
         if (!treeData) {
           treeData = { label: "root (no matches)", isEnd: false, children: [] };
         }
@@ -1540,6 +1541,7 @@
   }
 
   function drawTree(treeData) {
+    if (!svgViewport) return;
     svgViewport.innerHTML = "";
     if (!treeData) return;
 
