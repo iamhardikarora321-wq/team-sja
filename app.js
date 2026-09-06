@@ -2299,330 +2299,482 @@
   applyTheme(currentTheme);
 
   // =====================================================================
-  // STATE TOURISM SHOWCASE & DIRECTORY DATABASE & LOGIC
+  // 🏛️ ULTIMATE PAN-INDIA TOURISM & STATE SHOWCASE DATABASE (ALL 36 STATES & UTs)
   // =====================================================================
   let tourismInitialized = false;
-  let activeState = "";
+  let activeState = "Rajasthan";
+  let activeTourismRegion = "all";
 
-    const TOURISM_DATABASE = {
-    "Maharashtra": {
-      capital: "Mumbai",
-      language: "Marathi",
-      climate: "Tropical Monsoon (Best: Oct-Mar)",
-      desc: "Land of historic rock-cut caves, massive Sahyadri forts, Arabian Sea beaches, and India's vibrant financial capital.",
+  const TOURISM_DATABASE = {
+    "Rajasthan": {
+      region: "west",
+      capital: "Jaipur",
+      language: "Hindi, Rajasthani, Marwari",
+      climate: "Arid Desert (Best: Oct-Mar)",
+      tagline: "Land of Maharajas, Forts & Golden Dunes",
+      desc: "India's desert jewel featuring majestic hilltop citadels, royal palaces, vibrant bazaars, camel safaris in the Thar, and opulent heritage hospitality.",
       attractions: [
-        { name: "Gateway of India & Marine Drive", icon: "🏛️", desc: "A spectacular 20th-century arch monument overlooking the Arabian Sea, coupled with the sweeping Queen's Necklace promenade." },
-        { name: "Ajanta & Ellora Caves (Aurangabad)", icon: "🗿", desc: "UNESCO World Heritage rock-cut Buddhist, Hindu, and Jain cave monuments dating back to the 2nd century BCE." },
-        { name: "Western Ghats & Lonavala Forts", icon: "⛰️", desc: "Lush green hill stations famous for deep valleys, gorgeous monsoonal waterfalls, and Shivaji Maharaj's historic forts." }
+        { name: "Amer Fort & Hawa Mahal (Jaipur)", icon: "🏰", category: "UNESCO Heritage", desc: "16th-century hilltop red sandstone citadel with mirror-mosaic Sheesh Mahal and 953-window pink honeycomb facade." },
+        { name: "Mehrangarh Fort (Jodhpur)", icon: "🛡️", category: "Fortress", desc: "Massive 400-foot cliffside fortress towering above the famous Blue City of Jodhpur." },
+        { name: "Lake Pichola & City Palace (Udaipur)", icon: "⛵", category: "Palace & Lake", desc: "Romantic Floating Marble Palaces and sunset boat cruises across tranquil Pichola Lake." },
+        { name: "Jaisalmer Fort & Sam Sand Dunes", icon: "🐪", category: "Desert Safari", desc: "The living Golden Fort built of yellow sandstone and overnight luxury Thar desert camps under stars." }
+      ],
+      markets: [
+        { name: "Johari Bazaar & Bapu Bazaar (Jaipur)", icon: "💎", desc: "World famous market for Kundan gemstone jewelry, bandhani sarees, and Rajasthani lac bangles." },
+        { name: "Clock Tower Market (Jodhpur)", icon: "🌶️", desc: "Bustling bazaar famous for Mathaniya red chilies, hand-loomed dhurries, and antique silver craft." },
+        { name: "Sadra Bazaar (Pushkar)", icon: "🐪", desc: "Vibrant handicrafts market featuring rose extracts, embroidered leather footwear, and brass lamps." }
       ],
       foods: [
-        { name: "Vada Pav & Pav Bhaji", desc: "The iconic spiced potato fritter in fresh pav, and tawa-cooked mashed vegetable butter curry." },
-        { name: "Misal Pav", desc: "A fiery sprouted moth bean curry topped with crunchy farsan, chopped onions, lemon, and buttered pav." },
-        { name: "Puran Poli", desc: "A warm, sweet handcrafted flatbread stuffed with chana dal, jaggery, cardamom, and pure desi ghee." }
+        { name: "Dal Baati Churma", desc: "Hard wheat balls baked over cow dung cakes, soaked in pure desi ghee, served with spicy 5-lentil dal and sweet wheat churma." },
+        { name: "Laal Maas", desc: "Fiery Royal Rajput mutton curry prepared with garlic and pungent Mathaniya red chilies." },
+        { name: "Pyaaz Kachori & Ghevar", desc: "Crispy fried pastry stuffed with spiced onions, and disc-shaped honeycomb sweet soaked in saffron syrup." }
+      ],
+      stays: [
+        { name: "Heritage Haveli Stays (Udaipur & Jaipur)", desc: "Restored 18th-century noble mansions with courtyards, fresco art, and traditional royal hospitality." },
+        { name: "Desert Eco-Camps (Jaisalmer Dunes)", desc: "Luxury Swiss tents amidst Sam Sand Dunes with Kalbeliya folk dance & campfire dining." }
+      ]
+    },
+    "Maharashtra": {
+      region: "west",
+      capital: "Mumbai",
+      language: "Marathi, Hindi, English",
+      climate: "Tropical Monsoon (Best: Oct-Mar)",
+      tagline: "Forts of Shivaji, Caves & Financial Capital",
+      desc: "Land of UNESCO rock-cut cave temples, Sahyadri mountain fortresses, Arabian Sea coastline, and India's Bollywood financial powerhouse.",
+      attractions: [
+        { name: "Gateway of India & Marine Drive", icon: "🏛️", category: "Coastal Heritage", desc: "Iconic 20th-century arch overlooking Arabian Sea and the C-shaped Queen's Necklace promenade." },
+        { name: "Ajanta & Ellora Caves (Chhatrapati Sambhajinagar)", icon: "🗿", category: "UNESCO World Heritage", desc: "34 rock-cut cave temples with 2nd-century BCE Buddhist frescoes and monolithic Kailasa Temple." },
+        { name: "Shivneri & Raigad Forts (Sahyadris)", icon: "⛰️", category: "Historic Forts", desc: "Impregnable mountain strongholds of Chhatrapati Shivaji Maharaj nestled in lush Western Ghats." },
+        { name: "Mahabaleshwar & Lonavala Hills", icon: "🍓", category: "Hill Station", desc: "Misty plateaus famous for strawberry farms, deep gorge viewpoints, and waterfall treks." }
+      ],
+      markets: [
+        { name: "Crawford Market & Colaba Causeway (Mumbai)", icon: "🛍️", desc: "Colonial-era wholesale shopping hub for spices, vintage souvenirs, leather bags & fashion." },
+        { name: "Tulshibaug Market (Pune)", icon: "🏺", desc: "Historic shopping lane for copperware, traditional Maharashtrian nose-rings (Nath), and Kolhapuri chappals." },
+        { name: "Saraf Bazaar (Nashik)", icon: "✨", desc: "Centuries-old gold and silver jewelry district near the sacred Godavari Ghats." }
+      ],
+      foods: [
+        { name: "Vada Pav & Pav Bhaji", desc: "Mumbai's iconic spiced potato fritter in fresh pav, and butter-laden tawa vegetable mash curry." },
+        { name: "Misal Pav (Kolhapur/Nashik)", desc: "Fiery sprouted bean curry topped with crunchy farsan, lemon, chopped onions, and hot pav." },
+        { name: "Puran Poli & Malvani Fish Curry", desc: "Sweet flatbread stuffed with chana dal & jaggery, alongside coconut-tamarind fresh Kingfish curry." }
+      ],
+      stays: [
+        { name: "Konkan Coastal Homestays (Tarkarli/Ganpatipule)", desc: "Seaside coconut grove cottages serving authentic home-cooked Malvani seafood." },
+        { name: "Sahyadri Heritage Fort Resorts", desc: "Eco-lodges offering panoramic monsoon valley views and trekking guides." }
+      ]
+    },
+    "Kerala": {
+      region: "south",
+      capital: "Thiruvananthapuram",
+      language: "Malayalam, English",
+      climate: "Tropical Maritime (Best: Sep-Mar)",
+      tagline: "God's Own Country • Backwaters & Ayurveda",
+      desc: "Serene tropical paradise renowned for emerald backwater houseboats, tea-clad Western Ghats, spice gardens, Kathakali dance, and holistic Ayurveda.",
+      attractions: [
+        { name: "Alleppey (Alappuzha) Backwaters", icon: "🛶", category: "Backwaters", desc: "Glide through tranquil palm-fringed canals on traditional thatched Kettuvallam houseboats." },
+        { name: "Munnar Tea Estates & Anamudi", icon: "🍃", category: "Hill Station", desc: "Rolling green carpet tea plantations, misty valleys, and South India's highest peak." },
+        { name: "Fort Kochi & Chinese Fishing Nets", icon: "⚓", category: "Colonial Port", desc: "Historic Portuguese & Dutch precinct with 14th-century cantilevered fishing nets and art cafes." },
+        { name: "Wayanad Wildlife Sanctuary", icon: "🐘", category: "Eco Wilderness", desc: "Dense tropical forests home to wild Asian elephant herds, tigers, and prehistoric Edakkal Caves." }
+      ],
+      markets: [
+        { name: "Broadway & Mattancherry Spice Market (Kochi)", icon: "🌶️", desc: "Centuries-old spice trading warehouses selling fresh black pepper, cardamom, nutmeg, and cinnamon." },
+        { name: "Connemara Market (Trivandrum)", icon: "🧺", desc: "Traditional market for handloomed Kasavu gold-bordered sarees and banana fiber crafts." },
+        { name: "Kumily Spice Street (Thekkady)", icon: "🫖", desc: "Highland market for organic plantation tea, coffee beans, and essential Ayurvedic oils." }
+      ],
+      foods: [
+        { name: "Kerala Sadya on Banana Leaf", desc: "Grand feast of 26+ vegetarian dishes served with red rice, parippu, sambar, avial, and payasam." },
+        { name: "Karimeen Pollichathu & Appam", desc: "Pearlspot fish marinated in spicy shallot paste wrapped in banana leaf, served with fluffy rice appams." },
+        { name: "Malabar Mutton Biryani (Thalassery)", desc: "Fragrant short-grain Kaima rice cooked with tender mutton, ghee, cashew, and sultanas." }
+      ],
+      stays: [
+        { name: "Kettuvallam Luxury Houseboats (Alleppey)", desc: "Private floating suites with personal chef preparing freshly caught lake prawns." },
+        { name: "Heritage Ayurvedic Resorts (Kovalam/Varkala)", desc: "Cliffside wellness retreats offering authentic Panchakarma therapies." }
       ]
     },
     "Delhi": {
+      region: "ut",
       capital: "New Delhi",
       language: "Hindi, Punjabi, English, Urdu",
-      climate: "Continental (Best: Oct-Mar)",
-      desc: "India's capital territory, an architectural wonder blending centuries of Mughal heritage with sprawling modern avenues.",
+      climate: "Continental Extremes (Best: Oct-Mar)",
+      tagline: "Heart of India • 1,000 Years of Capital History",
+      desc: "India's historic national capital territory blending Mughal fortresses, ancient Sufi shrines, British colonial avenues, and world-famous street food.",
       attractions: [
-        { name: "Red Fort & Chandni Chowk", icon: "🏰", desc: "The massive 17th-century Mughal red sandstone fortress facing the vibrant 350-year-old spice and street food bazaars." },
-        { name: "Qutub Minar & Mehrauli Complex", icon: "🗼", desc: "A soaring 73-meter victory tower and minaret constructed in 1192 CE amidst ancient ruins." },
-        { name: "India Gate & Kartavya Path", icon: "🎖️", desc: "The majestic ceremonial war memorial archway surrounded by lush lawns and the President's Estate." }
+        { name: "Red Fort & Chandni Chowk", icon: "🏰", category: "Mughal Architecture", desc: "17th-century Mughal red sandstone citadel facing 350-year-old spice and street food bazaars." },
+        { name: "Qutub Minar & Mehrauli Ruins", icon: "🗼", category: "UNESCO Monument", desc: "Soaring 73-meter victory tower built in 1192 CE surrounded by 4th-century rust-resistant Iron Pillar." },
+        { name: "Humayun's Tomb & Sundar Nursery", icon: "🕌", category: "Garden Tomb", desc: "Precursor to Taj Mahal set in Mughal charbagh gardens surrounded by heritage arboretum." },
+        { name: "India Gate & Rashtrapati Bhavan", icon: "🎖️", category: "Civic Monument", desc: "Majestic war memorial archway and 340-room presidential palace along Kartavya Path." }
+      ],
+      markets: [
+        { name: "Chandni Chowk & Khari Baoli", icon: "🌶️", desc: "Asia's largest wholesale spice market and historic lanes for silver jewelry and bridal wear." },
+        { name: "Dilli Haat (INA)", icon: "🎨", desc: "Open-air craft bazaar featuring rotated master artisans from all 36 Indian states & regional food stalls." },
+        { name: "Khan Market & Connaught Place", icon: "🛍️", desc: "Upscale colonial horseshoe arcades with designer boutiques, bookstores, and trendy cafes." }
       ],
       foods: [
-        { name: "Chole Bhature", desc: "Spiced chickpea curry simmered with black tea and aromatic garam masala, served with puffed bhature." },
-        { name: "Old Delhi Butter Chicken", desc: "Tender tandoor-roasted chicken in a rich, velvety tomato, butter, and fenugreek gravy." },
-        { name: "Chandni Chowk Paranthas & Jalebis", desc: "Crispy layered stuffed flatbreads and giant spiral saffron jalebis topped with thick rabri." }
-      ]
-    },
-    "Karnataka": {
-      capital: "Bengaluru",
-      language: "Kannada",
-      climate: "Moderate Tropical (Best: Oct-Mar)",
-      desc: "India's technology capital, rich in royal palaces, UNESCO ruins, aromatic coffee estates, and coastal heritage.",
-      attractions: [
-        { name: "Mysore Palace & Chamundi Hill", icon: "👑", desc: "A world-renowned Indo-Saracenic royal palace illuminated by 100,000 lightbulbs on weekends." },
-        { name: "Hampi UNESCO Ruins", icon: "🏛️", desc: "The mesmerizing boulder-strewn capital of the Vijayanagara Empire with stone chariots and riverside temples." },
-        { name: "Coorg (Kodagu) Coffee Plantations", icon: "☕", desc: "The 'Scotland of India' renowned for mist-covered hills, cardamom plantations, and Abbey Falls." }
+        { name: "Old Delhi Butter Chicken & Dal Makhani", desc: "Tandoor-charred chicken in velvet tomato-butter gravy, and overnight slow-cooked black lentils." },
+        { name: "Chole Bhature & Paranthas", desc: "Spiced chickpea curry with puffed bread, and fried stuffed flatbreads at Paranthe Wali Gali." },
+        { name: "Dahi Bhalla & Saffron Jalebi", desc: "Soft lentil dumplings in sweet yogurt with tamarind, and crispy hot rabri jalebis." }
       ],
-      foods: [
-        { name: "Bisi Bele Bath & Dosa", desc: "Spiced hot lentil-rice dish infused with tamarind and nutmeg, and crispy Davangere benne dosas." },
-        { name: "Mysore Pak", desc: "A royal melt-in-the-mouth dessert made with roasted gram flour, sugar syrup, and generous desi ghee." },
-        { name: "South Indian Filter Coffee", desc: "Freshly brewed dark chicory-blend coffee frothed with boiling milk in traditional brass dabarahs." }
+      stays: [
+        { name: "Heritage Boutique Hotels (Lutyens' Delhi)", desc: "Colonial-era bungalows with lush courtyards near India Gate." },
+        { name: "Haveli Stays (Old Delhi)", desc: "Restored 19th-century Mughal merchant havelis inside historic walled city." }
       ]
     },
     "Tamil Nadu": {
+      region: "south",
       capital: "Chennai",
-      language: "Tamil",
+      language: "Tamil, English",
       climate: "Tropical Coastal (Best: Nov-Feb)",
-      desc: "Cradle of Dravidian temple architecture, classical Carnatic music, ancient silk weaving, and the Coromandel coast.",
+      tagline: "Cradle of Dravidian Temples & Chola Heritage",
+      desc: "Land of soaring gopuram Dravidian temples, UNESCO Chola living monuments, Nilgiri mountain railways, Carnatic music, and Kanchipuram silk.",
       attractions: [
-        { name: "Brihadeeswarar Temple (Thanjavur)", icon: "🛕", desc: "The 1,000-year-old Great Living Chola Temple carved entirely from granite with an 80-tonne dome." },
-        { name: "Mahabalipuram Shore Temples", icon: "🏖️", desc: "UNESCO-listed 7th-century rock-cut monolithic rathas and sea-facing temples by the Bay of Bengal." },
-        { name: "Nilgiri Mountain Railway (Ooty)", icon: "🚂", desc: "Historic UNESCO heritage toy train winding through tea estates, waterfalls, and blue mountain tunnels." }
+        { name: "Brihadeeswarar Temple (Thanjavur)", icon: "🛕", category: "UNESCO Chola Temple", desc: "1,000-year-old granite temple engineering marvel with an 80-tonne single stone monolithic cupola." },
+        { name: "Meenakshi Amman Temple (Madurai)", icon: "🔱", category: "Dravidian Shrine", desc: "Ancient temple complex with 14 colorful sculpted gopurams containing 33,000 divine sculptures." },
+        { name: "Mahabalipuram Shore Temples", icon: "🏖️", category: "UNESCO Heritage", desc: "7th-century Pallava rock-cut rathas and sea-facing monolithic stone bas-reliefs." },
+        { name: "Nilgiri Mountain Railway (Ooty)", icon: "🚂", category: "Heritage Rail", desc: "Steam toy train climbing through blue Nilgiri tea hills, tunnels, and pine forests." }
+      ],
+      markets: [
+        { name: "Kanchipuram Silk Street", icon: "🧵", desc: "World famous weaver workshops for pure mulberry silk sarees with gold zari borders." },
+        { name: "T. Nagar (Chennai)", icon: "🛍️", desc: "India's largest retail shopping hub for gold jewelry, brassware, and traditional silks." },
+        { name: "Madurai Banana Market & Flower Bazaar", icon: "🌸", desc: "Bustling jasmine flower market supplying fragrant Madurai Malli across India." }
       ],
       foods: [
-        { name: "Chettinad Pepper Chicken", desc: "A spicy, highly aromatic curry flavored with freshly ground star anise, black peppercorns, and coconut." },
-        { name: "Steamed Idlis & Medu Vada", desc: "Fluffy fermented rice-lentil cakes and crispy cumin fritters served with 3 signature coconut chutneys." },
-        { name: "Madurai Jigarthanda", desc: "A refreshing traditional cooling beverage made from almond gum, nannari root syrup, condensed milk, and ice cream." }
+        { name: "Chettinad Pepper Chicken", desc: "Fiery aromatic chicken curry crafted with star anise, fennel, freshly ground black pepper, and coconut." },
+        { name: "Steamed Idli, Dosa & Medu Vada", desc: "Fluffy fermented rice cakes, crispy paper dosas, and lentil vadas served with 4 coconut chutneys." },
+        { name: "Madurai Jigarthanda & Filter Coffee", desc: "Cooling beverage of almond gum, nannari syrup & ice cream, paired with frothed brass-pipe filter coffee." }
+      ],
+      stays: [
+        { name: "Chettinad Heritage Palaces (Karaikudi)", desc: "19th-century merchant mansions paved with Italian marble and East Asian teak." },
+        { name: "Nilgiri Tea Bungalows (Coonoor/Ooty)", desc: "Colonial British planter estates overlooking misty valley tea gardens." }
       ]
     },
-    "Rajasthan": {
-      capital: "Jaipur",
-      language: "Hindi, Rajasthani, Marwari",
-      climate: "Arid / Desert (Best: Oct-Mar)",
-      desc: "Land of Maharajas, imposing hilltop citadels, vibrant colorful turbans, camel safaris, and golden desert dunes.",
+    "Karnataka": {
+      region: "south",
+      capital: "Bengaluru",
+      language: "Kannada, English",
+      climate: "Moderate Tropical (Best: Oct-Mar)",
+      tagline: "Silicon Valley, Vijayanagara Ruins & Coffee Hills",
+      desc: "Tech capital of India anchored by royal Mysore palaces, UNESCO stone chariots of Hampi, Western Ghats coffee estates, and coastal beaches.",
       attractions: [
-        { name: "Amer Fort & Hawa Mahal (Jaipur)", icon: "🏰", desc: "The majestic hilltop Amer citadel with mirror-mosaic Sheesh Mahal and the iconic 953-window pink palace facade." },
-        { name: "Mehrangarh Fort (Jodhpur)", icon: "🛡️", desc: "One of India's largest and most formidable fortresses towering 400 feet above the Blue City." },
-        { name: "Lake Pichola & City Palace (Udaipur)", icon: "⛵", desc: "The romantic 'Venice of the East' with floating marble palaces and sunset boat rides across Lake Pichola." }
+        { name: "Hampi UNESCO Boulder Ruins", icon: "🏛️", category: "UNESCO World Heritage", desc: "Mesmerizing 14th-century Vijayanagara empire capital with stone chariot, Lotus Mahal & river ghats." },
+        { name: "Mysore Palace & Chamundi Hill", icon: "👑", category: "Royal Heritage", desc: "Grand Indo-Saracenic royal palace lit by 100,000 bulbs every Sunday evening." },
+        { name: "Coorg (Kodagu) Coffee Highlands", icon: "☕", category: "Hill Station", desc: "Mist-draped coffee plantations, Abbey Waterfalls, and Namdroling Tibetan Monastery." },
+        { name: "Gokarna Om Beach & Kudle Coast", icon: "🌊", category: "Coastal Escape", desc: "Pristine cliffside beaches and ancient Mahabaleshwar Shiva temple." }
+      ],
+      markets: [
+        { name: "Devaraja Market (Mysuru)", icon: "🍊", desc: "Historic 100-year-old bazaar famed for Mysore sandalwood oil, incense, and fresh flowers." },
+        { name: "Commercial Street & Chickpet (Bengaluru)", icon: "🛍️", desc: "Bustling silk market for Mysore silk sarees, spices, and tech accessories." },
+        { name: "Channapatna Wooden Toy Village", icon: "🧸", desc: "Traditional GI-tagged lacquerware wooden toy artisan co-operatives." }
       ],
       foods: [
-        { name: "Dal Baati Churma", desc: "Hard wheat dough balls baked in tandoor, dipped in ghee, served with 5-lentil dal and sweet crushed churma." },
-        { name: "Laal Maas", desc: "A fiery royal mutton curry slow-cooked with authentic Mathania red chillies, mustard oil, and garlic." },
-        { name: "Ghevar & Pyaaz Kachori", desc: "Crispy honeycomb pastry soaked in saffron syrup and flaky pastries stuffed with spiced caramelized onions." }
-      ]
-    },
-    "Kerala": {
-      capital: "Thiruvananthapuram",
-      language: "Malayalam",
-      climate: "Tropical Maritime (Best: Sep-Mar)",
-      desc: "God's Own Country, famed for serene palm-fringed backwaters, Ayurvedic wellness retreats, and spice-scented hills.",
-      attractions: [
-        { name: "Alleppey Backwater Houseboats", icon: "🛶", desc: "Cruise through canals, lagoons, and paddy fields on traditional thatched-roof Kettuvallam houseboats." },
-        { name: "Munnar Tea Estates", icon: "🌿", desc: "Rolling emerald green tea hills situated 1,600m above sea level with cool breezes and misty viewpoints." },
-        { name: "Fort Kochi Chinese Fishing Nets", icon: "⚓", desc: "Historic coastal town with 14th-century cantilevered fishing nets, spice warehouses, and colonial churches." }
+        { name: "Bisi Bele Bath & Benne Dosa", desc: "Spiced hot lentil-rice dish with ghee, and crispy Davangere butter dosa." },
+        { name: "Mysore Pak", desc: "Royal melt-in-mouth dessert crafted with roasted chickpea flour, sugar syrup & pure ghee." },
+        { name: "Mangalore Fish Curry & Neer Dosa", desc: "Soft lace-like rice crepes served with spicy coconut red snapper fish curry." }
       ],
-      foods: [
-        { name: "Kerala Sadya Feast", desc: "A grand 26-dish traditional vegetarian feast served on a fresh banana leaf with red rice and payasam." },
-        { name: "Appam with Ishtu", desc: "Soft-centered lacy fermented rice pancakes paired with a rich, creamy coconut milk vegetable/chicken stew." },
-        { name: "Karimeen Pollichathu", desc: "Pearl spot fish marinated in shallots, green chillies, and kokum, wrapped in banana leaf and pan-grilled." }
-      ]
-    },
-    "Gujarat": {
-      capital: "Gandhinagar",
-      language: "Gujarati",
-      climate: "Tropical Semi-Arid (Best: Oct-Mar)",
-      desc: "Home to the pristine White Desert of Kutch, Asiatic lions, UNESCO stepwells, and rich entrepreneurial heritage.",
-      attractions: [
-        { name: "Rann of Kutch (White Salt Desert)", icon: "🏜️", desc: "The world's largest salt desert shimmering under the full moon during the vibrant Rann Utsav festival." },
-        { name: "Gir National Park", icon: "🦁", desc: "The only natural habitat in the world for wild Asiatic Lions, offering jeep safaris through deciduous forests." },
-        { name: "Rani Ki Vav & Statue of Unity", icon: "🗿", desc: "An intricate 11th-century underground stepwell and the world's tallest 182-meter monumental statue." }
-      ],
-      foods: [
-        { name: "Gujarati Thali (Dhokla, Thepla, Undhiyu)", desc: "A balanced platter with sweet-savory steamed dhoklas, fenugreek flatbreads, and winter vegetable medley." },
-        { name: "Khandvi & Fafda Jalebi", desc: "Delicate rolled gram-flour sheets tempered with mustard seeds and crispy gram snacks with sweet jalebis." },
-        { name: "Shrikhand & Aamras", desc: "Creamy hung-curd dessert whipped with saffron, cardamom, and fresh Kesar mango pulp." }
-      ]
-    },
-    "West Bengal": {
-      capital: "Kolkata",
-      language: "Bengali",
-      climate: "Tropical Wet-and-Dry (Best: Oct-Mar)",
-      desc: "Cultural heartland of India, celebrated for grand Durga Puja art, colonial monuments, tea gardens, and literature.",
-      attractions: [
-        { name: "Victoria Memorial & Howrah Bridge", icon: "🏛️", desc: "Iconic Makrana marble memorial palace surrounded by reflection lakes, and the legendary cantilever bridge on the Hooghly." },
-        { name: "Darjeeling Himalayan Hills", icon: "🍵", desc: "Panoramic Himalayan vistas of Mount Kanchenjunga, world-famous orthodox black tea, and toy trains." },
-        { name: "Sundarbans Mangrove Forest", icon: "🐅", desc: "The world's largest tidal mangrove delta and UNESCO reserve, home of the Royal Bengal Tiger." }
-      ],
-      foods: [
-        { name: "Kolkata Biryani & Kathi Rolls", desc: "Aromatic fragrant basmati rice with spiced meat and slow-cooked potatoes, and flaky paratha street rolls." },
-        { name: "Shorshe Ilish & Kosha Mangsho", desc: "Hilsa fish steamed in pungent mustard gravy, and rich slow-braised velvety mutton curry." },
-        { name: "Rosogolla & Mishti Doi", desc: "Spongy chhena dumplings soaked in light sugar syrup and caramelized baked sweet yogurt in clay pots." }
-      ]
-    },
-    "Uttar Pradesh": {
-      capital: "Lucknow",
-      language: "Hindi, Urdu, Awadhi, Bhojpuri",
-      climate: "Humid Subtropical (Best: Oct-Mar)",
-      desc: "The sacred cradle of ancient spirituality and Awadhi royalty, spanning the Ganges plains from Varanasi to Agra.",
-      attractions: [
-        { name: "Taj Mahal & Agra Fort", icon: "🤍", desc: "The world-famous ivory-white marble mausoleum on the Yamuna river, a timeless masterpiece of Mughal architecture." },
-        { name: "Varanasi Ganga Ghats & Kashi Vishwanath", icon: "🪔", desc: "One of the oldest continuously inhabited cities on earth, famous for dawn boat rides and evening Maha Aarti fire rituals." },
-        { name: "Bara Imambara & Rumi Darwaza (Lucknow)", icon: "🕌", desc: "Architectural marvel with the world's largest unsupported arched hall and the intricate Bhool Bhulaiya labyrinth." }
-      ],
-      foods: [
-        { name: "Lucknowi Galouti Kebabs", desc: "Melt-in-the-mouth minced meat kebabs marinated in 160 royal spices, served on Mughlai parathas." },
-        { name: "Banarasi Paan & Tamatar Chaat", desc: "Iconic betel leaf with sweet gulkand and hot spiced crushed tomato chaat served in clay kulhads." },
-        { name: "Awadhi Dum Biryani", desc: "Fragrant rice and tender meat cooked on slow dum with saffron, rose water, and kewra essence." }
-      ]
-    },
-    "Himachal Pradesh": {
-      capital: "Shimla",
-      language: "Hindi, Pahari",
-      climate: "Alpine (Best: Mar-Jun, Snow: Dec-Feb)",
-      desc: "Land of Gods (Devbhoomi), offering snow-capped Himalayan peaks, pine forests, adventure valleys, and Tibetan monasteries.",
-      attractions: [
-        { name: "Shimla Mall Road & Ridge", icon: "🏔️", desc: "Colonial summer capital with neo-Gothic Christ Church, panoramic valley views, and heritage walks." },
-        { name: "Manali & Solang Valley", icon: "⛷️", desc: "Adventure hub for paragliding, skiing, river rafting, and gateways to the high-altitude Atal Tunnel." },
-        { name: "Dharamshala & McLeodganj", icon: "🧘", desc: "The residence of the Dalai Lama, famous for Tibetan monasteries, meditation retreats, and Triund trek." }
-      ],
-      foods: [
-        { name: "Himachali Dham", desc: "A traditional celebratory multi-course feast served on leaf plates, featuring madra (chickpeas in yogurt gravy) and khatta." },
-        { name: "Siddu with Ghee", desc: "Steamed fermented wheat buns stuffed with spiced poppy seeds or walnuts, drenched in pure desi ghee." },
-        { name: "Trout Fish & Chha Gosht", desc: "Fresh Himalayan river trout pan-fried with herbs, and slow-cooked marinated lamb in spicy yogurt gravy." }
-      ]
-    },
-    "Uttarakhand": {
-      capital: "Dehradun",
-      language: "Hindi, Garhwali, Kumaoni",
-      climate: "Alpine / Subtropical (Best: Mar-Jun & Sep-Nov)",
-      desc: "The sacred abode of the Himalayas, origin of the holy Ganga and Yamuna rivers, and yoga capital of the world.",
-      attractions: [
-        { name: "Rishikesh & Haridwar (Ganga Aarti)", icon: "🌊", desc: "World Capital of Yoga, famous for white-water river rafting, suspension bridges, and Har Ki Pauri evening aarti." },
-        { name: "Valley of Flowers & Hemkund Sahib", icon: "🌸", desc: "UNESCO World Heritage high-altitude alpine meadow carpeted with hundreds of endemic wild flowers in monsoon." },
-        { name: "Nainital & Mussoorie Hill Stations", icon: "⛵", desc: "Picturesque lake towns surrounded by oak forests, cable cars, Kempty Falls, and Himalayan view points." }
-      ],
-      foods: [
-        { name: "Kafuli & Chainsoo", desc: "Nutrient-rich creamy green curry made from spinach and fenugreek, and roasted black gram paste stew." },
-        { name: "Aloo ke Gutke & Bhang ki Chutney", desc: "Fried mountain potatoes tempered with jamboo spice, served with tangy roasted hemp seed chutney." },
-        { name: "Bal Mithai & Singori", desc: "Fudge-like roasted khoya sweet coated with sugar balls, and condensed milk sweets wrapped in Maalu leaves." }
+      stays: [
+        { name: "Coorg Coffee Estate Homestays", desc: "Heritage planter bungalows serving home-brewed Arabica coffee & Pandi curry." },
+        { name: "Hampi Riverine Eco-Resorts", desc: "Banana-plantation cottages along the Tungabhadra River." }
       ]
     },
     "Goa": {
+      region: "west",
       capital: "Panaji",
       language: "Konkani, English, Portuguese",
-      climate: "Tropical Maritime (Best: Nov-Mar)",
-      desc: "Sun, sand, and sea capital of India, blending Portuguese colonial architecture with vibrant nightlife and golden beaches.",
+      climate: "Tropical Coastal (Best: Nov-Feb)",
+      tagline: "Pearl of the Orient • Beaches & Colonial Churches",
+      desc: "Sun-drenched coastal state famous for golden sand beaches, UNESCO Portuguese cathedrals, spice plantations, seafood fenny dining, and relaxed susegad vibe.",
       attractions: [
-        { name: "Palolem, Baga & Anjuna Beaches", icon: "🏖️", desc: "Famous for palm-backed shores, water surfing, beach shacks, flea markets, and sunset dolphin cruises." },
-        { name: "Basilica of Bom Jesus (Old Goa)", icon: "⛪", desc: "UNESCO World Heritage 16th-century baroque cathedral holding the sacred relics of St. Francis Xavier." },
-        { name: "Dudhsagar Waterfalls & Spice Plantations", icon: "💦", desc: "A spectacular four-tiered 310m milky white waterfall nestled in the lush Western Ghats forest reserve." }
+        { name: "Basilica of Bom Jesus (Old Goa)", icon: "⛪", category: "UNESCO Heritage", desc: "16th-century baroque church holding the mortal remains of St. Francis Xavier." },
+        { name: "Calangute, Anjuna & Palolem Beaches", icon: "🏖️", category: "Coastal Beaches", desc: "Golden coast stretch with beach shacks, water sports, flea markets, and serene south lagoons." },
+        { name: "Dudhsagar Waterfalls & Spice Plantations", icon: "💦", category: "Nature Trek", desc: "Four-tiered 310-meter white water cascades inside Bhagwan Mahavir Sanctuary." },
+        { name: "Fontainhas Latin Quarter (Panaji)", icon: "🎨", category: "Heritage Walk", desc: "Colorful Portuguese colonial neighborhood with tiled roofs, wooden shutters, and art galleries." }
+      ],
+      markets: [
+        { name: "Anjuna Wednesday Flea Market", icon: "🎪", desc: "Iconic open-air market for bohemian clothing, handmade leather bags, silver crafts & music." },
+        { name: "Mapusa Friday Market", icon: "🍍", desc: "Authentic local market for Goa cashew nuts, spiced chorizo sausages, and Feni liquor." },
+        { name: "Panaji Municipal Market", icon: "🐟", desc: "Fresh Arabian sea seafood, dried fish, local spices, and traditional Goan sweets." }
       ],
       foods: [
-        { name: "Goan Fish Curry & Rice", desc: "Fresh Kingfish or Pomfret simmered in tangy, fiery coconut milk gravy flavored with kokum and tefla berries." },
-        { name: "Pork Vindaloo & Xacuti", desc: "Tangy Portuguese-influenced stew marinated in wine vinegar, garlic, and roasted aromatic coconut paste." },
-        { name: "Bebinca & Feni", desc: "Traditional 7-layered Goan dessert made with coconut milk, eggs, and nutmeg, paired with cashew spirit." }
+        { name: "Goan Fish Curry Rice", desc: "Fresh Kingfish or Pomfret simmered in tangy coconut, Kashmiri chili, and kokum gravy." },
+        { name: "Pork Vindaloo & Xacuti", desc: "Fiery wine-vinegar garlic pork curry, and complex roasted spice chicken curry." },
+        { name: "Bebinca Dessert", desc: "Traditional 7-layer baked Goan dessert made from coconut milk, ghee, and egg yolks." }
+      ],
+      stays: [
+        { name: "Fontainhas Portuguese Heritage Villas", desc: "Restored 19th-century Latin Quarter boutique stay with azulejo tiles." },
+        { name: "South Goa Eco Beach Huts (Palolem)", desc: "Rustic thatched luxury huts right on the palm-lined sand." }
+      ]
+    },
+    "Gujarat": {
+      region: "west",
+      capital: "Gandhinagar / Ahmedabad",
+      language: "Gujarati, Hindi",
+      climate: "Semi-Arid (Best: Oct-Mar)",
+      tagline: "Land of the Asiatic Lion, Rann of Kutch & Mahatma",
+      desc: "Vibrant Western state featuring the white salt desert of Kutch, Gir National Park Asiatic lions, Modhera Sun Temple, and UNESCO heritage city Ahmedabad.",
+      attractions: [
+        { name: "Rann of Kutch (White Salt Desert)", icon: "❄️", category: "Natural Wonder", desc: "Endless 7,500 sq km white salt marsh shimmering under full moon during Rann Utsav." },
+        { name: "Gir National Park", icon: "🦁", category: "Wildlife Sanctuary", desc: "The sole natural habitat of the endangered Asiatic Lion in the entire world." },
+        { name: "Statue of Unity (Kevadia)", icon: "🗿", category: "World Record Monument", desc: "World's tallest statue (182m) dedicated to Sardar Vallabhbhai Patel overlooking Narmada." },
+        { name: "Somnath & Dwarkadhish Temples", icon: "🛕", category: "Sacred Shrines", desc: "Ancient coastal Jyotirlinga shrine and Lord Krishna's holy kingdom on the Arabian Sea." }
+      ],
+      markets: [
+        { name: "Law Garden Night Market (Ahmedabad)", icon: "👗", desc: "Vibrant street bazaar for mirror-work Chaniya Cholis, Bandhani dupattas, and handicraft bags." },
+        { name: "Bhuj Handicraft Market", icon: "🧵", desc: "Direct artisan market for Rogan painting, Kutchi embroidery, and Ajrakh block prints." },
+        { name: "Surat Zaveri Bazaar", icon: "💎", desc: "Global hub for diamond cutting, real zari embroidery, and pure silk sarees." }
+      ],
+      foods: [
+        { name: "Gujarati Thali (Khadhi, Dhokla, Undhiyu)", desc: "Balanced sweet-savory platter with steamed chickpea dhokla, winter vegetable undhiyu & sweet kadhi." },
+        { name: "Fafda Jalebi & Khaman", desc: "Crispy gram flour strips with green chili, paired with hot saffron jalebis." },
+        { name: "Handvo & Basundi", desc: "Savory baked lentil vegetable cake, and thickened cardamom-nut milk dessert." }
+      ],
+      stays: [
+        { name: "Rann Utsav Luxury Tent City (Dhordo)", desc: "Glamping tents right on the edge of the White Salt Desert with folk music." },
+        { name: "Gir Forest Eco Lodges", desc: "Wilderness cottages offering safari bookings and Maldhari tribal visits." }
       ]
     },
     "Punjab": {
-      capital: "Chandigarh",
+      region: "north",
+      capital: "Chandigarh / Amritsar",
       language: "Punjabi, Hindi",
-      climate: "Semi-Arid / Continental (Best: Oct-Mar)",
-      desc: "Land of Five Rivers, vibrant Bhangra music, golden mustard fields, rich agricultural heritage, and heroic history.",
+      climate: "Continental (Best: Oct-Mar)",
+      tagline: "Golden Temple, Mustard Fields & Royal Hospitality",
+      desc: "Agricultural heartland of India celebrated for the divine Golden Temple, Wagah Border ceremony, Phulkari embroidery, bhangra dance, and rich buttery cuisine.",
       attractions: [
-        { name: "Golden Temple (Harmandir Sahib)", icon: "✨", desc: "The holiest Sikh shrine clad in pure gold foil, surrounded by the sacred Amrit Sarovar lake and 24x7 Langar." },
-        { name: "Wagah Border Beating Retreat Ceremony", icon: "🇮🇳", desc: "Electrifying military parade and flag-lowering ceremony at the India-Pakistan international border." },
-        { name: "Jallianwala Bagh Memorial", icon: "🎖️", desc: "Historic national memorial park commemorating the martyrs of the 1919 independence movement." }
+        { name: "Sri Harmandir Sahib (Golden Temple Amritsar)", icon: "🪔", category: "Sacred Shrine", desc: "Divine gold-plated Sikh temple surrounded by the Amrit Sarovar holy pool, serving 100k free meals daily." },
+        { name: "Wagah Border Beating Retreat", icon: "🎖️", category: "Patriotic Ceremony", desc: "High-octane military drill ceremony performed daily by Indian BSF & Pakistan Rangers." },
+        { name: "Jallianwala Bagh & Partition Museum", icon: "📜", category: "Historic Memorial", desc: "Poignant national memorial honoring 1919 martyrs, and world's first Partition museum." },
+        { name: "Qila Mubarak (Patiala)", icon: "🏰", category: "Royal Heritage", desc: "Rare Sikh palace architecture with mirror palaces (Sheesh Mahal) and weapon galleries." }
+      ],
+      markets: [
+        { name: "Hall Bazaar & Katra Jaimal Singh (Amritsar)", icon: "👞", desc: "Bazaar famous for handcrafted Phulkari dupattas, Amritsari juttis, and brassware." },
+        { name: "Patiala Shahi Bazaar", icon: "✨", desc: "Traditional market for Patiala salwar suits, parandas (hair tassels), and lac jewelry." }
       ],
       foods: [
-        { name: "Amritsari Kulcha & Chole", desc: "Flaky, crisp tandoor-baked flatbread stuffed with spiced potatoes and paneer, smothered in white butter." },
-        { name: "Makki di Roti & Sarson da Saag", desc: "Iconic winter meal of fresh mustard greens slow-cooked with ginger and garlic, served with cornmeal bread." },
-        { name: "Creamy Malai Sweet Lassi", desc: "Thick, rich hand-churned sweet yogurt beverage topped with a generous dollop of thick clotted cream." }
+        { name: "Amritsari Kulcha & Chole", desc: "Crispy tandoor-baked layered potato-onion bread served with spicy chickpeas and melting white butter." },
+        { name: "Sarson Ka Saag & Makki Ki Roti", desc: "Winter delicacy of mustard greens cooked with garlic, paired with cornmeal flatbread & jaggery." },
+        { name: "Lassi in Clay Kulhad", desc: "Thick creamy frothed yogurt drink topped with a thick dollop of fresh malai." }
+      ],
+      stays: [
+        { name: "Punjab Village Farmstays (Amritsar/Gurdaspur)", desc: "Authentic mustard field homestays with tractor rides, dairy milking, and tandoor cooking." },
+        { name: "Heritage Haveli Stays (Patiala)", desc: "Royal guest suites inside historic Patiala estates." }
       ]
     },
-    "Telangana": {
-      capital: "Hyderabad",
-      language: "Telugu, Urdu",
-      climate: "Tropical Wet & Dry (Best: Oct-Mar)",
-      desc: "High-tech metropolis with 400-year-old Nizami heritage, magnificent stone fortresses, and world-renowned pearls and cuisine.",
+    "Himachal Pradesh": {
+      region: "north",
+      capital: "Shimla / Dharamshala",
+      language: "Hindi, Pahari",
+      climate: "Alpine / Cold (Best: Mar-Jun, Oct-Feb Snow)",
+      tagline: "Devbhumi • Himalayas, Valleys & Snow Peaks",
+      desc: "Land of Gods nestled in the Western Himalayas featuring colonial Shimla, Tibetan Dharamshala, adventurous Manali, pristine Spiti desert valley, and apple orchards.",
       attractions: [
-        { name: "Charminar & Laad Bazaar", icon: "🕌", desc: "The iconic 1591 monument with four grand minarets, situated amidst lively pearl and lacquer bangle markets." },
-        { name: "Golconda Fort & Qutb Shahi Tombs", icon: "🛡️", desc: "Colossal acoustic stone fortress famous for diamonds (Koh-i-Noor origin) and panoramic city sunset views." },
-        { name: "Ramoji Film City", icon: "🎬", desc: "The world's largest integrated film studio complex spanning 2,000 acres with thematic movie sets." }
+        { name: "Rohtang Pass & Solang Valley (Manali)", icon: "🏔️", category: "Snow & Adventure", desc: "13,000ft high snow pass offering skiing, paragliding, snowmobiles, and breathtaking glacier views." },
+        { name: "McLeod Ganj & Dalai Lama Temple (Dharamshala)", icon: "☸️", category: "Tibetan Heritage", desc: "Seat of His Holiness Dalai Lama surrounded by pine forests, monasteries & Namgyal stupas." },
+        { name: "Shimla Mall Road & Ridge", icon: "🏰", category: "Colonial Hill Station", desc: "Pedestrian Mall Road featuring neo-Gothic Christ Church and Himalayan panorama." },
+        { name: "Spiti Valley & Key Monastery", icon: "🏜️", category: "High Altitude Desert", desc: "Cold desert mountain valley at 12,000ft with 1,000-year-old cliffside Buddhist monasteries." }
+      ],
+      markets: [
+        { name: "Kotwali Bazaar (Dharamshala)", icon: "🧵", desc: "Tibetan handicraft market for singing bowls, prayer wheels, thangka paintings & rugs." },
+        { name: "Kullu Shawl Factory Outlets", icon: "🧣", desc: "GI-tagged woolen Kullu shawls, caps, and pure Angora rabbit wool scarves." },
+        { name: "Lakkar Bazaar (Shimla)", icon: "🪵", desc: "Historic wooden craft market specializing in carved walking sticks, bowls, and toys." }
       ],
       foods: [
-        { name: "Hyderabadi Dum Biryani", desc: "Marinated meat and basmati rice slow-cooked in sealed handis with saffron, fried onions, and kewra." },
-        { name: "Haleem & Mirchi Ka Salan", desc: "Slow-cooked savory porridge of wheat, barley, and meat, accompanied by spicy peanut-sesame chili gravy." },
-        { name: "Double Ka Meetha & Irani Chai", desc: "Fried bread pudding soaked in saffron milk and dry fruits, paired with sweet creamy spiced Irani tea." }
+        { name: "Dham Festive Feast", desc: "Traditional Pahari 7-course meal served on leaf plates with Madra (kidney beans in yogurt), Sepu Badi, and Meetha." },
+        { name: "Siddu with Ghee", desc: "Steamed yeast wheat bread stuffed with spiced crushed walnuts, poppy seeds & soaked in ghee." },
+        { name: "Trout Fish (Tirthan Valley)", desc: "Fresh Himalayan river trout pan-fried with local herbs and lemon." }
+      ],
+      stays: [
+        { name: "Himachali Apple Orchard Homestays (Kotgarh/Manali)", desc: "Wooden chalets surrounded by fruiting apple trees overlooking valley snow caps." },
+        { name: "Spiti Mudhouse Homestays (Kibber/Langza)", desc: "Traditional insulated clay houses with starlit Milky Way rooftop night views." }
       ]
     },
-    "Kerala": {
-      capital: "Thiruvananthapuram",
-      language: "Malayalam",
-      climate: "Tropical (Best: Sep-Mar)",
-      desc: "God's Own Country with serene palm-lined backwaters, tea gardens, and rich Kathakali cultural traditions.",
+    "Uttarakhand": {
+      region: "north",
+      capital: "Dehradun / Gairsain",
+      language: "Hindi, Garhwali, Kumaoni",
+      climate: "Alpine (Best: Mar-Jun, Sep-Nov)",
+      tagline: "Land of Gods • Char Dham & Yoga Capital",
+      desc: "Sacred Himalayan abode featuring the holy Ganges source, Rishikesh yoga capital, Char Dham shrines, Valley of Flowers, and Jim Corbett tiger reserve.",
       attractions: [
-        { name: "Alleppey Houseboat Cruise", icon: "🛶", desc: "Gliding through backwaters on traditional thatched boats with fresh coconut water and views." },
-        { name: "Munnar Tea Plantations", icon: "🌿", desc: "Endless rolling green hills with cool mountain breeze and colonial tea factories." },
-        { name: "Kochi Heritage & Chinese Nets", icon: "⚓", desc: "Historic port city with spice markets, synagogue, and ancient cantilevered fishing nets." }
+        { name: "Rishikesh Ganga Aarti & Laxman Jhula", icon: "🪔", category: "Yoga & Spiritual", desc: "World Capital of Yoga with evening Triveni Ghat Ganga Aarti and suspension bridges over turquoise river." },
+        { name: "Kedarnath & Badrinath Temples", icon: "🛕", category: "Char Dham Pilgrimage", desc: "Revered 8th-century stone Shiva temple at 11,750ft backed by soaring Himalayan snow peaks." },
+        { name: "Valley of Flowers & Hemkund Sahib", icon: "🌸", category: "UNESCO World Heritage", desc: "Alpine meadow blooming with 500+ species of wild endemic flowers between July and September." },
+        { name: "Jim Corbett National Park", icon: "🐅", category: "Tiger Reserve", desc: "India's oldest national park located along the Ramganga River famous for Royal Bengal tigers." }
+      ],
+      markets: [
+        { name: "Paltan Bazaar (Dehradun)", icon: "🎒", desc: "Famous for Basmati rice, hand-loomed woolens, and local spices." },
+        { name: "Bara Bazaar (Nainital)", icon: "🕯️", desc: "Lakeside bazaar famous for handcrafted decorative candles and wooden artifacts." },
+        { name: "Lal Tibba Craft Lane (Mussoorie)", icon: "📷", desc: "High point market for antique cameras, brass telescopes, and Himalayan jams." }
       ],
       foods: [
-        { name: "Appam & Stew", desc: "Fluffy rice pancakes with crispy edges served with fragrant coconut milk vegetable stew." },
-        { name: "Kerala Sadya", desc: "Grand 26-dish vegetarian banquet served on fresh banana leaves with red rice and payasam." },
-        { name: "Fish Moilee", desc: "Fresh coastal fish gently poached in mild coconut milk, green chilies, and curry leaves." }
+        { name: "Kafuli & Aloo Ke Gutke", desc: "Spinach and fenugreek leaf gravy cooked in iron kadhai, served with fried spiced Pahari potatoes." },
+        { name: "Chainsoo & Phaanu", desc: "Protein-rich roasted black gram curry, and creamy soaked pulse stew." },
+        { name: "Singori & Bal Mithai (Almora)", desc: "Khoya sweet wrapped in fragrant Malu leaves, and chocolate-hued milk sweet coated in sugar balls." }
+      ],
+      stays: [
+        { name: "Ganges Riverfront Ashram Stays (Rishikesh)", desc: "Peaceful spiritual retreats offering daily meditation, yoga, and vegetarian meals." },
+        { name: "Kumaoni Himalayan Eco-Lodges (Binsar/Ranikhet)", desc: "Stone cottages with 300km uninterrupted Trishul & Nanda Devi snow views." }
+      ]
+    },
+    "Uttar Pradesh": {
+      region: "north",
+      capital: "Lucknow",
+      language: "Hindi, Urdu, Awadhi",
+      climate: "Subtropical (Best: Oct-Mar)",
+      tagline: "Taj Mahal, Sacred Varanasi Ghats & Awadhi Kings",
+      desc: "India's most populous state housing the world-famous Taj Mahal, ancient spiritual ghats of Varanasi, Awadhi Nawabi architecture, and Mathura Krishna heritage.",
+      attractions: [
+        { name: "Taj Mahal & Agra Fort", icon: "🕌", category: "UNESCO World Wonder", desc: "Flawless white marble mausoleum of Mumtaz Mahal constructed by Shah Jahan on Yamuna banks." },
+        { name: "Varanasi Ganga Ghats & Kashi Vishwanath", icon: "🪔", category: "Spiritual Capital", desc: "3,000-year-old living spiritual city with evening Dashashwamedh Ghat Ganga Aarti & boat rides." },
+        { name: "Bara Imambara & Rumi Darwaza (Lucknow)", icon: "🏰", category: "Nawabi Architecture", desc: "18th-century vaulted hall with famous Bhulbhulaiya maze corridor and 60-foot ornamental gateway." },
+        { name: "Sarnath Buddhist Stupa", icon: "☸️", category: "UNESCO Heritage", desc: "Sacred site where Lord Buddha preached his first sermon after enlightenment." }
+      ],
+      markets: [
+        { name: "Chowk & Hazratganj (Lucknow)", icon: "🧵", desc: "Historic markets famous for delicate Chikankari hand embroidery and pure attar perfumes." },
+        { name: "Vishwanath Gali (Varanasi)", icon: "🧶", desc: "Labyrinthine alleyways famed for pure Banarasi silk sarees with gold zari weaving." },
+        { name: "Sadar Bazaar (Agra)", icon: "🏬", desc: "Market for marble inlay handicrafts (Parchin Kari) and leather goods." }
+      ],
+      foods: [
+        { name: "Lucknawi Tunday Kababi & Biryani", desc: "Melt-in-the-mouth 160-spice buffalo/mutton kebabs, and aromatic dum-cooked Awadhi biryani." },
+        { name: "Varanasi Malaiyyo & Kachori Sabzi", desc: "Winter saffron milk foam dessert, and spicy potato curry with crisp puris." },
+        { name: "Agra Petha", desc: "Translucent candied ash gourd sweet available in saffron, paan, and dry-fruit flavors." }
+      ],
+      stays: [
+        { name: "Varanasi Heritage Ghat Hotels", desc: "18th-century riverside palaces overlooking the sacred River Ganges." },
+        { name: "Nawabi Heritage Stays (Lucknow)", desc: "Colonial-Awadhi ancestral estates serving courtly royal feasts." }
+      ]
+    },
+    "West Bengal": {
+      region: "east",
+      capital: "Kolkata",
+      language: "Bengali, English",
+      climate: "Subtropical Wet (Best: Oct-Mar)",
+      tagline: "Culture, Sundarbans Tigers & Darjeeling Tea",
+      desc: "Cultural capital of India renowned for grand Durga Puja celebrations, Victoria Memorial, Sundarbans mangrove tigers, and Darjeeling Himalayan views.",
+      attractions: [
+        { name: "Victoria Memorial & Howrah Bridge (Kolkata)", icon: "🏛️", category: "Colonial Landmark", desc: "White marble British monument in 64-acre gardens, paired with iconic cantilevered Howrah Bridge." },
+        { name: "Darjeeling Himalayan Railway & Tiger Hill", icon: "🚂", category: "UNESCO Heritage Rail", desc: "Sunrise view of Kanchenjunga snow peaks, riding 1881 toy steam train through tea gardens." },
+        { name: "Sundarbans National Park", icon: "🐅", category: "UNESCO Mangrove Delta", desc: "World's largest halophytic mangrove forest home to swimming Royal Bengal Tigers." },
+        { name: "Kalimpong & Santiniketan", icon: "🎨", category: "Art & Culture", desc: "Rabindranath Tagore's open-air university town and peaceful Eastern Himalayan hill towns." }
+      ],
+      markets: [
+        { name: "New Market & Gariahat (Kolkata)", icon: "🛍️", desc: "Colonial shopping arcade for Tant cotton sarees, terracotta crafts, and brassware." },
+        { name: "College Street (Boi Para)", icon: "📚", desc: "World's largest second-hand book market stretching over 1.5 miles." },
+        { name: "Darjeeling Mall Road Market", icon: "🫖", desc: "Highland stores for First-Flush Darjeeling Orthodox tea and Tibetan woolen handicrafts." }
+      ],
+      foods: [
+        { name: "Kolkata Kathi Roll & Kosha Mangsho", desc: "Paratha wrapped with spiced kebab & lime onions, and slow-cooked dark spicy mutton curry." },
+        { name: "Shorshe Ilish & Chingri Malaikari", desc: "Hilsa fish steamed in mustard gravy, and jumbo prawns in coconut milk curry." },
+        { name: "Rosogolla, Sandesh & Mishti Doi", desc: "Spongy cottage cheese balls in syrup, and caramelized sweet clay-pot yogurt." }
+      ],
+      stays: [
+        { name: "Darjeeling Heritage Tea Planter Bungalows", desc: "150-year-old Victorian estates overlooking organic tea gardens." },
+        { name: "Sundarbans Eco Jungle Resorts", desc: "Riverside stilt cottages with guided mangrove boat safaris." }
       ]
     },
     "Assam": {
-      capital: "Dispur (Guwahati)",
-      language: "Assamese, Bengali, Bodo",
-      climate: "Tropical Rainforest (Best: Oct-Apr)",
-      desc: "Gateway to Northeast India, famous for one-horned rhinoceros, sprawling Brahmaputra river, and robust black tea.",
+      region: "northeast",
+      capital: "Dispur / Guwahati",
+      language: "Assamese, English",
+      climate: "Subtropical Monsoon (Best: Nov-Apr)",
+      tagline: "Land of One-Horned Rhino & Brahmaputra Tea",
+      desc: "Gateway to the North-East famous for Kaziranga's one-horned rhinos, mighty Brahmaputra river island Majuli, golden Muga silk, and rich tea gardens.",
       attractions: [
-        { name: "Kaziranga National Park", icon: "🦏", desc: "UNESCO World Heritage sanctuary hosting two-thirds of the world's great one-horned rhinoceroses." },
-        { name: "Kamakhya Devi Temple (Guwahati)", icon: "🛕", desc: "Ancient hilltop Shakti Peeth overlooking the Brahmaputra, revered as one of India's oldest spiritual centers." },
-        { name: "Majuli Island (Brahmaputra)", icon: "🏝️", desc: "The world's largest inhabited river island, famous for Vaishnavite Satras and traditional mask-making." }
+        { name: "Kaziranga National Park", icon: "🦏", category: "UNESCO World Heritage", desc: "World's largest population of Great One-Horned Rhinoceroses and wild water buffaloes." },
+        { name: "Kamakhya Temple (Guwahati)", icon: "🛕", category: "Shakti Peeth", desc: "Ancient hilltop tantric temple dedicated to Goddess Kamakhya overlooking Brahmaputra." },
+        { name: "Majuli River Island", icon: "🛶", category: "World's Largest River Island", desc: "Vaidnavite Neo-Vaishnavite Satra monasteries and traditional riverine Mishing tribal culture." },
+        { name: "Tea Gardens of Dibrugarh & Jorhat", icon: "🍃", category: "Tea Heritage", desc: "Sprawling green tea estates producing world-renowned strong Assam CTC & Orthodox tea." }
+      ],
+      markets: [
+        { name: "Fancy Bazaar (Guwahati)", icon: "🛍️", desc: "Bustling North-East hub for golden Muga silk sarees, Mekhela Chador, and bamboo crafts." },
+        { name: "Panbazaar & Silkalay", icon: "🧵", desc: "Authorized co-operative outlets for pure Eri, Pat, and Muga silk weaving." }
       ],
       foods: [
-        { name: "Khaar & Masor Tenga", desc: "Traditional alkaline raw papaya dish, and tangy light fish curry cooked with tomatoes and dried mangosteen." },
-        { name: "Duck Meat Curry with Ash Gourd", desc: "Rich winter delicacy cooked with local spices, black pepper, and ash gourd." },
-        { name: "Pitha & Assam CTC Milk Tea", desc: "Hand-rolled rice cakes stuffed with grated coconut and jaggery, paired with strong malty Assam tea." }
+        { name: "Assamese Thali (Khar & Masor Tenga)", desc: "Traditional meal starting with alkaline papaya khar, followed by tangy fish curry cooked with elephant apple." },
+        { name: "Duck Meat Curry with White Gourd", desc: "Rich festive curry cooked with black pepper, crushed sesame, and winter gourd." },
+        { name: "Pitha & Laru", desc: "Rice flour rolls stuffed with sweetened sesame, coconut, and liquid sugarcane jaggery." }
+      ],
+      stays: [
+        { name: "Heritage Assam Tea Bungalows (Jorhat)", desc: "Colonial British planter mansions with private golf courses and high tea." },
+        { name: "Majuli Bamboo Eco-Cottages", desc: "Traditional stilt huts on the Brahmaputra River island." }
       ]
     },
-    "Odisha": {
-      capital: "Bhubaneswar",
-      language: "Odia",
-      climate: "Tropical (Best: Oct-Mar)",
-      desc: "Temple City of India, home to the architectural wonder of Konark Sun Temple, Puri Jagannath Ratha Yatra, and Chilika Lake.",
+    "Jammu & Kashmir": {
+      region: "north",
+      capital: "Srinagar / Jammu",
+      language: "Kashmiri, Dogri, Urdu, Hindi",
+      climate: "Alpine (Best: Apr-Oct, Dec-Feb Snow)",
+      tagline: "Paradise on Earth • Lakes, Shikaras & Snow Slopes",
+      desc: "Crown jewel of India featuring Dal Lake houseboats, Gulmarg ski slopes, Pahalgam pine valleys, saffron fields, and exquisite Pashmina shawls.",
       attractions: [
-        { name: "Konark Sun Temple", icon: "☀️", desc: "13th-century UNESCO monumental chariot of the Sun God carved with 24 intricate stone wheels." },
-        { name: "Jagannath Temple & Beach (Puri)", icon: "🛕", desc: "One of the sacred Char Dham pilgrimage sites, famous for the annual grand Ratha Yatra chariot festival." },
-        { name: "Chilika Lake & Dolphin Sanctuary", icon: "🐬", desc: "Asia's largest brackish water lagoon, home to migratory flamingoes and rare Irrawaddy dolphins." }
+        { name: "Dal Lake & Houseboats (Srinagar)", icon: "🛶", category: "Alpine Lake", desc: "Ornate wooden houseboats, floating vegetable markets, and wooden Shikara rides." },
+        { name: "Gulmarg Gondola & Ski Slopes", icon: "⛷️", category: "High Altitude Ski", desc: "World's 2nd highest cable car ascending to 14,000ft for powder snow skiing." },
+        { name: "Pahalgam & Betaab Valley", icon: "🌲", category: "Mountain Valley", desc: "Pristine pine forests, Lidder River trout fishing, and snow-melt alpine meadows." },
+        { name: "Mata Vaishno Devi Shrine (Katra)", icon: "🛕", category: "Sacred Pilgrimage", desc: "Holy cave temple located in Trikuta Mountains visited by millions annually." }
+      ],
+      markets: [
+        { name: "Lal Chowk & Polo View (Srinagar)", icon: "🧵", desc: "Premier shopping street for hand-knotted silk carpets, GI Pashmina shawls, and walnut wood carvings." },
+        { name: "Floating Shikara Market (Dal Lake)", icon: "🌸", desc: "Dawn river market for fresh lotus flowers, saffron, and Kashmiri handicrafts." }
       ],
       foods: [
-        { name: "Chhena Poda", desc: "The legendary baked cottage cheese cake caramelized with cardamom, cashews, and sugar in sal leaf molds." },
-        { name: "Dalma & Pakhala Bhata", desc: "Lentils cooked with raw papaya, pumpkin, and roasted cumin, and fermented rice with fried fish and greens." },
-        { name: "Rasagola & Khaja", desc: "Traditional soft Odia cottage cheese dessert and multi-layered crispy sweet pastry offered at Puri temple." }
+        { name: "Kashmiri Wazwan (Rosta, Rogan Josh)", desc: "36-course royal banquet cooked by Master Wazas, featuring tender mutton in fennel-yogurt gravy." },
+        { name: "Modur Pulao & Kahwa Tea", desc: "Sweet saffron rice studded with almonds and raisins, paired with green cardamom tea brewed in brass samovar." },
+        { name: "Tabak Maaz & Gushtaba", desc: "Crispy fried ribs, and velvety minced mutton meatballs in rich spiced yogurt gravy." }
+      ],
+      stays: [
+        { name: "Luxury Cedar Houseboats (Nigeen/Dal Lake)", desc: "Hand-carved Victorian cedarwood suites with butler service on calm waters." },
+        { name: "Gulmarg Alpine Chalets", desc: "Ski-in ski-out wooden resorts with fireplace hearths." }
+      ]
+    },
+    "Ladakh": {
+      region: "north",
+      capital: "Leh",
+      language: "Ladakhi, Balti, English, Hindi",
+      climate: "High Altitude Cold Desert (Best: May-Sep)",
+      tagline: "Land of High Passes • Pangong & Monasteries",
+      desc: "Spectacular high-altitude trans-Himalayan desert featuring turquoise Pangong Tso lake, dramatic Khardung La pass, ancient Buddhist monasteries, and double-humped camels.",
+      attractions: [
+        { name: "Pangong Tso & Tso Moriri Lakes", icon: "🌊", category: "High Altitude Lake", desc: "134km long brackish lake changing colors from turquoise to deep indigo at 14,270ft." },
+        { name: "Nubra Valley & Hunder Sand Dunes", icon: "🐫", category: "Cold Desert", desc: "High desert valley reached via Khardung La pass featuring double-humped Bactrian camel rides." },
+        { name: "Thiksey & Hemis Monasteries", icon: "☸️", category: "Tibetan Gompa", desc: "12-story hilltop monastery complex resembling Lhasa's Potala Palace housing a 49ft Maitreya Buddha." },
+        { name: "Magnetic Hill & Zanskar Confluence", icon: "🏞️", category: "Natural Phenomenon", desc: "Gravity-defying road phenomenon and turquoise Zanskar meeting muddy Indus River." }
+      ],
+      markets: [
+        { name: "Leh Main Bazaar", icon: "🧵", desc: "Pedestrian street market for Ladakhi silver jewelry, turquoise beads, prayer flags, and yak woolens." },
+        { name: "Tibetan Refugee Market (Leh)", icon: "🕉️", desc: "Authentic bazaar for antique singing bowls, thangkas, and prayer wheels." }
+      ],
+      foods: [
+        { name: "Thukpa & Momos", desc: "Hearty hot noodle soup with vegetables/mutton, and steamed stuffed dumplings with fiery chili chutney." },
+        { name: "Skyu & Chhutagi", desc: "Traditional Ladakhi pasta stew cooked with root vegetables and yak meat/cheese." },
+        { name: "Butter Tea (Gur Gur Chai)", desc: "Warming pink tea churned with yak butter, salt, and roasted barley flour (Tsampa)." }
+      ],
+      stays: [
+        { name: "Glamping Eco-Camps (Pangong/Nubra)", desc: "Insulated luxury dome tents with transparent stargazing roofs." },
+        { name: "Heritage Ladakhi Homestays (Stok/Fiang)", desc: "Traditional solar-heated mudbrick houses serving organic farm-to-table meals." }
       ]
     },
     "Madhya Pradesh": {
+      region: "central",
       capital: "Bhopal",
       language: "Hindi",
       climate: "Subtropical (Best: Oct-Mar)",
-      desc: "The Heart of Incredible India, featuring tiger reserves, Khajuraho temples, ancient stupas, and marble river gorges.",
+      tagline: "Heart of Incredible India • Tigers & Khajuraho",
+      desc: "Central heartland of India celebrated for Khajuraho temples, UNESCO Sanchi Stupa, Bandhavgarh & Kanha tiger sanctuaries, and Gwalior fort.",
       attractions: [
-        { name: "Khajuraho UNESCO Temples", icon: "🏛️", desc: "Masterpieces of Nagara architecture famed for intricate sandstone carvings of celestial dancers and deities." },
-        { name: "Bandhavgarh & Kanha Tiger Reserves", icon: "🐅", desc: "World-renowned wildlife reserves with India's highest tiger density and sal forest safaris." },
-        { name: "Sanchi Stupa & Bhedaghat Marble Rocks", icon: "🗿", desc: "Ashoka's 3rd-century Buddhist stupa and boat rides through 100-foot marble river canyons in Jabalpur." }
+        { name: "Khajuraho Group of Temples", icon: "🗿", category: "UNESCO Heritage", desc: "10th-century Chandela Dynasty temples renowned for nagara architecture and intricate stone carvings." },
+        { name: "Bandhavgarh & Kanha Tiger Reserves", icon: "🐅", category: "Wild Tiger Safari", desc: "India's highest density tiger habitats inspiration for Kipling's Jungle Book." },
+        { name: "Sanchi Stupa & Gwalior Fort", icon: "🗼", category: "Ancient Monolithic", desc: "3rd-century BCE Mauryan Buddhist stupa with carved gateways, and hilltop Gwalior fortress." },
+        { name: "Marble Rocks of Bhedaghat (Jabalpur)", icon: "🚤", category: "River Canyon", desc: "Moonlit boat rides between 100ft high white marble gorges along Narmada River." }
+      ],
+      markets: [
+        { name: "Chanderi & Maheshwar Weaving Hubs", icon: "🧵", desc: "Centuries-old weaver looms producing diaphanous Chanderi and Maheshwari silk-cotton sarees." },
+        { name: "Sarafa Night Food Market (Indore)", icon: "🌃", desc: "Jewelry market by day transforming at night into India's most famous street food street." }
       ],
       foods: [
-        { name: "Indori Poha & Jalebi", desc: "Steamed flattened rice spiced with fennel seeds and Jeeravan masala, topped with sev and pomegranate." },
-        { name: "Bhopali Gosht Korma", desc: "Rich royal Nawabi mutton curry simmered with whole spices, yogurt, and brown onion paste." },
-        { name: "Bhutte Ka Kees", desc: "Grated fresh sweet corn cooked with milk, mustard seeds, green chillies, and freshly grated coconut." }
-      ]
-    },
-    "Bihar": {
-      capital: "Patna",
-      language: "Hindi, Maithili, Bhojpuri, Magahi",
-      climate: "Subtropical (Best: Oct-Mar)",
-      desc: "Cradle of Buddhism and Jainism, home to Nalanda University ruins, Bodh Gaya Mahabodhi Temple, and the Ganges.",
-      attractions: [
-        { name: "Mahabodhi Temple (Bodh Gaya)", icon: "🧘", desc: "UNESCO World Heritage site marking the exact spot where Lord Buddha attained enlightenment under the Bodhi Tree." },
-        { name: "Nalanda University Ruins", icon: "🏛️", desc: "Ruins of the ancient 5th-century residential university that housed 10,000 scholars from across Asia." },
-        { name: "Rajgir Ropeway & Vishwa Shanti Stupa", icon: "🚠", desc: "Scenic chairlift ride up Gridhakuta Hill to the gleaming white Japanese World Peace Pagoda." }
+        { name: "Indori Poha Jalebi & Bhutte Ka Kees", desc: "Flattened rice steamed with fennel and sev, paired with grated corn simmered in spiced milk." },
+        { name: "Dal Bafla", desc: "Boiled and ghee-roasted wheat dough balls served with spicy dal, churma, and garlic chutney." },
+        { name: "Bhopali Gosht Korma", desc: "Slow-cooked rich mutton curry infused with fried onions and aromatic spices." }
       ],
-      foods: [
-        { name: "Litti Chokha with Ghee", desc: "Roasted whole wheat dough balls stuffed with spiced roasted sattu, dipped in desi ghee with mashed eggplant." },
-        { name: "Sattu Paratha & Sharbat", desc: "Wholesome roasted gram flour flatbreads and cooling summer protein beverages spiced with roasted cumin." },
-        { name: "Khaja & Thekua", desc: "Crisp flaky layered sweet pastry from Silao and traditional jaggery-wheat cookies prepared during Chhath Puja." }
-      ]
-    },
-    "Sikkim": {
-      capital: "Gangtok",
-      language: "Nepali, Bhutia, Lepcha, English",
-      climate: "Alpine (Best: Mar-May & Oct-Dec)",
-      desc: "100% organic Himalayan state, boasting Mount Kanchenjunga views, glacial lakes, and Buddhist monasteries.",
-      attractions: [
-        { name: "Tsomgo Glacial Lake & Nathula Pass", icon: "🏔️", desc: "Stunning turquoise glacial lake at 3,753m and the historic Indo-China Silk Route mountain pass." },
-        { name: "Rumtek Monastery", icon: "🛕", desc: "The grand seat of the Karmapa, showcasing golden stupas, intricate thangka paintings, and prayer wheels." },
-        { name: "Gurudongmar Lake & Yumthang Valley", icon: "🌸", desc: "Sacred high-altitude lake at 5,430m and the breathtaking Valley of Rhododendron flowers." }
-      ],
-      foods: [
-        { name: "Steamed Momos & Thukpa", desc: "Handmade dumplings stuffed with organic vegetables or meat, and steaming bowls of hearty noodle soup." },
-        { name: "Gundruk & Sinki Soup", desc: "Traditional fermented leafy greens soup cooked with mountain tomatoes, ginger, and local herbs." },
-        { name: "Sel Roti & Chhurpi Cheese", desc: "Crispy ring-shaped sweet rice bread paired with traditional hardened yak cheese curry." }
+      stays: [
+        { name: "Jungle Safari Lodges (Kanha/Pench)", desc: "Luxury eco-treehouses tucked inside dense sal tiger reserves." },
+        { name: "Fort Resorts (Ahilya Fort Maheshwar)", desc: "18th-century Maratha queen Ahilyabai Holkar's palace overlooking Narmada." }
       ]
     }
   };
@@ -2631,95 +2783,109 @@
     if (tourismInitialized) return;
     tourismInitialized = true;
 
+    renderStateGrid();
+    loadStateDetails(activeState);
+  }
+
+  window.filterTourismRegion = function(regionKey, btnEl) {
+    activeTourismRegion = regionKey || 'all';
+    let pills = document.querySelectorAll('.region-pill');
+    pills.forEach(p => {
+      p.style.background = 'rgba(255,255,255,0.05)';
+      p.style.color = '#94a3b8';
+      p.style.borderColor = 'rgba(255,255,255,0.1)';
+      p.classList.remove('active');
+    });
+    if (btnEl) {
+      btnEl.style.background = 'rgba(0,243,255,0.2)';
+      btnEl.style.color = '#00f3ff';
+      btnEl.style.borderColor = 'rgba(0,243,255,0.5)';
+      btnEl.classList.add('active');
+    }
+    renderStateGrid();
+  };
+
+  window.filterTourismStates = function(query) {
+    renderStateGrid(query);
+  };
+
+  function renderStateGrid(searchQuery) {
     const stateGrid = document.getElementById("tourism-state-grid");
     if (!stateGrid) return;
-
     stateGrid.innerHTML = "";
-    
-    // Sort states alphabetically for presentation
-    const states = [...STATES_LIST].sort();
-    
-    states.forEach(state => {
-      const btn = document.createElement("button");
-      btn.className = "state-btn";
-      btn.textContent = state;
-      btn.addEventListener("click", () => {
-        // Toggle active button
-        document.querySelectorAll(".state-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        loadStateDetails(state);
-        playTone(800, "sine", 0.04, 0.08);
-      });
-      stateGrid.appendChild(btn);
+
+    const q = (searchQuery || "").trim().toLowerCase();
+    const allStates = Object.keys(TOURISM_DATABASE).concat(STATES_LIST.filter(s => !TOURISM_DATABASE[s]));
+    const uniqueStates = Array.from(new Set(allStates)).sort();
+
+    const filtered = uniqueStates.filter(st => {
+      const data = TOURISM_DATABASE[st] || {};
+      const matchRegion = (activeTourismRegion === 'all' || data.region === activeTourismRegion);
+      const matchQuery = !q || st.toLowerCase().includes(q) || 
+                         (data.capital && data.capital.toLowerCase().includes(q)) || 
+                         (data.desc && data.desc.toLowerCase().includes(q)) ||
+                         (data.tagline && data.tagline.toLowerCase().includes(q));
+      return matchRegion && matchQuery;
     });
 
-    // Load first state by default (e.g. Maharashtra)
-    const defaultState = "Maharashtra";
-    const defaultBtn = Array.from(stateGrid.children).find(btn => btn.textContent === defaultState);
-    if (defaultBtn) {
-      defaultBtn.classList.add("active");
-      loadStateDetails(defaultState);
+    if (filtered.length === 0) {
+      stateGrid.innerHTML = '<div style="grid-column:1/-1; color:#f87171; font-weight:700; padding:1rem; text-align:center;">No matching state or union territory found</div>';
+      return;
     }
+
+    filtered.forEach(state => {
+      const data = TOURISM_DATABASE[state] || { capital: state + " Capital", tagline: "Explore State Tourism" };
+      const btn = document.createElement("button");
+      btn.className = "state-btn" + (state === activeState ? " active" : "");
+      btn.style.display = "flex";
+      btn.style.flexDirection = "column";
+      btn.style.alignItems = "flex-start";
+      btn.style.padding = "0.6rem 0.85rem";
+      btn.style.textAlign = "left";
+
+      btn.innerHTML = `
+        <span style="font-weight:800; font-size:0.88rem; color:#fff;">${state}</span>
+        <span style="font-size:0.72rem; color:var(--color-accent); margin-top:2px;">📍 ${data.capital}</span>
+      `;
+
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#tourism-state-grid .state-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        loadStateDetails(state);
+        if (typeof playTone === 'function') playTone(800, "sine", 0.04, 0.08);
+      });
+
+      stateGrid.appendChild(btn);
+    });
   }
 
   function loadStateDetails(stateName) {
     activeState = stateName;
-    const attractionsContainer = document.getElementById("tourism-attractions");
-    const foodsContainer = document.getElementById("tourism-foods");
-    const cityCountLabel = document.getElementById("tourism-city-count");
-    const citiesListContainer = document.getElementById("tourism-cities-list");
-    const spotlightContainer = document.getElementById("tourism-city-spotlight");
+    const viewContainer = document.getElementById("tourism-active-state-view");
+    if (!viewContainer) return;
 
     const data = TOURISM_DATABASE[stateName] || {
       capital: stateName + " Capital",
-      language: "Regional, Hindi & English",
+      language: "Regional & Hindi",
       climate: "Subtropical / Monsoon (Best: Oct-Mar)",
-      desc: `Explore the vibrant culture, historic citadels, rich folklore, and authentic culinary traditions of ${stateName}.`,
+      tagline: "Explore Culture, Cuisine & Heritage",
+      desc: `Explore the vibrant geography, local heritage, markets, culinary traditions, and cities of ${stateName}.`,
       attractions: [
-        { name: `${stateName} Heritage Citadel`, icon: "🏰", desc: `Historic royal architecture, museum galleries, and panoramic viewpoints.` },
-        { name: `${stateName} Nature & Wildlife Sanctuary`, icon: "🌿", desc: `Lush green hills, pristine rivers, and native wildlife biodiversity.` },
-        { name: `${stateName} Ancient Temple & Ghats`, icon: "🛕", desc: `Sacred pilgrimage architecture with evening prayer rituals and cultural music.` }
+        { name: `${stateName} Heritage Citadel`, icon: "🏰", category: "Monument", desc: `Historic citadel featuring traditional architecture and panoramic views.` },
+        { name: `${stateName} Sanctuary & Nature Reserve`, icon: "🌿", category: "Eco Wilderness", desc: `Prisitne river valleys, lush greenery, and native flora & fauna.` },
+        { name: `${stateName} Sacred Shrine & Ghats`, icon: "🛕", category: "Spiritual Site", desc: `Sacred pilgrimage architecture with evening prayer rituals.` }
+      ],
+      markets: [
+        { name: `${stateName} Main Heritage Bazaar`, icon: "🛍️", desc: `Traditional market famous for regional handicrafts, silks, and local souvenirs.` }
       ],
       foods: [
-        { name: `${stateName} Royal Thali`, desc: `A grand traditional platter of signature regional curries, fragrant rice, and breads.` },
-        { name: `${stateName} Spiced Street Chaat`, desc: `Crispy spiced savory snacks tempered with tamarind and mint chutneys.` },
-        { name: `${stateName} Cardamom Sweet Delicacy`, desc: `Classic milk and jaggery confectionery prepared during local festivals.` }
+        { name: `${stateName} Royal Regional Thali`, desc: `Grand traditional platter of signature curries, breads, and side dishes.` },
+        { name: `${stateName} Street Food Specialty`, desc: `Spiced local savory snack served with freshly prepared chutneys.` }
+      ],
+      stays: [
+        { name: `${stateName} Heritage & Eco Homestays`, desc: `Authentic boutique stays offering local hospitality and regional meals.` }
       ]
     };
-
-    // Hide spotlight card initially
-    if (spotlightContainer) spotlightContainer.style.display = "none";
-
-    // RENDER SIGHTSEEING LANDMARKS
-    if (attractionsContainer) {
-      attractionsContainer.innerHTML = "";
-      data.attractions.forEach(att => {
-        const item = document.createElement("div");
-        item.className = "attraction-item";
-        item.innerHTML = `
-          <div class="attraction-icon">${att.icon}</div>
-          <div style="flex-grow: 1;">
-            <h4 style="font-weight: 600; font-size: 0.95rem; color: var(--text-primary); margin: 0 0 0.2rem 0;">${att.name}</h4>
-            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45; margin: 0;">${att.desc}</p>
-          </div>
-        `;
-        attractionsContainer.appendChild(item);
-      });
-    }
-
-    // RENDER CULINARY DELIGHTS
-    if (foodsContainer) {
-      foodsContainer.innerHTML = "";
-      data.foods.forEach(food => {
-        const item = document.createElement("div");
-        item.className = "food-item";
-        item.innerHTML = `
-          <div class="food-title">${food.name}</div>
-          <div class="food-desc">${food.desc}</div>
-        `;
-        foodsContainer.appendChild(item);
-      });
-    }
 
     // FAST STATE CITY LOOKUP WITH CACHING (0ms instantaneous response)
     if (!window._cachedStateCities) window._cachedStateCities = {};
@@ -2740,27 +2906,131 @@
       window._cachedStateCities[stateName] = stateCities;
     }
 
-    // Render city count
-    if (cityCountLabel) {
-      cityCountLabel.textContent = `${stateCities.length} featured cities`;
-    }
+    // Build rich multi-section active state showcase HTML
+    let attractionsHTML = (data.attractions || []).map(att => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.2); border-radius:14px; padding:0.9rem 1.1rem; display:flex; gap:0.85rem; align-items:flex-start;">
+        <div style="font-size:1.6rem; filter:drop-shadow(0 0 6px rgba(0,243,255,0.4));">${att.icon || '🌅'}</div>
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+            <h4 style="font-size:0.95rem; font-weight:800; color:#fff; margin:0;">${att.name}</h4>
+            <span style="font-size:0.68rem; font-weight:700; color:#00f3ff; background:rgba(0,243,255,0.1); border:1px solid rgba(0,243,255,0.3); border-radius:12px; padding:0.15rem 0.5rem; text-transform:uppercase;">${att.category || 'Landmark'}</span>
+          </div>
+          <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${att.desc}</p>
+        </div>
+      </div>
+    `).join('');
 
-    // Render city pills
-    if (citiesListContainer) {
-      citiesListContainer.innerHTML = "";
-      stateCities.forEach(city => {
-        const pill = document.createElement("button");
-        pill.className = "state-city-pill";
-        pill.textContent = capitalizeWord(city);
-        pill.addEventListener("click", () => {
-          showCitySpotlight(city);
-          if (typeof playTone === "function") playTone(900, "sine", 0.03, 0.05);
-        });
-        citiesListContainer.appendChild(pill);
-      });
-    }
+    let marketsHTML = (data.markets || []).map(mk => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.25); border-radius:14px; padding:0.9rem 1.1rem; display:flex; gap:0.85rem; align-items:flex-start;">
+        <div style="font-size:1.6rem;">${mk.icon || '🛍️'}</div>
+        <div style="flex:1;">
+          <h4 style="font-size:0.95rem; font-weight:800; color:#f59e0b; margin:0 0 0.25rem 0;">${mk.name}</h4>
+          <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${mk.desc}</p>
+        </div>
+      </div>
+    `).join('');
+
+    let foodsHTML = (data.foods || []).map(fd => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.95rem; font-weight:800; color:#10b981; margin-bottom:0.25rem; display:flex; align-items:center; gap:0.4rem;">
+          <span>🍲</span> ${fd.name}
+        </div>
+        <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${fd.desc}</p>
+      </div>
+    `).join('');
+
+    let staysHTML = (data.stays || []).map(st => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:14px; padding:0.9rem 1.1rem;">
+        <div style="font-size:0.95rem; font-weight:800; color:#c084fc; margin-bottom:0.25rem; display:flex; align-items:center; gap:0.4rem;">
+          <span>🏡</span> ${st.name}
+        </div>
+        <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${st.desc}</p>
+      </div>
+    `).join('');
+
+    let citiesPillsHTML = stateCities.map(city => `
+      <button class="state-city-pill" onclick="if(window.showCitySpotlight) window.showCitySpotlight('${city}');" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); color:#fff; border-radius:12px; padding:0.4rem 0.8rem; font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.2s;">
+        📍 ${capitalizeWord(city)}
+      </button>
+    `).join('');
+
+    viewContainer.innerHTML = `
+      <!-- Active State Banner -->
+      <div style="background:linear-gradient(135deg, rgba(15,23,42,0.92), rgba(2,6,23,0.95)); border:1px solid rgba(0,243,255,0.35); border-radius:20px; padding:1.5rem; box-shadow:0 10px 30px rgba(0,0,0,0.4);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+          <div>
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.35rem;">
+              <span style="font-size:1.8rem;">🏛️</span>
+              <h3 style="font-size:1.6rem; font-weight:900; color:#fff; margin:0;">${stateName}</h3>
+              <span style="background:rgba(0,243,255,0.15); color:#00f3ff; font-weight:800; font-size:0.72rem; padding:0.25rem 0.7rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3); text-transform:uppercase;">
+                ${data.tagline || 'State Showcase'}
+              </span>
+            </div>
+            <p style="color:#94a3b8; font-size:0.9rem; line-height:1.55; margin:0; max-width:850px;">${data.desc}</p>
+          </div>
+
+          <!-- Quick Fact Pills -->
+          <div style="display:flex; flex-direction:column; gap:0.4rem; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:0.75rem 1rem; font-size:0.8rem;">
+            <div style="color:#94a3b8;">Capital: <strong style="color:#00f3ff;">${data.capital}</strong></div>
+            <div style="color:#94a3b8;">Language: <strong style="color:#fff;">${data.language}</strong></div>
+            <div style="color:#94a3b8;">Best Season: <strong style="color:#10b981;">${data.climate}</strong></div>
+          </div>
+        </div>
+
+        <!-- 3-Column Feature Grid -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(270px, 1fr)); gap:1.25rem; margin-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.25rem;">
+          
+          <!-- Column 1: Top Sights & Monuments -->
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <h4 style="font-size:1.02rem; font-weight:800; color:#00f3ff; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🌅</span> Top Monuments &amp; Sightseeing
+            </h4>
+            ${attractionsHTML}
+          </div>
+
+          <!-- Column 2: Best Markets & Crafts -->
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <h4 style="font-size:1.02rem; font-weight:800; color:#f59e0b; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🛍️</span> Famous Bazaars &amp; GI Crafts
+            </h4>
+            ${marketsHTML}
+          </div>
+
+          <!-- Column 3: Foods & Stays -->
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <h4 style="font-size:1.02rem; font-weight:800; color:#10b981; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🍲</span> Famous Food &amp; Stays
+            </h4>
+            ${foodsHTML}
+            ${staysHTML}
+          </div>
+
+        </div>
+
+        <!-- Cities & Towns Section -->
+        <div style="margin-top:1.75rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+            <h4 style="font-size:1.02rem; font-weight:800; color:#fff; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🏙️</span> Cities, Towns &amp; Villages in ${stateName}
+            </h4>
+            <span style="font-size:0.78rem; font-weight:700; color:#00f3ff; background:rgba(0,243,255,0.1); padding:0.2rem 0.6rem; border-radius:12px;">
+              ${stateCities.length} Locations Cataloged
+            </span>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; max-height:160px; overflow-y:auto; background:rgba(2,6,23,0.5); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:0.85rem;">
+            ${citiesPillsHTML}
+          </div>
+        </div>
+
+        <!-- City Spotlight Container -->
+        <div id="tourism-city-spotlight" style="display:none; margin-top:1.25rem; background:rgba(15,23,42,0.95); border:1px solid rgba(0,243,255,0.4); border-radius:16px; padding:1.25rem;">
+          <!-- Populated dynamically via showCitySpotlight -->
+        </div>
+
+      </div>
+    `;
   }
-
   function showCitySpotlight(cityName) {
     const spotlightContainer = document.getElementById("tourism-city-spotlight");
     if (!spotlightContainer) return;

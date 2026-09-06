@@ -1070,154 +1070,70 @@
   <!-- =====================================================================
        TAB 8: STATE SHOWCASE & TOURISM GUIDE
        ===================================================================== -->
+    <!-- =====================================================================
+       TAB 8: STATE SHOWCASE & TOURISM GUIDE (ULTIMATE PAN-INDIA MASTER)
+       ===================================================================== -->
   <div id="tab-content-tourism" class="tab-content">
-    <div style="max-width:1200px; margin:0 auto; display:flex; flex-direction:column; gap:1.5rem; padding: 0 1.5rem 2.5rem 1.5rem;">
-      
-      <!-- Top Overview Panel -->
-      <div class="panel ambient-mesh-bg">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.75rem;">
-          <h2 class="panel-title" style="margin-bottom:0;"><span>🏛️</span> State Showcase &amp; Virtual Tour</h2>
-          <div class="live-status-pill">
+    <div style="max-width:1250px; margin:0 auto; display:flex; flex-direction:column; gap:1.75rem; padding: 0 1.25rem 3rem 1.25rem;">
+
+      <!-- Hero Header Panel -->
+      <div class="panel ambient-mesh-bg" style="background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)); border:1px solid rgba(0,243,255,0.3); border-radius:24px; padding:2rem; box-shadow:0 0 50px rgba(0,243,255,0.15);">
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+          <div>
+            <div style="font-size:0.78rem; font-weight:800; color:#00f3ff; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.35rem;">
+              🏛️ Pan-India Tourism &amp; Cultural Directory
+            </div>
+            <h2 style="font-size:1.85rem; font-weight:900; color:#ffffff; margin:0; line-height:1.2;">
+              Bharat 36 States &amp; Union Territories Master Showcase
+            </h2>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; background:rgba(0,243,255,0.1); border:1px solid rgba(0,243,255,0.3); border-radius:20px; padding:0.4rem 1rem; color:#00f3ff; font-size:0.82rem; font-weight:700;">
             <span class="ripple-dot"></span>
-            ✦ LIVE DEALS ACTIVE
+            36 STATES &amp; UTs • 50,000+ CITIES &amp; VILLAGES
           </div>
         </div>
-        <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:1.25rem;">
-          Select any state or union territory from our database to explore its rich geography, local sightseeing landmarks, famous culinary delicacies, and view all its cities.
+
+        <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem; max-width:900px;">
+          Explore India’s rich geographical diversity, ancient UNESCO monuments, bustling bazaars, regional culinary masterworks, offbeat villages, and authentic homestays across all 36 States &amp; UTs.
         </p>
 
-        <!-- INFINITE DUAL-ROW MARQUEE TICKER (OHHMYDESIGN AGENCY STYLE) -->
-        <div class="marquee-wrapper">
-          <!-- Row 1: Left Scroll -->
-          <div class="marquee-row">
-            <div class="marquee-track marquee-track-left">
-              <span class="marquee-pill">🏡 Boutique Hotels</span>
-              <span class="marquee-pill">🌿 Eco-Resorts</span>
-              <span class="marquee-pill">📜 Local Heritage Guilds</span>
-              <span class="marquee-pill">🏕️ Highland Treks</span>
-              <span class="marquee-pill">🍲 Culinary Artisans</span>
-              <span class="marquee-pill">🌄 Off-Peak Stays</span>
-              <span class="marquee-pill">🏡 Boutique Hotels</span>
-              <span class="marquee-pill">🌿 Eco-Resorts</span>
-              <span class="marquee-pill">📜 Local Heritage Guilds</span>
-              <span class="marquee-pill">🏕️ Highland Treks</span>
-              <span class="marquee-pill">🍲 Culinary Artisans</span>
-              <span class="marquee-pill">🌄 Off-Peak Stays</span>
-            </div>
+        <!-- Search Bar & Region Filter Tabs -->
+        <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:1.25rem;">
+          <div style="position:relative; width:100%;">
+            <input type="text" id="tourism-state-search" placeholder="🔍 Search any state, capital, monument, dish, craft market or city (e.g. Rajasthan, Hawa Mahal, Misal Pav, Coorg, Wayanad)..." style="width:100%; padding:0.85rem 1.25rem 0.85rem 2.75rem; background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); border-radius:14px; color:#fff; font-size:0.95rem; outline:none; transition:all 0.2s;" oninput="if(window.filterTourismStates) window.filterTourismStates(this.value);">
+            <span style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:#00f3ff; font-size:1.1rem;">🔍</span>
           </div>
-          <!-- Row 2: Right Scroll -->
-          <div class="marquee-row">
-            <div class="marquee-track marquee-track-right">
-              <span class="marquee-pill">🏰 Heritage Homesteads</span>
-              <span class="marquee-pill">🛶 Backwater Cruisers</span>
-              <span class="marquee-pill">🫖 Chai Trail Guides</span>
-              <span class="marquee-pill">🐘 Wilderness Expeditions</span>
-              <span class="marquee-pill">🎨 Craft Co-Ops</span>
-              <span class="marquee-pill">🚲 Eco-Bike Tours</span>
-              <span class="marquee-pill">🏰 Heritage Homesteads</span>
-              <span class="marquee-pill">🛶 Backwater Cruisers</span>
-              <span class="marquee-pill">🫖 Chai Trail Guides</span>
-              <span class="marquee-pill">🐘 Wilderness Expeditions</span>
-              <span class="marquee-pill">🎨 Craft Co-Ops</span>
-              <span class="marquee-pill">🚲 Eco-Bike Tours</span>
-            </div>
+
+          <!-- Region Pills -->
+          <div id="tourism-region-pills" style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <button class="region-pill active" data-region="all" onclick="if(window.filterTourismRegion) window.filterTourismRegion('all', this);" style="background:rgba(0,243,255,0.2); color:#00f3ff; border:1px solid rgba(0,243,255,0.5); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">⚡ All 36 States &amp; UTs</button>
+            <button class="region-pill" data-region="north" onclick="if(window.filterTourismRegion) window.filterTourismRegion('north', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🏔️ North India</button>
+            <button class="region-pill" data-region="south" onclick="if(window.filterTourismRegion) window.filterTourismRegion('south', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🌴 South India</button>
+            <button class="region-pill" data-region="west" onclick="if(window.filterTourismRegion) window.filterTourismRegion('west', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🏜️ West India</button>
+            <button class="region-pill" data-region="east" onclick="if(window.filterTourismRegion) window.filterTourismRegion('east', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🌊 East India</button>
+            <button class="region-pill" data-region="northeast" onclick="if(window.filterTourismRegion) window.filterTourismRegion('northeast', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🍃 North-East</button>
+            <button class="region-pill" data-region="central" onclick="if(window.filterTourismRegion) window.filterTourismRegion('central', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🐯 Central India</button>
+            <button class="region-pill" data-region="ut" onclick="if(window.filterTourismRegion) window.filterTourismRegion('ut', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.4rem 1rem; font-size:0.82rem; font-weight:700; cursor:pointer;">🏛️ Union Territories</button>
           </div>
         </div>
-        
-        <!-- State Grid Selector -->
-        <div id="tourism-state-grid" class="state-grid">
-          <!-- Populated dynamically via JS -->
+
+        <!-- State Selector Carousel / Grid -->
+        <div id="tourism-state-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:0.75rem; max-height:240px; overflow-y:auto; padding-right:0.5rem;">
+          <!-- Populated dynamically -->
         </div>
 
-        <!-- ANIMATED TOURISM STATISTICS METRIC STRIP -->
-        <div id="tourism-stats-strip" class="tourism-stats-grid reveal-on-scroll" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem; margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid rgba(255,255,255,0.08);">
-          
-          <div class="stat-roll-card reveal-card" style="--stagger-idx:0;">
-            <div class="stat-roll-label">Revenue Recovered</div>
-            <div class="stat-roll-value" data-target="1.4" data-prefix="$" data-suffix="M+">$0M+</div>
-            <div class="stat-roll-desc">Direct local community earnings</div>
-          </div>
-
-          <div class="stat-roll-card reveal-card" style="--stagger-idx:1;">
-            <div class="stat-roll-label">Off-Peak Occupancy</div>
-            <div class="stat-roll-value" data-target="94" data-prefix="" data-suffix="%">0%</div>
-            <div class="stat-roll-desc">Monsoon &amp; winter stay optimization</div>
-          </div>
-
-          <div class="stat-roll-card reveal-card" style="--stagger-idx:2;">
-            <div class="stat-roll-label">Local Guilds Partnered</div>
-            <div class="stat-roll-value" data-target="3200" data-prefix="" data-suffix="+">0</div>
-            <div class="stat-roll-desc">Artisans, guides &amp; homesteaders</div>
-          </div>
-
-        </div>
       </div>
 
-      <!-- Main Showcase Layout -->
-      <div class="tourism-detail-container">
-        
-        <!-- Left Column: Details, Sightseeing & Food -->
-        <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          
-          <!-- Attractions Panel -->
-          <div class="panel" style="flex-grow: 1;">
-            <h3 style="font-size:1.15rem; font-weight:600; margin-bottom:1.25rem; color:var(--color-accent); display:flex; align-items:center; gap:0.5rem;">
-              <span>🌅</span> Top Sightseeing Landmarks
-            </h3>
-            <div id="tourism-attractions" style="display:flex; flex-direction:column;">
-              <!-- Populated dynamically -->
-              <div style="color:var(--text-muted); text-align:center; padding:2rem;">Select a state above to start your journey...</div>
-            </div>
-          </div>
-
-          <!-- Culinary Highlights Panel -->
-          <div class="panel">
-            <h3 style="font-size:1.15rem; font-weight:600; margin-bottom:1rem; color:var(--color-success); display:flex; align-items:center; gap:0.5rem;">
-              <span>🍲</span> Famous Culinary Delights
-            </h3>
-            <div id="tourism-foods" class="food-grid">
-              <!-- Populated dynamically -->
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Right Column: State Cities Directory & Spotlight -->
-        <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          
-          <!-- State Cities Directory -->
-          <div class="panel" style="display:flex; flex-direction:column; height:350px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--card-border); padding-bottom:0.75rem; margin-bottom:1rem;">
-              <h3 style="font-size:1.1rem; font-weight:600; color:var(--color-primary); margin:0;">
-                <span>🏙️</span> Cities in State
-              </h3>
-              <span id="tourism-city-count" style="font-size:0.8rem; color:var(--text-muted); font-weight:500;">0 cities</span>
-            </div>
-            <p style="color:var(--text-secondary); font-size:0.85rem; margin-bottom:0.75rem;">
-              Click on any city below to load its coordinates, district jurisdiction, and estimated ZIP code.
-            </p>
-            <div style="flex-grow:1; overflow-y:auto; background:rgba(2,6,23,0.4); border:1px solid var(--card-border); border-radius:var(--radius-sm);">
-              <div id="tourism-cities-list" class="state-cities-list">
-                <!-- Populated dynamically -->
-              </div>
-            </div>
-          </div>
-
-          <!-- City Spotlight Panel -->
-          <div id="tourism-city-spotlight" class="panel spotlight-card" style="display:none;">
-            <!-- Populated dynamically -->
-          </div>
-
-        </div>
-
+      <!-- State Detail Active Showcase -->
+      <div id="tourism-active-state-view" style="display:flex; flex-direction:column; gap:1.5rem;">
+        <!-- Populated dynamically via JS renderStateShowcaseView(stateName) -->
       </div>
 
     </div>
   </div>
 
-  <!-- =====================================================================
-       TAB 9: TRIP PLANNER & ITINERARY BUILDER
-       ===================================================================== -->
+  <!-- ===================================================================== -->
   <div id="tab-content-trip" class="tab-content">
     <div style="max-width:1200px; margin:0 auto; padding: 0 1rem 3rem;">
 
