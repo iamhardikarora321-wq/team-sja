@@ -1389,68 +1389,132 @@
 
   window.switchTab = switchTab;
   window.switchTab = switchTab;
-    function switchTab(tabId) {
+      function switchTab(tabId) {
     if (!tabId) return;
 
-    // 1. Primary Tab & Direct Sub-Mode Routing
-    if (tabId === 'travelintel' || tabId === 'explore' || tabId === 'food' || tabId === 'culinary' || tabId === 'attractions') {
-      tabId = 'travelintel';
-      if (typeof window.setIntelTab === 'function') window.setIntelTab('explore');
+    // Close any open modals/drawers first so the target view is fully visible
+    if (typeof window.closeShowcaseModal === 'function') window.closeShowcaseModal();
+    if (typeof window.closeFeatureDetailModal === 'function') window.closeFeatureDetailModal();
+    if (typeof window.closeDrawer === 'function') window.closeDrawer();
+
+    let cleanId = tabId.toString().trim().toLowerCase();
+
+    // 1. Theme Studio Trigger
+    if (cleanId === 'theme' || cleanId === 'themestudio') {
+      if (typeof window.openThemeModal === 'function') window.openThemeModal();
+      return;
     }
-    else if (tabId === 'planner' || tabId === 'routecalc') {
-      tabId = 'travelintel';
-      if (typeof window.setIntelTab === 'function') window.setIntelTab('planner');
+
+    // 2. 3D Constellation Trigger
+    if (cleanId === 'constellation' || cleanId === 'matrix3d' || cleanId === 'hologram') {
+      if (typeof window.openQuantumHologramModal === 'function') window.openQuantumHologramModal();
+      return;
     }
-    else if (tabId === 'roam' || tabId === 'discover') {
-      tabId = 'roam';
-      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode('discover');
+
+    // 3. Hard Reset Trigger
+    if (cleanId === 'reset' || cleanId === 'hardreset') {
+      if (typeof window.performHardReset === 'function') window.performHardReset();
+      return;
     }
-    else if (tabId === 'market' || tabId === 'control' || tabId === 'impact' || tabId === 'reroute' || tabId === 'loadmap') {
-      let mode = 'discover';
-      if (['explore', 'reroute', 'loadmap'].some(k => tabId.includes(k))) mode = 'explore';
-      else if (tabId.includes('market')) mode = 'market';
-      else if (tabId.includes('control')) mode = 'control';
-      else if (tabId.includes('impact')) mode = 'impact';
-      tabId = 'roam';
-      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode(mode);
-    }
-    else if (tabId === 'transport' || tabId === 'transithub' || tabId === 'transit' || tabId === 'fares' || tabId === 'bus' || tabId === 'car' || tabId === 'auto' || tabId === 'aeroplane' || tabId === 'flight' || tabId === 'train' || tabId === 'roadtrip' || tabId === 'rickshaw' || tabId === 'bagcalc' || tabId === 'transitbooking' || tabId === 'cabestimator' || tabId === 'fastagcalc' || tabId === 'evcharge' || tabId === 'evrouter' || tabId === 'seat' || tabId === 'metro' || tabId === 'airport' || tabId === 'routesolver') {
-      let mode = 'flight';
-      if (['bus', 'busguide', 'intercity'].some(k => tabId.includes(k))) mode = 'bus';
-      else if (['car', 'roadtrip', 'cab', 'fastag', 'fuel', 'rental'].some(k => tabId.includes(k))) mode = 'car';
-      else if (['auto', 'rickshaw', 'erickshaw'].some(k => tabId.includes(k))) mode = 'auto';
-      else if (['train', 'rail', 'pnr', 'irctc', 'seat', 'coach', 'tatkal'].some(k => tabId.includes(k))) mode = 'train';
+
+    // 4. Transport & Mobility Features (5-Mode Estimator)
+    if (['transport', 'transithub', 'transit', 'fares', 'bus', 'car', 'auto', 'aeroplane', 'flight', 'train', 'roadtrip', 'rickshaw', 'bagcalc', 'transitbooking', 'cabestimator', 'fastagcalc', 'evcharge', 'evrouter', 'seat', 'metro', 'airport', 'routesolver', 'fuelcost', 'pnrpredict', 'tatkal', 'baggage', 'airportcode', 'sleeperbus', 'vande', 'ferry', 'carrental', 'bikebook', 'stationcode', 'retiringroom', 'coachlocator', 'highwaydhabas', 'tollfree', 'parking'].includes(cleanId)) {
       tabId = 'transport';
+      let mode = 'flight';
+      if (['bus', 'busguide', 'intercity', 'sleeperbus'].some(k => cleanId.includes(k))) mode = 'bus';
+      else if (['car', 'roadtrip', 'cab', 'fastag', 'fuel', 'rental', 'dhabas', 'parking', 'tollfree'].some(k => cleanId.includes(k))) mode = 'car';
+      else if (['auto', 'rickshaw', 'erickshaw'].some(k => cleanId.includes(k))) mode = 'auto';
+      else if (['train', 'rail', 'pnr', 'irctc', 'seat', 'coach', 'tatkal', 'vande', 'stationcode', 'retiringroom', 'coachlocator'].some(k => cleanId.includes(k))) mode = 'train';
+      
       if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
     }
-    else if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture' || tabId === 'translator' || tabId === 'audio') {
-      tabId = 'lingo';
+
+    // 5. Bharat Travel Intelligence & Explorer Features
+    else if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'overcrowding', 'peakbalancer', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
+      tabId = 'travelintel';
+      let subTab = 'explore';
+      if (['attractions', 'sightseeing', 'monument', 'photospots', 'heritage'].some(k => cleanId.includes(k))) subTab = 'attractions';
+      else if (['food', 'culinary', 'delicacies', 'dhabas', 'cuisine'].some(k => cleanId.includes(k))) subTab = 'culinary';
+      else if (['planner', 'routecalc', 'scenicroutes', 'distance'].some(k => cleanId.includes(k))) subTab = 'planner';
+      
+      if (typeof window.setIntelTab === 'function') window.setIntelTab(subTab);
     }
-    else if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'digitalsurvival' || tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety') {
+
+    // 6. Nexora ROAM Destination Intelligence Features
+    else if (['roam', 'discover', 'market', 'control', 'impact', 'reroute', 'loadmap'].includes(cleanId)) {
+      tabId = 'roam';
+      let mode = 'discover';
+      if (['explore', 'reroute', 'loadmap'].some(k => cleanId.includes(k))) mode = 'explore';
+      else if (cleanId.includes('market')) mode = 'market';
+      else if (cleanId.includes('control')) mode = 'control';
+      else if (cleanId.includes('impact')) mode = 'impact';
+      
+      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode(mode);
+    }
+
+    // 7. Culture, Lingo & Audio Translator Features
+    else if (['lingo', 'culture', 'lingo-culture', 'translator', 'audio', 'etiquette', 'phrases', 'hindi', 'bengali', 'tamil', 'marathi', 'telugu', 'gujarati', 'kannada', 'malayalam', 'punjabi', 'odia', 'bargain', 'tipping', 'templedress', 'foodetiquette', 'festivals', 'handicrafts', 'music', 'dance', 'architecture', 'cuisineglossary', 'streetfoodsafe', 'tea', 'artisanworkshops', 'heritagecrafts', 'localcustoms'].includes(cleanId)) {
+      tabId = 'lingo';
+      
+      // Auto-trigger language selection if a specific language audio item is clicked
+      const langMap = { hindi:'hi', bengali:'bn', tamil:'ta', marathi:'mr', telugu:'te', gujarati:'gu', kannada:'kn', malayalam:'ml', punjabi:'pa', odia:'or' };
+      if (langMap[cleanId]) {
+        let selectEl = document.getElementById('lingo-lang-select');
+        if (selectEl) {
+          selectEl.value = langMap[cleanId];
+          selectEl.dispatchEvent(new Event('change'));
+        }
+      }
+    }
+
+    // 8. Safety, Security & Digital Survival Kit Features
+    else if (['survival', 'survival-kit', 'apps', 'digitalsurvival', 'appguide', 'emergency', 'safety', 'vault', 'sos', 'helpline', 'upi', 'simguide', 'solosafety', 'stomach', 'foodsafety', 'scamadvisor', 'nriguide', 'visainfo', 'heatwave', 'monsoonsafety', 'highaltitude', 'embassy', 'travelinsurance', 'lostfound', 'cybersecurity', 'atm', 'pharmacy', 'bloodbank', 'snakebite', 'beachsafety', 'nighttravel', 'scamrates', 'policepost', 'digitalcopies'].includes(cleanId)) {
       tabId = 'survival';
     }
-    else if (tabId === 'tourism' || tabId === 'stateshowcase' || tabId === 'state' || tabId === 'states' || tabId === 'showcase' || tabId === 'hotel' || tabId === 'homestay' || tabId === 'resort') {
+
+    // 9. State Tourism & Hotelier Showcase Features
+    else if (['tourism', 'stateshowcase', 'state', 'states', 'showcase', 'hotel', 'homestay', 'resort', 'delhitourism', 'mumbaitourism', 'jaipurtourism', 'keralatourism', 'varanasitourism', 'goatourism', 'punetourism', 'bengalurutourism', 'kolkatatourism', 'chennaitourism', 'hyderabadtourism', 'shimlatourism', 'rishikeshtourism', 'amritsartourism', 'agratourism', 'udaipurtourism', 'jodhpurtourism', 'mysoretourism', 'darjeelingtourism', 'shillongtourism', 'ladakhtourism', 'andamantourism', 'kazirangatourism', 'hampitourism', 'maduraitourism', 'pondicherrytourism'].includes(cleanId)) {
       tabId = 'tourism';
+      
+      // If a state-specific tourism feature was clicked, select that state in the state grid
+      const stateNameMap = {
+        delhitourism: 'Delhi', mumbaitourism: 'Maharashtra', jaipurtourism: 'Rajasthan',
+        keralatourism: 'Kerala', varanasitourism: 'Uttar Pradesh', goatourism: 'Goa',
+        punetourism: 'Maharashtra', bengalurutourism: 'Karnataka', kolkatatourism: 'West Bengal',
+        chennaitourism: 'Tamil Nadu', hyderabadtourism: 'Telangana', shimlatourism: 'Himachal Pradesh',
+        rishikeshtourism: 'Uttarakhand', amritsartourism: 'Punjab', agratourism: 'Uttar Pradesh',
+        udaipurtourism: 'Rajasthan', jodhpurtourism: 'Rajasthan', mysoretourism: 'Karnataka',
+        darjeelingtourism: 'West Bengal', shillongtourism: 'Meghalaya', ladakhtourism: 'Jammu & Kashmir',
+        andamantourism: 'Andaman & Nicobar Islands', kazirangatourism: 'Assam', hampitourism: 'Karnataka',
+        maduraitourism: 'Tamil Nadu', pondicherrytourism: 'Puducherry'
+      };
+
+      let targetState = stateNameMap[cleanId];
+      if (targetState && typeof window.selectStateTourism === 'function') {
+        window.selectStateTourism(targetState);
+      }
     }
-    else if (tabId === 'trip' || tabId === 'tripplanner' || tabId === 'itinerary' || tabId === 'plan') {
+
+    // 10. Trip Planner & Itinerary Features
+    else if (['trip', 'tripplanner', 'itinerary', 'budget', 'pack', 'plan', 'notes', 'smartpacker', 'tracker'].includes(cleanId)) {
       tabId = 'trip';
+      if (cleanId === 'pack' || cleanId === 'smartpacker') {
+        if (typeof window.switchPackCat === 'function') window.switchPackCat('clothes');
+      }
     }
-    else if (tabId === 'game' || tabId === 'geoguess' || tabId === 'gameplay' || tabId === 'guess' || tabId === 'spelling') {
+
+    // 11. Interactive Game & Geography Hub Features
+    else if (['game', 'geoguess', 'gameplay', 'quiz', 'guess', 'spelling'].includes(cleanId)) {
       tabId = 'game';
     }
-    else if (tabId === 'travel' || tabId === 'geography' || tabId === 'matrix' || tabId === 'distance' || tabId === 'map') {
+    else if (['travel', 'geography', 'matrix', 'distance', 'map', 'pincode', 'converter', 'socket', 'timezone', 'shopping', 'localizer', 'voice', 'sleep', 'altitude', 'language', 'dialcode', 'rto', 'circuit', 'offline'].includes(cleanId)) {
       tabId = 'travel';
     }
 
     let activeTab = document.getElementById("tab-content-" + tabId);
     if (!activeTab) {
-      // Dynamic fallback lookup per feature item to open dedicated Feature Detail Modal
-      let featureMeta = getFeatureMetadata(tabId);
-      if (featureMeta) {
-        openFeatureDetailModal(featureMeta);
-        return;
-      }
-      return;
+      tabId = 'travelintel';
+      activeTab = document.getElementById("tab-content-travelintel");
     }
 
     window._currentActiveTab = tabId;
@@ -1474,1280 +1538,11 @@
     // Highlight active navigation buttons across UI
     document.querySelectorAll(".feature-card-compact, .tab-btn, .sidebar-feature-item, .island-btn").forEach(btn => {
       const target = btn.dataset.tab || btn.getAttribute("data-tab") || btn.dataset.target || btn.getAttribute("data-target");
-      if (target === tabId) {
+      if (target === tabId || (target && cleanId.includes(target))) {
         btn.classList.add("active");
       } else {
         btn.classList.remove("active");
       }
-    });
-
-    if (typeof updateDynamicIslandTitle === 'function') {
-      updateDynamicIslandTitle(tabId);
-    }
-  }
-
-  // =====================================================================
-  // UNIFIED AUTOCOMPLETE HANDLER FOR ALL INPUT FIELDS
-  // =====================================================================
-  
-  function handleAutocompleteInput(inputElem, dropdownElem, listElem, metricsElem, query, limit, onSelectCallback) {
-    const t0 = performance.now();
-    let suggestions = radixTrie.autocomplete(query, limit);
-    
-    // Smart Hybrid Fallback: Alias & Substring Matching if Radix Trie prefix is empty
-    if (suggestions.length === 0 && query.trim().length > 0) {
-      const cleanQ = query.trim().toLowerCase();
-      const aliasMap = {
-        'calcutta': 'kolkata', 'bombay': 'mumbai', 'madras': 'chennai', 'banaras': 'varanasi',
-        'kashi': 'varanasi', 'poona': 'pune', 'bangalore': 'bengaluru', 'gurgaon': 'gurugram',
-        'trivandrum': 'thiruvananthapuram', 'baroda': 'vadodara', 'cawnpore': 'kanpur',
-        'simla': 'shimla', 'calicut': 'kozhikode', 'cochin': 'kochi', 'pondicherry': 'puducherry',
-        'vizag': 'visakhapatnam', 'gao': 'goa', 'dilli': 'delhi', 'pink city': 'jaipur'
-      };
-      if (aliasMap[cleanQ]) {
-        suggestions = [aliasMap[cleanQ]];
-      } else {
-        const cityList = (typeof CITIES_DATA !== 'undefined') ? CITIES_DATA : (window.CITIES_DATA || []);
-        suggestions = cityList.filter(c => c.toLowerCase().includes(cleanQ)).slice(0, limit);
-      }
-    }
-
-    const t1 = performance.now();
-    const durationMs = t1 - t0;
-
-    // Update the main lookup speed metrics in the top dashboard
-    if (statLookupTime) statLookupTime.textContent = `${durationMs.toFixed(3)} ms`;
-
-    // If it's Tab 1 (Main search input), update its custom benchmarking stats cards
-    if (inputElem === searchInput) {
-      if (benchmarkExactTime) benchmarkExactTime.textContent = `${(durationMs * 1000).toFixed(1)} μs (${durationMs.toFixed(4)} ms)`;
-      const pct = Math.min((durationMs / 5.0) * 100, 100);
-      if (benchmarkBar) benchmarkBar.style.width = `${pct}%`;
-      if (benchmarkStatus) {
-        if (durationMs < 5.0) {
-          benchmarkStatus.textContent = "PASSED";
-          benchmarkStatus.style.color = "var(--color-success)";
-          if (benchmarkBar) benchmarkBar.style.background = "linear-gradient(90deg, var(--color-primary), var(--color-accent))";
-        } else {
-          benchmarkStatus.textContent = "FAILED";
-          benchmarkStatus.style.color = "var(--color-purple)";
-          if (benchmarkBar) benchmarkBar.style.background = "var(--color-purple)";
-        }
-      }
-    }
-
-    // Populate drop-down list
-    listElem.innerHTML = "";
-    if (metricsElem) {
-      metricsElem.textContent = `${suggestions.length} match${suggestions.length === 1 ? '' : 'es'}`;
-    }
-
-    if (suggestions.length === 0) {
-      const emptyLi = document.createElement("li");
-      emptyLi.className = "suggestion-item";
-      emptyLi.style.cursor = "default";
-      emptyLi.innerHTML = `<span style="color: var(--text-muted)">No matches found</span>`;
-      listElem.appendChild(emptyLi);
-    } else {
-      suggestions.forEach(item => {
-        const li = document.createElement("li");
-        li.className = "suggestion-item";
-        
-        let displayedHTML = item.startsWith(query) 
-          ? `<span class="match">${query}</span>${item.slice(query.length)}`
-          : item;
-
-        li.innerHTML = `
-          <span class="suggestion-text">${displayedHTML}</span>
-          <span class="suggestion-arrow">➔</span>
-        `;
-
-        li.addEventListener("mouseenter", playHoverSound);
-        li.addEventListener("click", () => {
-          playSelectSound();
-          inputElem.value = capitalizeWord(item); // Capitalize selected autocomplete result
-          dropdownElem.classList.remove("active");
-          onSelectCallback(item);
-          if (window.openCitySpotlightModal) window.openCitySpotlightModal(item);
-        });
-
-        listElem.appendChild(li);
-      });
-    }
-    dropdownElem.classList.add("active");
-  }
-
-  // Backwards compatible wrapper for search input handle autocomplete
-  function handleAutocomplete(query) {
-    if (visualizerMode === 'search') {
-      updateVisualizer();
-    }
-  }
-
-  // Hide the main search suggestions dropdown
-  function hideSuggestions() {
-    dropdown.classList.remove("active");
-    suggestionsList.innerHTML = "";
-    if (suggestionsMetrics) suggestionsMetrics.textContent = "0 matches";
-  }
-
-  /**
-   * Simple autocomplete for dropdowns that use style.display instead of .active class.
-   * Renders items directly into the container div and shows/hides it.
-   */
-  function simpleAutocomplete(inputElem, dropdownElem, listContainerElem, query, limit, onSelectCallback) {
-    const suggestions = radixTrie.autocomplete(query.toLowerCase(), limit);
-
-    listContainerElem.innerHTML = '';
-    if (suggestions.length === 0) {
-      const d = document.createElement('div');
-      d.className = 'suggestion-item';
-      d.style.cssText = 'padding:0.65rem 1rem; color:var(--text-muted); font-size:0.85rem;';
-      d.textContent = 'No matches found';
-      listContainerElem.appendChild(d);
-    } else {
-      suggestions.forEach(item => {
-        const d = document.createElement('div');
-        d.className = 'suggestion-item';
-        const matchedPart = item.startsWith(query.toLowerCase()) ? `<span style="color:var(--color-accent);font-weight:700">${query.toLowerCase()}</span>${item.slice(query.length)}` : item;
-        d.innerHTML = `<span>${matchedPart}</span><span style="color:var(--text-muted);font-size:0.8rem;">➔</span>`;
-        d.addEventListener('mouseenter', playHoverSound);
-        d.addEventListener('click', () => {
-          playSelectSound();
-          inputElem.value = capitalizeWord(item);
-          dropdownElem.style.display = 'none';
-          onSelectCallback(item);
-        });
-        listContainerElem.appendChild(d);
-      });
-    }
-    dropdownElem.style.display = 'block';
-  }
-
-  // =====================================================================
-  // PLAYGROUND ACTION
-  // =====================================================================
-  
-  function handlePlaygroundInsert() {
-    if (!playgroundInput) return;
-    const input = playgroundInput.value.trim().toLowerCase().replace(/[^a-z]/g, '');
-    if (!input || input.length < 2) {
-      playErrorSound();
-      alert("Please enter a valid alphabetic word of length 2 or more.");
-      return;
-    }
-    playgroundTrie.insert(input);
-    playgroundInput.value = "";
-    updateVisualizer();
-    playSuccessSound();
-  }
-
-  // =====================================================================
-  // ENGINE PERFORMANCE STRESS TEST CHALLENGE
-  // =====================================================================
-
-  function runStressTest() {
-    initAudio();
-    if (btnStressTest) btnStressTest.disabled = true;
-    btnStressTest.textContent = "Benchmarking Engine...";
-    stressTestStatus.textContent = "Running...";
-    stressStatsDisplay.style.display = "none";
-
-    const testSeeds = [];
-    for (let i = 0; i < 500; i++) {
-      const city = CITIES_DATA[Math.floor(Math.random() * CITIES_DATA.length)];
-      if (city.length > 3) testSeeds.push(city.slice(0, 3));
-    }
-    if (testSeeds.length === 0) testSeeds.push("del", "mum", "ban", "che", "kol");
-
-    const totalQueries = 10000;
-    const chunkSize = 1000;
-    let queriesCompleted = 0;
-    let totalDurationMs = 0;
-
-    function runChunk() {
-      const start = performance.now();
-      for (let i = 0; i < chunkSize; i++) {
-        const seed = testSeeds[Math.floor(Math.random() * testSeeds.length)];
-        radixTrie.autocomplete(seed, 10);
-      }
-      const end = performance.now();
-      totalDurationMs += (end - start);
-      queriesCompleted += chunkSize;
-
-      const progress = queriesCompleted / totalQueries;
-      playStressTick(progress);
-      
-      const buttonRect = btnStressTest.getBoundingClientRect();
-      spawnParticleBurst(
-        buttonRect.left + Math.random() * buttonRect.width, 
-        buttonRect.top + buttonRect.height / 2, 
-        5, 
-        "var(--color-purple)"
-      );
-
-      if (queriesCompleted < totalQueries) {
-        setTimeout(runChunk, 30);
-      } else {
-        finalizeStressTest(totalDurationMs, totalQueries);
-      }
-    }
-    setTimeout(runChunk, 100);
-  }
-
-  function finalizeStressTest(totalDurationMs, count) {
-    const avgLatencyMs = totalDurationMs / count;
-    const opsPerSec = Math.round(count / (totalDurationMs / 1000));
-    
-    stressTestStatus.textContent = "COMPLETE!";
-    stressTestStatus.style.color = "var(--color-success)";
-    
-    stressStatsDisplay.style.display = "flex";
-    stressAvgSpeed.textContent = `${avgLatencyMs.toFixed(4)} ms`;
-    stressThroughput.textContent = `${opsPerSec.toLocaleString()} ops/sec`;
-    
-    btnStressTest.disabled = false;
-    btnStressTest.textContent = "Re-run Lookup Stress Test";
-    
-    playSelectSound();
-    const buttonRect = btnStressTest.getBoundingClientRect();
-    spawnParticleBurst(buttonRect.left + buttonRect.width / 2, buttonRect.top + buttonRect.height / 2, 45, "var(--color-success)");
-
-    const latencyCard = document.getElementById("card-latency");
-    latencyCard.style.boxShadow = "0 0 30px var(--color-purple-glow)";
-    setTimeout(() => latencyCard.style.boxShadow = "none", 1200);
-  }
-
-  // =====================================================================
-  // DYNAMIC SVG TREE VISUALIZER LAYOUT RENDERER
-  // =====================================================================
-
-  function updateVisualizer() {
-    if (!svgViewport) return;
-    let treeData = null;
-    
-    if (visualizerMode === 'playground') {
-      treeData = playgroundTrie ? playgroundTrie.exportToJSON() : null;
-    } else {
-      const query = (searchInput && searchInput.value) ? searchInput.value.trim().toLowerCase() : "";
-      if (!query) {
-        treeData = { label: "root", isEnd: false, children: [] };
-      } else {
-        treeData = radixTrie ? radixTrie.exportSubtreeToJSON(query) : null;
-        if (!treeData) {
-          treeData = { label: "root (no matches)", isEnd: false, children: [] };
-        }
-      }
-    }
-    
-    drawTree(treeData);
-  }
-
-  function drawTree(treeData) {
-    if (!svgViewport) return;
-    svgViewport.innerHTML = "";
-    if (!treeData) return;
-
-    let nextX = 0;
-    function calculateGrid(node, depth = 0) {
-      node.depth = depth;
-      if (!node.children || node.children.length === 0) {
-        node.xIndex = nextX;
-        nextX++;
-        return;
-      }
-      node.children.forEach(child => calculateGrid(child, depth + 1));
-      
-      const firstChildX = node.children[0].xIndex;
-      const lastChildX = node.children[node.children.length - 1].xIndex;
-      node.xIndex = (firstChildX + lastChildX) / 2;
-    }
-    
-    calculateGrid(treeData);
-
-    const spacingX = 140;
-    const spacingY = 130;
-    
-    function mapCoords(node) {
-      node.cx = node.xIndex * spacingX;
-      node.cy = node.depth * spacingY;
-      if (node.children) {
-        node.children.forEach(mapCoords);
-      }
-    }
-    mapCoords(treeData);
-
-    const linksGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    const nodesGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    
-    svgViewport.appendChild(linksGroup);
-    svgViewport.appendChild(nodesGroup);
-
-    function drawLinks(node) {
-      if (!node.children) return;
-      
-      node.children.forEach(child => {
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        const pathData = `M ${node.cx} ${node.cy} C ${node.cx} ${(node.cy + child.cy)/2}, ${child.cx} ${(node.cy + child.cy)/2}, ${child.cx} ${child.cy}`;
-        
-        path.setAttribute("d", pathData);
-        path.setAttribute("class", "link");
-        
-        if (visualizerMode === 'search' && child.label !== "") {
-          path.classList.add("highlighted");
-        }
-        
-        linksGroup.appendChild(path);
-
-        if (child.label) {
-          const midX = (node.cx + child.cx) / 2;
-          const midY = (node.cy + child.cy) / 2;
-          
-          const labelGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
-          const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-          const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-          
-          text.setAttribute("x", midX);
-          text.setAttribute("y", midY);
-          text.setAttribute("class", "edge-text");
-          text.textContent = child.label;
-          
-          labelGroup.appendChild(rect);
-          labelGroup.appendChild(text);
-          linksGroup.appendChild(labelGroup);
-          
-          const textBBox = text.getBBox ? text.getBBox() : { width: child.label.length * 7, height: 14 };
-          rect.setAttribute("x", midX - textBBox.width / 2 - 4);
-          rect.setAttribute("y", midY - 8);
-          rect.setAttribute("width", textBBox.width + 8);
-          rect.setAttribute("height", 16);
-          rect.setAttribute("class", "edge-text-bg");
-        }
-        
-        drawLinks(child);
-      });
-    }
-
-    function drawNodes(node) {
-      const nodeG = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      nodeG.setAttribute("class", `node ${node.isEnd ? 'is-end' : ''}`);
-      
-      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute("cx", node.cx);
-      circle.setAttribute("cy", node.cy);
-      circle.setAttribute("r", "14");
-      
-      if (visualizerMode === 'search' && node.label !== "root") {
-        circle.classList.add("highlighted");
-      }
-      
-      nodeG.appendChild(circle);
-
-      if (node.label === "root" || !node.label) {
-        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", node.cx);
-        text.setAttribute("y", node.cy + 30);
-        text.setAttribute("text-anchor", "middle");
-        text.textContent = node.label || "root";
-        nodeG.appendChild(text);
-      } else if (node.isEnd) {
-        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        dot.setAttribute("cx", node.cx);
-        dot.setAttribute("cy", node.cy);
-        dot.setAttribute("r", "4");
-        dot.setAttribute("fill", "var(--color-success)");
-        nodeG.appendChild(dot);
-      }
-      
-      circle.addEventListener("mouseenter", () => {
-        circle.setAttribute("r", "17");
-        playHoverSound();
-      });
-      circle.addEventListener("mouseleave", () => {
-        circle.setAttribute("r", "14");
-      });
-
-      nodesGroup.appendChild(nodeG);
-      
-      if (node.children) {
-        node.children.forEach(drawNodes);
-      }
-    }
-
-    drawLinks(treeData);
-    drawNodes(treeData);
-  }
-
-  // =====================================================================
-  // TAB 2: DATABASE SEED EXPORTER TOOL (Useful Tool)
-  // =====================================================================
-  
-  function setupRoutePlannerListeners() {
-    // Autocomplete for Destination City (using unified autocomplete input logic!)
-    if (routeDestination) {
-      routeDestination.addEventListener("input", (e) => {
-        const query = e.target.value.trim().toLowerCase();
-        if (query.length > 0) {
-          handleAutocompleteInput(
-            routeDestination, 
-            dropdownDestination, 
-            listDestination, 
-            logisticsSuggestionsMetrics, 
-            query, 
-            5, 
-            (selected) => {
-              // Callback: Add selected city manually to selected basket
-              if (!selectedBasket.includes(selected)) {
-                selectedBasket.push(selected);
-              }
-              routeDestination.value = ""; // Clear input immediately for quick multiple adds
-              if (dropdownDestination) dropdownDestination.classList.remove("active");
-              
-              generateDatabaseSeed();
-              playSuccessSound();
-            }
-          );
-        } else {
-          if (dropdownDestination) dropdownDestination.classList.remove("active");
-        }
-      });
-
-      // Enter key triggers adding the city if it's a valid prefix
-      if (routeDestination) routeDestination.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          const val = routeDestination.value.trim().toLowerCase();
-          const resolved = resolveCityInput(val);
-          if (resolved) {
-            if (!selectedBasket.includes(resolved)) selectedBasket.push(resolved);
-            routeDestination.value = "";
-            if (dropdownDestination) dropdownDestination.classList.remove("active");
-            generateDatabaseSeed();
-            playSuccessSound();
-          } else {
-            playErrorSound();
-          }
-        }
-      });
-    }
-
-    // Form inputs change triggers database schema rebuild instantly
-    if (selectStateFilter) selectStateFilter.addEventListener("change", generateDatabaseSeed);
-    if (selectFormat) selectFormat.addEventListener("change", generateDatabaseSeed);
-    if (inputNamePattern) inputNamePattern.addEventListener("input", generateDatabaseSeed);
-    if (inputExportLimit) inputExportLimit.addEventListener("input", generateDatabaseSeed);
-
-    // Schema button action
-    if (btnCalcRoute) {
-      btnCalcRoute.addEventListener("click", () => {
-        generateDatabaseSeed();
-        playSuccessSound();
-      });
-    }
-
-    // Copy to clipboard action
-    if (btnCopySeed) {
-      btnCopySeed.addEventListener("click", () => {
-        const codeText = exportCodeBlock ? exportCodeBlock.textContent : "";
-        if (!codeText) return;
-
-        navigator.clipboard.writeText(codeText).then(() => {
-          playSelectSound();
-          
-          // Temporarily change button style to show success
-          const prevText = btnCopySeed.textContent;
-          btnCopySeed.textContent = "Copied!";
-          btnCopySeed.style.background = "var(--color-success)";
-          btnCopySeed.style.color = "var(--bg-primary)";
-          btnCopySeed.style.borderColor = "var(--color-success)";
-          
-          setTimeout(() => {
-            btnCopySeed.textContent = prevText;
-            btnCopySeed.style.background = "var(--color-primary)";
-            btnCopySeed.style.color = "";
-            btnCopySeed.style.borderColor = "";
-          }, 1200);
-
-          // Spawn particles
-          const rect = btnCopySeed.getBoundingClientRect();
-          spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25, "var(--color-success)");
-        }).catch(err => {
-          playErrorSound();
-          console.error("Clipboard write failed", err);
-        });
-      });
-    }
-
-    // Download file action
-    if (btnDownloadSeed) {
-      btnDownloadSeed.addEventListener("click", () => {
-        const codeText = exportCodeBlock ? exportCodeBlock.textContent : "";
-        if (!codeText) return;
-
-        const format = selectFormat ? selectFormat.value : "json";
-        let filename = "cities_seed.json";
-        let mime = "application/json";
-
-        if (format.startsWith("sql")) {
-          filename = "cities_seed.sql";
-          mime = "application/sql";
-        } else if (format === "csv") {
-          filename = "cities_seed.csv";
-          mime = "text/csv";
-        }
-
-        const blob = new Blob([codeText], { type: mime + ";charset=utf-8;" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute("download", filename);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        playSuccessSound();
-        const rect = btnDownloadSeed.getBoundingClientRect();
-        spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25, "var(--color-success)");
-      });
-    }
-  }
-
-  // Helper to resolve city inputs
-  function resolveCityInput(inputVal) {
-    if (!inputVal) return null;
-    const cleaned = inputVal.trim().toLowerCase();
-    if (!cleaned) return null;
-    
-    if (typeof radixTrie !== 'undefined' && radixTrie && radixTrie.search && radixTrie.search(cleaned)) {
-      return cleaned;
-    }
-    
-    if (typeof radixTrie !== 'undefined' && radixTrie && radixTrie.autocomplete) {
-      const suggestions = radixTrie.autocomplete(cleaned, 1);
-      if (suggestions && suggestions.length > 0) {
-        return suggestions[0];
-      }
-    }
-    return cleaned;
-  }
-
-  // Comprehensive Indian City & Village Aliases
-  const CITY_ALIASES = {
-    "ddn": "dehradun", "dehradoon": "dehradun",
-    "delhi": "delhi", "ndls": "delhi", "new delhi": "delhi", "dli": "delhi",
-    "jpr": "jaipur", "jaipore": "jaipur",
-    "bom": "mumbai", "bombay": "mumbai", "mum": "mumbai",
-    "blr": "bengaluru", "blre": "bengaluru", "bangalore": "bengaluru",
-    "maa": "chennai", "madras": "chennai",
-    "ccu": "kolkata", "calcutta": "kolkata",
-    "hyd": "hyderabad", "secunderabad": "hyderabad",
-    "amd": "ahmedabad", "ahmedbad": "ahmedabad",
-    "pnq": "pune", "poona": "pune",
-    "lko": "lucknow",
-    "vns": "varanasi", "kashi": "varanasi", "banaras": "varanasi",
-    "agr": "agra", "atq": "amritsar", "sxr": "srinagar", "bpl": "bhopal",
-    "pat": "patna", "cok": "kochi", "cochin": "kochi", "gau": "guwahati",
-    "bbi": "bhubaneswar", "jdh": "jodhpur", "udr": "udaipur", "st": "surat",
-    "idr": "indore", "ixc": "chandigarh", "slv": "shimla", "gurgaon": "gurugram"
-  };
-
-  // Real-world coordinates database for Indian cities, towns & hill stations
-  const GLOBAL_CITY_COORDS = {
-    "delhi": {lat: 28.6139, lng: 77.2090},
-    "mumbai": {lat: 19.0760, lng: 72.8777},
-    "bengaluru": {lat: 12.9716, lng: 77.5946},
-    "chennai": {lat: 13.0827, lng: 80.2707},
-    "kolkata": {lat: 22.5726, lng: 88.3639},
-    "hyderabad": {lat: 17.3850, lng: 78.4867},
-    "ahmedabad": {lat: 23.0225, lng: 72.5714},
-    "pune": {lat: 18.5204, lng: 73.8567},
-    "jaipur": {lat: 26.9124, lng: 75.7873},
-    "lucknow": {lat: 26.8467, lng: 80.9462},
-    "dehradun": {lat: 30.3165, lng: 78.0322},
-    "mussoorie": {lat: 30.4598, lng: 78.0644},
-    "rishikesh": {lat: 30.0869, lng: 78.2676},
-    "haridwar": {lat: 29.9457, lng: 78.1642},
-    "nainital": {lat: 29.3803, lng: 79.4636},
-    "pantnagar": {lat: 29.0222, lng: 79.4908},
-    "haldwani": {lat: 29.2183, lng: 79.5130},
-    "roorkee": {lat: 29.8543, lng: 77.8880},
-    "agra": {lat: 27.1767, lng: 78.0081},
-    "amritsar": {lat: 31.6340, lng: 74.8723},
-    "srinagar": {lat: 34.0837, lng: 74.7973},
-    "bhopal": {lat: 23.2599, lng: 77.4126},
-    "patna": {lat: 25.5941, lng: 85.1376},
-    "kochi": {lat: 9.9312, lng: 76.2673},
-    "guwahati": {lat: 26.1445, lng: 91.7362},
-    "bhubaneswar": {lat: 20.2961, lng: 85.8245},
-    "coimbatore": {lat: 11.0168, lng: 76.9558},
-    "varanasi": {lat: 25.3176, lng: 82.9739},
-    "jodhpur": {lat: 26.2389, lng: 73.0243},
-    "udaipur": {lat: 24.5854, lng: 73.7125},
-    "jaisalmer": {lat: 26.9157, lng: 70.9083},
-    "bikaner": {lat: 28.0229, lng: 73.3119},
-    "kota": {lat: 25.2138, lng: 75.8648},
-    "alwar": {lat: 27.5530, lng: 76.6346},
-    "ajmer": {lat: 26.4499, lng: 74.6399},
-    "surat": {lat: 21.1702, lng: 72.8311},
-    "indore": {lat: 22.7196, lng: 75.8577},
-    "mysuru": {lat: 12.2958, lng: 76.6394},
-    "ooty": {lat: 11.4102, lng: 76.6950},
-    "shimla": {lat: 31.1048, lng: 77.1734},
-    "manali": {lat: 32.2432, lng: 77.1892},
-    "dharamshala": {lat: 32.2190, lng: 76.3234},
-    "darjeeling": {lat: 27.0410, lng: 88.2663},
-    "panaji": {lat: 15.4909, lng: 73.8278},
-    "madurai": {lat: 9.9252, lng: 78.1198},
-    "gwalior": {lat: 26.2183, lng: 78.1828},
-    "nagpur": {lat: 21.1458, lng: 79.0882},
-    "raipur": {lat: 21.2514, lng: 81.6296},
-    "ranchi": {lat: 23.3441, lng: 85.3096},
-    "chandigarh": {lat: 30.7333, lng: 76.7794},
-    "leh": {lat: 34.1526, lng: 77.5771},
-    "jammu": {lat: 32.7266, lng: 74.8570},
-    "noida": {lat: 28.5355, lng: 77.3910},
-    "gurugram": {lat: 28.4595, lng: 77.0266},
-    "faridabad": {lat: 28.4089, lng: 77.3178},
-    "ghaziabad": {lat: 28.6692, lng: 77.4538},
-    "meerut": {lat: 28.9845, lng: 77.7064},
-    "bareilly": {lat: 28.3670, lng: 79.4304},
-    "moradabad": {lat: 28.8386, lng: 78.7733},
-    "kanpur": {lat: 26.4499, lng: 80.3319},
-    "ayodhya": {lat: 26.7922, lng: 82.1998},
-    "gorakhpur": {lat: 26.7606, lng: 83.3732},
-    "mathura": {lat: 27.4924, lng: 77.6737},
-    "vrindavan": {lat: 27.5804, lng: 77.7006},
-    "aligarh": {lat: 27.8974, lng: 78.0880},
-    "prayagraj": {lat: 25.4358, lng: 81.8463},
-    "allahabad": {lat: 25.4358, lng: 81.8463},
-    "ludhiana": {lat: 30.9010, lng: 75.8573},
-    "jalandhar": {lat: 31.3260, lng: 75.5762},
-    "patiala": {lat: 30.3398, lng: 76.3869},
-    "bathinda": {lat: 30.2110, lng: 74.9455},
-    "hisar": {lat: 29.1492, lng: 75.7217},
-    "rohtak": {lat: 28.8955, lng: 76.6066},
-    "panipat": {lat: 29.3909, lng: 76.9635},
-    "karnal": {lat: 29.6857, lng: 76.9905},
-    "ambala": {lat: 30.3782, lng: 76.7767},
-    "mangalore": {lat: 12.9141, lng: 74.8560},
-    "hubli": {lat: 15.3647, lng: 75.1240},
-    "belgaum": {lat: 15.8497, lng: 74.4977},
-    "tirupati": {lat: 13.6288, lng: 79.4192},
-    "vijayawada": {lat: 16.5062, lng: 80.6480},
-    "visakhapatnam": {lat: 17.6868, lng: 83.2185},
-    "vizag": {lat: 17.6868, lng: 83.2185},
-    "thiruvananthapuram": {lat: 8.5241, lng: 76.9366},
-    "trivandrum": {lat: 8.5241, lng: 76.9366},
-    "kozhikode": {lat: 11.2588, lng: 75.7804},
-    "thrissur": {lat: 10.5276, lng: 76.2144},
-    "kollam": {lat: 8.8932, lng: 76.6141},
-    "puducherry": {lat: 11.9416, lng: 79.8083},
-    "salem": {lat: 11.6643, lng: 78.1460},
-    "tiruchirappalli": {lat: 10.7905, lng: 78.7047},
-    "trichy": {lat: 10.7905, lng: 78.7047},
-    "tirunelveli": {lat: 8.7139, lng: 77.7567},
-    "vellore": {lat: 12.9165, lng: 79.1325},
-    "jamshedpur": {lat: 22.8046, lng: 86.2029},
-    "dhanbad": {lat: 23.7957, lng: 86.4304},
-    "bokaro": {lat: 23.6693, lng: 86.1511},
-    "siliguri": {lat: 26.7271, lng: 88.3953},
-    "asansol": {lat: 23.6889, lng: 86.9661},
-    "durgapur": {lat: 23.5204, lng: 87.3119},
-    "cuttack": {lat: 20.4625, lng: 85.8828},
-    "puri": {lat: 19.8135, lng: 85.8312},
-    "rourkela": {lat: 22.2604, lng: 84.8536},
-    "shillong": {lat: 25.5788, lng: 91.8933},
-    "gangtok": {lat: 27.3389, lng: 88.6065},
-    "imphal": {lat: 24.8170, lng: 93.9368},
-    "aizawl": {lat: 23.7271, lng: 92.7176},
-    "agartala": {lat: 23.8315, lng: 91.2868},
-    "kohima": {lat: 25.6751, lng: 94.1086},
-    "itanagar": {lat: 27.0844, lng: 93.6053},
-    "dibrugarh": {lat: 27.4728, lng: 94.9120},
-    "silchar": {lat: 24.8333, lng: 92.7789},
-    "jorhat": {lat: 26.7509, lng: 94.2037},
-    "tezpur": {lat: 26.6528, lng: 92.7926},
-    "tawang": {lat: 27.5861, lng: 91.8594},
-    "kaziranga": {lat: 26.5775, lng: 93.1711},
-    "port blair": {lat: 11.6234, lng: 92.7265},
-    "kavaratti": {lat: 10.5669, lng: 72.6420}
-  };
-
-  function getCityCoords(cityName) {
-    if (!cityName) return { lat: 28.6139, lng: 77.2090 };
-    let lower = cityName.trim().toLowerCase();
-    
-    if (CITY_ALIASES[lower]) lower = CITY_ALIASES[lower];
-    if (GLOBAL_CITY_COORDS[lower]) return GLOBAL_CITY_COORDS[lower];
-
-    const keys = Object.keys(GLOBAL_CITY_COORDS);
-    const matchedKey = keys.find(k => lower.includes(k) || k.includes(lower));
-    if (matchedKey) return GLOBAL_CITY_COORDS[matchedKey];
-
-    // State & region anchor fallbacks for villages and smaller towns
-    let baseLat = 20.5937, baseLng = 78.9629;
-    if (lower.includes("uttarakhand") || lower.includes("garhwal") || lower.includes("kumaon") || lower.includes("uk") || lower.includes("ddn")) {
-      baseLat = 30.1; baseLng = 78.5;
-    } else if (lower.includes("rajasthan") || lower.includes("raj") || lower.includes("marwar")) {
-      baseLat = 26.9; baseLng = 74.8;
-    } else if (lower.includes("up") || lower.includes("uttar pradesh") || lower.includes("purvanchal")) {
-      baseLat = 26.8; baseLng = 81.0;
-    } else if (lower.includes("mp") || lower.includes("madhya pradesh")) {
-      baseLat = 23.2; baseLng = 77.5;
-    } else if (lower.includes("maharashtra") || lower.includes("mh") || lower.includes("konkan")) {
-      baseLat = 19.5; baseLng = 74.5;
-    } else if (lower.includes("kerala") || lower.includes("kl")) {
-      baseLat = 10.5; baseLng = 76.5;
-    } else if (lower.includes("karnataka") || lower.includes("ka")) {
-      baseLat = 14.5; baseLng = 75.8;
-    } else if (lower.includes("tamil") || lower.includes("tn")) {
-      baseLat = 11.0; baseLng = 78.5;
-    } else if (lower.includes("bengal") || lower.includes("wb")) {
-      baseLat = 23.5; baseLng = 87.8;
-    } else if (lower.includes("punjab") || lower.includes("pb")) {
-      baseLat = 31.0; baseLng = 75.5;
-    } else if (lower.includes("haryana") || lower.includes("hr")) {
-      baseLat = 29.2; baseLng = 76.3;
-    } else if (lower.includes("himachal") || lower.includes("hp")) {
-      baseLat = 31.8; baseLng = 77.2;
-    }
-
-    let hash = 0;
-    for (let i = 0; i < lower.length; i++) hash = lower.charCodeAt(i) + ((hash << 5) - hash);
-    hash = Math.abs(hash);
-
-    const latOffset = ((hash % 100) - 50) / 100;
-    const lngOffset = (((hash >> 3) % 100) - 50) / 100;
-
-    return {
-      lat: Number((baseLat + latOffset).toFixed(4)),
-      lng: Number((baseLng + lngOffset).toFixed(4))
-    };
-  }
-
-  function haversineKm(c1, c2) {
-    const R = 6371;
-    const dLat = (c2.lat - c1.lat) * Math.PI / 180;
-    const dLng = (c2.lng - c1.lng) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos(c1.lat * Math.PI / 180) * Math.cos(c2.lat * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  }
-
-  // Geo-jurisdiction builder (District, State, PIN)
-  function computeLogisticsFacts(cityName, coords, weight) {
-    let hash = 0;
-    for (let i = 0; i < cityName.length; i++) {
-      hash = cityName.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    hash = Math.abs(hash);
-
-    // (Using global STATES_LIST)
-    const DISTRICTS_SUFFIX = ["District", "West District", "East District", "Central District", "Rural District"];
-    
-    const state = STATES_LIST[hash % STATES_LIST.length];
-    const district = capitalizeWord(cityName) + " " + DISTRICTS_SUFFIX[(hash >> 2) % DISTRICTS_SUFFIX.length];
-
-    let firstDigit = 8;
-    if (["Delhi", "Haryana", "Punjab", "Jammu & Kashmir", "Himachal Pradesh"].includes(state)) firstDigit = 1;
-    else if (["Uttar Pradesh"].includes(state)) firstDigit = 2;
-    else if (["Gujarat", "Rajasthan", "Goa"].includes(state)) firstDigit = 3;
-    else if (["Maharashtra", "Madhya Pradesh"].includes(state)) firstDigit = 4;
-    else if (["Andhra Pradesh", "Telangana", "Karnataka"].includes(state)) firstDigit = 5;
-    else if (["Tamil Nadu", "Kerala"].includes(state)) firstDigit = 6;
-    else if (["West Bengal", "Odisha", "Assam"].includes(state)) firstDigit = 7;
-    
-    const zipCode = firstDigit.toString() + (10000 + (hash % 89999)).toString().slice(1);
-
-    return {
-      zipCode,
-      state,
-      district
-    };
-  }
-
-  // Main code-generating engine for Tab 2 Exporter
-  function generateDatabaseSeed() {
-    const stateFilter = selectStateFilter.value;
-    const patternFilter = inputNamePattern.value.trim().toLowerCase();
-    const limit = parseInt(inputExportLimit.value) || 25;
-    const format = selectFormat.value;
-
-    const records = [];
-
-    // 1. Manually selected cities are injected first
-    selectedBasket.forEach(city => {
-      const coords = getCityCoords(city);
-      const facts = computeLogisticsFacts(city, coords, 0.5);
-      
-      // Still apply state filters to manual list if not ALL
-      if (stateFilter !== "ALL" && facts.state !== stateFilter) return;
-      if (patternFilter && !city.endsWith(patternFilter)) return;
-
-      records.push({
-        city: capitalizeWord(city),
-        zip: facts.zipCode,
-        state: facts.state,
-        district: facts.district
-      });
-    });
-
-    // 2. Scan global index up to limit
-    for (let i = 0; i < CITIES_DATA.length; i++) {
-      if (records.length >= limit) break;
-      const city = CITIES_DATA[i];
-      if (selectedBasket.includes(city)) continue; // skip duplicates
-      
-      const coords = getCityCoords(city);
-      const facts = computeLogisticsFacts(city, coords, 0.5);
-
-      if (stateFilter !== "ALL" && facts.state !== stateFilter) continue;
-      if (patternFilter && !city.endsWith(patternFilter)) continue;
-
-      records.push({
-        city: capitalizeWord(city),
-        zip: facts.zipCode,
-        state: facts.state,
-        district: facts.district
-      });
-    }
-
-    // 3. Render format code string
-    let codeStr = "";
-    const escapeSql = str => str.replace(/'/g, "''");
-
-    if (format === "json") {
-      codeStr = JSON.stringify(records, null, 2);
-    } else if (format === "sql_postgres") {
-      let sql = `-- Arvora Postgres Seed File\n-- Created at: ${new Date().toISOString()}\n\n`;
-      sql += `CREATE TABLE IF NOT EXISTS indian_cities_directory (\n`;
-      sql += `  id SERIAL PRIMARY KEY,\n`;
-      sql += `  city_name VARCHAR(100) NOT NULL,\n`;
-      sql += `  zip_code VARCHAR(10) NOT NULL,\n`;
-      sql += `  state_name VARCHAR(100) NOT NULL,\n`;
-      sql += `  district_name VARCHAR(100) NOT NULL\n`;
-      sql += `);\n\n`;
-      sql += `INSERT INTO indian_cities_directory (city_name, zip_code, state_name, district_name) VALUES`;
-      
-      const inserts = records.map(r => `\n  ('${escapeSql(r.city)}', '${r.zip}', '${escapeSql(r.state)}', '${escapeSql(r.district)}')`).join(",");
-      codeStr = sql + (records.length > 0 ? inserts + ";" : "\n  -- No matching records to seed;");
-    } else if (format === "sql_mysql") {
-      let sql = `-- Arvora MySQL Seed File\n-- Created at: ${new Date().toISOString()}\n\n`;
-      sql += `CREATE TABLE IF NOT EXISTS \`indian_cities_directory\` (\n`;
-      sql += `  \`id\` INT AUTO_INCREMENT PRIMARY KEY,\n`;
-      sql += `  \`city_name\` VARCHAR(100) NOT NULL,\n`;
-      sql += `  \`zip_code\` VARCHAR(10) NOT NULL,\n`;
-      sql += `  \`state_name\` VARCHAR(100) NOT NULL,\n`;
-      sql += `  \`district_name\` VARCHAR(100) NOT NULL\n`;
-      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
-      sql += `INSERT INTO \`indian_cities_directory\` (\`city_name\`, \`zip_code\`, \`state_name\`, \`district_name\`) VALUES`;
-      
-      const inserts = records.map(r => `\n  ('${escapeSql(r.city)}', '${r.zip}', '${escapeSql(r.state)}', '${escapeSql(r.district)}')`).join(",");
-      codeStr = sql + (records.length > 0 ? inserts + ";" : "\n  -- No matching records to seed;");
-    } else if (format === "csv") {
-      let csv = "id,city_name,zip_code,state_name,district_name";
-      const rows = records.map((r, idx) => `\n${idx+1},"${r.city}",${r.zip},"${r.state}","${r.district}"`).join("");
-      codeStr = csv + rows;
-    }
-
-    // 4. Update code viewer DOM
-    exportCodeBlock.textContent = codeStr;
-
-    // 5. Update Statistics elements
-    safeText("logistics-cost", `${records.length} city record${records.length === 1 ? '' : 's'}`);
-    
-    const sizeKb = (codeStr.length / 1024).toFixed(2);
-    safeText("logistics-zip", `${sizeKb} KB`);
-  }
-
-  function capitalizeWord(word) {
-    return word.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-  }
-
-  // =====================================================================
-  // TAB 3: GEOGUESS SPELLING GAME LOGIC (Inbuilt Game)
-  // =====================================================================
-  
-  function setupGameScoreboard() {
-    const savedScore = localStorage.getItem("arvora_game_score") || localStorage.getItem("sja_game_score");
-    const savedStreak = localStorage.getItem("arvora_game_streak") || localStorage.getItem("sja_game_streak");
-    const savedBestStreak = localStorage.getItem("arvora_game_best_streak") || localStorage.getItem("sja_game_best_streak");
-
-    if (savedScore) gameScore = parseInt(savedScore);
-    if (savedStreak) gameStreak = parseInt(savedStreak);
-    if (savedBestStreak) gameBestStreak = parseInt(savedBestStreak);
-
-    domGameScore.textContent = gameScore.toLocaleString();
-    domGameStreak.textContent = gameStreak.toLocaleString();
-    domGameBestStreak.textContent = gameBestStreak.toLocaleString();
-  }
-
-  function setupGameListeners() {
-    // Autocomplete for Game Guesses (using unified autocomplete input logic!)
-    if (gameGuessInput) {
-      gameGuessInput.addEventListener("input", (e) => {
-        const query = e.target.value.trim().toLowerCase();
-        if (query.length > 0) {
-          handleAutocompleteInput(
-            gameGuessInput, 
-            dropdownGame, 
-            listGame, 
-            gameSuggestionsMetrics, 
-            query, 
-            5, 
-            (selected) => {
-              checkAnswer();
-            }
-          );
-        } else {
-          if (dropdownGame) dropdownGame.classList.remove("active");
-        }
-      });
-
-      if (gameGuessInput) gameGuessInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") checkAnswer();
-      });
-    }
-
-    if (gameBtnSubmit) gameBtnSubmit.addEventListener("click", checkAnswer);
-
-    if (gameBtnSkip) {
-      gameBtnSkip.addEventListener("click", () => {
-        appendGameLog(`Skipped: The answer was <strong>${capitalizeWord(gameCurrentCity)}</strong>.`, "var(--text-muted)");
-        gameStreak = 0;
-        updateGameDashboard();
-        loadNewGameWord();
-        playErrorSound();
-      });
-    }
-
-    if (gameBtnRevealClue) gameBtnRevealClue.addEventListener("click", revealClue);
-  }
-
-  function loadNewGameWord() {
-    let chosenCity = "";
-    
-    for (let attempts = 0; attempts < 1000; attempts++) {
-      const city = CITIES_DATA[Math.floor(Math.random() * CITIES_DATA.length)];
-      if (city.length >= 5 && city.length <= 9 && !city.includes(" ") && !city.includes("-")) {
-        chosenCity = city;
-        break;
-      }
-    }
-    
-    if (!chosenCity) chosenCity = "mumbai";
-
-    gameCurrentCity = chosenCity;
-    gameCluesRevealed = 0;
-    
-    const scrambled = scrambleString(chosenCity);
-    gameScrambledWord.textContent = scrambled.toUpperCase().split("").join(" ");
-    gameGuessInput.value = "";
-    dropdownGame.classList.remove("active");
-    
-    gameClueText.innerHTML = `<i>- Clue 1: Word length is <strong>${chosenCity.length}</strong> characters. Starts with <strong>"${chosenCity[0].toUpperCase()}"</strong>.</i>`;
-  }
-
-  function scrambleString(str) {
-    const arr = str.split("");
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = temp;
-    }
-    const scrambled = arr.join("");
-    if (scrambled === str) return scrambleString(str);
-    return scrambled;
-  }
-
-  function revealClue() {
-    if (gameCluesRevealed >= 2) {
-      playErrorSound();
-      alert("No more clues available for this word!");
-      return;
-    }
-    
-    gameCluesRevealed++;
-    playHoverSound();
-
-    if (gameCluesRevealed === 1) {
-      const char3 = gameCurrentCity[2] ? gameCurrentCity[2].toUpperCase() : "_";
-      gameClueText.innerHTML += `<br>- Clue 2: The third letter is <strong>"${char3}"</strong>.`;
-    } else if (gameCluesRevealed === 2) {
-      const lastChar = gameCurrentCity[gameCurrentCity.length - 1].toUpperCase();
-      gameClueText.innerHTML += `<br>- Clue 3: The word ends with <strong>"${lastChar}"</strong>.`;
-    }
-  }
-
-  function checkAnswer() {
-    const guess = gameGuessInput.value.trim().toLowerCase();
-    
-    if (!guess) {
-      playErrorSound();
-      alert("Please enter a guess!");
-      return;
-    }
-
-    if (guess === gameCurrentCity) {
-      const points = 10 - gameCluesRevealed * 2;
-      gameScore += points;
-      gameStreak++;
-      
-      if (gameStreak > gameBestStreak) {
-        gameBestStreak = gameStreak;
-      }
-
-      appendGameLog(`Correct! <strong>${capitalizeWord(gameCurrentCity)}</strong> (+${points} pts)`, "var(--color-success)");
-      updateGameDashboard();
-      playSuccessSound();
-      
-      const rect = gameScrambledWord.getBoundingClientRect();
-      spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 35, "var(--color-accent)");
-      
-      loadNewGameWord();
-    } else {
-      playErrorSound();
-      appendGameLog(`Incorrect: <strong>"${guess}"</strong>. Try again!`, "var(--color-purple)");
-      gameStreak = 0;
-      updateGameDashboard();
-      
-      const board = gameScrambledWord.parentElement;
-      board.style.borderColor = "var(--color-purple)";
-      setTimeout(() => board.style.borderColor = "rgba(168, 85, 247, 0.35)", 300);
-    }
-  }
-
-  function updateGameDashboard() {
-    domGameScore.textContent = gameScore.toLocaleString();
-    domGameStreak.textContent = gameStreak.toLocaleString();
-    domGameBestStreak.textContent = gameBestStreak.toLocaleString();
-
-    localStorage.setItem("arvora_game_score", gameScore);
-    localStorage.setItem("arvora_game_streak", gameStreak);
-    localStorage.setItem("arvora_game_best_streak", gameBestStreak);
-  }
-
-  function appendGameLog(message, colorClass = "var(--text-secondary)") {
-    const item = document.createElement("div");
-    item.style.color = colorClass;
-    item.style.marginBottom = "0.25rem";
-    item.innerHTML = `• ${message}`;
-    gameLog.appendChild(item);
-    gameLog.scrollTop = gameLog.scrollHeight;
-  }
-
-  // Fire initialization
-  initializeApp();
-
-  // =====================================================================
-  // TAB 4: PATTERN SEARCH
-  // =====================================================================
-  let ptnCurrentMode = 'contains';
-  let ptnCurrentMatches = [];
-
-  function setupPatternSearch() {
-    const ptnInput = document.getElementById('ptn-input');
-    const ptnMinLen = document.getElementById('ptn-min-len');
-    const ptnMaxLen = document.getElementById('ptn-max-len');
-    const btnPtnSearch = document.getElementById('btn-ptn-search');
-    const ptnStats = document.getElementById('ptn-stats');
-    const ptnMatchCount = document.getElementById('ptn-match-count');
-    const ptnSearchTime = document.getElementById('ptn-search-time');
-    const ptnResultsList = document.getElementById('ptn-results-list');
-    const ptnShowingLabel = document.getElementById('ptn-showing-label');
-    const btnPtnExport = document.getElementById('btn-ptn-export');
-    const modeBtns = document.querySelectorAll('.ptn-mode-btn');
-
-    modeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modeBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        ptnCurrentMode = btn.dataset.mode;
-      });
-    });
-
-    function runPatternSearch() {
-      if (!ptnInput || !ptnMinLen || !ptnMaxLen) return;
-      const query = ptnInput.value.trim().toLowerCase();
-      const minLen = parseInt(ptnMinLen.value) || 1;
-      const maxLen = parseInt(ptnMaxLen.value) || 100;
-
-      const t0 = performance.now();
-      ptnCurrentMatches = CITIES_DATA.filter(city => {
-        const c = city.toLowerCase();
-        if (c.length < minLen || c.length > maxLen) return false;
-        if (!query) return true;
-        switch (ptnCurrentMode) {
-          case 'contains': return c.includes(query);
-          case 'starts':   return c.startsWith(query);
-          case 'ends':     return c.endsWith(query);
-          case 'exact':    return c === query;
-          default:         return c.includes(query);
-        }
-      });
-      const t1 = performance.now();
-
-      if (ptnStats) ptnStats.style.display = 'block';
-      if (ptnMatchCount) ptnMatchCount.textContent = ptnCurrentMatches.length.toLocaleString();
-      if (ptnSearchTime) ptnSearchTime.textContent = `${(t1 - t0).toFixed(2)} ms`;
-      if (ptnShowingLabel) ptnShowingLabel.textContent = `Showing ${Math.min(ptnCurrentMatches.length, 500)} of ${ptnCurrentMatches.length} results`;
-
-      if (ptnResultsList) {
-        ptnResultsList.innerHTML = '';
-        const toShow = ptnCurrentMatches.slice(0, 500);
-        if (toShow.length === 0) {
-          ptnResultsList.innerHTML = '<span style="color:var(--text-muted); font-size:0.85rem;">No cities matched this pattern.</span>';
-        } else {
-          toShow.forEach(city => {
-            const tag = document.createElement('span');
-            tag.textContent = city;
-            tag.style.cssText = 'background:rgba(6,182,212,0.12); border:1px solid rgba(6,182,212,0.3); border-radius:999px; padding:0.2rem 0.65rem; font-size:0.8rem; color:var(--color-accent); cursor:default; white-space:nowrap;';
-            ptnResultsList.appendChild(tag);
-          });
-        }
-      }
-      if (btnPtnExport) btnPtnExport.style.display = ptnCurrentMatches.length > 0 ? 'block' : 'none';
-    }
-
-    if (btnPtnSearch) btnPtnSearch.addEventListener('click', runPatternSearch);
-    if (ptnInput) ptnInput.addEventListener('keydown', e => { if (e.key === 'Enter') runPatternSearch(); });
-
-    if (btnPtnExport) {
-      btnPtnExport.addEventListener('click', () => {
-        const blob = new Blob([ptnCurrentMatches.join('\n')], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `indian_cities_${ptnCurrentMode}_${Date.now()}.txt`;
-      a.click();
-      });
-    }
-  }
-  try { setupPatternSearch(); } catch(e) { console.warn('[setupPatternSearch] error:', e); }
-
-  // =====================================================================
-  // TAB 5: CITY ANALYTICS
-  // =====================================================================
-  let analyticsRendered = false;
-
-  function renderAnalytics() {
-    if (analyticsRendered) return;
-    analyticsRendered = true;
-
-    const cities = CITIES_DATA.map(c => c.toLowerCase());
-
-    // --- Length Distribution ---
-    const lenMap = {};
-    let totalLen = 0;
-    cities.forEach(c => {
-      lenMap[c.length] = (lenMap[c.length] || 0) + 1;
-      totalLen += c.length;
-    });
-    const avgLen = (totalLen / cities.length).toFixed(1);
-    safeText('analytics-avg-len', avgLen);
-
-    const lenChart = document.getElementById('analytics-length-chart');
-    const lenLabels = document.getElementById('analytics-length-labels');
-    const lenKeys = Object.keys(lenMap).map(Number).sort((a, b) => a - b);
-    const lenMax = Math.max(...Object.values(lenMap));
-    lenChart.innerHTML = '';
-    lenLabels.innerHTML = '';
-    lenKeys.forEach(k => {
-      const h = Math.round((lenMap[k] / lenMax) * 130);
-      const bar = document.createElement('div');
-      bar.title = `Length ${k}: ${lenMap[k]} cities`;
-      bar.style.cssText = `flex:1; min-width:4px; height:${h}px; background:linear-gradient(to top, var(--color-accent), var(--color-primary)); border-radius:2px 2px 0 0; opacity:0.85; transition:opacity 0.2s; cursor:default;`;
-      bar.onmouseover = () => bar.style.opacity = '1';
-      bar.onmouseout = () => bar.style.opacity = '0.85';
-      lenChart.appendChild(bar);
-
-      const lbl = document.createElement('span');
-      lbl.textContent = k;
-      lbl.style.cssText = 'flex:1; text-align:center; min-width:4px; font-size:0.55rem; color:var(--text-muted);';
-      lenLabels.appendChild(lbl);
-    });
-
-    // --- Letter Frequency ---
-    const letterMap = {};
-    cities.forEach(c => {
-      const ch = c[0];
-      if (ch && /[a-z]/.test(ch)) {
-        letterMap[ch] = (letterMap[ch] || 0) + 1;
-      }
-    });
-    const letterKeys = Object.keys(letterMap).sort();
-    const letterMax = Math.max(...Object.values(letterMap));
-    const topLetter = letterKeys.reduce((a, b) => (letterMap[a] || 0) >= (letterMap[b] || 0) ? a : b, letterKeys[0]);
-    safeText('analytics-top-letter', `"${topLetter.toUpperCase()}" (${letterMap[topLetter].toLocaleString()} cities)`);
-
-    const letterChart = document.getElementById('analytics-letter-chart');
-    const letterLabels = document.getElementById('analytics-letter-labels');
-    letterChart.innerHTML = '';
-    letterLabels.innerHTML = '';
-    letterKeys.forEach(ch => {
-      const h = Math.round((letterMap[ch] / letterMax) * 130);
-      const bar = document.createElement('div');
-      bar.title = `"${ch.toUpperCase()}": ${letterMap[ch]} cities`;
-      bar.style.cssText = `flex:1; min-width:5px; height:${h}px; background:linear-gradient(to top, var(--color-purple), rgba(168,85,247,0.5)); border-radius:2px 2px 0 0; opacity:0.85; transition:opacity 0.2s; cursor:default;`;
-      bar.onmouseover = () => bar.style.opacity = '1';
-      bar.onmouseout = () => bar.style.opacity = '0.85';
-      letterChart.appendChild(bar);
-
-      const lbl = document.createElement('span');
-      lbl.textContent = ch.toUpperCase();
-      lbl.style.cssText = 'flex:1; text-align:center; min-width:5px; font-size:0.55rem; color:var(--text-muted);';
-      letterLabels.appendChild(lbl);
-    });
-
-    // --- Top Suffixes ---
-    const suffixLen = 3;
-    const suffixMap = {};
-    cities.forEach(c => {
-      if (c.length >= suffixLen + 1) {
-        const sfx = c.slice(-suffixLen);
-        suffixMap[sfx] = (suffixMap[sfx] || 0) + 1;
-      }
-    });
-    const topSuffixes = Object.entries(suffixMap).sort((a, b) => b[1] - a[1]).slice(0, 15);
-    const sfxMax = topSuffixes[0]?.[1] || 1;
-    const sfxContainer = document.getElementById('analytics-suffixes');
-    sfxContainer.innerHTML = '';
-    topSuffixes.forEach(([sfx, cnt]) => {
-      const pct = Math.round((cnt / sfxMax) * 100);
-      sfxContainer.innerHTML += `
-        <div style="font-size:0.82rem;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-            <span style="color:var(--text-primary); font-family:monospace;">-${sfx}</span>
-            <span style="color:var(--text-muted);">${cnt.toLocaleString()} cities</span>
-          </div>
-          <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:2px;">
-            <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--color-success), rgba(16,185,129,0.4)); border-radius:2px;"></div>
-          </div>
-        </div>`;
-    });
-
-    // --- Top Prefixes ---
-    const prefixLen = 3;
-    const prefixMap = {};
-    cities.forEach(c => {
-      if (c.length >= prefixLen + 1) {
-        const pfx = c.slice(0, prefixLen);
-        prefixMap[pfx] = (prefixMap[pfx] || 0) + 1;
-      }
-    });
-    const topPrefixes = Object.entries(prefixMap).sort((a, b) => b[1] - a[1]).slice(0, 15);
-    const pfxMax = topPrefixes[0]?.[1] || 1;
-    const pfxContainer = document.getElementById('analytics-prefixes');
-    pfxContainer.innerHTML = '';
-    topPrefixes.forEach(([pfx, cnt]) => {
-      const pct = Math.round((cnt / pfxMax) * 100);
-      pfxContainer.innerHTML += `
-        <div style="font-size:0.82rem;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-            <span style="color:var(--text-primary); font-family:monospace;">${pfx}-</span>
-            <span style="color:var(--text-muted);">${cnt.toLocaleString()} cities</span>
-          </div>
-          <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:2px;">
-            <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--color-primary), rgba(59,130,246,0.4)); border-radius:2px;"></div>
-          </div>
-        </div>`;
     });
   }
 
@@ -5226,7 +4021,7 @@ Generated by Arvora (India City Autocomplete & Planner) 🚀`;
   // TAB 14: TRANSIT & ROUTE SOLVER
   // =====================================================================
 
-  const CITY_COORDS = GLOBAL_CITY_COORDS;
+  const CITY_COORDS = (typeof GLOBAL_CITY_COORDS !== 'undefined') ? GLOBAL_CITY_COORDS : {};
 
   function computeRoute(start, end, mode) {
     const c1 = getCityCoords(start);
