@@ -1542,8 +1542,21 @@
       if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
     }
 
+    // 4.5. Overcrowding Mitigation & Smart Rebalancing Matrix Hub
+    else if (['overcrowding', 'overtourism', 'congestion', 'peakbalancer', 'rebalance', 'crowdbalancer', 'throttle'].includes(cleanId)) {
+      tabId = 'overcrowding';
+      setTimeout(() => {
+        if (typeof window.BeforeAfterController === 'function' || typeof BeforeAfterController !== 'undefined') {
+          try { new (window.BeforeAfterController || BeforeAfterController)('overcrowding-comparison-mount'); } catch(e) {}
+        }
+        if (typeof window.ImpactCalcController === 'function' || typeof ImpactCalcController !== 'undefined') {
+          try { new (window.ImpactCalcController || ImpactCalcController)('overcrowding-calculator-mount'); } catch(e) {}
+        }
+      }, 50);
+    }
+
     // 5. Bharat Travel Intelligence & Explorer Features
-    else if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'overcrowding', 'peakbalancer', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
+    else if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
       tabId = 'travelintel';
       let subTab = 'explore';
       if (['attractions', 'sightseeing', 'monument', 'photospots', 'heritage'].some(k => cleanId.includes(k))) subTab = 'attractions';
@@ -28058,6 +28071,8 @@ class HackathonGuide {
     }
   }
 
+  window.BeforeAfterController = BeforeAfterController;
+  window.ImpactCalcController = ImpactCalcController;
   window.syncGlobalLocation = syncGlobalLocation;
   window.selectGlobalCity = syncGlobalLocation;
 
