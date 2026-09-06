@@ -4776,3 +4776,30 @@ header nav,
   color: #020617;
   box-shadow: 0 0 18px rgba(0, 243, 255, 0.4);
 }
+
+
+/* Overcrowding Vector SVG Map Styles */
+.map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.map-grid-line {
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-dasharray: 2 4;
+}
+.flow-path-animated {
+  animation: flowDash 20s linear infinite;
+}
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+.node-pulse {
+  animation: nodeGlowPulse 2s ease-in-out infinite alternate;
+}
+@keyframes nodeGlowPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}

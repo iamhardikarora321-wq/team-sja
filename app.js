@@ -1546,6 +1546,9 @@
     else if (['overcrowding', 'overtourism', 'congestion', 'peakbalancer', 'rebalance', 'crowdbalancer', 'throttle'].includes(cleanId)) {
       tabId = 'overcrowding';
       setTimeout(() => {
+        if (typeof window.initOvercrowdingMap === 'function') {
+          try { window.initOvercrowdingMap('all'); } catch(e) {}
+        }
         if (typeof window.BeforeAfterController === 'function' || typeof BeforeAfterController !== 'undefined') {
           try { new (window.BeforeAfterController || BeforeAfterController)('overcrowding-comparison-mount'); } catch(e) {}
         }
@@ -28070,6 +28073,59 @@ class HackathonGuide {
       breadcrumb.textContent = `Active Destination: ${cityName}, ${stateName}`;
     }
   }
+
+  window.DestinationLoadMap = DestinationLoadMap;
+  
+  // =====================================================================
+  // 🗺️ OVERCROWDING DESTINATION HEATMAP MAP CONTROLLER
+  // =====================================================================
+  let overcrowdingMapInstance = null;
+
+  function initOvercrowdingMap(filter) {
+    const container = document.getElementById('overcrowding-map-mount');
+    if (!container) return;
+
+    if (!overcrowdingMapInstance) {
+      overcrowdingMapInstance = new DestinationLoadMap('overcrowding-map-mount', {
+        onNodeClick: (attraction) => {
+          const infoBox = document.getElementById('overcrowding-map-node-info');
+          if (infoBox && attraction) {
+            const isCritical = attraction.status === 'critical' || attraction.status === 'elevated';
+            const badgeColor = isCritical ? '#f87171' : '#a7f3d0';
+            const badgeBg = isCritical ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)';
+            const statusText = isCritical ? '🔴 HEAVY BOTTLECONGESTION' : '🟢 OPTIMAL / UNCROWDED';
+
+            infoBox.style.display = 'block';
+            infoBox.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+                <strong style="font-size:1rem; color:#fff;">📍 ${attraction.name}</strong>
+                <span style="background:${badgeBg}; color:${badgeColor}; padding:2px 8px; border-radius:10px; font-size:0.72rem; font-weight:800;">${statusText} (${attraction.loadPercentage}% CAPACITY)</span>
+              </div>
+              <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
+                ⏱️ <strong>Est. Wait Time:</strong> ${attraction.waitTime || (isCritical ? '45 mins' : '5 mins')}<br>
+                💡 <strong>Smart Recommendation:</strong> ${attraction.recommendation || (isCritical ? 'Divert visitors to nearby satellite heritage site' : 'Ideal window for tranquil sightseeing')}
+              </div>
+            `;
+          }
+        }
+      });
+    }
+
+    const currentLoc = (window.ROAM && window.ROAM.currentLocation) ? window.ROAM.currentLocation : (typeof resolveLocation === 'function' ? resolveLocation('jaipur') : { name: 'Jaipur', state: 'Rajasthan', attractions: [] });
+    overcrowdingMapInstance.setDestination(currentLoc);
+    if (filter) overcrowdingMapInstance.setFilter(filter);
+  }
+
+  function filterOvercrowdingMap(filter, btnEl) {
+    if (btnEl) {
+      document.querySelectorAll('.overcrowding-map-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+    }
+    initOvercrowdingMap(filter);
+  }
+
+  window.initOvercrowdingMap = initOvercrowdingMap;
+  window.filterOvercrowdingMap = filterOvercrowdingMap;
 
   window.BeforeAfterController = BeforeAfterController;
   window.ImpactCalcController = ImpactCalcController;

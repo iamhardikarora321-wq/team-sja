@@ -612,6 +612,30 @@
           </div>
         </div>
 
+        
+        <!-- Interactive Overcrowding & Crowd Density Vector Heatmap -->
+        <div style="margin-bottom:1.75rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <span style="font-size:0.72rem; font-weight:800; color:#ef4444; text-transform:uppercase; letter-spacing:0.12em;">Live Vector Heatmap</span>
+              <h3 style="font-size:1.1rem; font-weight:800; color:#fff; margin:2px 0 0 0;">🗺️ Spatial Destination Overcrowding &amp; Density Heatmap Map</h3>
+            </div>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="map-filter-btn active overcrowding-map-btn" data-filter="all" onclick="if(window.filterOvercrowdingMap) window.filterOvercrowdingMap('all', this);">All Areas</button>
+              <button class="map-filter-btn overcrowding-map-btn" data-filter="critical" onclick="if(window.filterOvercrowdingMap) window.filterOvercrowdingMap('critical', this);" style="border-color:rgba(239,68,68,0.4); color:#f87171;">🔴 Overcrowded (&gt;80%)</button>
+              <button class="map-filter-btn overcrowding-map-btn" data-filter="optimal" onclick="if(window.filterOvercrowdingMap) window.filterOvercrowdingMap('optimal', this);" style="border-color:rgba(16,185,129,0.4); color:#a7f3d0;">🟢 Uncrowded (&lt;40%)</button>
+            </div>
+          </div>
+
+          <div id="overcrowding-map-mount" style="height:380px; background:rgba(2,6,23,0.85); border:1px solid rgba(239,68,68,0.35); border-radius:18px; position:relative; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+            <!-- Vector SVG Map populated by initOvercrowdingMap() -->
+          </div>
+          
+          <div id="overcrowding-map-node-info" style="display:none; margin-top:0.75rem; background:rgba(15,23,42,0.9); border:1px solid rgba(0,243,255,0.4); border-radius:12px; padding:0.85rem 1.1rem; color:#fff; font-size:0.85rem; line-height:1.5;">
+            <!-- Node details popup on click -->
+          </div>
+        </div>
+
         <!-- Side-by-Side Comparison: Without Rebalancing vs With Rebalancing -->
         <div id="overcrowding-comparison-mount" style="margin-bottom:1.75rem;"></div>
 
