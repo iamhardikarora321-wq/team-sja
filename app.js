@@ -16,28 +16,61 @@
       { id: 'bus', name: 'RedBus Volvo & Intercity Bus Estimator', title: 'RedBus Volvo & Intercity Bus Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚌', desc: 'State Roadways & RedBus AC Sleeper/Seater fare estimator with live departure times.' },
       { id: 'car', name: 'FASTag Toll & Private Cab Calculator', title: 'FASTag Toll & Private Cab Calculator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚗', desc: 'Door-to-door cab rates, FASTag toll costs, fuel consumption & highway dhabas.' },
       { id: 'auto', name: 'City Auto-Rickshaw Meter Tariff Estimator', title: 'City Auto-Rickshaw Meter Tariff Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🛺', desc: 'Official government auto-rickshaw meter rates, night surcharges & e-rickshaw routes.' },
-      { id: 'train', name: 'IRCTC Express Train & Tatkal Estimator', title: 'IRCTC Express Train & Tatkal Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚆', desc: 'Vande Bharat, Rajdhani & Express class fares, PNR status predictor & station codes.' }
+      { id: 'train', name: 'IRCTC Express Train & Tatkal Estimator', title: 'IRCTC Express Train & Tatkal Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚆', desc: 'Vande Bharat, Rajdhani & Express class fares, PNR status predictor & station codes.' },
+      { id: 'evrouter', name: 'EV Charging Station & Green Route Planner', title: 'EV Charging Station & Green Route Planner', category: 'Transit & Fares', categoryKey: 'transport', icon: '⚡', desc: 'Locate EV chargers, calculate battery range anxiety & plan eco-friendly driving routes.' },
+      { id: 'rickshaw', name: 'City E-Rickshaw & Local Shuttle Navigator', title: 'City E-Rickshaw & Local Shuttle Navigator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🛺', desc: 'Fixed-route local e-rickshaws, shared shuttles & last-mile metro station connectivity.' },
+      { id: 'pnrpredict', name: 'IRCTC PNR Confirmation Predictor & Seat Tracker', title: 'IRCTC PNR Confirmation Predictor & Seat Tracker', category: 'Transit & Fares', categoryKey: 'transport', icon: '🎫', desc: 'Waitlist confirmation algorithm, live running status & coach layout predictor.' }
     ],
     travelintel: [
-      { id: 'travelintel', name: 'Bharat Travel Intelligence & City Explorer', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'City search engine for 50,000+ towns, attractions, local cuisine & travel guides.' }
+      { id: 'travelintel', name: 'Bharat Travel Intelligence & City Explorer', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'City search engine for 50,000+ towns, attractions, local cuisine & travel guides.' },
+      { id: 'explore', name: 'City Explorer & Local Neighborhood Finder', title: 'City Explorer & Local Neighborhood Finder', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🔍', desc: 'Discover local hotspots, hidden gems, heritage walks & district neighborhood guides.' },
+      { id: 'attractions', name: 'Top Sightseeing Monuments & Heritage Sites', title: 'Top Sightseeing Monuments & Heritage Sites', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🏰', desc: 'Explore historic forts, UNESCO heritage sites, temples, architectural wonders & photo spots.' },
+      { id: 'culinary', name: 'Local Cuisine & Street Food Gourmet Guide', title: 'Local Cuisine & Street Food Gourmet Guide', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🍲', desc: 'Regional culinary specialties, iconic thalis, street food hubs & legendary dhabas.' },
+      { id: 'routecalc', name: 'Multi-City Intercity Route & Time Solver', title: 'Multi-City Intercity Route & Time Solver', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '📍', desc: 'Optimal multi-destination travel path planner with distance, travel duration & road conditions.' },
+      { id: 'weatherintel', name: 'Real-Time Weather & Monsoon Forecast Radar', title: 'Real-Time Weather & Monsoon Forecast Radar', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🌦️', desc: 'Live air quality index (AQI), weather alerts, rainfall radar & seasonal clothing advisory.' }
     ],
     lingo: [
-      { id: 'lingo', name: 'Bharat Lingo & Regional Audio Translator', title: 'Bharat Lingo & Regional Audio Translator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voice synthesis.' }
+      { id: 'lingo', name: 'Bharat Lingo & Regional Audio Translator', title: 'Bharat Lingo & Regional Audio Translator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voice synthesis.' },
+      { id: 'hindi', name: 'Hindi Regional Voice & Phrase Guide', title: 'Hindi Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🇮🇳', desc: 'Audio phrasebook for greetings, navigation, directions and shopping in Hindi.' },
+      { id: 'bengali', name: 'Bengali Regional Voice & Phrase Guide', title: 'Bengali Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Audio phrases for Kolkata, Darjeeling, Sundarbans and Bengal cultural travel.' },
+      { id: 'tamil', name: 'Tamil Regional Voice & Phrase Guide', title: 'Tamil Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🔊', desc: 'Audio phrasebook for Chennai, Madurai temple circuits and Tamil Nadu exploration.' },
+      { id: 'marathi', name: 'Marathi Regional Voice & Phrase Guide', title: 'Marathi Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Audio guide for Mumbai street markets, Pune culture and Maharashtra heritage.' },
+      { id: 'telugu', name: 'Telugu Regional Voice & Phrase Guide', title: 'Telugu Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🎙️', desc: 'Audio phrases for Hyderabad, Vizag beaches and Andhra/Telangana culinary journeys.' },
+      { id: 'bargain', name: 'Local Market Bargaining & Price Negotiator', title: 'Local Market Bargaining & Price Negotiator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🏷️', desc: 'Fair price estimator, polite negotiation phrases & street market shopping tips.' },
+      { id: 'tipping', name: 'Tipping Etiquette & Gratuity Calculator', title: 'Tipping Etiquette & Gratuity Calculator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '💵', desc: 'Restaurant tipping guidelines, taxi driver gratuity, hotel porter fees & local customs.' },
+      { id: 'templedress', name: 'Temple Dress Code & Cultural Etiquette', title: 'Temple Dress Code & Cultural Etiquette', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🛕', desc: 'Sacred site dress codes, shoe removal protocol, photography restrictions & shrine manners.' }
     ],
     survival: [
-      { id: 'survival', name: 'Digital Survival Kit & Emergency SOS Center', title: 'Digital Survival Kit & Emergency SOS Center', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency numbers (Police 112, Ambulance 108, Tourist 1363) & safety advisor.' }
+      { id: 'survival', name: 'Digital Survival Kit & Emergency SOS Center', title: 'Digital Survival Kit & Emergency SOS Center', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency numbers (Police 112, Ambulance 108, Tourist 1363) & safety advisor.' },
+      { id: 'emergency', name: 'Emergency Speed-Dial & All-India Helplines', title: 'Emergency Speed-Dial & All-India Helplines', category: 'Safety & Security', categoryKey: 'survival', icon: '🚨', desc: 'Instant 1-tap contacts for Police, Women Safety, Cyber Cell, Highway Emergency & Hospitals.' },
+      { id: 'vault', name: 'Encrypted Offline Travel Document Vault', title: 'Encrypted Offline Travel Document Vault', category: 'Safety & Security', categoryKey: 'survival', icon: '🔐', desc: 'Securely store encrypted digital copies of Passport, Visa, Aadhar, Driving License & Tickets.' },
+      { id: 'stomach', name: 'Delhi Belly & Street Food Safety Guide', title: 'Delhi Belly & Street Food Safety Guide', category: 'Safety & Security', categoryKey: 'survival', icon: '🍲', desc: 'Hygienic street food selection rules, water safety tips, ORS hydration & stomach care.' },
+      { id: 'solosafety', name: 'Solo Traveler & Night Safety Advisory', title: 'Solo Traveler & Night Safety Advisory', category: 'Safety & Security', categoryKey: 'survival', icon: '🛡️', desc: 'Live location sharing, night transit safety recommendations & verified safe lodging tips.' },
+      { id: 'scamadvisor', name: 'Taxi, Hotel & Tourist Scam Detector', title: 'Taxi, Hotel & Tourist Scam Detector', category: 'Safety & Security', categoryKey: 'survival', icon: '⚠️', desc: 'Spot fake travel desks, inflated auto meters, gemstone scams & overpriced tourist traps.' },
+      { id: 'visainfo', name: 'India e-Visa & Entry Requirements Hub', title: 'India e-Visa & Entry Requirements Hub', category: 'Safety & Security', categoryKey: 'survival', icon: '✈️', desc: 'Foreign tourist e-Visa rules, FRRO registration guidance & duty-free currency limits.' },
+      { id: 'monsoonsafety', name: 'Monsoon & Disaster Warning Alert System', title: 'Monsoon & Disaster Warning Alert System', category: 'Safety & Security', categoryKey: 'survival', icon: '🌧️', desc: 'Flash flood alerts, landslide risk advisories, cyclone tracker & seasonal travel advisories.' }
     ],
     tourism: [
-      { id: 'tourism', name: '36 Indian States & UTs Tourism Showcase', title: '36 Indian States & UTs Tourism Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore official state tourism boards, heritage sites, cuisine & homestays across India.' }
+      { id: 'tourism', name: '36 Indian States & UTs Tourism Showcase', title: '36 Indian States & UTs Tourism Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore official state tourism boards, heritage sites, cuisine & homestays across India.' },
+      { id: 'delhitourism', name: 'Delhi Capital Heritage & Monuments Showcase', title: 'Delhi Capital Heritage & Monuments Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🕌', desc: 'Red Fort, Qutub Minar, Chandni Chowk street food, Humayun Tomb & Lotus Temple.' },
+      { id: 'mumbaitourism', name: 'Gateway of India & Konkan Coast Showcase', title: 'Gateway of India & Konkan Coast Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏙️', desc: 'Marine Drive, Elephanta Caves, Colaba Causeway, Bollywood tours & coastal seafood.' },
+      { id: 'jaipurtourism', name: 'Pink City & Royal Rajasthan Fort Showcase', title: 'Jaipur Pink City & Royal Rajasthan Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏰', desc: 'Hawa Mahal, Amber Fort, City Palace, Thar Desert safaris & Marwari heritage.' },
+      { id: 'keralatourism', name: 'Kerala Backwaters & Eco Tourism Hub', title: 'Kerala Backwaters & Eco Tourism Hub', category: 'State Tourism', categoryKey: 'tourism', icon: '🌴', desc: 'Alleppey houseboats, Munnar tea gardens, Kovalam beaches & Ayurvedic wellness retreats.' },
+      { id: 'varanasitourism', name: 'Varanasi Ancient Ghats & Heritage Showcase', title: 'Varanasi Ancient Ghats & Heritage Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🛕', desc: 'Kashi Vishwanath, Ganga Aarti at Dashashwamedh Ghat, Sarnath & ancient silk bazaars.' },
+      { id: 'goatourism', name: 'Goa Beaches, Forts & Portuguese Culture', title: 'Goa Beaches, Forts & Portuguese Culture', category: 'State Tourism', categoryKey: 'tourism', icon: '🏖️', desc: 'Baga & Calangute beaches, Dudhsagar falls, Old Goa cathedrals & coastal shacks.' }
     ],
     trip: [
-      { id: 'trip', name: 'Interactive Trip Planner & Smart Budgeting', title: 'Interactive Trip Planner & Smart Budgeting', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate daily travel budgets & smart packing lists.' }
+      { id: 'trip', name: 'Interactive Trip Planner & Smart Budgeting', title: 'Interactive Trip Planner & Smart Budgeting', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate daily travel budgets & smart packing lists.' },
+      { id: 'budget', name: 'Daily Travel Budget & Cost Estimator', title: 'Daily Travel Budget & Cost Estimator', category: 'Trip Planning', categoryKey: 'trip', icon: '💰', desc: 'Calculate daily expense breakdown across accommodation, meals, transit & entry tickets.' },
+      { id: 'pack', name: 'Smart Climate & Duration Packing Assistant', title: 'Smart Climate & Duration Packing Assistant', category: 'Trip Planning', categoryKey: 'trip', icon: '🎒', desc: 'Automated packing checklist customized for destination state climate, season & activity.' }
     ],
     game: [
       { id: 'game', name: 'Geoguess Heritage & Cultural Quiz Game', title: 'Geoguess Heritage & Cultural Quiz Game', category: 'Interactive Game', categoryKey: 'game', icon: '🎮', desc: 'Test your knowledge of Indian monuments, local dishes, and regional geography.' }
     ],
     travel: [
-      { id: 'travel', name: '15,000 City Inter-City Distance Matrix', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, PIN codes & IST solar time converter.' }
+      { id: 'travel', name: '15,000 City Inter-City Distance Matrix', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, PIN codes & IST solar time converter.' },
+      { id: 'pincode', name: 'All-India Postal Code & PIN Directory', title: 'All-India Postal Code & PIN Directory', category: 'Geography Hub', categoryKey: 'travel', icon: '📮', desc: 'Lookup post office details, district codes, and PIN codes for 150,000+ locations.' },
+      { id: 'timezone', name: 'Solar IST Time & Meridian Time Converter', title: 'Solar IST Time & Meridian Time Converter', category: 'Geography Hub', categoryKey: 'travel', icon: '☀️', desc: 'Calculate local solar time variance, sunrise/sunset offset across Indian longitudes.' }
     ]
   };
   window.ARVORA_ALL_FEATURES = ARVORA_MASTER_180_FEATURES;
@@ -288,12 +321,14 @@
 
   function startApp() {
     // --- GLOBAL ALL-INDIA STATES LIST ---
-    const STATES_LIST = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Delhi", "Goa", "Gujarat",
-    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra",
-    "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
-    "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
-  ];        var DEFAULT_SHOWCASE_FEATURES = [
+        const STATES_LIST = [
+      "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+      "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Goa",
+      "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+      "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+      "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+      "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    ];        var DEFAULT_SHOWCASE_FEATURES = [
     { id: 'discover', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting.' },
     { id: 'roam-plan', title: 'Plan Dynamic Travel Itinerary Matrix', category: 'Smart Travel', categoryKey: 'roam', icon: '📅', desc: 'AI-assisted dynamic itinerary generator and smart destination schedule balancer.' },
     { id: 'market', title: 'Local Artisan & GI-Tagged Craft Market', category: 'Smart Travel', categoryKey: 'roam', icon: '🛍️', desc: 'Direct GI-tagged handicraft discovery, traditional artisan bazaars & ethical booking.' },
@@ -305,13 +340,46 @@
     { id: 'car', title: 'FASTag Toll & Private Cab Calculator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚗', desc: 'Door-to-door cab rates, FASTag toll costs, fuel consumption & highway dhabas.' },
     { id: 'auto', title: 'City Auto-Rickshaw Meter Tariff Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🛺', desc: 'Official government auto-rickshaw meter rates, night surcharges & e-rickshaw routes.' },
     { id: 'train', title: 'IRCTC Express Train & Tatkal Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚆', desc: 'Vande Bharat, Rajdhani & Express class fares, PNR status predictor & station codes.' },
+    { id: 'evrouter', title: 'EV Charging Station & Green Route Planner', category: 'Transit & Fares', categoryKey: 'transport', icon: '⚡', desc: 'Locate EV chargers, calculate battery range anxiety & plan eco-friendly driving routes.' },
+    { id: 'rickshaw', title: 'City E-Rickshaw & Local Shuttle Navigator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🛺', desc: 'Fixed-route local e-rickshaws, shared shuttles & last-mile metro station connectivity.' },
+    { id: 'pnrpredict', title: 'IRCTC PNR Confirmation Predictor & Seat Tracker', category: 'Transit & Fares', categoryKey: 'transport', icon: '🎫', desc: 'Waitlist confirmation algorithm, live running status & coach layout predictor.' },
     { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'City search engine for 50,000+ towns, attractions, local cuisine & travel guides.' },
+    { id: 'explore', title: 'City Explorer & Local Neighborhood Finder', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🔍', desc: 'Discover local hotspots, hidden gems, heritage walks & district neighborhood guides.' },
+    { id: 'attractions', title: 'Top Sightseeing Monuments & Heritage Sites', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🏰', desc: 'Explore historic forts, UNESCO heritage sites, temples, architectural wonders & photo spots.' },
+    { id: 'culinary', title: 'Local Cuisine & Street Food Gourmet Guide', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🍲', desc: 'Regional culinary specialties, iconic thalis, street food hubs & legendary dhabas.' },
+    { id: 'routecalc', title: 'Multi-City Intercity Route & Time Solver', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '📍', desc: 'Optimal multi-destination travel path planner with distance, travel duration & road conditions.' },
+    { id: 'weatherintel', title: 'Real-Time Weather & Monsoon Forecast Radar', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🌦️', desc: 'Live air quality index (AQI), weather alerts, rainfall radar & seasonal clothing advisory.' },
     { id: 'lingo', title: 'Bharat Lingo & Regional Audio Translator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voice synthesis.' },
+    { id: 'hindi', title: 'Hindi Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🇮🇳', desc: 'Audio phrasebook for greetings, navigation, directions and shopping in Hindi.' },
+    { id: 'bengali', title: 'Bengali Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Audio phrases for Kolkata, Darjeeling, Sundarbans and Bengal cultural travel.' },
+    { id: 'tamil', title: 'Tamil Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🔊', desc: 'Audio phrasebook for Chennai, Madurai temple circuits and Tamil Nadu exploration.' },
+    { id: 'marathi', title: 'Marathi Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Audio guide for Mumbai street markets, Pune culture and Maharashtra heritage.' },
+    { id: 'telugu', title: 'Telugu Regional Voice & Phrase Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🎙️', desc: 'Audio phrases for Hyderabad, Vizag beaches and Andhra/Telangana culinary journeys.' },
+    { id: 'bargain', title: 'Local Market Bargaining & Price Negotiator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🏷️', desc: 'Fair price estimator, polite negotiation phrases & street market shopping tips.' },
+    { id: 'tipping', title: 'Tipping Etiquette & Gratuity Calculator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '💵', desc: 'Restaurant tipping guidelines, taxi driver gratuity, hotel porter fees & local customs.' },
+    { id: 'templedress', title: 'Temple Dress Code & Cultural Etiquette', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🛕', desc: 'Sacred site dress codes, shoe removal protocol, photography restrictions & shrine manners.' },
     { id: 'survival', title: 'Digital Survival Kit & Emergency SOS Center', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency numbers (Police 112, Ambulance 108, Tourist 1363) & safety advisor.' },
+    { id: 'emergency', title: 'Emergency Speed-Dial & All-India Helplines', category: 'Safety & Security', categoryKey: 'survival', icon: '🚨', desc: 'Instant 1-tap contacts for Police, Women Safety, Cyber Cell, Highway Emergency & Hospitals.' },
+    { id: 'vault', title: 'Encrypted Offline Travel Document Vault', category: 'Safety & Security', categoryKey: 'survival', icon: '🔐', desc: 'Securely store encrypted digital copies of Passport, Visa, Aadhar, Driving License & Tickets.' },
+    { id: 'stomach', title: 'Delhi Belly & Street Food Safety Guide', category: 'Safety & Security', categoryKey: 'survival', icon: '🍲', desc: 'Hygienic street food selection rules, water safety tips, ORS hydration & stomach care.' },
+    { id: 'solosafety', title: 'Solo Traveler & Night Safety Advisory', category: 'Safety & Security', categoryKey: 'survival', icon: '🛡️', desc: 'Live location sharing, night transit safety recommendations & verified safe lodging tips.' },
+    { id: 'scamadvisor', title: 'Taxi, Hotel & Tourist Scam Detector', category: 'Safety & Security', categoryKey: 'survival', icon: '⚠️', desc: 'Spot fake travel desks, inflated auto meters, gemstone scams & overpriced tourist traps.' },
+    { id: 'visainfo', title: 'India e-Visa & Entry Requirements Hub', category: 'Safety & Security', categoryKey: 'survival', icon: '✈️', desc: 'Foreign tourist e-Visa rules, FRRO registration guidance & duty-free currency limits.' },
+    { id: 'monsoonsafety', title: 'Monsoon & Disaster Warning Alert System', category: 'Safety & Security', categoryKey: 'survival', icon: '🌧️', desc: 'Flash flood alerts, landslide risk advisories, cyclone tracker & seasonal travel advisories.' },
     { id: 'tourism', title: '36 Indian States & UTs Tourism Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore official state tourism boards, heritage sites, cuisine & homestays across India.' },
+    { id: 'delhitourism', title: 'Delhi Capital Heritage & Monuments Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🕌', desc: 'Red Fort, Qutub Minar, Chandni Chowk street food, Humayun Tomb & Lotus Temple.' },
+    { id: 'mumbaitourism', title: 'Gateway of India & Konkan Coast Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏙️', desc: 'Marine Drive, Elephanta Caves, Colaba Causeway, Bollywood tours & coastal seafood.' },
+    { id: 'jaipurtourism', title: 'Pink City & Royal Rajasthan Fort Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏰', desc: 'Hawa Mahal, Amber Fort, City Palace, Thar Desert safaris & Marwari heritage.' },
+    { id: 'keralatourism', title: 'Kerala Backwaters & Eco Tourism Hub', category: 'State Tourism', categoryKey: 'tourism', icon: '🌴', desc: 'Alleppey houseboats, Munnar tea gardens, Kovalam beaches & Ayurvedic wellness retreats.' },
+    { id: 'varanasitourism', title: 'Varanasi Ancient Ghats & Heritage Showcase', title: 'Varanasi Ancient Ghats & Heritage Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🛕', desc: 'Kashi Vishwanath, Ganga Aarti at Dashashwamedh Ghat, Sarnath & ancient silk bazaars.' },
+    { id: 'goatourism', title: 'Goa Beaches, Forts & Portuguese Culture', category: 'State Tourism', categoryKey: 'tourism', icon: '🏖️', desc: 'Baga & Calangute beaches, Dudhsagar falls, Old Goa cathedrals & coastal shacks.' },
     { id: 'trip', title: 'Interactive Trip Planner & Smart Budgeting', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate daily travel budgets & smart packing lists.' },
+    { id: 'budget', title: 'Daily Travel Budget & Cost Estimator', category: 'Trip Planning', categoryKey: 'trip', icon: '💰', desc: 'Calculate daily expense breakdown across accommodation, meals, transit & entry tickets.' },
+    { id: 'pack', title: 'Smart Climate & Duration Packing Assistant', category: 'Trip Planning', categoryKey: 'trip', icon: '🎒', desc: 'Automated packing checklist customized for destination state climate, season & activity.' },
     { id: 'game', title: 'Geoguess Heritage & Cultural Quiz Game', category: 'Interactive Game', categoryKey: 'game', icon: '🎮', desc: 'Test your knowledge of Indian monuments, local dishes, and regional geography.' },
-    { id: 'travel', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, PIN codes & IST solar time converter.' }
+    { id: 'travel', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, PIN codes & IST solar time converter.' },
+    { id: 'pincode', title: 'All-India Postal Code & PIN Directory', category: 'Geography Hub', categoryKey: 'travel', icon: '📮', desc: 'Lookup post office details, district codes, and PIN codes for 150,000+ locations.' },
+    { id: 'timezone', title: 'Solar IST Time & Meridian Time Converter', category: 'Geography Hub', categoryKey: 'travel', icon: '☀️', desc: 'Calculate local solar time variance, sunrise/sunset offset across Indian longitudes.' }
   ];
 
   // --- HARD RESET & UNFREEZE RECOVERY ---
@@ -323,53 +391,12 @@
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
       }
-    } catch(e) {}
-    const cleanUrl = window.location.origin + window.location.pathname + '?nocache=' + Date.now();
-    window.location.href = cleanUrl;
+      window.location.reload(true);
+    } catch(e) {
+      window.location.reload(true);
+    }
   }
-  window.performHardReset = performHardReset;
-  window.openShowcaseModal = openShowcaseModal;
-  window.closeShowcaseModal = closeShowcaseModal;
 
-  document.addEventListener("click", (e) => {
-    if (e.target.closest("#footer-hard-reset-btn")) {
-      e.preventDefault();
-      performHardReset();
-    }
-  });
-
-  // --- UNIVERSAL GLOBAL EVENT DELEGATOR ---
-  document.addEventListener("click", function(e) {
-    const target = e.target.closest(".tab-btn, .sidebar-feature-item, .island-btn[data-target], [data-tab]");
-    if (target) {
-      var tabId = target.dataset.tab || target.getAttribute("data-tab");
-      if (!tabId && target.dataset.target && (target.classList.contains("island-btn") || target.classList.contains("sidebar-feature-item") || target.classList.contains("tab-btn"))) {
-        tabId = target.dataset.target;
-      }
-      if (!tabId && target.id && target.id.startsWith("tab-btn-")) {
-        tabId = target.id.replace("tab-btn-", "");
-      }
-      if (tabId && typeof window.switchTab === 'function') {
-        window.switchTab(tabId);
-      }
-    }
-
-    const triggerBtn = e.target.closest("#nav-browse-all-btn, #island-more-btn, .browse-all-trigger");
-    if (triggerBtn) {
-      if (typeof window.openShowcaseModal === 'function') {
-        window.openShowcaseModal();
-      }
-    }
-
-    const searchBtn = e.target.closest("#header-search-trigger, #sidebar-search-btn");
-    if (searchBtn) {
-      if (typeof window.openDrawer === 'function') {
-        window.openDrawer('search');
-      }
-    }
-  });
-
-        // --- SITE LOCK / PRIVATE SENTINEL VAULT CONTROLLER ---
   function initSiteLock() {
     const lockModal = document.getElementById("site-lock-modal");
     if (lockModal) {
@@ -2775,6 +2802,409 @@
       stays: [
         { name: "Jungle Safari Lodges (Kanha/Pench)", desc: "Luxury eco-treehouses tucked inside dense sal tiger reserves." },
         { name: "Fort Resorts (Ahilya Fort Maheshwar)", desc: "18th-century Maratha queen Ahilyabai Holkar's palace overlooking Narmada." }
+      ]
+    },
+    "Andhra Pradesh": {
+      region: "south",
+      capital: "Amaravati / Visakhapatnam",
+      language: "Telugu, English",
+      climate: "Tropical Coastal (Best: Oct-Mar)",
+      tagline: "Sunrise State • Tirupati Shrine & Araku Valley",
+      desc: "Vibrant coastal state home to sacred Tirumala Tirupati temple, lush Araku Valley coffee highlands, Borra Caves, and Kondapalli artisan crafts.",
+      attractions: [
+        { name: "Tirumala Tirupati Balaji Temple", icon: "🛕", category: "Sacred Pilgrimage", desc: "World famous sacred hilltop shrine of Lord Venkateswara visited by millions of devotees." },
+        { name: "Araku Valley & Borra Caves", icon: "☕", category: "Hill Station & Caves", desc: "Mist-clad coffee plantations, tribal culture, and million-year-old limestone stalactite caves." },
+        { name: "Visakhapatnam Submarine Museum & RK Beach", icon: "⚓", category: "Coastal Heritage", desc: "Decommissioned INS Kurusura submarine museum parked on scenic promenade." }
+      ],
+      markets: [
+        { name: "Kondapalli Wooden Toy Co-op", icon: "🪆", desc: "GI-tagged traditional softwood toy craftsmanship famous for vibrant rural figurines." },
+        { name: "Mangalagiri Handloom Silk Bazaar", icon: "🧵", desc: "Centuries-old weaving center for pure cotton-silk sarees with heavy gold zari borders." }
+      ],
+      foods: [
+        { name: "Andhra Royyala Fry & Biryani", desc: "Spiced coastal prawn pepper fry cooked with curry leaves and green chilies." },
+        { name: "Gongura Pachadi & Rice", desc: "Tangy sorrel leaf chutney mixed with hot steamed rice, ghee, and roasted lentils." }
+      ],
+      stays: [
+        { name: "Araku Valley Coffee Estate Cottages", desc: "Eco-resorts nestled amidst organic coffee plantations and waterfalls." }
+      ]
+    },
+    "Arunachal Pradesh": {
+      region: "northeast",
+      capital: "Itanagar",
+      language: "Monpa, Nyishi, English, Hindi",
+      climate: "Alpine Sub-Tropical (Best: Oct-Apr)",
+      tagline: "Land of Dawn-Lit Mountains & Monasteries",
+      desc: "India's easternmost frontier adorned with snow-capped Himalayan peaks, 400-year-old Tawang Monastery, Ziro Valley pine forests, and tribal heritage.",
+      attractions: [
+        { name: "Tawang Monastery & Sela Pass", icon: "🏔️", category: "Himalayan Monastery", desc: "India's largest monastery built in 1680 perched at 10,000 ft near snow-covered Sela Pass." },
+        { name: "Ziro Valley Pine Groves & Apatani Villages", icon: "🌿", category: "UNESCO Candidate", desc: "Picturesque valley famous for Apatani tribal paddy-fish cultivation." }
+      ],
+      markets: [
+        { name: "Bomdila Tribal Craft Market", icon: "🎨", desc: "Hand-woven Tibetan carpets, carved wooden dragon masks, and silver jewelry." }
+      ],
+      foods: [
+        { name: "Bamboo Shoot Pork & Zan", desc: "Tender pork stewed with fermented bamboo shoots, served with warm millet porridge." }
+      ],
+      stays: [
+        { name: "Ziro Apatani Bamboo Homestays", desc: "Authentic tribal bamboo cottages overlooking paddy fields." }
+      ]
+    },
+    "Bihar": {
+      region: "east",
+      capital: "Patna",
+      language: "Hindi, Maithili, Bhojpuri, Magahi",
+      climate: "Subtropical Monsoon (Best: Oct-Mar)",
+      tagline: "Land of Buddha, Mahavira & Ancient Nalanda",
+      desc: "Cradle of ancient empires and spiritual enlightenment, featuring Mahabodhi UNESCO Temple, 5th-century Nalanda University ruins, and Rajgir peace pagoda.",
+      attractions: [
+        { name: "Mahabodhi Temple (Bodh Gaya)", icon: "🛕", category: "UNESCO World Heritage", desc: "Ancient brick temple marking the exact spot where Lord Buddha attained enlightenment under the Bodhi Tree." },
+        { name: "Nalanda Mahavihara Ruins", icon: "🏛️", category: "UNESCO World Heritage", desc: "5th-century residential international university ruins that once housed 10,000 scholars." }
+      ],
+      markets: [
+        { name: "Jitwarpur Madhubani Art Village", icon: "🎨", desc: "World famous village of GI-tagged Mithila / Madhubani hand-painted canvases." }
+      ],
+      foods: [
+        { name: "Litti Chokha with Desi Ghee", desc: "Baked wheat balls stuffed with spiced sattu, dipped in pure ghee and served with baingan chokha." }
+      ],
+      stays: [
+        { name: "Bodh Gaya Zen Spiritual Retreats", desc: "Tranquil monastery gardens offering meditation sessions." }
+      ]
+    },
+    "Chhattisgarh": {
+      region: "central",
+      capital: "Raipur",
+      language: "Chhattisgarhi, Hindi",
+      climate: "Tropical Wet & Dry (Best: Oct-Mar)",
+      tagline: "Niagara of India, Tribal Bastar & Ancient Caves",
+      desc: "Ecological haven featuring horseshoe Chitrakote Waterfalls, Bastar tribal Bell Metal (Dhokra) crafts, Kanger Valley National Park, and ancient Sirpur temples.",
+      attractions: [
+        { name: "Chitrakote Waterfalls (Bastar)", icon: "💦", category: "Natural Wonder", desc: "India's widest 300-meter horseshoe waterfall on the Indravati river." },
+        { name: "Kanger Valley & Kutumsar Caves", icon: "🦇", category: "Eco Wilderness", desc: "Subterranean limestone caves with blind cavefish and dense teak wildlife reserves." }
+      ],
+      markets: [
+        { name: "Bastar Tribal Haat & Bell Metal Bazaar", icon: "🏺", desc: "Hand-lost-wax cast Dhokra bronze sculptures." }
+      ],
+      foods: [
+        { name: "Chila, Farra & Dubki Kadi", desc: "Steamed rice flour dumplings tossed with sesame seeds and spicy yogurt curry." }
+      ],
+      stays: [
+        { name: "Chitrakote Waterfall View Eco-Resorts", desc: "Log cabins overlooking the roaring Indravati cascades." }
+      ]
+    },
+    "Haryana": {
+      region: "north",
+      capital: "Chandigarh",
+      language: "Haryanvi, Hindi, Punjabi",
+      climate: "Semi-Arid / Subtropical (Best: Oct-Mar)",
+      tagline: "Land of Mahabharata, Kurukshetra & Cyber City",
+      desc: "Vibrant agricultural powerhouse housing ancient Kurukshetra battlefield, Surajkund International Crafts Fair, Sultanpur Bird Sanctuary, and Gurugram tech hub.",
+      attractions: [
+        { name: "Kurukshetra Brahma Sarovar", icon: "🛕", category: "Sacred Heritage", desc: "Ancient sacred water tank and birth spot of Bhagavad Gita under holy Banyan tree." },
+        { name: "Sultanpur Bird Sanctuary", icon: "🦅", category: "Eco Sanctuary", desc: "Ramsar wetland haven hosting 250+ species of migratory winter birds." }
+      ],
+      markets: [
+        { name: "Surajkund Crafts Mela Grounds", icon: "🎨", desc: "Host to the world's largest annual international artisan crafts fair." }
+      ],
+      foods: [
+        { name: "Bajra Roti with White Butter & Churma", desc: "Hearty pearl millet flatbread served with fresh churned white butter and sweet jaggery churma." }
+      ],
+      stays: [
+        { name: "Pinjore Heritage Haveli Resorts", desc: "Restored Mughal royal pavilions turned boutique heritage stays." }
+      ]
+    },
+    "Jharkhand": {
+      region: "east",
+      capital: "Ranchi",
+      language: "Hindi, Santali, Mundari, Nagpuri",
+      climate: "Subtropical Moist (Best: Oct-Mar)",
+      tagline: "Land of Forests, Waterfalls & Baidyanath Shrine",
+      desc: "Mineral-rich wilderness state famous for Hundru Waterfalls, sacred Baidyanath Jyotirlinga, Betla National Park tigers, and Sohrai tribal cave art.",
+      attractions: [
+        { name: "Hundru & Dassam Waterfalls", icon: "💦", category: "Cascades", desc: "Spectacular 98-meter Subarnarekha river drop surrounded by dense rocky sal forests." },
+        { name: "Deoghar Baidyanath Jyotirlinga Temple", icon: "🛕", category: "Sacred Shrine", desc: "One of the 12 revered Jyotirlinga shrines visited during annual Shravani Mela." }
+      ],
+      markets: [
+        { name: "Ranchi Tribal Sohrai Art Emporium", icon: "🎨", desc: "Traditional GI-tagged Sohrai & Khovar mud wall tribal paintings." }
+      ],
+      foods: [
+        { name: "Dhuska with Aloo Chana Curry", desc: "Crispy deep-fried rice & chana dal fritter served with spicy potato chickpea curry." }
+      ],
+      stays: [
+        { name: "Netarhat Chotanagpur Hill Lodges", desc: "Scenic sunrise point bungalows surrounded by pine forests." }
+      ]
+    },
+    "Manipur": {
+      region: "northeast",
+      capital: "Imphal",
+      language: "Manipuri (Meiteilon), English",
+      climate: "Subtropical Highland (Best: Oct-Apr)",
+      tagline: "Jewel of India • Floating Loktak Lake & Raas Leela",
+      desc: "Enchanting valley state featuring freshwater Loktak Lake with floating phumdis, Keibul Lamjao sangai deer sanctuary, and mothers-only Ima Keithel market.",
+      attractions: [
+        { name: "Loktak Lake & Floating Phumdis", icon: "🌊", category: "Natural Wonder", desc: "Largest freshwater lake in NE India featuring unique floating circular biomass islands." },
+        { name: "Keibul Lamjao National Park", icon: "🦌", category: "World's Only Floating Park", desc: "Natural habitat of the endangered Sangai dancing deer living on floating lake vegetation." }
+      ],
+      markets: [
+        { name: "Ima Keithel (Mother's Market)", icon: "👩‍👧", desc: "World's only 500-year-old market run exclusively by 5,000+ women entrepreneurs." }
+      ],
+      foods: [
+        { name: "Eromba & Chamthong Stew", desc: "Mashed boiled vegetables flavored with fermented fish and fiery ghost chilies." }
+      ],
+      stays: [
+        { name: "Loktak Lake Floating Eco-Huts", desc: "Unique eco-lodges built atop floating phumdis on the lake." }
+      ]
+    },
+    "Meghalaya": {
+      region: "northeast",
+      capital: "Shillong",
+      language: "Khasi, Garo, Pnar, English",
+      climate: "Subtropical Highland / Monsoonal (Best: Oct-Apr)",
+      tagline: "Abode of Clouds • Living Root Bridges & Waterfalls",
+      desc: "Rain-draped pine highlands home to double-decker Living Root Bridges of Cherrapunji, crystal clear Dawki River, Mawlynnong clean village, and Shillong music scene.",
+      attractions: [
+        { name: "Cherrapunji Living Root Bridges", icon: "🌿", category: "Bio Wonder", desc: "Century-old living Ficus rubber tree root bridges grown across mountain streams." },
+        { name: "Dawki Umngot Crystal River", icon: "🚣", category: "Crystal Waterway", desc: "Glass-like transparent emerald river where boats appear to float in mid-air." }
+      ],
+      markets: [
+        { name: "Police Bazar (Shillong)", icon: "🛍️", desc: "Bustling highland bazaar for Khasi handloom shawls, cane baskets, and indie rock music." }
+      ],
+      foods: [
+        { name: "Jadoh & Dohneiiong", desc: "Traditional Khasi rice dish cooked with pork broth, served with black sesame pork curry." }
+      ],
+      stays: [
+        { name: "Cherrapunji Cloud Valley Homestays", desc: "Cozy pine wood cottages overlooking deep green canyon gorges." }
+      ]
+    },
+    "Mizoram": {
+      region: "northeast",
+      capital: "Aizawl",
+      language: "Mizo, English",
+      climate: "Subtropical Moderate (Best: Oct-Apr)",
+      tagline: "Land of Blue Mountains & Bamboo Festivals",
+      desc: "Picturesque hill country famed for rolling green ridges, Phawngpui Blue Mountain, Chapchar Kut bamboo dance festivals, and traditional Mizo handlooms.",
+      attractions: [
+        { name: "Phawngpui (Blue Mountain) Peak", icon: "🏔️", category: "Highest Peak", desc: "Highest mountain peak in Mizoram (2,157m) surrounded by orchid gardens." },
+        { name: "Reiek Heritage Village", icon: "🏡", category: "Cultural Village", desc: "Recreated traditional Mizo chieftain huts set against dramatic cliffside paths." }
+      ],
+      markets: [
+        { name: "Bara Bazar (Aizawl)", icon: "🧵", desc: "Highland market famous for traditional Mizo Puan handloomed wrap skirts." }
+      ],
+      foods: [
+        { name: "Mizo Bai & Varsa Vosa", desc: "Nutritious stew prepared with bamboo shoots, steamed vegetables, and pork." }
+      ],
+      stays: [
+        { name: "Reiek Mountain Resort Huts", desc: "Traditional Mizo bamboo huts offering panoramic valley views." }
+      ]
+    },
+    "Nagaland": {
+      region: "northeast",
+      capital: "Kohima",
+      language: "English, Nagamese, Naga Dialects",
+      climate: "Subtropical Highland (Best: Oct-May)",
+      tagline: "Land of Festivals • Hornbill Festival & Dzukou Valley",
+      desc: "Vibrant tribal realm famous for the world-famous Hornbill Festival, emerald Dzukou Valley flower trek, Kohima WWII War Cemetery, and Naga wood carvings.",
+      attractions: [
+        { name: "Hornbill Festival Grounds (Kisama)", icon: "🎺", category: "Cultural Festival", desc: "Heritage village hosting 17 Naga tribes during annual December festival." },
+        { name: "Dzukou Valley Flower Trek", icon: "🌺", category: "Alpine Meadow", desc: "Breathtaking valley filled with rare Dzukou lilies and winding streams." }
+      ],
+      markets: [
+        { name: "Kohima Night Bazaar & Dimapur Crafts", icon: "🪵", desc: "Hand-carved Naga wooden spears, beaded tribal necklaces, and woven shawls." }
+      ],
+      foods: [
+        { name: "Smoked Pork with Axone & Ghost Pepper", desc: "Rich smoked pork cooked with fermented soybeans and fiery Raja Mircha." }
+      ],
+      stays: [
+        { name: "Kisama Tribal Homestays", desc: "Traditional wood and stone Naga homes with central fire hearth hospitality." }
+      ]
+    },
+    "Odisha": {
+      region: "east",
+      capital: "Bhubaneswar",
+      language: "Odia, English",
+      climate: "Tropical Coastal (Best: Oct-Mar)",
+      tagline: "Soul of Incredible India • Jagannath Temple & Konark",
+      desc: "Ancient Kalinga kingdom home to sacred Puri Jagannath Rath Yatra, UNESCO Konark Sun Temple stone wheel, Chilika Lake flamingoes, and Pattachitra paintings.",
+      attractions: [
+        { name: "Puri Jagannath Temple & Golden Beach", icon: "🛕", category: "Sacred Shrine", desc: "12th-century sacred shrine of Lord Jagannath famous for annual Rath Yatra." },
+        { name: "Konark Sun Temple (UNESCO)", icon: "🌞", category: "UNESCO World Heritage", desc: "13th-century colossal stone chariot temple carved with 24 sun wheels." }
+      ],
+      markets: [
+        { name: "Raghurajpur Pattachitra Village", icon: "🎨", desc: "Heritage village where every household creates palm-leaf scroll art." }
+      ],
+      foods: [
+        { name: "Puri Mahaprasad & Dalma", desc: "Sacred 56-dish temple feast, and Odia lentil-vegetable stew." },
+        { name: "Chhena Poda", desc: "India's original baked cheese dessert with caramelized sugar crust." }
+      ],
+      stays: [
+        { name: "Puri Heritage Ocean Resorts", desc: "Colonial sea-facing bungalows near the sacred Golden Beach." }
+      ]
+    },
+    "Sikkim": {
+      region: "northeast",
+      capital: "Gangtok",
+      language: "Nepali, Bhutia, Lepcha, English",
+      climate: "Alpine Sub-Arctic (Best: Mar-May, Oct-Dec)",
+      tagline: "Organic Himalayan Paradise • Kanchenjunga & Monasteries",
+      desc: "India's 100% organic state nestled under Mt. Kanchenjunga, featuring Rumtek Monastery, glacial Tsomgo Lake, Nathula Indo-China Pass, and rhododendron valleys.",
+      attractions: [
+        { name: "Tsomgo Glacial Lake & Nathula Pass", icon: "🏔️", category: "Himalayan Frontier", desc: "Sacred turquoise glacial lake at 12,400 ft and historic Silk Route border pass." },
+        { name: "Rumtek & Pemayangtse Monasteries", icon: "☸️", category: "Tibetan Buddhism", desc: "Seat of the Black Hat Karmapa Lama featuring golden stupas and ancient murals." }
+      ],
+      markets: [
+        { name: "MG Marg Promenade (Gangtok)", icon: "🛍️", desc: "Pedestrian boulevard lined with handicraft stores and cafes." }
+      ],
+      foods: [
+        { name: "Organic Steamed Momos & Phagshapa", desc: "Handmade dumplings, and pork cooked with radish and dried chilies." }
+      ],
+      stays: [
+        { name: "Pelling Kanchenjunga View Resorts", desc: "Boutique lodges offering uninterrupted views of Mt. Kanchenjunga." }
+      ]
+    },
+    "Telangana": {
+      region: "south",
+      capital: "Hyderabad",
+      language: "Telugu, Urdu, English",
+      climate: "Tropical Savanna (Best: Oct-Mar)",
+      tagline: "City of Pearls, Charminar & Kakatiya Heritage",
+      desc: "Historic Deccan state combining 16th-century Hyderabad Charminar & Golconda Fort, UNESCO Ramappa Temple, Pochampally Ikat silks, and world-famous Biryani.",
+      attractions: [
+        { name: "Charminar & Golconda Fort (Hyderabad)", icon: "🕌", category: "Deccan Heritage", desc: "1591 CE monumental four-minaret archway and acoustic fortress of Qutb Shahi kings." },
+        { name: "Ramappa Kakatiya Temple (Warangal)", icon: "🛕", category: "UNESCO World Heritage", desc: "13th-century temple carved from sandstone featuring floating bricks." }
+      ],
+      markets: [
+        { name: "Laad Bazaar (Charminar)", icon: "💎", desc: "Centuries-old market famous for handmade lac bangles and pearls." }
+      ],
+      foods: [
+        { name: "Hyderabadi Dum Biryani & Haleem", desc: "Slow-cooked fragrant basmati rice with marinated mutton and fried onions." }
+      ],
+      stays: [
+        { name: "Nizam Royal Palace Hotels", desc: "Luxury stays inside former palaces of the Nizams of Hyderabad." }
+      ]
+    },
+    "Tripura": {
+      region: "northeast",
+      capital: "Agartala",
+      language: "Bengali, Kokborok, English",
+      climate: "Subtropical Moist (Best: Oct-Mar)",
+      tagline: "Land of Palaces, Unakoti Sculptures & Bamboo Crafts",
+      desc: "Scenic North-Eastern realm featuring white marble Ujjayanta Palace, Neermahal Lake Palace, mysterious 7th-century Unakoti rock-cut Shiva carvings, and cane crafts.",
+      attractions: [
+        { name: "Ujjayanta Palace & Neermahal", icon: "🏰", category: "Royal Palaces", desc: "Opulent white marble royal palace and Eastern India's only lake palace." },
+        { name: "Unakoti Rock-Cut Sculptures", icon: "🗿", category: "Ancient Heritage", desc: "Mysterious 7th-century forest hill carved with 99,99,999 giant stone Shiva heads." }
+      ],
+      markets: [
+        { name: "Agartala Bamboo Handicraft Bazaar", icon: "🧺", desc: "Fine bamboo mats, lampshades, furniture, and tribal idols." }
+      ],
+      foods: [
+        { name: "Mui Borok & Bangui Rice Cake", desc: "Traditional fish curry flavored with Berma and sun-dried spices." }
+      ],
+      stays: [
+        { name: "Neermahal Lakeside Eco-Cottages", desc: "Tranquil water-facing lodges overlooking Rudrasagar Lake Palace." }
+      ]
+    },
+    "Andaman and Nicobar Islands": {
+      region: "ut",
+      capital: "Port Blair",
+      language: "Hindi, Bengali, Tamil, English",
+      climate: "Tropical Marine (Best: Oct-May)",
+      tagline: "Emerald Islands • Coral Reefs & Freedom Trail",
+      desc: "Pristine tropical archipelago featuring Cellular Jail national memorial, Asia's best Radhanagar Beach on Havelock Island, bioluminescent night kayaking, and coral reefs.",
+      attractions: [
+        { name: "Cellular Jail National Memorial", icon: "🏛️", category: "Freedom Monument", desc: "Historic colonial prison where Indian freedom fighters were incarcerated." },
+        { name: "Radhanagar & Elephant Beach (Havelock)", icon: "🏖️", category: "Top Asia Beach", desc: "Crowned Asia's best beach with turquoise waters and white powder sand." }
+      ],
+      markets: [
+        { name: "Aberdeen Bazaar & Sagarika Emporium", icon: "🐚", desc: "Handcrafted mother-of-pearl jewelry, wooden artifacts, and shell crafts." }
+      ],
+      foods: [
+        { name: "Island Seafood Platter & Coconut Curry", desc: "Freshly caught lobster, red snapper, and prawns cooked with island spices." }
+      ],
+      stays: [
+        { name: "Havelock Beachfront Luxury Villas", desc: "Thatch-roofed luxury cottages steps away from the sea." }
+      ]
+    },
+    "Chandigarh": {
+      region: "ut",
+      capital: "Chandigarh",
+      language: "Hindi, Punjabi, English",
+      climate: "Subtropical Continental (Best: Oct-Mar)",
+      tagline: "The City Beautiful • Le Corbusier Architecture & Rock Garden",
+      desc: "India's first planned modernist city designed by Le Corbusier, famous for Nek Chand's recycled Rock Garden, Sukhna Lake sunset boating, and Rose Garden.",
+      attractions: [
+        { name: "Rock Garden of Nek Chand", icon: "🗿", category: "Surreal Art Park", desc: "20-acre garden built entirely of urban industrial waste and ceramics." },
+        { name: "Sukhna Lake & Capitol Complex", icon: "⛵", category: "UNESCO Architecture", desc: "Man-made lake at Shivalik foothills and UNESCO modernist Open Hand monument." }
+      ],
+      markets: [
+        { name: "Sector 17 Plaza & Shastri Market", icon: "🛍️", desc: "Pedestrian shopping arcades for Phulkari embroidery and Punjabi juttis." }
+      ],
+      foods: [
+        { name: "Amritsari Kulcha & Butter Chicken", desc: "Crispy stuffed flatbread served with chole, butter chicken, and tall lassi." }
+      ],
+      stays: [
+        { name: "Sector 17 Heritage Boutique Hotels", desc: "Modernist architectural boutique stays near city promenade." }
+      ]
+    },
+    "Dadra and Nagar Haveli and Daman and Diu": {
+      region: "ut",
+      capital: "Daman",
+      language: "Gujarati, Hindi, English, Portuguese",
+      climate: "Tropical Coastal (Best: Oct-May)",
+      tagline: "Portuguese Sea Forts, Golden Beaches & Silvassa Forests",
+      desc: "Cozy coastal union territory combining 16th-century Daman & Diu Portuguese sea fortresses, Devka beach, and lush green Silvassa tribal wildlife sanctuaries.",
+      attractions: [
+        { name: "Diu Fort & St. Paul's Church", icon: "🏰", category: "Portuguese Heritage", desc: "Imposing 1535 CE stone sea citadel surrounded by sea moats." },
+        { name: "Nagoa & Ghoghla Beaches (Diu)", icon: "🏖️", category: "Coastal Escape", desc: "Horseshoe-shaped palm-fringed beaches famous for water sports." }
+      ],
+      markets: [
+        { name: "Diu Custom House Market", icon: "🐚", desc: "Bazaar for Portuguese souvenirs, seashells, and local handloom fabrics." }
+      ],
+      foods: [
+        { name: "Portuguese Crab Xacuti & Lobster", desc: "Fresh Arabian sea seafood cooked in spiced coconut and wine vinegar sauce." }
+      ],
+      stays: [
+        { name: "Diu Seafront Heritage Fort Hotels", desc: "Restored colonial rampart stays facing the ocean." }
+      ]
+    },
+    "Lakshadweep": {
+      region: "ut",
+      capital: "Kavaratti",
+      language: "Malayalam, Mahl, English",
+      climate: "Tropical Marine (Best: Oct-May)",
+      tagline: "Coral Paradise • Turquoise Lagoons & Scuba Diving",
+      desc: "Exclusive 36-island coral reef paradise in Arabian Sea featuring crystal clear turquoise lagoons, Agatti Island scuba diving, and Bangaram uninhabited cays.",
+      attractions: [
+        { name: "Agatti Island Lagoon & Coral Reef", icon: "🤿", category: "Scuba & Snorkeling", desc: "World class coral reef atoll teeming with sea turtles and tropical fish." },
+        { name: "Bangaram Uninhabited Atoll", icon: "🏝️", category: "Private Island", desc: "Secluded tear-drop island surrounded by shallow turquoise waters." }
+      ],
+      markets: [
+        { name: "Kavaratti Island Coir & Shell Crafts", icon: "🧺", desc: "Local coconut coir mats, shell ornaments, and fresh coconut handicrafts." }
+      ],
+      foods: [
+        { name: "Mus Kavaab & Coconut Fish Fry", desc: "Spiced oceanic tuna skewers marinated in coconut curry leaves." }
+      ],
+      stays: [
+        { name: "Bangaram Island Luxury Beach Tents", desc: "Eco-beach tents on private uninhabited coral island." }
+      ]
+    },
+    "Puducherry": {
+      region: "ut",
+      capital: "Puducherry",
+      language: "Tamil, French, English, Telugu",
+      climate: "Tropical Coastal (Best: Oct-Mar)",
+      tagline: "French Riviera of the East • Auroville & White Town",
+      desc: "Charming coastal enclave featuring yellow French colonial Quarter (White Town), Auroville experimental township & Matrimandir, and Promenade Beach.",
+      attractions: [
+        { name: "Auroville Matrimandir & Township", icon: "🧘", category: "Global Eco Township", desc: "Golden geodesic meditation dome set inside global experimental universal township." },
+        { name: "French Quarter (White Town Promenade)", icon: "🎨", category: "Colonial Architecture", desc: "Mustard-yellow French colonial villas and seaside Rock Beach." }
+      ],
+      markets: [
+        { name: "Auroville Handicrafts & Mission Street Bazaar", icon: "🕯️", desc: "Handmade paper, aromatherapy candles, pottery, and French antiques." }
+      ],
+      foods: [
+        { name: "Franco-Tamil Crepes & Croissants", desc: "Authentic French bakeries serving baguettes, crepes, and spicy Tamil seafood curry." }
+      ],
+      stays: [
+        { name: "French Heritage Villa Boutique Hotels", desc: "Restored 18th-century French colonial mansions with garden courtyards." }
       ]
     }
   };
