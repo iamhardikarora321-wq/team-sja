@@ -29431,7 +29431,7 @@ class ImpactCalcController {
 }
 
   /**
- * ROAM 90-Second Hackathon Demo Tour Guide
+ * ROAM Destination Guide
  * Interactive walkthrough guiding judges through the complete thesis & platform.
  */
 
@@ -29547,7 +29547,7 @@ class HackathonGuide {
         <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.5; margin-bottom:18px;">${step.desc}</p>
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:0.75rem; color:var(--text-muted); font-family:var(--font-mono);">
-            90-Sec Hackathon Walkthrough
+            Interactive Platform Walkthrough
           </span>
           <button id="tour-next-btn" class="reroute-btn" style="padding:8px 18px; font-size:0.85rem;">
             ${step.actionLabel}
