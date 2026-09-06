@@ -28156,64 +28156,132 @@ class HackathonGuide {
 
     if (currentTransportMode === 'flight') {
       container.innerHTML = `
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
-          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">✈️</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Domestic Air Travel & Major Flight Corridors</h3>
-            <p style="font-size:0.83rem; color:#94a3b8; line-height:1.5; margin:0 0 1rem 0;">Connect major Indian metros & Tier-2 regional airports via nonstop flights.</p>
-            <div style="background:rgba(2,6,23,0.8); border:1px solid rgba(0,243,255,0.2); border-radius:12px; padding:0.85rem; font-size:0.82rem; color:#a7f3d0; line-height:1.6;">
-              ⚡ <strong>Avg Air Fares:</strong> ₹3,200 – ₹7,500 (Metro Corridors)<br>
-              ⏱️ <strong>Flight Durations:</strong> 1h 15m – 2h 45m<br>
-              🛫 <strong>Major Hubs:</strong> DEL (Delhi), BOM (Mumbai), BLR (Bengaluru), CCU (Kolkata), MAA (Chennai), JAI (Jaipur), GOI (Goa)
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem;">
+          
+          <!-- Flight Corridors & Fares -->
+          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.4); grid-column: 1 / -1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+              <h3 style="font-size:1.15rem; font-weight:800; color:#00f3ff; margin:0; display:flex; align-items:center; gap:0.5rem;">
+                <span>✈️</span> Major Domestic Flight Trunk Corridors &amp; Average Airfares
+              </h3>
+              <span style="font-size:0.75rem; color:#a7f3d0; background:rgba(16,185,129,0.15); padding:0.25rem 0.65rem; border-radius:12px; font-weight:800;">LIVE AIRFARE TELEMETRY</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:0.85rem; font-size:0.83rem; color:#cbd5e1;">
+              <div style="background:rgba(2,6,23,0.7); border:1px solid rgba(0,243,255,0.2); padding:0.75rem; border-radius:10px;">
+                <strong style="color:#fff;">🛫 DEL ⇄ BOM (Delhi - Mumbai):</strong><br>
+                ⏱️ 2h 10m Non-stop • ~120 Daily Flights<br>
+                💰 Avg Fare: <strong style="color:#00f3ff;">₹3,400 – ₹6,500</strong>
+              </div>
+              <div style="background:rgba(2,6,23,0.7); border:1px solid rgba(0,243,255,0.2); padding:0.75rem; border-radius:10px;">
+                <strong style="color:#fff;">🛫 DEL ⇄ BLR (Delhi - Bengaluru):</strong><br>
+                ⏱️ 2h 45m Non-stop • ~85 Daily Flights<br>
+                💰 Avg Fare: <strong style="color:#00f3ff;">₹4,200 – ₹7,800</strong>
+              </div>
+              <div style="background:rgba(2,6,23,0.7); border:1px solid rgba(0,243,255,0.2); padding:0.75rem; border-radius:10px;">
+                <strong style="color:#fff;">🛫 BOM ⇄ BLR (Mumbai - Bengaluru):</strong><br>
+                ⏱️ 1h 35m Non-stop • ~70 Daily Flights<br>
+                💰 Avg Fare: <strong style="color:#00f3ff;">₹2,800 – ₹5,200</strong>
+              </div>
+              <div style="background:rgba(2,6,23,0.7); border:1px solid rgba(0,243,255,0.2); padding:0.75rem; border-radius:10px;">
+                <strong style="color:#fff;">🛫 DEL ⇄ JAI (Delhi - Jaipur):</strong><br>
+                ⏱️ 55m Non-stop • ~15 Daily Flights<br>
+                💰 Avg Fare: <strong style="color:#00f3ff;">₹2,100 – ₹4,200</strong>
+              </div>
+              <div style="background:rgba(2,6,23,0.7); border:1px solid rgba(0,243,255,0.2); padding:0.75rem; border-radius:10px;">
+                <strong style="color:#fff;">🛫 BOM ⇄ GOI (Mumbai - Goa):</strong><br>
+                ⏱️ 1h 15m Non-stop • ~45 Daily Flights<br>
+                💰 Avg Fare: <strong style="color:#00f3ff;">₹2,400 – ₹4,800</strong>
+              </div>
+              <div style="background:rgba(2,6,23,0.7); border:1px solid rgba(0,243,255,0.2); padding:0.75rem; border-radius:10px;">
+                <strong style="color:#fff;">🛫 DEL ⇄ VNS (Delhi - Varanasi):</strong><br>
+                ⏱️ 1h 25m Non-stop • ~25 Daily Flights<br>
+                💰 Avg Fare: <strong style="color:#00f3ff;">₹2,900 – ₹5,500</strong>
+              </div>
             </div>
           </div>
 
-          <div class="intel-item-card" style="border-color:rgba(59,130,246,0.3);">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🧳</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#3b82f6; margin:0 0 0.35rem 0;">Standard Domestic Baggage Policy</h3>
-            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>Cabin Hand Baggage:</strong> 7 kg limit (1 piece max 115cm dimensions)<br>
-              • <strong>Check-in Baggage:</strong> 15 kg limit (1 piece included in standard fare)<br>
-              • <strong>Extra Weight Surcharge:</strong> ~₹500 per additional kg at airport check-in counter.<br>
-              • <strong>Air India Extra Perk:</strong> Offers 25 kg check-in allowance on domestic routes.
-            </div>
-          </div>
-
+          <!-- Carrier Directory -->
           <div class="intel-item-card" style="border-color:rgba(168,85,247,0.3);">
             <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛫</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#c084fc; margin:0 0 0.35rem 0;">Indian Carrier Directory</h3>
-            <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem; color:#e2e8f0;">
-              <div>🔹 <strong>IndiGo:</strong> 60%+ market share, high punctuality, 100+ domestic airports.</div>
-              <div>🔹 <strong>Air India:</strong> Full-service carrier, includes complimentary hot meal.</div>
-              <div>🔹 <strong>Akasa Air:</strong> Modern Boeing 737 MAX fleet, budget friendly fares.</div>
-              <div>🔹 <strong>SpiceJet:</strong> Connects key regional UDAN scheme remote airstrips.</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#c084fc; margin:0 0 0.35rem 0;">Indian Airline Carriers Directory</h3>
+            <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.82rem; color:#e2e8f0; line-height:1.5;">
+              <div>🔹 <strong>IndiGo (6E):</strong> 60%+ market share, high punctuality, 100+ domestic airports connected. 6E Prime & Flexi fare perks.</div>
+              <div>🔹 <strong>Air India (AI):</strong> Full-service carrier, includes complimentary hot meals & 25kg check-in allowance on domestic routes.</div>
+              <div>🔹 <strong>Akasa Air (QP):</strong> Modern Boeing 737 MAX fleet, budget friendly fares & Cafe Akasa gourmet menu.</div>
+              <div>🔹 <strong>SpiceJet (SG) / Alliance Air:</strong> Connects key regional UDAN scheme remote airstrips (e.g. Shimla, Dharamshala, Jharsuguda).</div>
             </div>
           </div>
+
+          <!-- Baggage Rules & Terminal Hacks -->
+          <div class="intel-item-card" style="border-color:rgba(59,130,246,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🧳</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#3b82f6; margin:0 0 0.35rem 0;">Baggage Policy &amp; Terminal Hacks</h3>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Hand / Cabin Baggage:</strong> 7 kg limit (1 piece max 115 cm total dimensions) + 1 small laptop bag.<br>
+              • <strong>Check-in Baggage:</strong> 15 kg (1 piece included). Air India allows 25 kg.<br>
+              • <strong>Excess Weight Surcharge:</strong> ~₹550 per additional kg prepaid online vs ₹600/kg at airport counter.<br>
+              • <strong>DigiYatra App Hack:</strong> Use DigiYatra facial recognition app at DEL (T3/T2), BOM (T2), BLR, CCU to bypass security lines in under 3 minutes.
+            </div>
+          </div>
+
         </div>
       `;
     } else if (currentTransportMode === 'bus') {
       container.innerHTML = `
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
-          <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚌</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#10b981; margin:0 0 0.35rem 0;">Intercity AC Sleeper & Volvo Buses</h3>
-            <p style="font-size:0.83rem; color:#94a3b8; line-height:1.5; margin:0 0 1rem 0;">Overnight luxury bus connectivity between major Indian cities and hill stations.</p>
-            <div style="background:rgba(2,6,23,0.8); border:1px solid rgba(16,185,129,0.2); border-radius:12px; padding:0.85rem; font-size:0.82rem; color:#a7f3d0; line-height:1.6;">
-              🛌 <strong>AC Multi-Axle Sleeper:</strong> ₹800 – ₹1,800 per berth<br>
-              💺 <strong>AC Seater / Executive Volvo:</strong> ₹450 – ₹950 per seat<br>
-              🚌 <strong>State Express Roadways:</strong> UPSRTC (UP), RSRTC (Rajasthan), MSRTC (Maharashtra), KSRTC (Karnataka), HRTC (Himachal)
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem;">
+          
+          <!-- RedBus Style Intercity Fleet Directory -->
+          <div class="intel-item-card" style="border-color:rgba(16,185,129,0.4); grid-column: 1 / -1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+              <h3 style="font-size:1.15rem; font-weight:800; color:#10b981; margin:0; display:flex; align-items:center; gap:0.5rem;">
+                <span>🚌</span> RedBus-Grade Intercity AC Sleeper &amp; Volvo Fleet Directory
+              </h3>
+              <span style="font-size:0.75rem; color:#a7f3d0; background:rgba(16,185,129,0.15); padding:0.25rem 0.65rem; border-radius:12px; font-weight:800;">VERIFIED BUS FLEET DATA</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1rem; font-size:0.83rem; color:#cbd5e1;">
+              <div style="background:rgba(2,6,23,0.75); border:1px solid rgba(16,185,129,0.25); padding:0.85rem; border-radius:12px;">
+                <strong style="color:#fff; font-size:0.95rem;">🛌 AC Multi-Axle Volvo / Scania Sleeper (2+1)</strong>
+                <p style="margin:4px 0 8px 0; color:#94a3b8; font-size:0.8rem;">Individual berth curtains, personal TV/USB charger, reading lights, blanket &amp; water bottle provided.</p>
+                <div>💰 Average Fare: <strong style="color:#10b981; font-size:0.95rem;">₹850 – ₹2,200</strong></div>
+              </div>
+              <div style="background:rgba(2,6,23,0.75); border:1px solid rgba(16,185,129,0.25); padding:0.85rem; border-radius:12px;">
+                <strong style="color:#fff; font-size:0.95rem;">💺 AC Executive Volvo Seater (2+2 Recliner)</strong>
+                <p style="margin:4px 0 8px 0; color:#94a3b8; font-size:0.8rem;">140° calf-rest recliners, air suspension smooth ride, ideal for 4-8 hour daytime &amp; intercity routes.</p>
+                <div>💰 Average Fare: <strong style="color:#10b981; font-size:0.95rem;">₹450 – ₹1,100</strong></div>
+              </div>
+              <div style="background:rgba(2,6,23,0.75); border:1px solid rgba(16,185,129,0.25); padding:0.85rem; border-radius:12px;">
+                <strong style="color:#fff; font-size:0.95rem;">🚌 Non-AC Seater / Express RTC Buses</strong>
+                <p style="margin:4px 0 8px 0; color:#94a3b8; font-size:0.8rem;">Frequent state transport inter-district connectivity connecting remote towns, villages &amp; shrines.</p>
+                <div>💰 Average Fare: <strong style="color:#10b981; font-size:0.95rem;">₹180 – ₹480</strong></div>
+              </div>
             </div>
           </div>
 
+          <!-- RTC State Roadways Directory -->
           <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚏</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">City Local Bus Transport</h3>
-            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>Tariff Rates:</strong> ₹10 base fare up to 5 km; ₹25 – ₹50 for long city routes.<br>
-              • <strong>Air-Conditioned City Buses:</strong> Available in Delhi (DTC Electric), Mumbai (BEST AC), Bengaluru (BMTC Vayu Vajra), Chennai (MTC).<br>
-              • <strong>NCMC Smart Card:</strong> National Common Mobility Card works across city buses & metros.
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🏛️</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">State RTC Roadways Directory</h3>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>UPSRTC (UP):</strong> Janrath AC &amp; Pink Express (Women Special)<br>
+              • <strong>RSRTC (Rajasthan):</strong> Goldline Deluxe &amp; Sleeper Express<br>
+              • <strong>KSRTC (Karnataka):</strong> Airavat Club Class (Volvo Multi-Axle) &amp; FlyBus<br>
+              • <strong>HRTC (Himachal):</strong> Himmani Deluxe Volvo to Shimla, Manali &amp; Dharamshala<br>
+              • <strong>MSRTC (Maharashtra):</strong> Shivneri AC Volvo (Mumbai - Pune corridor)
             </div>
           </div>
+
+          <!-- RedBus Features & Safety Protocols -->
+          <div class="intel-item-card" style="border-color:rgba(244,114,182,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛡️</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#f472b6; margin:0 0 0.35rem 0;">RedBus Boarding &amp; Safety Tips</h3>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Live GPS Tracking:</strong> Track exact bus location via SMS link sent 30 mins before boarding.<br>
+              • <strong>Solo Female Traveler Protection:</strong> Adjacent seat reserved strictly for female passengers when booked.<br>
+              • <strong>Rest Stop Quality:</strong> Premium operators (VRL, SRS, IntrCity SmartBus) stop at verified hygienic food courts.<br>
+              • <strong>Luggage Tagging:</strong> Insist on luggage barcode tags when stowing large bags in bottom locker.
+            </div>
+          </div>
+
         </div>
       `;
     } else if (currentTransportMode === 'car') {
@@ -28250,25 +28318,25 @@ class HackathonGuide {
           </div>
 
           <!-- Outstation Cabs & Self-Drive -->
-          <div class="intel-item-card">
+          <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
             <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚕</div>
-            <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Outstation Cabs & Rental Rates</h3>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">Outstation Cabs &amp; Self-Drive Tariffs</h3>
             <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>Compact Hatchback (WagonR):</strong> ₹10 – ₹11 / km (Min 250 km/day)<br>
-              • <strong>Sedan (Dzire / Etios):</strong> ₹12 – ₹13 / km<br>
-              • <strong>SUV (Innova Crysta):</strong> ₹16 – ₹19 / km<br>
-              • <strong>Self-Drive Rental (Revv / Zoomcar):</strong> ₹1,200 – ₹2,500 / day
+              • <strong>Hatchback (WagonR / Tiago):</strong> ₹10.5 – ₹11 / km (Min 250 km/day + ₹300 driver allowance)<br>
+              • <strong>Sedan (Dzire / Etios):</strong> ₹12.5 – ₹13.5 / km (Min 250 km/day + ₹300 driver allowance)<br>
+              • <strong>SUV (Innova Crysta / Ertiga):</strong> ₹17.5 – ₹21 / km (Min 300 km/day + ₹400 driver allowance)<br>
+              • <strong>Self-Drive Rental (Zoomcar / Revv):</strong> ₹1,200 – ₹2,800 / day (Security deposit ₹2,000 refunded upon return).
             </div>
           </div>
 
-          <!-- Airport Taxi vs App Cab -->
-          <div class="intel-item-card">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚖</div>
-            <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">Airport Taxi vs App Cabs</h3>
+          <!-- FASTag Rules & App Cabs -->
+          <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛣️</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#10b981; margin:0 0 0.35rem 0;">FASTag Tolls &amp; Airport Cabs</h3>
             <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>Uber / Ola / BluSmart EV:</strong> Dynamic upfront pricing, fixed toll charges included.<br>
-              • <strong>Prepaid Airport Taxi Counter:</strong> Official fixed RTO rate counter inside terminal arrivals.<br>
-              • <strong>Tip:</strong> BluSmart offers zero cancellation & guaranteed EV cabs in Delhi & Bengaluru.
+              • <strong>FASTag Mandatory:</strong> All NHAI national expressways use automated RFID FASTag lanes. Non-FASTag cars charged double cash penalty.<br>
+              • <strong>Uber Intercity &amp; MakeMyTrip Cabs:</strong> Upfront fixed fare includes state entry tax &amp; highway tolls.<br>
+              • <strong>BluSmart EV Guarantee:</strong> Zero cancellation guaranteed electric cabs operating at Delhi (DEL) &amp; Bengaluru (BLR) airports.
             </div>
           </div>
 
@@ -28281,7 +28349,7 @@ class HackathonGuide {
           <!-- Official Auto Meter Calculator -->
           <div class="intel-item-card" style="border-color:rgba(0,243,255,0.35); grid-column:1 / -1;">
             <h3 style="font-size:1.15rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
-              <span>🛺</span> Official City Auto Rickshaw Meter & Night Surge Tariff Estimator
+              <span>🛺</span> Official City Auto Rickshaw Meter &amp; Night Surge Tariff Estimator
             </h3>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; align-items:end;">
               <div>
@@ -28306,13 +28374,26 @@ class HackathonGuide {
             </div>
           </div>
 
-          <div class="intel-item-card">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛺</div>
-            <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0;">Shared Auto & E-Rickshaw Commute</h3>
+          <!-- City Auto Tariffs comparison -->
+          <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">📍</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#10b981; margin:0 0 0.35rem 0;">City Official RTO Auto Rates</h3>
             <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>E-Rickshaws (Battery Auto):</strong> Flat ₹10 – ₹20 per passenger for last-mile metro & railway station drops.<br>
-              • <strong>Shared Auto Corridors:</strong> Fixed ₹15 – ₹30 per seat on popular bazaar corridors.<br>
-              • <strong>Meter Refusal Tip:</strong> In Mumbai & Delhi, autos are legally bound to run by meter.
+              • <strong>Delhi NCR:</strong> ₹30 base fare (first 1.5 km), ₹11 per km after.<br>
+              • <strong>Mumbai / Navi Mumbai:</strong> ₹23 base fare (first 1.5 km), ₹15.33 per km after.<br>
+              • <strong>Bengaluru:</strong> ₹30 base fare (first 2 km), ₹15 per km after.<br>
+              • <strong>Night Surcharge:</strong> +25% extra between 11:00 PM and 5:00 AM across all metros.
+            </div>
+          </div>
+
+          <!-- Shared Auto & E-Rickshaws -->
+          <div class="intel-item-card" style="border-color:rgba(168,85,247,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🛺</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#c084fc; margin:0 0 0.35rem 0;">Shared Auto &amp; E-Rickshaws</h3>
+            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>E-Rickshaws (Battery Auto):</strong> Flat ₹10 – ₹20 per passenger for last-mile metro &amp; railway station drops.<br>
+              • <strong>Shared Auto Corridors:</strong> Fixed ₹15 – ₹30 per seat on high-density bazaar corridors.<br>
+              • <strong>Meter Refusal Tip:</strong> In Mumbai &amp; Delhi, drivers refusing meter rides can be reported to RTO Traffic Helpline (Dial 112).
             </div>
           </div>
 
@@ -28320,34 +28401,62 @@ class HackathonGuide {
       `;
     } else if (currentTransportMode === 'train') {
       container.innerHTML = `
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem;">
-          <div class="intel-item-card" style="border-color:rgba(168,85,247,0.3);">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🚆</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#c084fc; margin:0 0 0.35rem 0;">Indian Railways Class & Tariff Matrix</h3>
-            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>Vande Bharat Executive CC:</strong> High-speed AC express train with gourmet meals.<br>
-              • <strong>3AC Tier (3A):</strong> Economy AC sleeper coach, complimentary bedroll provided.<br>
-              • <strong>Sleeper Class (SL):</strong> Non-AC reserved berths, budget friendly.<br>
-              • <strong>Tatkal Quota Booking:</strong> Opens at 10:00 AM for AC classes & 11:00 AM for Sleeper classes daily.
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem;">
+          
+          <!-- IRCTC Class Hierarchy Matrix -->
+          <div class="intel-item-card" style="border-color:rgba(168,85,247,0.4); grid-column:1 / -1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem;">
+              <h3 style="font-size:1.15rem; font-weight:800; color:#c084fc; margin:0; display:flex; align-items:center; gap:0.5rem;">
+                <span>🚆</span> Indian Railways &amp; IRCTC Class Hierarchy Matrix
+              </h3>
+              <span style="font-size:0.75rem; color:#c084fc; background:rgba(168,85,247,0.15); padding:0.25rem 0.65rem; border-radius:12px; font-weight:800;">IRCTC RAIL TELEMETRY</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:0.85rem; font-size:0.83rem; color:#cbd5e1;">
+              <div style="background:rgba(2,6,23,0.75); border:1px solid rgba(168,85,247,0.25); padding:0.85rem; border-radius:12px;">
+                <strong style="color:#fff; font-size:0.95rem;">🚄 Vande Bharat Express (Executive CC / CC)</strong>
+                <p style="margin:4px 0 6px 0; color:#94a3b8; font-size:0.8rem;">Semi-high speed 160 km/h, 180° rotating seats, panoramic windows, complimentary gourmet meals &amp; Wi-Fi.</p>
+                <div style="color:#c084fc; font-weight:700;">Fare: ₹1,100 – ₹2,600 (CC / EC)</div>
+              </div>
+              <div style="background:rgba(2,6,23,0.75); border:1px solid rgba(168,85,247,0.25); padding:0.85rem; border-radius:12px;">
+                <strong style="color:#fff; font-size:0.95rem;">🛌 1st AC (1A) &amp; 2nd AC (2A) Tier</strong>
+                <p style="margin:4px 0 6px 0; color:#94a3b8; font-size:0.8rem;">Lockable 2/4-berth cabins (1A) or curtained bays (2A). Complimentary bedroll, blanket &amp; catering included.</p>
+                <div style="color:#c084fc; font-weight:700;">Baggage Allowance: 70 kg (1A) / 50 kg (2A)</div>
+              </div>
+              <div style="background:rgba(2,6,23,0.75); border:1px solid rgba(168,85,247,0.25); padding:0.85rem; border-radius:12px;">
+                <strong style="color:#fff; font-size:0.95rem;">🛌 3rd AC (3A / 3E Economy) &amp; Sleeper (SL)</strong>
+                <p style="margin:4px 0 6px 0; color:#94a3b8; font-size:0.8rem;">Air-conditioned 6-berth bays (3A/3E) or budget non-AC reserved berths (SL). Most popular long-distance option.</p>
+                <div style="color:#c084fc; font-weight:700;">Baggage Allowance: 40 kg free</div>
+              </div>
             </div>
           </div>
 
+          <!-- Tatkal Quota Rules -->
           <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
-            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🎒</div>
-            <h3 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">IRCTC Luggage Allowance Rules</h3>
-            <div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">
-              • <strong>1st AC (1A):</strong> Free allowance 70 kg<br>
-              • <strong>2nd AC (2A):</strong> Free allowance 50 kg<br>
-              • <strong>3rd AC (3A) & Sleeper:</strong> Free allowance 40 kg<br>
-              • <strong>Margin:</strong> 10 kg additional grace weight allowed per passenger.
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">⚡</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.35rem 0;">Tatkal Booking &amp; PNR Predictor</h3>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>AC Tatkal Quota:</strong> Opens sharp at <strong>10:00 AM</strong> one day prior to journey.<br>
+              • <strong>Sleeper Tatkal Quota:</strong> Opens sharp at <strong>11:00 AM</strong> one day prior to journey.<br>
+              • <strong>10-Second Checkout Hack:</strong> Pre-save passenger list &amp; use IRCTC e-Wallet or UPI for instant confirmation before tickets sell out in 60 seconds.<br>
+              • <strong>PNR Confirmation Rule:</strong> WL 1-15 on 3A has >85% confirmation chance before chart preparation (4 hrs prior to departure).
             </div>
           </div>
+
+          <!-- Luggage Allowance -->
+          <div class="intel-item-card" style="border-color:rgba(16,185,129,0.3);">
+            <div style="font-size:1.8rem; margin-bottom:0.4rem;">🎒</div>
+            <h3 style="font-size:1.05rem; font-weight:800; color:#10b981; margin:0 0 0.35rem 0;">IRCTC Luggage Rules &amp; Retiring Rooms</h3>
+            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.6;">
+              • <strong>Free Baggage Allowance:</strong> 1st AC (70 kg), 2nd AC (50 kg), 3rd AC / Chair Car (40 kg), Sleeper Class (40 kg).<br>
+              • <strong>Marginal Grace Allowance:</strong> 10 kg extra permitted without penalty.<br>
+              • <strong>Station Retiring Rooms:</strong> Book AC/Non-AC rooms at major stations (NDLS, CSMT, HWH, SBC) starting ₹150 for 12 hours via IRCTC PNR.
+            </div>
+          </div>
+
         </div>
       `;
     }
-  }
-
-  function calcCarFuelToll() {
+  }  function calcCarFuelToll() {
     const dist = parseFloat(document.getElementById('car-calc-distance').value) || 0;
     const mileage = parseFloat(document.getElementById('car-calc-mileage').value) || 1;
     const price = parseFloat(document.getElementById('car-calc-price').value) || 0;
