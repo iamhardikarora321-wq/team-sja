@@ -28885,6 +28885,60 @@ class HackathonGuide {
     } catch(e) {}
   });
 
+  
+  // =====================================================================
+  // 📊 24-HOUR HOURLY CROWD FORECAST CURVE CONTROLLER
+  // =====================================================================
+  function renderCrowdForecastCurve(containerId, locationData) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const hours = [
+      { time: '06:00', load: 15, status: 'optimal' },
+      { time: '08:00', load: 30, status: 'optimal' },
+      { time: '10:00', load: 72, status: 'elevated' },
+      { time: '12:00', load: 94, status: 'critical' },
+      { time: '14:00', load: 88, status: 'critical' },
+      { time: '16:00', load: 65, status: 'elevated' },
+      { time: '18:00', load: 45, status: 'optimal' },
+      { time: '20:00', load: 20, status: 'optimal' }
+    ];
+
+    const barsHtml = hours.map(h => {
+      const isCritical = h.status === 'critical';
+      const isElevated = h.status === 'elevated';
+      const barColor = isCritical ? '#ef4444' : isElevated ? '#f59e0b' : '#10b981';
+      const barHeight = Math.max(12, Math.round(h.load * 1.1));
+
+      return `
+        <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+          <span style="font-size:0.68rem; font-weight:800; color:${barColor}; font-family:var(--font-mono); margin-bottom:4px;">${h.load}%</span>
+          <div style="width:100%; height:120px; display:flex; align-items:flex-end; justify-content:center; background:rgba(255,255,255,0.03); border-radius:6px; padding:2px;">
+            <div style="width:70%; height:${barHeight}px; background:${barColor}; border-radius:4px; transition:height 0.3s ease; opacity:0.85;"></div>
+          </div>
+          <span style="font-size:0.68rem; color:#94a3b8; margin-top:6px; font-family:var(--font-mono);">${h.time}</span>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,243,255,0.3); border-radius:18px; padding:1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <div>
+            <span style="font-size:0.72rem; text-transform:uppercase; color:var(--roam-accent); font-weight:800;">Real-Time Congestion Curve</span>
+            <h3 style="font-size:1.1rem; font-weight:800; color:#fff; margin:2px 0 0 0;">📈 24-Hour Hourly Crowd Forecast</h3>
+          </div>
+          <span class="badge badge-optimal" style="background:rgba(16,185,129,0.15); color:#10b981;">QUIET WINDOW: 06:00 AM - 09:00 AM</span>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:flex-end; margin-top:0.75rem;">
+          ${barsHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  window.renderCrowdForecastCurve = renderCrowdForecastCurve;
+
   window.switchTransportMode = switchTransportMode;
   window.calcCarFuelToll = calcCarFuelToll;
   window.calcAutoMeter = calcAutoMeter;

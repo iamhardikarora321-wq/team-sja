@@ -728,11 +728,11 @@
 
     <!-- 5 Nav Tab Buttons -->
     <div style="display:flex; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem; margin-bottom:1.5rem; flex-wrap:wrap;">
-      <button class="nav-tab-btn active" data-mode="discover" onclick="if(window.ROAM) window.ROAM.switchMode('discover');">🌏 Discover</button>
-      <button class="nav-tab-btn" data-mode="explore" onclick="if(window.ROAM) window.ROAM.switchMode('explore');">🗺️ Explore &amp; Load Map</button>
-      <button class="nav-tab-btn" data-mode="market" onclick="if(window.ROAM) window.ROAM.switchMode('market');">🏪 Local Business</button>
+      <button class="nav-tab-btn active" data-mode="discover" onclick="if(window.ROAM) window.ROAM.switchMode('discover');">🧭 Discover</button>
+      <button class="nav-tab-btn" data-mode="plan" onclick="if(window.ROAM) window.ROAM.switchMode('plan');">📅 Plan</button>
+      <button class="nav-tab-btn" data-mode="market" onclick="if(window.ROAM) window.ROAM.switchMode('market');">🏪 Market</button>
+      <button class="nav-tab-btn" data-mode="impact" onclick="if(window.ROAM) window.ROAM.switchMode('impact');">📊 Impact</button>
       <button class="nav-tab-btn" data-mode="control" onclick="if(window.ROAM) window.ROAM.switchMode('control');">🏛️ Control Center</button>
-      <button class="nav-tab-btn" data-mode="impact" onclick="if(window.ROAM) window.ROAM.switchMode('impact');">📊 Macro Impact</button>
     </div>
 
     <!-- Mode 1: Discover -->
@@ -743,6 +743,26 @@
     </div>
 
     <!-- Mode 2: Explore -->
+    
+    <!-- Mode 2: Plan (Interactive Day Builder & Schedule Rerouter) -->
+    <div id="mode-view-plan" class="mode-view" style="display:none;">
+      <div class="card" style="background:rgba(255,255,255,0.02); border:1px solid rgba(0,243,255,0.3); border-radius:18px; padding:1.25rem; margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+          <div>
+            <span style="font-size:0.72rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.12em;">Smart Itinerary Engine</span>
+            <h3 style="font-size:1.2rem; font-weight:900; color:#fff; margin:2px 0 0 0;">📅 Interactive Day Builder &amp; Queue-Free Schedule Rerouter</h3>
+          </div>
+          <button class="reroute-btn" style="background:linear-gradient(135deg, #00f3ff, #10b981); color:#020617; font-weight:900; padding:0.5rem 1.2rem; border-radius:12px; font-size:0.82rem;" onclick="if(window.ROAM && window.ROAM.touristController) window.ROAM.touristController.rerouteDay();">
+            ⚡ REROUTE MY DAY
+          </button>
+        </div>
+        <p style="font-size:0.85rem; color:#cbd5e1; line-height:1.5; margin:0 0 1.25rem 0;">
+          ROAM restructures your travel itinerary on the fly. Avoid 60-minute monument lines by swapping peak hours with tranquil havelis and local artisan workshops.
+        </p>
+        <div id="itinerary-container"></div>
+      </div>
+    </div>
+
     <div id="mode-view-explore" class="mode-view" style="display:none;">
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
         <!-- Left: Destination Load Map SVG -->
