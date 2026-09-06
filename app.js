@@ -31090,6 +31090,7 @@ class HackathonGuide {
   
   // Decoupled Dynamic openFeature implementation
   // Rectified Decoupled Dynamic openFeature implementation (27 Distinct Main Working Features)
+  // Clean Core Features openFeature implementation
   function openFeature(featureId, targetUrl) {
     if (!featureId && !targetUrl) return;
 
@@ -31106,40 +31107,23 @@ class HackathonGuide {
       }
     });
 
-    // 1. Handled by launchDirectFeatureTool (Modals, Sub-tabs & Transport modes)
-    const directHandled = [
-      'themestudio', 'theme', 'constellation', 'matrix3d', 'hologram',
-      'spotlight', 'weatherintel',
-      'flight', 'bus', 'car', 'auto', 'train', 'evrouter', 'pnrpredict',
-      'explore', 'attractions', 'culinary', 'planner'
-    ];
-
-    if (cleanId && directHandled.includes(cleanId) && typeof window.launchDirectFeatureTool === 'function') {
-      window.launchDirectFeatureTool(cleanId);
-      return;
-    }
-
-    // 2. Direct Main Tab Navigation
     const tabMap = {
       'travelintel': 'travelintel',
-      'transport': 'transport',
       'roam': 'roam',
-      'market': 'market',
-      'tourism': 'tourism',
-      'impact': 'impact',
-      'authority': 'authority',
+      'transport': 'transport',
       'lingo': 'lingo',
-      'budget': 'budget',
-      'overcrowding': 'overcrowding',
+      'survival': 'survival',
       'game': 'game',
-      'survival': 'survival'
+      'tourism': 'tourism',
+      'budget': 'budget'
     };
 
-    if (cleanId && tabMap[cleanId]) {
+    let tabId = tabMap[cleanId];
+    if (tabId) {
       if (typeof window.switchTab === 'function') {
-        window.switchTab(tabMap[cleanId]);
+        window.switchTab(tabId);
       }
-      const tabEl = document.getElementById('tab-content-' + tabMap[cleanId]);
+      const tabEl = document.getElementById('tab-content-' + tabId);
       if (tabEl) {
         tabEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
@@ -31149,14 +31133,13 @@ class HackathonGuide {
       return;
     }
 
-    // 3. Fallback targetUrl anchor navigation
     if (targetUrl && targetUrl.startsWith('#')) {
       const targetEl = document.querySelector(targetUrl);
       if (targetEl) {
         const parentTab = targetEl.closest('.tab-content');
         if (parentTab) {
-          const tabId = parentTab.id.replace('tab-content-', '');
-          if (typeof window.switchTab === 'function') window.switchTab(tabId);
+          const pId = parentTab.id.replace('tab-content-', '');
+          if (typeof window.switchTab === 'function') window.switchTab(pId);
         }
         targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
