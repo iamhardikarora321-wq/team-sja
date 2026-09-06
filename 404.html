@@ -260,6 +260,37 @@
           </button>
         </nav>
       </div>
+
+      <!-- MAIN HUB TOP NAVIGATION TAB BAR (8 MAIN DOMAIN HUBS) -->
+      <nav class="main-hub-tab-bar" style="display:flex; align-items:center; gap:0.5rem; overflow-x:auto; padding:0.75rem 0.5rem; margin-top:1rem; border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(0,243,255,0.25); background:rgba(2,6,23,0.7); backdrop-filter:blur(12px); border-radius:16px; scrollbar-width:none;">
+        <button id="tab-btn-travelintel" class="tab-btn active" data-tab="travelintel" onclick="if(window.switchTab) window.switchTab('travelintel');">
+          <span>🗺️</span> Bharat Travel Intel
+        </button>
+        <button id="tab-btn-roam" class="tab-btn" data-tab="roam" onclick="if(window.switchTab) window.switchTab('roam');">
+          <span>🧭</span> Nexora ROAM
+        </button>
+        <button id="tab-btn-transport" class="tab-btn" data-tab="transport" onclick="if(window.switchTab) window.switchTab('transport');">
+          <span>✈️</span> 5-Mode Transport
+        </button>
+        <button id="tab-btn-lingo" class="tab-btn" data-tab="lingo" onclick="if(window.switchTab) window.switchTab('lingo');">
+          <span>🗣️</span> Lingo &amp; Culture
+        </button>
+        <button id="tab-btn-survival" class="tab-btn" data-tab="survival" onclick="if(window.switchTab) window.switchTab('survival');">
+          <span>📲</span> Digital Survival Kit
+        </button>
+        <button id="tab-btn-tourism" class="tab-btn" data-tab="tourism" onclick="if(window.switchTab) window.switchTab('tourism');">
+          <span>🏛️</span> State Tourism
+        </button>
+        <button id="tab-btn-trip" class="tab-btn" data-tab="trip" onclick="if(window.switchTab) window.switchTab('trip');">
+          <span>🧳</span> Trip Planner
+        </button>
+        <button id="tab-btn-game" class="tab-btn" data-tab="game" onclick="if(window.switchTab) window.switchTab('game');">
+          <span>🎮</span> Geoguess Quiz
+        </button>
+        <button id="tab-btn-travel" class="tab-btn" data-tab="travel" onclick="if(window.switchTab) window.switchTab('travel');">
+          <span>🌐</span> Geography Hub
+        </button>
+      </nav>
     </header>
 
 
@@ -394,7 +425,7 @@
     <!-- =====================================================================
          ROAM LIVING DESTINATION INTELLIGENCE LAYER (5 MODES)
          ===================================================================== -->
-    <div id="tab-content-roam" class="tab-content active" style="margin-bottom:2rem;">
+    <div id="tab-content-roam" class="tab-content" style="margin-bottom:2rem;">
       <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.92), rgba(2,6,23,0.98)); border:1px solid rgba(255,0,127,0.35); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(255,0,127,0.15);">
         
         <!-- Header & Dynamic Active Location Pill -->
