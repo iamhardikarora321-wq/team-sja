@@ -15,7 +15,7 @@
       if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
     }
     if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
-    if (tabId === 'autocomplete' || tabId === 'radix') tabId = 'engine';
+    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine') tabId = 'roam';
     if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
     if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
     if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';
@@ -1207,7 +1207,7 @@
       if (!document.getElementById('tab-content-' + tabId)) tabId = 'tourism';
     }
     if (tabId === 'tripplanner' || tabId === 'itinerary') tabId = 'trip';
-    if (tabId === 'autocomplete' || tabId === 'radix') tabId = 'engine';
+    if (tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine') tabId = 'roam';
     if (tabId === 'dbexporter' || tabId === 'seedexporter') tabId = 'routes';
     if (tabId === 'geoguess' || tabId === 'gameplay') tabId = 'game';
     if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture') tabId = 'lingo';

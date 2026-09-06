@@ -16,9 +16,7 @@
   function populateShowcase3DStage() {
     var stage = document.getElementById('showcase-3d-stage');
     if (!stage) return;
-    var defaultFeatures = [
-      { id: 'engine', title: 'Pan-India Destination & Stay Search', category: 'Core Engine', icon: '🔍', desc: 'Sub-millisecond Radix Trie search for 50,000+ towns, heritage sites & homestays across all 36 States & UTs.' },
-      { id: 'tourism', title: 'Hotelier & Homestay Booking Hub', category: 'Hospitality', icon: '🏨', desc: 'Direct booking portal empowering tier-2/3 hoteliers without 20-30% aggregator commissions.' },
+    var defaultFeatures = [      { id: 'tourism', title: 'Hotelier & Homestay Booking Hub', category: 'Hospitality', icon: '🏨', desc: 'Direct booking portal empowering tier-2/3 hoteliers without 20-30% aggregator commissions.' },
       { id: 'trip', title: 'Travel Corridor & Itinerary Planner', category: 'Travel Guide', icon: '🗺️', desc: 'Plan custom itineraries, track multi-modal transit stops, and estimate travel budgets.' },
       { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Culture Quiz', icon: '🎮', desc: 'Gamified exploration of Indian regional culture, food, and historical sites.' }
     ];
@@ -204,7 +202,6 @@
         <button class="island-btn" data-target="transport" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('transport');" title="Separated Transport Modes (Aeroplane, Bus, Car, Auto, Train)">✈️</button>
         <button class="island-btn" data-target="lingo" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('lingo');" title="Regional Lingo & Culture Audio Translator">🗣️</button>
         <button class="island-btn" data-target="survival" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('survival');" title="Digital Survival Kit & SOS Hotlines">📲</button>
-        <button class="island-btn" data-target="engine" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('engine');" title="Pan-India Radix Trie Autocomplete & Dev Hub">🔍</button>
         <button class="island-btn" data-target="game" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('game');" title="Geoguess Heritage & Culture Quiz">🎮</button>
         <button class="island-btn" data-target="tourism" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('tourism');" title="State Showcase & Virtual Tour">🏛️</button>
         <button class="island-btn" data-target="trip" onclick="event.stopPropagation(); if(window.switchTab) window.switchTab('trip');" title="Trip Planner & Itinerary Builder">🧳</button>
@@ -698,107 +695,7 @@
   </div>
 </div>
 
-<!-- =====================================================================
-     FEATURE #2: PAN-INDIA RADIX TREE AUTOCOMPLETE & DEV HUB
-     ===================================================================== -->
-<div id="tab-content-engine" class="tab-content">
-      <div class="dashboard-grid">
-        
-        <!-- Left Column: Search & Benchmarks -->
-        <div class="panel">
-          <h2 class="panel-title"><span>🔍</span> Search Interface</h2>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
-            Type a prefix to perform a memory-efficient DFS lookup on the Radix Tree.
-          </p>
-
-          <div class="search-wrapper">
-            <div class="search-input-container">
-              <span class="search-icon">🔍</span>
-              <input type="text" id="city-search" placeholder="Search Indian cities... (e.g. del, mum, ban)" autocomplete="off">
-              <span id="clear-search" class="clear-icon" style="display: none;">✕</span>
-            </div>
-
-            <!-- Dropdown suggestions -->
-            <div id="suggestions-dropdown" class="suggestions-container">
-              <div class="suggestions-header">
-                <span>Suggestions (Top 10)</span>
-                <span id="suggestions-metrics">0 matches</span>
-              </div>
-              <ul id="suggestions-list" class="suggestions-list">
-                <!-- Dynamically populated -->
-              </ul>
-            </div>
-          </div>
-
-          <div class="benchmark-card">
-            <div class="benchmark-title">
-              <span>Lookup Constraint Benchmarking</span>
-              <span id="benchmark-status" style="color: var(--color-success);">PASSED</span>
-            </div>
-            <div class="benchmark-bar-container">
-              <div id="benchmark-bar" class="benchmark-bar" style="width: 0.8%;"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
-              <span>0.0 ms</span>
-              <span style="color: var(--color-accent); font-weight: bold;" id="benchmark-exact-time">0.0000 ms</span>
-              <span>Limit: 5.0 ms</span>
-            </div>
-          </div>
-
-          <!-- Stress Test challenge -->
-          <div class="benchmark-card" style="margin-top: 1rem; border-color: rgba(168, 85, 247, 0.3);">
-            <div class="benchmark-title" style="color: var(--color-purple);">
-              <span>🚀 Engine Performance Stress Test</span>
-              <span id="stress-test-status" style="font-size: 0.8rem; font-weight: 500; color: var(--text-muted);">Ready</span>
-            </div>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
-              Run 10,000 lookups on random city prefixes to check engine throughput.
-            </p>
-            <div class="stress-stats" style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.5rem; display: none;" id="stress-stats-display">
-              <div>Avg Speed: <span id="stress-avg-speed" style="color: var(--color-accent); font-weight: bold;">0.000 ms</span></div>
-              <div>Throughput: <span id="stress-throughput" style="color: var(--color-success); font-weight: bold;">0 ops/s</span></div>
-            </div>
-            <button id="btn-stress-test" class="visualizer-btn" onclick="if(window.runStressTest) window.runStressTest();" style="width: 100%; background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.4); color: var(--color-purple); font-weight: 600; padding: 0.6rem; border-radius: var(--radius-sm);">
-              Run 10,000 Lookup Stress Test
-            </button>
-          </div>
-        </div>
-
-        <!-- Right Column: Visualizer -->
-        <div class="panel visualizer-card">
-          <div class="visualizer-header">
-            <h2 class="panel-title" style="margin-bottom: 0; padding-bottom: 0; border: none;">
-              <span>🌿</span> Radix Tree Visualizer
-            </h2>
-            <div class="visualizer-controls">
-              <button id="btn-mode-playground" class="visualizer-btn active" onclick="if(window.setEngineMode) window.setEngineMode('playground');">Playground Tree</button>
-              <button id="btn-mode-search" class="visualizer-btn" onclick="if(window.setEngineMode) window.setEngineMode('search');">Search Path</button>
-            </div>
-          </div>
-          <p id="visualizer-description" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
-            Playground Mode: Insert custom strings to see how the Radix Tree splits and compresses edge labels.
-          </p>
-
-          <div class="svg-container">
-            <svg id="tree-svg" class="svg-canvas"></svg>
-          </div>
-
-          <div id="playground-form-container" class="playground-form">
-            <input type="text" id="playground-input" placeholder="Type a custom word (e.g. 'cart', 'category', 'cat')..." autocomplete="off">
-            <button id="playground-btn-insert" onclick="if(window.insertPlaygroundCity) window.insertPlaygroundCity();">Insert Word</button>
-            <button id="playground-btn-reset" class="visualizer-btn" onclick="if(window.resetPlaygroundTrie) window.resetPlaygroundTrie();" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: rgb(239, 68, 68);">Reset</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-
-
-    <!-- =====================================================================
-         TAB 3: GEOGUESS SPELLING GAME (Inbuilt Game)
-         ===================================================================== -->
-    <div id="tab-content-game" class="tab-content">
+<div id="tab-content-game" class="tab-content">
       <div class="dashboard-grid">
         
         <!-- Left Panel: Game Arena -->
@@ -880,80 +777,14 @@
           </div>
 
           <div style="margin-top: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
-            Challenge leverages the 15,000 GeoNames database to test geographical and spelling speed.
+            Challenge tests your geographical and spelling speed across Indian heritage cities.
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- Comparative Table & Explanations Grid -->
-    <div class="comparison-section">
-      
-      <!-- GeoNames Pipeline Card -->
-      <div class="panel">
-        <h2 class="panel-title"><span>🔄</span> GeoNames Dataset Pipeline</h2>
-        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-          How the 15,000 city database was prepared from the raw GeoNames database (IN.zip):
-        </p>
-        <ul class="info-list">
-          <li><strong>Downloading & Extraction:</strong> Fetched <code>IN.zip</code> containing <code>IN.txt</code>, representing Indian geographical features.</li>
-          <li><strong>Populated Place Filtering:</strong> Filtered class 'P' records (populated places/cities), discarding administrative entities, lakes, and monuments.</li>
-          <li><strong>Heuristic Sorting:</strong> Prioritized capitals (State and Country levels) first, then sorted in descending order of census population.</li>
-          <li><strong>Cleaning & Deduplication:</strong> Normalized strings to lowercase, collapsed spaces, stripped punctuation, and extracted the top 15,000 unique names.</li>
-        </ul>
-      </div>
-
-      <!-- Complexity Analysis Card -->
-      <div class="panel">
-        <h2 class="panel-title"><span>📊</span> Trie vs. Radix Tree Efficiency</h2>
-        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.5rem;">
-          Dynamic comparison metrics of the active dataset:
-        </p>
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Standard Trie</th>
-              <th>Radix Tree (Trie)</th>
-              <th>Improvement</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Total Nodes</strong></td>
-              <td id="table-st-nodes">-</td>
-              <td id="table-rt-nodes">-</td>
-              <td id="table-node-savings" style="color: var(--color-success); font-weight: 600;">-</td>
-            </tr>
-            <tr>
-              <td><strong>Total Characters</strong></td>
-              <td id="table-st-chars">-</td>
-              <td id="table-rt-chars">-</td>
-              <td id="table-char-savings" style="color: var(--color-success); font-weight: 600;">-</td>
-            </tr>
-            <tr>
-              <td><strong>Space Complexity</strong></td>
-              <td>O(Σ(len(word)))</td>
-              <td>O(N) - Key nodes</td>
-              <td>O(N) vs O(N * L)</td>
-            </tr>
-            <tr>
-              <td><strong>Search Complexity</strong></td>
-              <td>O(L) - Word length</td>
-              <td>O(L) - Less transitions</td>
-              <td>Higher Cache Locality</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </div>
-
-
-
-  <!-- =====================================================================
+    <!-- =====================================================================
        TAB 7: GEOGRAPHY & TRAVEL HUB
        ===================================================================== -->
   <div id="tab-content-travel" class="tab-content">
