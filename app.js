@@ -3670,7 +3670,7 @@
   // =====================================================================
   // UNIVERSAL UNRESTRICTED PLACE INTELLIGENCE CARD GENERATOR
   // =====================================================================
-  function renderUniversalPlaceCard(placeName) {
+    function renderUniversalPlaceCard(placeName) {
     const viewContainer = document.getElementById("tourism-active-state-view");
     if (!viewContainer) return;
 
@@ -3684,9 +3684,9 @@
     const db = window.TRAVEL_INTEL_DB || {};
     const intelData = db[placeName.toLowerCase()] || null;
 
-    // Detect place category & terrain
+    // Category detection
     const pLower = placeName.toLowerCase();
-    let category = "📍 Destination & Cultural Center";
+    let category = "📍 Cultural & Regional Center";
     let icon = "🌅";
 
     if (pLower.includes("manali") || pLower.includes("munnar") || pLower.includes("ooty") || pLower.includes("coorg") || pLower.includes("wayanad") || pLower.includes("shimla") || pLower.includes("darjeeling") || pLower.includes("spiti") || pLower.includes("shillong") || pLower.includes("tawang") || pLower.includes("gulmarg") || pLower.includes("leh") || pLower.includes("kodaikanal") || pLower.includes("nainital") || pLower.includes("mussoorie")) {
@@ -3715,28 +3715,39 @@
       attractions = intelData.attractions;
     } else if (stateData.attractions && stateData.attractions.length > 0) {
       attractions = [
-        { name: `${capPlace} Main Citadel & Viewpoint`, icon: icon, category: "Landmark", desc: `Historic landmark of ${capPlace} offering panoramic views of ${facts.district} district and regional architecture.` },
-        { name: `${capPlace} Cultural Center & Heritage Square`, icon: "🏛️", category: "Heritage", desc: `Traditional town square featuring local craftsmanship, historic structures, and community gatherings.` },
+        { name: `${capPlace} Main Citadel & Promenade`, icon: icon, category: "Landmark", desc: `Historic focal point of ${capPlace} offering scenic views of ${facts.district} and traditional architecture.` },
+        { name: `${capPlace} Cultural Square & Heritage Walk`, icon: "🏛️", category: "Heritage", desc: `Historic town square displaying local craftsmanship and community gatherings.` },
         ...stateData.attractions.slice(0, 2)
       ];
     } else {
       attractions = [
-        { name: `${capPlace} Heritage Citadel & Promenade`, icon: icon, category: "Landmark", desc: `Iconic focal point of ${capPlace} featuring historical architecture and scenic surrounding vistas.` },
-        { name: `${capPlace} Nature Trail & Eco Reserve`, icon: "🌿", category: "Nature", desc: `Pristine natural ecosystem, river trails, and native flora in ${facts.state}.` },
-        { name: `${capPlace} Sacred Shrine & Temple Ghats`, icon: "🛕", category: "Spiritual", desc: `Ancient sacred sanctuary revered by locals and pilgrims across ${facts.state}.` }
+        { name: `${capPlace} Heritage Citadel & Promenade`, icon: icon, category: "Landmark", desc: `Iconic focal point of ${capPlace} featuring historical architecture and scenic vistas.` },
+        { name: `${capPlace} Nature Trail & Eco Reserve`, icon: "🌿", category: "Nature", desc: `Pristine natural ecosystem and native flora in ${facts.state}.` },
+        { name: `${capPlace} Sacred Shrine & Ghats`, icon: "🛕", category: "Spiritual", desc: `Ancient sanctuary revered by locals and pilgrims across ${facts.state}.` }
       ];
     }
 
     // Build Foods List
     let foods = [];
-    if (intelData && intelData.foods) {
-      foods = intelData.foods;
+    if (intelData && intelData.food) {
+      foods = intelData.food;
     } else if (stateData.foods && stateData.foods.length > 0) {
       foods = stateData.foods;
     } else {
       foods = [
-        { name: `${capPlace} Regional Thali Special`, desc: `Authentic regional thali featuring traditional curries, freshly baked breads, and local chutneys of ${stateName}.` },
+        { name: `${capPlace} Signature Thali Special`, desc: `Authentic regional thali featuring traditional curries, freshly baked breads, and local chutneys of ${stateName}.` },
         { name: `${capPlace} Street Food & Savory Snacks`, desc: `Freshly prepared local savory delicacies served with aromatic spiced dips and piping hot chai.` }
+      ];
+    }
+
+    // Build Famous Food Shops List
+    let famousShops = [];
+    if (intelData && intelData.famousFoodShops) {
+      famousShops = intelData.famousFoodShops;
+    } else {
+      famousShops = [
+        { shop: `${capPlace} Heritage Sweet & Snacks Stall`, dish: `Signature ${capPlace} Regional Sweets`, desc: `Popular local sweetshop serving fresh regional milk delicacies and hot kachoris.` },
+        { shop: `${capPlace} Central Bazaar Food Lane`, dish: `Spiced Street Food & Kulhad Chai`, desc: `Bustling evening food alley famous for piping hot regional savory snacks.` }
       ];
     }
 
@@ -3752,14 +3763,31 @@
       ];
     }
 
+    // Build Transit Data
+    let transit = (intelData && intelData.transitFares) ? intelData.transitFares : {
+      autoRickshaw: `₹30 – ₹100 shared / metered auto in ${capPlace}`,
+      cityBus: `Local Bus / Cab service | Fare ₹10 – ₹40`,
+      trainSleeper: `${capPlace} / ${stateData.capital || 'Regional'} Rail Junction`,
+      train3AC: `Direct train connection across ${stateName}`,
+      flight: `${stateData.capital || 'Regional'} Airport`,
+      baggageAllowance: `Flight: 15 kg Check-in, 7 kg Cabin`
+    };
+
+    // Build Lingo Data
+    let lingoList = (intelData && intelData.lingo) ? intelData.lingo : [
+      { phrase: "Hello / Welcome", local: "Namaste / Namaskar", pronunciation: "Nuh-muh-stay" },
+      { phrase: "How much is this?", local: "Iska daam kitna hai?", pronunciation: "Is-kah daam kit-nah hai?" },
+      { phrase: "Thank you", local: "Dhanyawad / Thanks", pronunciation: "Dhun-yoh-baad" }
+    ];
+
     // Weather & AQI Simulation
     const tempC = Math.floor(Math.random() * 8 + 22);
     const aqi = Math.floor(Math.random() * 50 + 35);
     const crowdLevel = (Math.random() > 0.5) ? '🟢 Optimal (Low Crowd)' : '🟡 Balanced Flow';
 
-    // HTML Construction
+    // HTML Construction for Sections
     let attractionsHTML = attractions.map(att => `
-      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.2); border-radius:14px; padding:0.9rem 1.1rem; display:flex; gap:0.85rem; align-items:flex-start;">
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(0,243,255,0.2); border-radius:14px; padding:0.95rem 1.15rem; display:flex; gap:0.85rem; align-items:flex-start;">
         <div style="font-size:1.6rem; filter:drop-shadow(0 0 6px rgba(0,243,255,0.4));">${att.icon || icon}</div>
         <div style="flex:1;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
@@ -3772,7 +3800,7 @@
     `).join('');
 
     let marketsHTML = markets.map(mk => `
-      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.25); border-radius:14px; padding:0.9rem 1.1rem; display:flex; gap:0.85rem; align-items:flex-start;">
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.25); border-radius:14px; padding:0.95rem 1.15rem; display:flex; gap:0.85rem; align-items:flex-start;">
         <div style="font-size:1.6rem;">${mk.icon || '🛍️'}</div>
         <div style="flex:1;">
           <h4 style="font-size:0.95rem; font-weight:800; color:#f59e0b; margin:0 0 0.25rem 0;">${mk.name}</h4>
@@ -3782,145 +3810,230 @@
     `).join('');
 
     let foodsHTML = foods.map(fd => `
-      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:0.9rem 1.1rem;">
-        <div style="font-size:0.95rem; font-weight:800; color:#10b981; margin-bottom:0.25rem; display:flex; align-items:center; gap:0.4rem;">
-          <span>🍲</span> ${fd.name}
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(16,185,129,0.25); border-radius:14px; padding:0.95rem 1.15rem;">
+        <div style="font-size:0.95rem; font-weight:800; color:#10b981; margin-bottom:0.25rem; display:flex; align-items:center; justify-content:space-between;">
+          <span>🍲 ${fd.name}</span>
+          ${fd.spot ? `<span style="font-size:0.7rem; color:#00f3ff; background:rgba(0,243,255,0.08); border-radius:8px; padding:0.1rem 0.4rem;">📍 ${fd.spot}</span>` : ''}
         </div>
         <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${fd.desc}</p>
       </div>
     `).join('');
 
+    let shopsHTML = famousShops.map(sh => `
+      <div style="background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.3); border-radius:14px; padding:0.95rem 1.15rem;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; margin-bottom:0.25rem;">
+          <h5 style="font-size:0.92rem; font-weight:800; color:#fbbf24; margin:0;">🏛️ ${sh.shop}</h5>
+          <span style="font-size:0.7rem; font-weight:700; color:#fff; background:rgba(245,158,11,0.2); border:1px solid rgba(245,158,11,0.4); border-radius:10px; padding:0.15rem 0.5rem;">${sh.dish}</span>
+        </div>
+        <p style="font-size:0.81rem; color:#cbd5e1; line-height:1.45; margin:0;">${sh.desc}</p>
+      </div>
+    `).join('');
+
+    let lingoHTML = lingoList.map(lg => `
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(192,132,252,0.25); border-radius:12px; padding:0.75rem 0.95rem; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:0.75rem; color:#94a3b8; font-weight:600;">${lg.phrase}</div>
+          <div style="font-size:0.92rem; font-weight:800; color:#c084fc; margin-top:2px;">${lg.local}</div>
+        </div>
+        <div style="font-size:0.72rem; color:#00f3ff; font-style:italic;">🔊 ${lg.pronunciation}</div>
+      </div>
+    `).join('');
+
     viewContainer.innerHTML = `
-      <!-- Active Place Banner -->
-      <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)); border:1px solid rgba(0,243,255,0.4); border-radius:22px; padding:1.75rem; box-shadow:0 12px 35px rgba(0,0,0,0.5);">
+      <!-- Universal Master Place Dossier Banner -->
+      <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98), rgba(2,6,23,0.99)); border:1px solid rgba(0,243,255,0.4); border-radius:24px; padding:2rem; box-shadow:0 15px 45px rgba(0,0,0,0.6);">
         
         <!-- Top Breadcrumb & Badge Bar -->
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.85rem;">
-          <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.82rem; color:#94a3b8; font-weight:600;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1.25rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.95rem;">
+          <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.85rem; color:#94a3b8; font-weight:600;">
             <span style="color:#00f3ff; cursor:pointer;" onclick="loadStateDetails('${stateName}');">🏛️ ${stateName}</span>
             <span>➔</span>
-            <span>📍 ${facts.district} District</span>
+            <span>📍 ${facts.district}</span>
             <span>➔</span>
-            <strong style="color:#fff;">${capPlace}</strong>
+            <strong style="color:#fff;">${capPlace} Master Dossier</strong>
           </div>
 
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
-            <span style="background:rgba(0,243,255,0.15); color:#00f3ff; font-weight:800; font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3);">
+            <span style="background:rgba(0,243,255,0.15); color:#00f3ff; font-weight:800; font-size:0.74rem; padding:0.25rem 0.85rem; border-radius:20px; border:1px solid rgba(0,243,255,0.35);">
               ${category}
             </span>
-            <span style="background:rgba(16,185,129,0.15); color:#10b981; font-weight:800; font-size:0.72rem; padding:0.25rem 0.75rem; border-radius:20px; border:1px solid rgba(16,185,129,0.3);">
-              PIN: ${facts.zipCode}
+            <span style="background:rgba(16,185,129,0.15); color:#10b981; font-weight:800; font-size:0.74rem; padding:0.25rem 0.85rem; border-radius:20px; border:1px solid rgba(16,185,129,0.35);">
+              PIN Code: ${facts.zipCode}
             </span>
           </div>
         </div>
 
-        <!-- Main Title Header -->
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.25rem; margin-bottom:1.5rem;">
-          <div>
-            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.4rem;">
-              <span style="font-size:2.2rem; filter:drop-shadow(0 0 10px rgba(0,243,255,0.4));">${icon}</span>
+        <!-- Main Title Header & Culture Snapshot -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.5rem; margin-bottom:1.75rem;">
+          <div style="flex:1; min-width:300px;">
+            <div style="display:flex; align-items:center; gap:0.85rem; margin-bottom:0.5rem;">
+              <span style="font-size:2.5rem; filter:drop-shadow(0 0 12px rgba(0,243,255,0.5));">${icon}</span>
               <div>
-                <h3 style="font-size:1.95rem; font-weight:900; color:#fff; margin:0; letter-spacing:-0.02em;">${capPlace}</h3>
-                <div style="font-size:0.88rem; color:#00f3ff; font-weight:700; margin-top:2px;">
-                  📍 ${facts.district} District • ${stateName} • Coords: ${coords.lat.toFixed(4)}°N, ${coords.lng.toFixed(4)}°E
+                <h3 style="font-size:2.2rem; font-weight:900; color:#fff; margin:0; letter-spacing:-0.02em;">${capPlace}</h3>
+                <div style="font-size:0.92rem; color:#00f3ff; font-weight:700; margin-top:3px;">
+                  📍 ${facts.district} • State: ${stateName} • Coords: ${coords.lat.toFixed(4)}°N, ${coords.lng.toFixed(4)}°E
                 </div>
               </div>
             </div>
-            <p style="color:#94a3b8; font-size:0.95rem; line-height:1.6; margin:0.5rem 0 0 0; max-width:880px;">
-              ${intelData && intelData.cultureSnapshot ? intelData.cultureSnapshot : `${capPlace} is a prominent destination in ${facts.district} district, ${stateName}. Known for its distinct local heritage, vibrant markets, regional culinary masterworks, and pristine surrounding landscapes.`}
+            <p style="color:#cbd5e1; font-size:0.98rem; line-height:1.65; margin:0.65rem 0 0 0; max-width:920px;">
+              ${intelData && intelData.cultureSnapshot ? intelData.cultureSnapshot : `${capPlace} is a historic center in ${facts.district}, ${stateName}. Celebrated for its unique cultural traditions, iconic markets, regional culinary specialties, and architectural heritage.`}
             </p>
           </div>
 
-          <!-- Quick Metrics Panel -->
-          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.6rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:0.85rem 1.1rem; min-width:240px;">
+          <!-- Quick Live Dashboard Metrics Panel -->
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.75rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:1rem 1.25rem; min-width:260px;">
             <div>
-              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Weather</div>
-              <div style="font-size:0.95rem; color:#10b981; font-weight:900; margin-top:2px;">🌤️ ${tempC}°C • AQI ${aqi}</div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Live Weather &amp; AQI</div>
+              <div style="font-size:0.95rem; color:#10b981; font-weight:900; margin-top:3px;">🌤️ ${tempC}°C • AQI ${aqi}</div>
             </div>
             <div>
-              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Crowd Risk</div>
-              <div style="font-size:0.88rem; color:#00f3ff; font-weight:800; margin-top:2px;">${crowdLevel}</div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Tourist Crowd Flow</div>
+              <div style="font-size:0.88rem; color:#00f3ff; font-weight:800; margin-top:3px;">${crowdLevel}</div>
             </div>
             <div>
-              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Best Season</div>
-              <div style="font-size:0.88rem; color:#f59e0b; font-weight:800; margin-top:2px;">Oct – Mar</div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Best Season to Visit</div>
+              <div style="font-size:0.88rem; color:#f59e0b; font-weight:800; margin-top:3px;">Oct – Mar</div>
             </div>
             <div>
-              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Language</div>
-              <div style="font-size:0.88rem; color:#c084fc; font-weight:800; margin-top:2px;">${stateData.language || 'Hindi & Local'}</div>
+              <div style="font-size:0.7rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Primary Language</div>
+              <div style="font-size:0.88rem; color:#c084fc; font-weight:800; margin-top:3px;">${stateData.language || 'Hindi & Regional'}</div>
             </div>
           </div>
         </div>
 
-        <!-- 3-Column Detailed Information Grid -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.25rem; margin-bottom:1.5rem;">
+        <!-- 3-Column Section: Sights, Markets & Delicacies -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.35rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; margin-bottom:1.75rem;">
           
           <!-- Sights -->
-          <div style="display:flex; flex-direction:column; gap:0.85rem;">
-            <h4 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0; display:flex; align-items:center; gap:0.4rem;">
-              <span>🌅</span> Top Landmarks &amp; Attractions in ${capPlace}
+          <div style="display:flex; flex-direction:column; gap:0.95rem;">
+            <h4 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🌅</span> Best Places to Visit &amp; Sights in ${capPlace}
             </h4>
             ${attractionsHTML}
           </div>
 
-          <!-- Bazaars -->
-          <div style="display:flex; flex-direction:column; gap:0.85rem;">
-            <h4 style="font-size:1.05rem; font-weight:800; color:#f59e0b; margin:0; display:flex; align-items:center; gap:0.4rem;">
-              <span>🛍️</span> Local Crafts &amp; Shopping Markets
+          <!-- Markets -->
+          <div style="display:flex; flex-direction:column; gap:0.95rem;">
+            <h4 style="font-size:1.1rem; font-weight:800; color:#f59e0b; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🛍️</span> Famous Markets, Bazaars &amp; Crafts
             </h4>
             ${marketsHTML}
           </div>
 
           <!-- Foods -->
-          <div style="display:flex; flex-direction:column; gap:0.85rem;">
-            <h4 style="font-size:1.05rem; font-weight:800; color:#10b981; margin:0; display:flex; align-items:center; gap:0.4rem;">
-              <span>🍲</span> Regional Cuisine &amp; Street Foods
+          <div style="display:flex; flex-direction:column; gap:0.95rem;">
+            <h4 style="font-size:1.1rem; font-weight:800; color:#10b981; margin:0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🍲</span> Famous Cuisine &amp; Signature Dishes
             </h4>
             ${foodsHTML}
           </div>
 
         </div>
 
-        <!-- Transit, Budget & Action Bar -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1rem; background:rgba(0,243,255,0.04); border:1px solid rgba(0,243,255,0.2); border-radius:16px; padding:1.25rem;">
+        <!-- Dedicated Section: 🏛️ Famous Food Shops & Iconic Eateries -->
+        <div style="background:rgba(245,158,11,0.03); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:1.25rem 1.5rem; margin-bottom:1.75rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h4 style="font-size:1.15rem; font-weight:900; color:#fbbf24; margin:0; display:flex; align-items:center; gap:0.5rem;">
+              <span>🏛️</span> Famous Food Shops, Legendary Eateries &amp; Street Outlets in ${capPlace}
+            </h4>
+            <span style="font-size:0.75rem; color:#cbd5e1; font-weight:600;">Authentic Culinary Outlets</span>
+          </div>
           
-          <!-- Transit -->
-          <div>
-            <div style="font-size:0.75rem; font-weight:800; color:#00f3ff; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;">🚆 Transit &amp; Access</div>
-            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
-              <div>✈️ <strong>Nearest Airport:</strong> ${stateData.capital || 'Regional'} Airport</div>
-              <div>🚆 <strong>Rail Junction:</strong> ${capPlace} Railway Station</div>
-              <div>🚌 <strong>Highway:</strong> Direct NH connectivity</div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+            ${shopsHTML}
+          </div>
+        </div>
+
+        <!-- 2-Column Grid: Transit Logistics & Language Translator -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.35rem; margin-bottom:1.75rem;">
+          
+          <!-- Transit & Logistics Fares -->
+          <div style="background:rgba(0,243,255,0.03); border:1px solid rgba(0,243,255,0.2); border-radius:18px; padding:1.25rem 1.5rem;">
+            <h4 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🚆</span> Transit Fares, Logistics &amp; Travel Rules
+            </h4>
+            <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.85rem; color:#cbd5e1;">
+              <div>🛺 <strong>Auto / Taxi:</strong> ${transit.autoRickshaw}</div>
+              <div>🚌 <strong>Local Bus / Metro:</strong> ${transit.cityBus}</div>
+              <div>🚆 <strong>Train Junction:</strong> ${transit.trainSleeper}</div>
+              <div>🚅 <strong>3AC / Express Fares:</strong> ${transit.train3AC}</div>
+              <div>✈️ <strong>Nearest Airport:</strong> ${transit.flight}</div>
+              <div>🧳 <strong>Baggage Limits:</strong> ${transit.baggageAllowance}</div>
             </div>
           </div>
 
-          <!-- Est Budget -->
-          <div>
-            <div style="font-size:0.75rem; font-weight:800; color:#10b981; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.4rem;">💰 Daily Travel Budget</div>
-            <div style="font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
-              <div>🪙 <strong>Budget:</strong> ₹1,500 – ₹2,200 / day</div>
-              <div>🏨 <strong>Mid-Range:</strong> ₹3,800 – ₹5,500 / day</div>
-              <div>✨ <strong>Luxury Haveli:</strong> ₹10,000+ / day</div>
+          <!-- Regional Lingo & Translator -->
+          <div style="background:rgba(192,132,252,0.03); border:1px solid rgba(192,132,252,0.25); border-radius:18px; padding:1.25rem 1.5rem;">
+            <h4 style="font-size:1.05rem; font-weight:800; color:#c084fc; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.4rem;">
+              <span>🗣️</span> Regional Language &amp; Survival Translator
+            </h4>
+            <div style="display:flex; flex-direction:column; gap:0.6rem;">
+              ${lingoHTML}
             </div>
-          </div>
-
-          <!-- Action Buttons -->
-          <div style="display:flex; flex-direction:column; gap:0.5rem; justify-content:center;">
-            <button onclick="if(window.switchTab) { window.switchTab('travel'); const re = document.getElementById('route-end'); if(re){ re.value='${capPlace}'; re.dispatchEvent(new Event('input', {bubbles:true})); } }" style="background:linear-gradient(135deg, #00f3ff, #0284c7); border:none; color:#020617; font-weight:800; padding:0.6rem 1rem; border-radius:12px; font-size:0.85rem; cursor:pointer; text-align:center;">
-              🚗 Plan Route to ${capPlace}
-            </button>
-            <button onclick="if(window.switchTab) { window.switchTab('trip'); const ci = document.getElementById('trip-city-input'); if(ci){ ci.value='${capPlace}'; } if(window.addTripStop) window.addTripStop(); }" style="background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); color:#fff; font-weight:700; padding:0.55rem 1rem; border-radius:12px; font-size:0.83rem; cursor:pointer; text-align:center;">
-              🗃️ Add ${capPlace} to Trip Planner
-            </button>
-            <button onclick="loadStateDetails('${stateName}');" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:#94a3b8; font-weight:600; padding:0.45rem 1rem; border-radius:12px; font-size:0.78rem; cursor:pointer; text-align:center;">
-              🏛️ View ${stateName} State Showcase
-            </button>
           </div>
 
         </div>
 
+        <!-- Digital Travel & SOS Survival Apps Bar -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:1.25rem 1.5rem; margin-bottom:1.5rem;">
+          <div style="font-size:0.8rem; font-weight:800; color:#10b981; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.85rem;">
+            📲 Essential Digital Survival &amp; Travel Apps for ${capPlace}
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem;">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:0.6rem 0.85rem; display:flex; align-items:center; gap:0.6rem;">
+              <span style="font-size:1.3rem;">🚆</span>
+              <div>
+                <div style="font-size:0.82rem; font-weight:800; color:#fff;">IRCTC &amp; UTS</div>
+                <div style="font-size:0.7rem; color:#94a3b8;">Train &amp; Metro Passes</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:0.6rem 0.85rem; display:flex; align-items:center; gap:0.6rem;">
+              <span style="font-size:1.3rem;">🛺</span>
+              <div>
+                <div style="font-size:0.82rem; font-weight:800; color:#fff;">Uber, Ola &amp; Rapido</div>
+                <div style="font-size:0.7rem; color:#94a3b8;">Metered Auto &amp; Cabs</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:0.6rem 0.85rem; display:flex; align-items:center; gap:0.6rem;">
+              <span style="font-size:1.3rem;">💳</span>
+              <div>
+                <div style="font-size:0.82rem; font-weight:800; color:#fff;">PhonePe &amp; UPI</div>
+                <div style="font-size:0.7rem; color:#94a3b8;">99% Acceptance</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:0.6rem 0.85rem; display:flex; align-items:center; gap:0.6rem;">
+              <span style="font-size:1.3rem;">🚨</span>
+              <div>
+                <div style="font-size:0.82rem; font-weight:800; color:#fff;">112 India SOS</div>
+                <div style="font-size:0.7rem; color:#94a3b8;">Emergency Response</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.25rem;">
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button onclick="if(window.switchTab) { window.switchTab('travel'); const re = document.getElementById('route-end'); if(re){ re.value='${capPlace}'; re.dispatchEvent(new Event('input', {bubbles:true})); } }" style="background:linear-gradient(135deg, #00f3ff, #0284c7); border:none; color:#020617; font-weight:800; padding:0.7rem 1.25rem; border-radius:14px; font-size:0.88rem; cursor:pointer;">
+              🚗 Plan Route to ${capPlace}
+            </button>
+            <button onclick="if(window.switchTab) { window.switchTab('trip'); const ci = document.getElementById('trip-city-input'); if(ci){ ci.value='${capPlace}'; } if(window.addTripStop) window.addTripStop(); }" style="background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); color:#fff; font-weight:700; padding:0.7rem 1.25rem; border-radius:14px; font-size:0.88rem; cursor:pointer;">
+              🗃️ Add ${capPlace} to Trip Planner
+            </button>
+          </div>
+
+          <button onclick="loadStateDetails('${stateName}');" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); color:#cbd5e1; font-weight:700; padding:0.65rem 1.25rem; border-radius:14px; font-size:0.85rem; cursor:pointer;">
+            🏛️ Back to ${stateName} State Showcase ➔
+          </button>
+        </div>
+
       </div>
     `;
+
+    // Smooth scroll into view
+    setTimeout(() => {
+      viewContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   }
 
   function loadStateDetails(stateName) {
@@ -4095,68 +4208,9 @@
       </div>
     `;
   }
-  function showCitySpotlight(cityName) {
-    const spotlightContainer = document.getElementById("tourism-city-spotlight");
-    if (!spotlightContainer) return;
-
-    const coords = getCityCoords(cityName);
-    const facts = computeLogisticsFacts(cityName, coords, 0.5);
-
-    spotlightContainer.style.display = "block";
-    spotlightContainer.innerHTML = `
-      <h4 style="font-weight: 700; font-size: 1.15rem; color: var(--color-accent); margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.4rem;">
-        <span>📍</span> ${capitalizeWord(cityName)}
-      </h4>
-      <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; display: flex; flex-direction: column; gap: 0.4rem;">
-        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.25rem;">
-          <span>District:</span> <strong style="color:var(--text-primary);">${facts.district}</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.25rem;">
-          <span>State:</span> <strong style="color:var(--text-primary);">${facts.state}</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.25rem;">
-          <span>ZIP Code:</span> <strong style="color:var(--color-success); font-family:var(--font-mono);">${facts.zipCode}</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.25rem;">
-          <span>Latitude:</span> <strong style="color:var(--text-primary); font-family:var(--font-mono);">${coords.lat.toFixed(4)}° N</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; padding-bottom: 0.5rem;">
-          <span>Longitude:</span> <strong style="color:var(--text-primary); font-family:var(--font-mono);">${coords.lng.toFixed(4)}° E</strong>
-        </div>
-      </div>
-      <button id="btn-spotlight-route" class="visualizer-btn" style="width:100%; margin-top:0.75rem; background:var(--color-primary); border-color:var(--color-primary); color:white; font-weight:600;">
-        Plan Route to ${capitalizeWord(cityName)} 🚗
-      </button>
-    `;
-
-    // Hook up button to plan route
-    const btnRoute = document.getElementById("btn-spotlight-route");
-    if (btnRoute) {
-      btnRoute.addEventListener("click", () => {
-        // Pre-fill route destination
-        const routeEnd = document.getElementById("route-end");
-        if (routeEnd) {
-          routeEnd.value = capitalizeWord(cityName);
-          
-          // Trigger custom autocomplete input handler if needed to bind values internally
-          const event = new Event('input', { bubbles: true });
-          routeEnd.dispatchEvent(event);
-        }
-        
-        // Switch to Travel tab
-        switchTab('travel');
-
-        // Automatically trigger calculation if start city is filled
-        const routeStart = document.getElementById("route-start");
-        if (routeStart && routeStart.value.trim().length > 0) {
-          const btnGenerate = document.getElementById("btn-generate-route");
-          if (btnGenerate) {
-            setTimeout(() => {
-              btnGenerate.click();
-            }, 100);
-          }
-        }
-      });
+    function showCitySpotlight(cityName) {
+    if (typeof selectTourismPlace === 'function') {
+      selectTourismPlace(cityName);
     }
   }
 
