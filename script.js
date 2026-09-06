@@ -44,12 +44,13 @@
     } else {
       smoothScroll = lerp(smoothScroll, targetScroll, 0.14);
     }
-    if (Math.abs(smoothScroll - targetScroll) < 0.08) {
+    if (Math.abs(smoothScroll - targetScroll) < 0.05) {
       smoothScroll = targetScroll;
     }
 
-    mouseX = lerp(mouseX, targetMouseX, 0.12);
-    mouseY = lerp(mouseY, targetMouseY, 0.12);
+    // High-refresh rate tuned mouse lerp factor (0.08)
+    mouseX = lerp(mouseX, targetMouseX, 0.08);
+    mouseY = lerp(mouseY, targetMouseY, 0.08);
 
     const isReduced = reduceMotion && reduceMotion.matches;
     const curMX = isReduced ? 0 : mouseX;
@@ -73,7 +74,7 @@
     const sightsScreenTop = Math.min(220, Math.max(112, window.innerHeight * 0.19)) - 50;
     const sightsParentTop = window.innerHeight - (window.innerHeight - sightsScreenTop) / backScale;
 
-    // Apply CSS Variables for 3D Motion
+    // Apply CSS Variables for 3D GPU Motion
     root.style.setProperty('--mx', curMX.toFixed(4));
     root.style.setProperty('--my', curMY.toFixed(4));
 
@@ -146,9 +147,12 @@
     root.style.setProperty('--sights-top', `${sightsParentTop.toFixed(4)}px`);
     root.style.setProperty('--sights-screen-top', `${sightsScreenTop.toFixed(4)}px`);
 
-    if (Math.abs(smoothScroll - targetScroll) > 0.08 ||
-        Math.abs(mouseX - targetMouseX) > 0.001 ||
-        Math.abs(mouseY - targetMouseY) > 0.001) {
+    // Idle Cutoff Check: stop RAF loop when motion settles
+    const scrollDelta = Math.abs(smoothScroll - targetScroll);
+    const mouseDeltaX = Math.abs(mouseX - targetMouseX);
+    const mouseDeltaY = Math.abs(mouseY - targetMouseY);
+
+    if (scrollDelta > 0.05 || mouseDeltaX > 0.0005 || mouseDeltaY > 0.0005) {
       requestTick();
     }
   }
@@ -298,11 +302,12 @@
     sightPrev = document.querySelector('.sight-prev');
     sightNext = document.querySelector('.sight-next');
 
+    // Strictly Passive Listeners for 60+ FPS Scroll & Motion
     window.addEventListener('scroll', requestTick, { passive: true });
     window.addEventListener('resize', () => {
       updateSightSlider();
       requestTick();
-    });
+    }, { passive: true });
 
     window.addEventListener('pointermove', (e) => {
       targetMouseX = e.clientX / window.innerWidth - 0.5;

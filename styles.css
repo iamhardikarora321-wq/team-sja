@@ -39,7 +39,7 @@
   --text-mist: #edf4ec;
   --text-sage: #8ca892;
   --glass-bg: rgba(6, 16, 10, 0.55);
-  --glass-blur: blur(24px);
+  --glass-blur: blur(14px);
   --glass-border: 1px solid rgba(237, 244, 236, 0.12);
   --glass-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
 
@@ -74,7 +74,10 @@ button { border: 0; font: inherit; }
   z-index: 0;
   pointer-events: none;
   background: url('./assets/jungle_bg.png') center/cover no-repeat fixed;
-  filter: brightness(0.65) contrast(1.1);
+  filter: brightness(0.7) contrast(1.05);
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .cinema-scroll {
@@ -91,6 +94,9 @@ button { border: 0; font: inherit; }
   overflow: hidden;
   isolation: isolate;
   background: url('./assets/jungle_bg.png') center/cover no-repeat #040a06;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @media (min-width: 900px) {
@@ -111,7 +117,7 @@ button { border: 0; font: inherit; }
   }
 }
 
-/* Volumetric Golden / Emerald Rays Piercing Canopy */
+/* Volumetric Golden / Emerald Rays Piercing Canopy (Hardware-Accelerated) */
 .sunbeams-overlay {
   position: absolute;
   inset: 0;
@@ -121,6 +127,9 @@ button { border: 0; font: inherit; }
               linear-gradient(135deg, rgba(237, 244, 236, 0.12) 0%, rgba(140, 168, 146, 0.04) 45%, transparent 75%);
   mix-blend-mode: overlay;
   opacity: 0.9;
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .world {
@@ -128,6 +137,9 @@ button { border: 0; font: inherit; }
   inset: 0;
   overflow: hidden;
   background: url('./assets/jungle_bg.png') center/cover no-repeat;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* Minimalist Split Navigation Header */
@@ -194,8 +206,10 @@ button { border: 0; font: inherit; }
   display: block;
   user-select: none;
   -webkit-user-drag: none;
-  will-change: transform, opacity, filter;
   pointer-events: none;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .sky-img {
@@ -204,8 +218,7 @@ button { border: 0; font: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: none;
-  filter: blur(var(--blur-px)) brightness(var(--back-brightness)) contrast(1.05);
+  transform: translateZ(0);
   z-index: 0;
 }
 
@@ -219,7 +232,8 @@ button { border: 0; font: inherit; }
   opacity: var(--back-opacity);
   transform: translate3d(var(--back-x), var(--back-y), 0) scale(var(--back-scale));
   transform-origin: 50% 100%;
-  will-change: transform, filter, opacity;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .back-img {
@@ -228,7 +242,6 @@ button { border: 0; font: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(var(--blur-px)) brightness(var(--back-brightness));
 }
 
 .back-bazaar,
@@ -245,7 +258,6 @@ button { border: 0; font: inherit; }
 .back-bazaar {
   z-index: 3;
   opacity: 1;
-  filter: blur(var(--bazaar-blur-px)) brightness(var(--bazaar-brightness)) saturate(var(--bazaar-saturation));
   transform: translate3d(-50%, var(--bazaar-y), 0) scale(0.86);
 }
 
@@ -256,7 +268,7 @@ button { border: 0; font: inherit; }
   transform: translate3d(-50%, calc(var(--four-y) - 110px), 0) scale(var(--four-scale));
 }
 
-/* 3D Slider & Translucent Glass Cards ("Browse All") */
+/* 3D Slider & Lightweight Translucent Glass Cards (Capped 14px Blur) */
 .sights-slider {
   position: absolute;
   z-index: 2;
@@ -271,6 +283,7 @@ button { border: 0; font: inherit; }
   transform-origin: 0 0;
   pointer-events: auto;
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .sights-track {
@@ -280,6 +293,7 @@ button { border: 0; font: inherit; }
   transform: translate3d(calc(var(--sights-shift) - 18vw), 0, 0);
   transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .sights-track.is-jumping {
@@ -294,8 +308,8 @@ button { border: 0; font: inherit; }
   overflow: hidden;
   border-radius: 20px;
   background: rgba(6, 16, 10, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(237, 244, 236, 0.12);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
   color: var(--text-mist);
@@ -303,12 +317,14 @@ button { border: 0; font: inherit; }
   pointer-events: auto;
   user-select: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .sight-card:hover {
   border-color: rgba(237, 244, 236, 0.28);
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75);
-  transform: translateY(-4px);
+  transform: translate3d(0, -4px, 0);
 }
 
 .sight-card:focus-visible,
@@ -396,6 +412,7 @@ button { border: 0; font: inherit; }
   transform: translate3d(0, var(--sights-y), 0);
   pointer-events: none;
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .sights-controls.is-ready {
@@ -411,19 +428,20 @@ button { border: 0; font: inherit; }
   border-radius: 999px;
   color: var(--text-mist);
   background: rgba(6, 16, 10, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(237, 244, 236, 0.15);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   font-size: 18px;
   transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  will-change: transform;
 }
 
 .sight-nav:hover {
   background: rgba(12, 28, 18, 0.88);
   border-color: rgba(237, 244, 236, 0.35);
-  transform: scale(1.05);
+  transform: scale3d(1.05, 1.05, 1);
 }
 
 /* Classical Editorial Hero Title Lockup (Middle-Left Anchored) */
@@ -432,10 +450,12 @@ button { border: 0; font: inherit; }
   z-index: 5;
   left: clamp(32px, 5vw, 64px);
   top: 48%;
-  transform: translateY(-50%);
+  transform: translate3d(0, -50%, 0);
   width: min(42vw, 540px);
   text-align: left;
   pointer-events: auto;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .hero-title {
@@ -457,6 +477,7 @@ button { border: 0; font: inherit; }
   transform: translate3d(0, var(--title-y), 0) scale(var(--title-scale));
   opacity: var(--title-opacity);
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .hero-subtitle {
@@ -476,8 +497,8 @@ button { border: 0; font: inherit; }
   line-height: 1.4;
   text-align: left;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.85);
-  pointer-events: none;
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* Floating Action Tray (Right Side Pill Stack Anchored) */
@@ -486,11 +507,13 @@ button { border: 0; font: inherit; }
   z-index: 8;
   right: clamp(32px, 5vw, 64px);
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate3d(0, -50%, 0);
   display: flex;
   flex-direction: column;
   gap: 14px;
   pointer-events: auto;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .action-pill-btn {
@@ -500,8 +523,8 @@ button { border: 0; font: inherit; }
   padding: 10px 20px;
   border-radius: 999px;
   background: rgba(6, 16, 10, 0.55);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(237, 244, 236, 0.12);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   color: var(--text-mist);
@@ -512,12 +535,14 @@ button { border: 0; font: inherit; }
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .action-pill-btn:hover {
   background: rgba(12, 28, 18, 0.85);
   border-color: rgba(237, 244, 236, 0.35);
-  transform: translateX(-4px) scale(1.03);
+  transform: translate3d(-4px, 0, 0) scale(1.03);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
 }
 
@@ -532,7 +557,7 @@ button { border: 0; font: inherit; }
   border-color: rgba(237, 244, 236, 0.08);
 }
 
-/* Mid-ground & Parallax Layers */
+/* Mid-ground & Parallax Layers (Overgrown Stone Archway) */
 .bridge-img {
   z-index: 4;
   left: 50%;
@@ -542,6 +567,8 @@ button { border: 0; font: inherit; }
   transform: translate3d(var(--bridge-x), var(--bridge-y), 0) scale(var(--bridge-scale));
   transform-origin: 50% 100%;
   filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.9));
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .splitframe-img {
@@ -552,6 +579,8 @@ button { border: 0; font: inherit; }
   height: auto;
   pointer-events: none;
   filter: contrast(1.08) saturate(1.15);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .splitframe-left {
@@ -575,6 +604,7 @@ button { border: 0; font: inherit; }
   opacity: var(--frame2-opacity);
   transform: translate3d(var(--frame2-x), var(--frame2-y), 0) scale(var(--frame2-scale));
   transform-origin: 50% 48%;
+  will-change: transform, opacity;
 }
 
 .shade {
@@ -587,6 +617,7 @@ button { border: 0; font: inherit; }
     rgba(var(--blur-tint), var(--shade-top-alpha)) 0%,
     rgba(var(--blur-tint), var(--shade-mid-alpha)) 48%,
     rgba(var(--blur-tint), var(--shade-bottom-alpha)) 100%);
+  will-change: opacity;
 }
 
 .intro-copy {
@@ -635,7 +666,7 @@ button { border: 0; font: inherit; }
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(14px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
@@ -723,8 +754,8 @@ button { border: 0; font: inherit; }
   border-radius: 999px;
   color: var(--text-mist);
   background: rgba(6, 16, 10, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(237, 244, 236, 0.18);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
   pointer-events: auto;
@@ -734,12 +765,13 @@ button { border: 0; font: inherit; }
   letter-spacing: 0.2em;
   text-transform: uppercase;
   transition: all 0.3s ease;
+  will-change: transform;
 }
 
 .note-button:hover {
   background: rgba(12, 28, 18, 0.9);
   border-color: rgba(237, 244, 236, 0.38);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
 }
 
 .note-button span:first-child {
