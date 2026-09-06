@@ -49,7 +49,7 @@
       smoothScroll = targetScroll;
     }
 
-    // High-refresh rate tuned mouse lerp factor (0.08)
+    // High-refresh rate mouse lerp factor (0.08)
     mouseX = lerp(mouseX, targetMouseX, 0.08);
     mouseY = lerp(mouseY, targetMouseY, 0.08);
 
@@ -57,96 +57,56 @@
     const curMX = isReduced ? 0 : mouseX;
     const curMY = isReduced ? 0 : mouseY;
 
+    // 3-Page Cinematic Navigation Math
+    // Page 1: Intro (0px - 600px)
+    const introExit = smoothstep(90, 600, smoothScroll);
+
+    // Page 2: 3D Feature Slides Showcase (600px - 2100px)
+    const sightsEnterRaw = smoothstep(500, 850, smoothScroll);
+    const sightsExitRaw = smoothstep(1950, 2300, smoothScroll);
+    const sightsEnter = sightsEnterRaw * (1 - sightsExitRaw);
+    const sightsControlsEnter = smoothstep(600, 900, smoothScroll) * (1 - sightsExitRaw);
+
     const frame2 = segmentInOut(smoothScroll, 560, 900, 1300, 1620);
     const frame3 = segmentInOut(smoothScroll, 1760, 2140, 2540, 2700);
     const progress = clamp(smoothScroll / 2700);
-    const introExit = smoothstep(90, 650, smoothScroll);
-    const sightsEnterRaw = smoothstep(2760, 3560, smoothScroll);
-    const sightsEnter = Math.pow(sightsEnterRaw, 1.55);
-    const sightsControlsEnter = smoothstep(3360, 3660, smoothScroll);
     const blurActive = clamp(frame2.active + frame3.active);
-    const frame2Opacity = frame2.active * (1 - frame3.enter);
-    const splitDrift = Math.pow(frame2.enter, 1.5);
-    const panel2Opacity = frame2.active * (1 - frame2.exit);
-    const panel3Opacity = frame3.active * (1 - frame3.exit);
     const backScale = 0.76 + progress * 0.2 + frame2.enter * 0.18 + frame3.enter * 0.16;
     const sharedHeroY = progress * -74;
     const sharedHeroScale = progress * 0.23;
-    const sightsScreenTop = Math.min(220, Math.max(112, window.innerHeight * 0.19)) - 50;
-    const sightsParentTop = window.innerHeight - (window.innerHeight - sightsScreenTop) / backScale;
 
     // Apply CSS Variables for 3D GPU Motion
     root.style.setProperty('--mx', curMX.toFixed(4));
     root.style.setProperty('--my', curMY.toFixed(4));
-
-    root.style.setProperty('--back-opacity', (1 - frame2.active * 0.06).toFixed(4));
-    root.style.setProperty('--back-x', `${(curMX * -16).toFixed(4)}px`);
-    root.style.setProperty('--back-y', `${(curMY * -6).toFixed(4)}px`);
     root.style.setProperty('--back-scale', backScale.toFixed(4));
 
-    root.style.setProperty('--four-y', `${(10 + progress * 10).toFixed(4)}vh`);
-    root.style.setProperty('--four-scale', (0.78 + progress * 0.16).toFixed(4));
-
-    root.style.setProperty('--bazaar-y', `${(20 - progress * 8).toFixed(4)}vh`);
-    root.style.setProperty('--blur-px', `${(blurActive * 14).toFixed(4)}px`);
-    root.style.setProperty('--back-brightness', (1 - blurActive * 0.255).toFixed(4));
-    root.style.setProperty('--bazaar-blur-px', `${(frame2.active * 14).toFixed(4)}px`);
-    root.style.setProperty('--bazaar-brightness', (1 - frame2.active * 0.255 - frame3.active * 0.06).toFixed(4));
-    root.style.setProperty('--bazaar-saturation', (1 + frame3.active * 0.18).toFixed(4));
-
-    root.style.setProperty('--shade-opacity', '1');
-    root.style.setProperty('--shade-z', frame2.active > 0.02 ? '2' : '0');
-    root.style.setProperty('--shade-top-alpha', (blurActive * 0.465).toFixed(4));
-    root.style.setProperty('--shade-mid-alpha', (blurActive * 0.42).toFixed(4));
-    root.style.setProperty('--shade-bottom-alpha', (blurActive * 0.51).toFixed(4));
-
+    // Page 1 Intro Elements (Hero title & Archway Portal)
     root.style.setProperty('--title-y', `${(introExit * -210).toFixed(4)}px`);
     root.style.setProperty('--title-scale', (1 - introExit * 0.08).toFixed(4));
     root.style.setProperty('--title-opacity', (1 - introExit).toFixed(4));
 
-    // Overgrown Stone Arch Portal Shift & Scale Motion
     root.style.setProperty('--bridge-x', `calc(-50% + ${(curMX * 22).toFixed(4)}px)`);
-    root.style.setProperty('--bridge-y', `${(curMY * 10 + sharedHeroY - frame2.exit * 760).toFixed(4)}px`);
-    root.style.setProperty('--bridge-bottom', `${(0 - frame2.enter * 10).toFixed(4)}vh`);
-    root.style.setProperty('--bridge-width', `${(76 + frame2.enter * 30).toFixed(4)}vw`);
-    root.style.setProperty('--bridge-scale', (1.02 + sharedHeroScale + frame2.exit * 0.46).toFixed(4));
+    root.style.setProperty('--bridge-y', `${(curMY * 10 + sharedHeroY - introExit * 350).toFixed(4)}px`);
+    root.style.setProperty('--bridge-scale', (1.02 + sharedHeroScale + introExit * 0.35).toFixed(4));
 
-    // Splitframe Leaves Parting Sideways
-    root.style.setProperty('--split-left-x', `calc(-50% + ${(-splitDrift * 48).toFixed(4)}vw + ${(curMX * 26).toFixed(4)}px)`);
-    root.style.setProperty('--split-left-y', `${(curMY * 12 + sharedHeroY - splitDrift * 180).toFixed(4)}px`);
-    root.style.setProperty('--split-left-scale', (1 + sharedHeroScale + frame2.enter * 0.74).toFixed(4));
+    root.style.setProperty('--split-left-x', `calc(-50% + ${(-introExit * 48).toFixed(4)}vw + ${(curMX * 26).toFixed(4)}px)`);
+    root.style.setProperty('--split-left-y', `${(curMY * 12 + sharedHeroY - introExit * 120).toFixed(4)}px`);
 
-    root.style.setProperty('--split-right-x', `calc(-50% + ${(splitDrift * 48).toFixed(4)}vw + ${(curMX * 26).toFixed(4)}px)`);
-    root.style.setProperty('--split-right-y', `${(curMY * 12 + sharedHeroY - splitDrift * 180).toFixed(4)}px`);
-    root.style.setProperty('--split-right-scale', (1 + sharedHeroScale + frame2.enter * 0.74).toFixed(4));
+    root.style.setProperty('--split-right-x', `calc(-50% + ${(introExit * 48).toFixed(4)}vw + ${(curMX * 26).toFixed(4)}px)`);
+    root.style.setProperty('--split-right-y', `${(curMY * 12 + sharedHeroY - introExit * 120).toFixed(4)}px`);
 
-    root.style.setProperty('--frame2-opacity', frame2Opacity.toFixed(4));
-    root.style.setProperty('--frame2-x', `calc(-50% + ${(curMX * 10).toFixed(4)}px)`);
-    root.style.setProperty('--frame2-y', `calc(-50% + ${(curMY * 8 - frame2.exit * 150).toFixed(4)}px)`);
-    root.style.setProperty('--frame2-scale', (1.06 + frame2.enter * 0.08 + frame2.exit * 0.08).toFixed(4));
-
-    root.style.setProperty('--intro-copy-y', `${(introExit * 90).toFixed(4)}px`);
-    root.style.setProperty('--intro-copy-opacity', (1 - introExit).toFixed(4));
-
-    root.style.setProperty('--panel2-opacity', panel2Opacity.toFixed(4));
-    root.style.setProperty('--panel2-y', `calc(-50% + ${(-frame2.exit * 86 + (1 - frame2.enter) * 58).toFixed(4)}px)`);
-
-    root.style.setProperty('--panel3-opacity', panel3Opacity.toFixed(4));
-    root.style.setProperty('--panel3-y', `calc(-50% + ${(-frame3.exit * 86 + (1 - frame3.enter) * 58).toFixed(4)}px)`);
-
+    // Page 2 3D Feature Slides & Page 3 Exit ("Slide is going to empty")
     root.style.setProperty('--sights-opacity', sightsEnter.toFixed(4));
     root.style.setProperty('--sights-controls-opacity', sightsControlsEnter.toFixed(4));
 
     if (sightsControls) {
-      sightsControls.classList.toggle("is-ready", sightsControlsEnter > 0.98);
+      sightsControls.classList.toggle("is-ready", sightsControlsEnter > 0.05);
     }
 
     root.style.setProperty('--sights-visibility', sightsEnter > 0.01 ? "visible" : "hidden");
-    root.style.setProperty('--sights-y', "0px");
-    root.style.setProperty('--sights-enter-x', `${((1 - sightsEnter) * 420).toFixed(4)}vw`);
+    root.style.setProperty('--sights-y', `${((1 - sightsEnterRaw) * 120 + sightsExitRaw * -180).toFixed(4)}px`);
+    root.style.setProperty('--sights-enter-x', "0px");
     root.style.setProperty('--sights-scale', (1 / backScale).toFixed(4));
-    root.style.setProperty('--sights-top', `${sightsParentTop.toFixed(4)}px`);
-    root.style.setProperty('--sights-screen-top', `${sightsScreenTop.toFixed(4)}px`);
 
     // Idle Detection Engine Cutoff: Stop RAF loop when scroll and mouse motion halt
     const scrollDelta = Math.abs(smoothScroll - targetScroll);
@@ -194,20 +154,33 @@
         const clone = card.cloneNode(true);
         clone.dataset.sightIndex = String(setIndex * originalSightCount + cardIndex);
 
-        clone.addEventListener('click', () => {
+        clone.addEventListener('click', (e) => {
+          e.preventDefault();
           selectSightCard(clone);
-          const h3 = clone.querySelector('h3');
-          if (h3 && window.openCityCardFromSlider) {
-            window.openCityCardFromSlider(h3.textContent.trim());
+          const fid = clone.dataset.featureId;
+          const url = clone.dataset.toolUrl;
+          if (fid || url) {
+            if (window.openFeature) {
+              window.openFeature(fid, url);
+            }
+          } else {
+            const h3 = clone.querySelector('h3');
+            if (h3 && window.openCityCardFromSlider) {
+              window.openCityCardFromSlider(h3.textContent.trim());
+            }
           }
         });
+
         clone.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             selectSightCard(clone);
-            const h3 = clone.querySelector('h3');
-            if (h3 && window.openCityCardFromSlider) {
-              window.openCityCardFromSlider(h3.textContent.trim());
+            const fid = clone.dataset.featureId;
+            const url = clone.dataset.toolUrl;
+            if (fid || url) {
+              if (window.openFeature) {
+                window.openFeature(fid, url);
+              }
             }
           } else if (e.key === 'ArrowLeft') {
             e.preventDefault();

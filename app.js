@@ -31091,6 +31091,7 @@ class HackathonGuide {
   // Decoupled Dynamic openFeature implementation
   // Rectified Decoupled Dynamic openFeature implementation (27 Distinct Main Working Features)
   // Clean Core Features openFeature implementation
+  // 3-Page Flow openFeature implementation
   function openFeature(featureId, targetUrl) {
     if (!featureId && !targetUrl) return;
 
@@ -31107,6 +31108,18 @@ class HackathonGuide {
       }
     });
 
+    // 1. Direct modal or sub-tool launchers
+    const directHandled = [
+      'themestudio', 'theme', 'constellation', 'matrix3d', 'hologram',
+      'spotlight', 'weatherintel'
+    ];
+
+    if (cleanId && directHandled.includes(cleanId) && typeof window.launchDirectFeatureTool === 'function') {
+      window.launchDirectFeatureTool(cleanId);
+      return;
+    }
+
+    // 2. Direct Main Tab Navigation (Scrolls smoothly to Page 3 #main-app-anchor)
     const tabMap = {
       'travelintel': 'travelintel',
       'roam': 'roam',
@@ -31123,16 +31136,12 @@ class HackathonGuide {
       if (typeof window.switchTab === 'function') {
         window.switchTab(tabId);
       }
-      const tabEl = document.getElementById('tab-content-' + tabId);
-      if (tabEl) {
-        tabEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        const anchor = document.getElementById('main-app-anchor');
-        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      const anchor = document.getElementById('main-app-anchor');
+      if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
 
+    // 3. Fallback targetUrl anchor navigation
     if (targetUrl && targetUrl.startsWith('#')) {
       const targetEl = document.querySelector(targetUrl);
       if (targetEl) {

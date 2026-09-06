@@ -271,19 +271,19 @@ button { border: 0; font: inherit; }
 /* 3D Slider & Lightweight Translucent Glass Cards (Capped 14px Blur) */
 .sights-slider {
   position: absolute;
-  z-index: 2;
+  z-index: 10;
   left: 0;
   right: 0;
-  top: auto;
-  bottom: 32px;
+  top: 48%;
   padding: 0 40px;
-  opacity: 1;
+  opacity: var(--sights-opacity);
   visibility: var(--sights-visibility);
   transform: translate3d(var(--sights-enter-x), var(--sights-y), 0) scale(var(--sights-scale));
-  transform-origin: 0 0;
+  transform-origin: center center;
   pointer-events: auto;
-  will-change: transform;
+  will-change: transform, opacity;
   backface-visibility: hidden;
+  transition: opacity 0.3s ease;
 }
 
 .sights-track {
@@ -846,7 +846,22 @@ button { border: 0; font: inherit; }
   .story-panel h2 { font-size: 2.45rem; }
   .facts { gap: 18px; margin-top: 34px; }
   .facts dt { font-size: 2.5rem; }
-  .sights-slider { padding: 0 16px; bottom: 16px; }
+  .sights-slider {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 48%;
+  padding: 0 40px;
+  opacity: var(--sights-opacity);
+  visibility: var(--sights-visibility);
+  transform: translate3d(var(--sights-enter-x), var(--sights-y), 0) scale(var(--sights-scale));
+  transform-origin: center center;
+  pointer-events: auto;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transition: opacity 0.3s ease;
+}
   .sights-track { gap: 12px; transform: translate3d(calc(var(--sights-shift) - 18vw), 0, 0); }
   .sight-card { flex-basis: min(82vw, 330px); height: 210px; padding: 20px; border-radius: 18px; }
   .sights-controls { bottom: calc(210px + 28px); left: 20px; }
@@ -859,7 +874,22 @@ button { border: 0; font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .scene-img, .back-stack, .hero-title, .intro-copy,
-  .story-panel, .sights-track, .sights-slider { transition: none; }
+  .story-panel, .sights-track, .sights-slider {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 48%;
+  padding: 0 40px;
+  opacity: var(--sights-opacity);
+  visibility: var(--sights-visibility);
+  transform: translate3d(var(--sights-enter-x), var(--sights-y), 0) scale(var(--sights-scale));
+  transform-origin: center center;
+  pointer-events: auto;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transition: opacity 0.3s ease;
+}
 }
 
 
