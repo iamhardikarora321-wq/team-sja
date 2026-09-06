@@ -191,33 +191,29 @@
 
   // --- UNIVERSAL GLOBAL EVENT DELEGATOR ---
   document.addEventListener("click", function(e) {
-    const target = e.target.closest("button, .tab-btn, .feature-card-compact, .sidebar-feature-item, .island-btn, [data-tab], [data-target], [data-action], a[href^='#']");
-    if (!target) return;
-
-    // 1. Check data-tab or data-target attribute
-    var tabId = target.dataset.tab || target.getAttribute("data-tab") || target.dataset.target || target.getAttribute("data-target");
-
-    // 2. Check element ID patterns (e.g. tab-btn-tourism -> tourism)
-    if (!tabId && target.id && target.id.startsWith("tab-btn-")) {
-      tabId = target.id.replace("tab-btn-", "");
-    }
-
-    // 3. Switch tab if target tab found
-    if (tabId) {
-      if (typeof window.switchTab === 'function') {
+    const target = e.target.closest(".tab-btn, .sidebar-feature-item, .island-btn[data-target], [data-tab]");
+    if (target) {
+      var tabId = target.dataset.tab || target.getAttribute("data-tab");
+      if (!tabId && target.dataset.target && (target.classList.contains("island-btn") || target.classList.contains("sidebar-feature-item") || target.classList.contains("tab-btn"))) {
+        tabId = target.dataset.target;
+      }
+      if (!tabId && target.id && target.id.startsWith("tab-btn-")) {
+        tabId = target.id.replace("tab-btn-", "");
+      }
+      if (tabId && typeof window.switchTab === 'function') {
         window.switchTab(tabId);
       }
     }
 
-    // 4. Handle Showcase 3D modal trigger buttons
-    if (target.id === "nav-browse-all-btn" || target.id === "island-more-btn" || target.classList.contains("browse-all-trigger") || (target.textContent && target.textContent.includes("Browse All"))) {
+    const triggerBtn = e.target.closest("#nav-browse-all-btn, #island-more-btn, .browse-all-trigger");
+    if (triggerBtn) {
       if (typeof window.openShowcaseModal === 'function') {
         window.openShowcaseModal();
       }
     }
 
-    // 5. Handle Sidebar Search Drawer trigger buttons
-    if (target.id === "header-search-trigger" || target.id === "sidebar-search-btn") {
+    const searchBtn = e.target.closest("#header-search-trigger, #sidebar-search-btn");
+    if (searchBtn) {
       if (typeof window.openDrawer === 'function') {
         window.openDrawer('search');
       }
@@ -1235,11 +1231,16 @@
     else if (tabId === 'trip' || tabId === 'tripplanner' || tabId === 'itinerary' || tabId === 'budget' || tabId === 'pack' || tabId === 'plan' || tabId === 'notes') {
       tabId = 'trip';
     }
-    else if (tabId === 'game' || tabId === 'geoguess' || tabId === 'gameplay' || tabId === 'quiz' || tabId === 'guess' || tabId === 'spelling') {
+    else if (tabId === 'game' || tabId === 'geoguess' || tabId === 'gameplay' || tabId === 'guess' || tabId === 'spelling') {
       tabId = 'game';
     }
-    else if (tabId === 'travel' || tabId === 'geography' || tabId === 'matrix' || tabId === 'distance' || tabId === 'map') {
+    else if (tabId === 'travel' || tabId === 'geography' || tabId === 'quiz' || tabId === 'matrix' || tabId === 'distance' || tabId === 'map') {
       tabId = 'travel';
+    }
+
+    let activeTab = document.getElementById("tab-content-" + tabId);
+    if (!activeTab) {
+      return;
     }
 
     window._currentActiveTab = tabId;
@@ -1253,20 +1254,12 @@
       tab.style.visibility = "hidden";
     });
 
-    let activeTab = document.getElementById("tab-content-" + tabId);
-    if (!activeTab) {
-      tabId = 'travelintel';
-      activeTab = document.getElementById("tab-content-travelintel");
-    }
-
     // SHOW ONLY THE SELECTED ACTIVE TAB
-    if (activeTab) {
-      activeTab.classList.add("active");
-      activeTab.style.setProperty("display", "block", "important");
-      activeTab.style.opacity = "1";
-      activeTab.style.visibility = "visible";
-      activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    activeTab.classList.add("active");
+    activeTab.style.setProperty("display", "block", "important");
+    activeTab.style.opacity = "1";
+    activeTab.style.visibility = "visible";
+    activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     // Highlight active navigation buttons across UI
     document.querySelectorAll(".feature-card-compact, .tab-btn, .sidebar-feature-item, .island-btn").forEach(btn => {
