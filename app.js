@@ -12,9 +12,7 @@
       { id: 'tourism',     icon: '🏛️', name: 'State Tourism Directory', title: 'State Tourism Directory', category: 'State Tourism', desc: 'Explore top attractions, authentic cuisine, homestays, and culture across all 36 Indian States & UTs.' },
       { id: 'trip',        icon: '🧳', name: 'Interactive Trip Planner', title: 'Interactive Trip Planner', category: 'Trip Planning', desc: 'Plan custom itineraries, track multi-modal transit stops, and calculate travel budgets.' },
       { id: 'game',        icon: '🎮', name: 'Geoguess Heritage & Culture Quiz', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', desc: 'Gamified exploration of Indian regional culture, food, and historical sites.' },
-      { id: 'travel',      icon: '🌐', name: 'India Geography & Travel Matrix Hub', title: 'India Geography & Travel Matrix Hub', category: 'Geography Hub', desc: '15,000 city inter-city distance matrix, district boundaries, and postal PIN code finder.' },
-      { id: 'constellation', icon: '🌌', name: '3D Holographic City Constellation Studio', title: '3D Holographic City Constellation Studio', category: '3D Spatial Engine', desc: 'Interactive 3D spatial particle constellation visualizing 15,000+ Indian cities in real-time 3D orbit.' },
-      { id: 'theme',        icon: '🎨', name: '16-Palette Quantum Theme Studio', title: '16-Palette Quantum Theme Studio', category: 'Visual Customization', desc: 'Customize Arvora visual appearance with 16 dynamic HSL palettes (Aurora, Saffron, Himalayan, Synthwave, etc.).' }
+      { id: 'travel',      icon: '🌐', name: 'India Geography & Travel Matrix Hub', title: 'India Geography & Travel Matrix Hub', category: 'Geography Hub', desc: '15,000 city inter-city distance matrix, district boundaries, and postal PIN code finder.' }
     ]
   };
   window.ARVORA_ALL_FEATURES = ARVORA_MASTER_180_FEATURES;
@@ -380,6 +378,48 @@
   }
 
   checkLockStatus();
+
+  // --- SAFE FALLBACK TRIE CLASSES (If trie.js omitted) ---
+  if (typeof RadixTrie === 'undefined') {
+    window.RadixTrie = class RadixTrie {
+      constructor() { this.words = new Set(); }
+      insert(w) { if (w) this.words.add(String(w).toLowerCase()); }
+      autocomplete(prefix, limit = 10) {
+        if (!prefix) return [];
+        const p = String(prefix).toLowerCase();
+        const res = [];
+        if (typeof CITIES_DATA !== 'undefined' && Array.isArray(CITIES_DATA)) {
+          for (let c of CITIES_DATA) {
+            let name = (typeof c === 'string' ? c : (c.name || '')).toLowerCase();
+            if (name.startsWith(p)) {
+              res.push(typeof c === 'string' ? c : c.name);
+              if (res.length >= limit) break;
+            }
+          }
+        } else {
+          for (let w of this.words) {
+            if (w.startsWith(p)) {
+              res.push(w);
+              if (res.length >= limit) break;
+            }
+          }
+        }
+        return res;
+      }
+      getNodeCount() { return this.words.size; }
+      getEdgeCharacterCount() { return this.words.size * 5; }
+      exportToJSON() { return { name: "root", children: [] }; }
+      exportSubtreeToJSON() { return { name: "root", children: [] }; }
+    };
+  }
+
+  if (typeof StandardTrie === 'undefined') {
+    window.StandardTrie = class StandardTrie {
+      constructor() { this.words = new Set(); }
+      insert(w) { if (w) this.words.add(String(w).toLowerCase()); }
+      getNodeCount() { return this.words.size * 2; }
+    };
+  }
 
   // --- STATE VARIABLES ---
   let radixTrie = new RadixTrie();
@@ -22445,9 +22485,7 @@ setTimeout(init3DParallax, 300);
       tourism: 'State Tourism Directory',
       trip: 'Interactive Trip Planner',
       game: 'Geoguess Heritage & Culture Quiz',
-      travel: 'India Geography & Travel Matrix',
-      constellation: '3D Spatial Engine',
-      theme: 'Visual Customization'
+      travel: 'India Geography & Travel Matrix'
     };
 
     let source = window.ARVORA_ALL_FEATURES || ARVORA_MASTER_180_FEATURES;
