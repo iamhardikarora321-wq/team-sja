@@ -1189,10 +1189,10 @@
 
   window.switchTab = switchTab;
   window.switchTab = switchTab;
-  function switchTab(tabId) {
+    function switchTab(tabId) {
     if (!tabId) return;
 
-    // Direct Sub-Mode & Feature Routing
+    // 1. Primary Tab & Direct Sub-Mode Routing
     if (tabId === 'travelintel' || tabId === 'explore' || tabId === 'food' || tabId === 'culinary' || tabId === 'attractions') {
       tabId = 'travelintel';
       if (typeof window.setIntelTab === 'function') window.setIntelTab('explore');
@@ -1201,7 +1201,11 @@
       tabId = 'travelintel';
       if (typeof window.setIntelTab === 'function') window.setIntelTab('planner');
     }
-    else if (tabId === 'roam' || tabId === 'discover' || tabId === 'market' || tabId === 'control' || tabId === 'impact' || tabId === 'reroute' || tabId === 'loadmap' || tabId === 'autocomplete' || tabId === 'radix' || tabId === 'engine' || tabId === 'pattern' || tabId === 'analytics' || tabId === 'scanner' || tabId === 'routes') {
+    else if (tabId === 'roam' || tabId === 'discover') {
+      tabId = 'roam';
+      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode('discover');
+    }
+    else if (tabId === 'market' || tabId === 'control' || tabId === 'impact' || tabId === 'reroute' || tabId === 'loadmap') {
       let mode = 'discover';
       if (['explore', 'reroute', 'loadmap'].some(k => tabId.includes(k))) mode = 'explore';
       else if (tabId.includes('market')) mode = 'market';
@@ -1219,27 +1223,33 @@
       tabId = 'transport';
       if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
     }
-    else if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture' || tabId === 'translator' || tabId === 'audio' || tabId === 'etiquette' || tabId === 'phrases') {
+    else if (tabId === 'lingo' || tabId === 'culture' || tabId === 'lingo-culture' || tabId === 'translator' || tabId === 'audio') {
       tabId = 'lingo';
     }
-    else if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'apps' || tabId === 'digitalsurvival' || tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety' || tabId === 'vault' || tabId === 'sos' || tabId === 'helpline' || tabId === 'upi' || tabId === 'simguide') {
+    else if (tabId === 'survival' || tabId === 'survival-kit' || tabId === 'digitalsurvival' || tabId === 'appguide' || tabId === 'emergency' || tabId === 'safety') {
       tabId = 'survival';
     }
     else if (tabId === 'tourism' || tabId === 'stateshowcase' || tabId === 'state' || tabId === 'states' || tabId === 'showcase' || tabId === 'hotel' || tabId === 'homestay' || tabId === 'resort') {
       tabId = 'tourism';
     }
-    else if (tabId === 'trip' || tabId === 'tripplanner' || tabId === 'itinerary' || tabId === 'budget' || tabId === 'pack' || tabId === 'plan' || tabId === 'notes') {
+    else if (tabId === 'trip' || tabId === 'tripplanner' || tabId === 'itinerary' || tabId === 'plan') {
       tabId = 'trip';
     }
     else if (tabId === 'game' || tabId === 'geoguess' || tabId === 'gameplay' || tabId === 'guess' || tabId === 'spelling') {
       tabId = 'game';
     }
-    else if (tabId === 'travel' || tabId === 'geography' || tabId === 'quiz' || tabId === 'matrix' || tabId === 'distance' || tabId === 'map') {
+    else if (tabId === 'travel' || tabId === 'geography' || tabId === 'matrix' || tabId === 'distance' || tabId === 'map') {
       tabId = 'travel';
     }
 
     let activeTab = document.getElementById("tab-content-" + tabId);
     if (!activeTab) {
+      // Dynamic fallback lookup per feature item to open dedicated Feature Detail Modal
+      let featureMeta = getFeatureMetadata(tabId);
+      if (featureMeta) {
+        openFeatureDetailModal(featureMeta);
+        return;
+      }
       return;
     }
 
@@ -29483,3 +29493,133 @@ class HackathonGuide {
 
 
 })();
+
+
+  // =====================================================================
+  // 🌟 DYNAMIC FEATURE METADATA REGISTRY & DETAIL MODAL CONTROLLER (v35.0.0)
+  // =====================================================================
+  const FEATURE_LOOKUP = {
+    travelintel: { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', icon: '🗺️', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
+    explore: { id: 'explore', title: 'City Explorer & Heritage Sightseeing', category: 'Travel Intelligence', icon: '🗺️', desc: 'Discover top monuments, UNESCO heritage, and city landmarks across India.', parentTab: 'travelintel' },
+    attractions: { id: 'attractions', title: 'Attraction & Sightseeing Landmark Guide', category: 'Travel Intelligence', icon: '🌅', desc: 'Explore top rated sightseeing monuments and hidden gems.', parentTab: 'travelintel' },
+    culinary: { id: 'culinary', title: 'Authentic Indian Food & Culinary Directory', category: 'Travel Intelligence', icon: '🍲', desc: 'Savor regional delicacies, famous street foods, and iconic eateries.', parentTab: 'travelintel' },
+    planner: { id: 'planner', title: 'Smart Route & Multi-City Trip Calculator', category: 'Travel Intelligence', icon: '📍', desc: 'Calculate multi-stop driving distances, routes, and transit times.', parentTab: 'travelintel' },
+    routecalc: { id: 'routecalc', title: 'Multi-Stop Distance & Route Calculator', category: 'Travel Intelligence', icon: '🛣️', desc: 'Calculate exact distances and drive times between Indian cities.', parentTab: 'travelintel' },
+
+    roam: { id: 'roam', title: 'Nexora ROAM Destination Intelligence', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
+    discover: { id: 'discover', title: 'Live Crowd & Destination Discovery', category: 'Smart Travel', icon: '🧭', desc: 'Real-time crowd heatmaps and spot traffic discovery.', parentTab: 'roam' },
+    reroute: { id: 'reroute', title: 'Smart Rerouting & Peak Traffic Avoidance', category: 'Smart Travel', icon: '⚡', desc: 'Restructure your itinerary on the fly to bypass high crowd peak hours.', parentTab: 'roam' },
+    loadmap: { id: 'loadmap', title: 'Real-Time Destination Load Map', category: 'Smart Travel', icon: '🗺️', desc: 'Visual load map indicator for popular attractions and heritage hubs.', parentTab: 'roam' },
+    market: { id: 'market', title: 'Local Merchant & Artisan Marketplace', category: 'Smart Travel', icon: '🏪', desc: 'Connect with verified regional artisans, homestays, and craft guilds.', parentTab: 'roam' },
+    control: { id: 'control', title: 'Destination Authority Control Panel', category: 'Smart Travel', icon: '🏛️', desc: 'Overtourism mitigation, corridor balancing, and visitor traffic management.', parentTab: 'roam' },
+    impact: { id: 'impact', title: 'Sustainable Tourism & Economic Impact Calculator', category: 'Smart Travel', icon: '📊', desc: 'Calculate tourist revenue distribution and community impact metrics.', parentTab: 'roam' },
+
+    transport: { id: 'transport', title: 'Bharat Multi-Mode Transport & Tariff Hub', category: 'Transit & Fares', icon: '✈️', desc: 'Separated 5-mode transport estimator for Flights, Buses, Cars, Auto meter, and Railways.' },
+    flight: { id: 'flight', title: 'Aeroplane & Domestic Flight Estimator', category: 'Transit & Fares', icon: '🛫', desc: 'Air routes, baggage limits, airport codes, and fare breakdowns.', parentTab: 'transport' },
+    aeroplane: { id: 'aeroplane', title: 'Aeroplane & Flight Booking Guide', category: 'Transit & Fares', icon: '✈️', desc: 'Domestic flight corridors and airline baggage tariffs.', parentTab: 'transport' },
+    bus: { id: 'bus', title: 'Intercity & City Bus Tariff Matrix', category: 'Transit & Fares', icon: '🚌', desc: 'Volvo AC sleeper vs seater fares, RTC state stands, and local bus routes.', parentTab: 'transport' },
+    car: { id: 'car', title: 'Car, Taxi & Highway FASTag Toll Calculator', category: 'Transit & Fares', icon: '🚗', desc: 'Highway toll rates, FASTag costs, fuel estimation, and cab fares.', parentTab: 'transport' },
+    auto: { id: 'auto', title: 'Auto Rickshaw Official Meter Tariff', category: 'Transit & Fares', icon: '🛺', desc: 'Official RTO auto meter base fare and night surcharge calculator.', parentTab: 'transport' },
+    train: { id: 'train', title: 'Express Railways, PNR & IRCTC Guide', category: 'Transit & Fares', icon: '🚆', desc: 'Vande Bharat trains, 3AC/Sleeper fares, Tatkal timings, and PNR guides.', parentTab: 'transport' },
+
+    lingo: { id: 'lingo', title: 'Bharat Lingo & Cultural Audio Matrix', category: 'Culture & Audio', icon: '🗣️', desc: 'Text-to-Speech audio translator for 10 regional Indian languages.' },
+    culture: { id: 'culture', title: 'Regional Cultural Heritage Matrix', category: 'Culture & Audio', icon: '🎭', desc: 'Deep dive into local traditions, attire, art forms, and festivals.', parentTab: 'lingo' },
+    translator: { id: 'translator', title: 'Indian Regional Language Audio Translator', category: 'Culture & Audio', icon: '🔊', desc: 'Instant audio pronunciations for everyday travel phrases.', parentTab: 'lingo' },
+    etiquette: { id: 'etiquette', title: 'Temple & Social Etiquette Guide', category: 'Culture & Audio', icon: '🕌', desc: 'Footwear guidelines, temple photography rules, dhaba tipping, and bargaining norms.', parentTab: 'lingo' },
+    phrases: { id: 'phrases', title: 'Everyday Market & Travel Phrasebook', category: 'Culture & Audio', icon: '💬', desc: 'Essential regional phrases for cabs, shopping, food, and greetings.', parentTab: 'lingo' },
+
+    survival: { id: 'survival', title: 'Digital Survival Kit & SOS Center', category: 'Safety & Apps', icon: '📲', desc: 'Speed-dial emergency helplines, essential travel apps, and foreign tourist guide.' },
+    sos: { id: 'sos', title: 'Pan-India Emergency SOS Speed-Dial', category: 'Safety & Apps', icon: '🚨', desc: 'Direct speed-dial 112 National Emergency, 100 Police, 108 Medical, 1363 Tourist Helpline.', parentTab: 'survival' },
+    apps: { id: 'apps', title: 'Essential Indian Travel Apps Directory', category: 'Safety & Apps', icon: '📱', desc: 'Curated list of must-have apps: IRCTC, UTS, PhonePe/Paytm, Uber/Ola, DigiLocker.', parentTab: 'survival' },
+    upi: { id: 'upi', title: 'NRI & Foreign Tourist UPI & SIM Guide', category: 'Safety & Apps', icon: '💳', desc: 'Airport eSIM activation and Cheq UPI setup for international cards.', parentTab: 'survival' },
+    emergency: { id: 'emergency', title: '24/7 Medical & Safety Emergency Center', category: 'Safety & Apps', icon: '🚑', desc: 'Find nearby hospitals, pharmacies, and police stations across Indian cities.', parentTab: 'survival' },
+
+    tourism: { id: 'tourism', title: 'State Tourism & Hotelier Directory', category: 'Travel Guide', icon: '🏛️', desc: 'Explore top attractions, cuisine, homestays, and culture across all Indian states.' },
+    states: { id: 'states', title: 'Pan-India State & UT Showcase', category: 'Travel Guide', icon: '🗺️', desc: 'Comprehensive guide to all 36 States & Union Territories.', parentTab: 'tourism' },
+    hotel: { id: 'hotel', title: 'Boutique Hotels & Eco-Resorts Directory', category: 'Travel Guide', icon: '🏨', desc: 'Browse verified heritage hotels, homestays, and eco-lodges.', parentTab: 'tourism' },
+    homestay: { id: 'homestay', title: 'Authentic Local Homestays Portal', category: 'Travel Guide', icon: '🏡', desc: 'Connect directly with local homestay hosts across off-beat circuits.', parentTab: 'tourism' },
+
+    trip: { id: 'trip', title: 'Interactive Trip Planner & Itinerary Builder', category: 'Trip Planning', icon: '🧳', desc: 'Custom itinerary builder, multi-stop corridor planner, packing list & budget calculator.' },
+    itinerary: { id: 'itinerary', title: 'Day-by-Day Itinerary Builder', category: 'Trip Planning', icon: '📝', desc: 'Build customizable day-by-day travel schedules and export as text.', parentTab: 'trip' },
+    budget: { id: 'budget', title: 'Travel Budget & Expense Calculator', category: 'Trip Planning', icon: '💰', desc: 'Estimate daily travel expenses across Budget, Mid-range, and Luxury tiers.', parentTab: 'trip' },
+    pack: { id: 'pack', title: 'Smart Packing Checklist Manager', category: 'Trip Planning', icon: '🎒', desc: 'Categorized checklist for clothes, documents, medicines, tech, and toiletries.', parentTab: 'trip' },
+
+    game: { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based city guessing.' },
+    travel: { id: 'travel', title: 'India Geography & Distance Hub', category: 'Geography', icon: '🌐', desc: 'Distance matrix calculator, state search, and coordinate locator.' },
+    matrix: { id: 'matrix', title: 'Pan-India Inter-City Distance Matrix', category: 'Geography', icon: '📏', desc: 'Calculate exact driving, flight, and rail distances between 15,000+ cities.', parentTab: 'travel' },
+    geography: { id: 'geography', title: 'State & District Structure Directory', category: 'Geography', icon: '🗺️', desc: 'Explore district administrative boundaries, PIN codes, and state capitals.', parentTab: 'travel' }
+  };
+
+  function getFeatureMetadata(id) {
+    if (!id) return null;
+    let cleanId = id.toString().trim().toLowerCase();
+
+    if (FEATURE_LOOKUP[cleanId]) return FEATURE_LOOKUP[cleanId];
+
+    if (window.ARVORA_ALL_FEATURES) {
+      for (let catKey of Object.keys(window.ARVORA_ALL_FEATURES)) {
+        let items = window.ARVORA_ALL_FEATURES[catKey];
+        if (Array.isArray(items)) {
+          let found = items.find(item => item && item.id && item.id.toLowerCase() === cleanId);
+          if (found) {
+            return {
+              id: found.id,
+              title: found.name || found.title || found.id,
+              category: catKey.toUpperCase() + ' TOOL',
+              icon: found.icon || '⚡',
+              desc: found.desc || ('Explore dedicated tools for ' + (found.name || found.id) + '.')
+            };
+          }
+        }
+      }
+    }
+
+    let formattedTitle = cleanId.replace(/[-_]/g, ' ').replace(/\w/g, l => l.toUpperCase());
+    return {
+      id: cleanId,
+      title: formattedTitle + ' Feature Tool',
+      category: 'ARVORA FEATURE',
+      icon: '⚡',
+      desc: 'Explore interactive tools, real-time metrics, and verified data for ' + formattedTitle + '.'
+    };
+  }
+
+  function openFeatureDetailModal(feat) {
+    if (!feat) return;
+    let modal = document.getElementById('feature-detail-modal');
+    if (!modal) return;
+
+    let iconEl = document.getElementById('feature-modal-icon');
+    let titleEl = document.getElementById('feature-modal-title');
+    let catEl = document.getElementById('feature-modal-category');
+    let descEl = document.getElementById('feature-modal-desc');
+    let actionBtn = document.getElementById('feature-modal-action-btn');
+
+    if (iconEl) iconEl.textContent = feat.icon || '⚡';
+    if (titleEl) titleEl.textContent = feat.title || feat.name || feat.id;
+    if (catEl) catEl.textContent = feat.category || 'FEATURE VIEW';
+    if (descEl) descEl.textContent = feat.desc || 'Explore details and interactive tools for this Arvora feature.';
+    if (actionBtn) {
+      actionBtn.onclick = function() {
+        closeFeatureDetailModal();
+        if (feat.parentTab && typeof window.switchTab === 'function') {
+          window.switchTab(feat.parentTab);
+        }
+      };
+    }
+
+    modal.style.setProperty('display', 'flex', 'important');
+    modal.style.setProperty('z-index', '9999999', 'important');
+    modal.style.setProperty('opacity', '1', 'important');
+    modal.style.setProperty('visibility', 'visible', 'important');
+  }
+
+  function closeFeatureDetailModal() {
+    let modal = document.getElementById('feature-detail-modal');
+    if (!modal) return;
+    modal.style.setProperty('display', 'none', 'important');
+  }
+
+  window.getFeatureMetadata = getFeatureMetadata;
+  window.openFeatureDetailModal = openFeatureDetailModal;
+  window.closeFeatureDetailModal = closeFeatureDetailModal;
