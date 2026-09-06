@@ -22459,21 +22459,32 @@ setTimeout(init3DParallax, 300);
     let list = [];
     let seen = new Set();
 
-    if (window.ARVORA_ALL_FEATURES) {
-      Object.keys(window.ARVORA_ALL_FEATURES).forEach(function(catKey) {
-        let items = window.ARVORA_ALL_FEATURES[catKey];
+    const catNameMap = {
+      travelintel: 'Bharat Travel Intelligence',
+      roam: 'Nexora ROAM Destination Intelligence',
+      transport: 'Multi-Mode Transit & Mobility',
+      lingo: 'Regional Lingo & Culture Matrix',
+      survival: 'Digital Survival Kit & SOS Center',
+      tourism: 'State Tourism Directory',
+      trip: 'Interactive Trip Planner',
+      game: 'Geoguess Heritage & Culture Quiz',
+      travel: 'India Geography & Travel Matrix'
+    };
+
+    let source = window.ARVORA_ALL_FEATURES || ARVORA_MASTER_180_FEATURES;
+    if (source) {
+      Object.keys(source).forEach(function(catKey) {
+        let items = source[catKey];
         if (Array.isArray(items)) {
           items.forEach(function(f) {
             if (f && f.id && !seen.has(f.id)) {
               seen.add(f.id);
-              let catName = catKey === 'engine' ? 'Core Engine' :
-                            catKey === 'routing' ? 'Transit & Planning' :
-                            catKey === 'safety' ? 'Safety & Security' :
-                            catKey === 'culture' ? 'Culture & Experience' : catKey.toUpperCase();
+              let catName = catNameMap[catKey] || catKey.toUpperCase();
               list.push({
                 id: f.id,
                 title: f.name || f.title || f.id,
                 category: catName,
+                categoryKey: catKey,
                 icon: f.icon || '⚡',
                 desc: f.desc || 'Arvora premium interactive feature tool.'
               });
@@ -22483,38 +22494,12 @@ setTimeout(init3DParallax, 300);
       });
     }
 
-    // Fallback/Complementary DOM scanner for any unlisted tab-content elements
-    try {
-      let tabEls = document.querySelectorAll('.tab-content');
-      tabEls.forEach(function(tab) {
-        let rawId = tab.id.replace(/^tab-content-/, '');
-        if (rawId && !seen.has(rawId)) {
-          seen.add(rawId);
-          let titleEl = tab.querySelector('.panel-title, h2, h3');
-          let descEl = tab.querySelector('p');
-          let fullTitle = titleEl ? titleEl.textContent.trim() : rawId;
-          let icon = '⚡';
-          let iconMatch = fullTitle.match(/^([\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEF6])/);
-          if (iconMatch) {
-            icon = iconMatch[0];
-            fullTitle = fullTitle.replace(iconMatch[0], '').trim();
-          }
-          list.push({
-            id: rawId,
-            title: fullTitle || rawId,
-            category: 'Feature Tool',
-            icon: icon,
-            desc: descEl ? descEl.textContent.trim() : 'Explore Indian cities & features in Arvora.'
-          });
-        }
-      });
-    } catch(e) {}
-
     return list.length > 0 ? list : DEFAULT_SHOWCASE_FEATURES.slice();
   }
 
   let FEATURES = buildAllFeaturesList();
   let activeIndex = 0;
+  let selectedShowcaseCategory = 'all';
   let filteredFeatures = FEATURES.slice();
 
   function openShowcaseModal() {
@@ -22538,13 +22523,12 @@ setTimeout(init3DParallax, 300);
       
       const showcaseSearchInput = document.getElementById('showcase-search-input');
       let q = showcaseSearchInput ? showcaseSearchInput.value.trim().toLowerCase() : '';
-      if (q) {
-        filteredFeatures = FEATURES.filter(function(f) {
-          return f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q);
-        });
-      } else {
-        filteredFeatures = FEATURES.slice();
-      }
+      
+      filteredFeatures = FEATURES.filter(function(f) {
+        let matchCat = (selectedShowcaseCategory === 'all' || f.categoryKey === selectedShowcaseCategory);
+        let matchQuery = !q || f.title.toLowerCase().includes(q) || f.category.toLowerCase().includes(q) || f.desc.toLowerCase().includes(q) || f.id.toLowerCase().includes(q);
+        return matchCat && matchQuery;
+      });
 
       render3DCarousel();
     } catch(err) {
@@ -22569,54 +22553,62 @@ setTimeout(init3DParallax, 300);
     let stage = document.getElementById('showcase-3d-stage');
     if (!stage) return;
 
-    if (filteredFeatures.length === 0) {
-      stage.innerHTML = '<div style="color:#f87171; font-weight:700;">No matching features found</div>';
+    stage.style.display = 'grid';
+    stage.style.gridTemplateColumns = 'repeat(auto-fill, minmax(260px, 1fr))';
+    stage.style.gap = '1.1rem';
+    stage.style.maxHeight = '65vh';
+    stage.style.overflowY = 'auto';
+    stage.style.padding = '0.5rem';
+
+    if (!filteredFeatures || filteredFeatures.length === 0) {
+      stage.innerHTML = '<div style="grid-column:1/-1; color:#f87171; font-weight:700; padding:2rem; text-align:center; background:rgba(239,68,68,0.1); border-radius:16px;">No matching features found</div>';
       return;
     }
-
-    if (activeIndex >= filteredFeatures.length) activeIndex = filteredFeatures.length - 1;
-    if (activeIndex < 0) activeIndex = 0;
 
     stage.innerHTML = '';
 
     filteredFeatures.forEach(function(feat, idx) {
-      let offset = idx - activeIndex;
-      let absOffset = Math.abs(offset);
-
-      if (absOffset > 4) return;
-
       let card = document.createElement('div');
-      card.className = 'showcase-card-3d' + (offset === 0 ? ' active' : '');
-      
-      let translateX = offset * 220;
-      let translateZ = offset === 0 ? 180 : (absOffset * -130);
-      let rotateY = offset * -24;
-      let opacity = offset === 0 ? 1 : Math.max(0.2, 1 - absOffset * 0.25);
-
-      card.style.transform = 'translateX(' + translateX + 'px) translateZ(' + translateZ + 'px) rotateY(' + rotateY + 'deg)';
-      card.style.opacity = opacity;
-      card.style.zIndex = 100 - absOffset;
+      card.className = 'showcase-card-3d-grid';
+      card.style.background = 'linear-gradient(135deg, rgba(15,23,42,0.92), rgba(2,6,23,0.95))';
+      card.style.border = '1px solid rgba(0, 243, 255, 0.3)';
+      card.style.borderRadius = '16px';
+      card.style.padding = '1.1rem';
+      card.style.cursor = 'pointer';
+      card.style.transition = 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+      card.style.display = 'flex';
+      card.style.flexDirection = 'column';
+      card.style.justifyContent = 'space-between';
 
       card.innerHTML = [
-        '<div style="display:flex; justify-content:space-between; align-items:flex-start;">',
-        '  <div class="showcase-card-icon">' + feat.icon + '</div>',
-        '  <span class="showcase-card-badge">' + feat.category + '</span>',
+        '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">',
+        '  <div style="font-size:1.8rem; filter:drop-shadow(0 0 8px rgba(0,243,255,0.4));">' + (feat.icon || '⚡') + '</div>',
+        '  <span style="background:rgba(0,243,255,0.12); color:#00f3ff; font-weight:700; font-size:0.68rem; padding:0.25rem 0.6rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3); text-transform:uppercase;">' + (feat.category || 'Feature') + '</span>',
         '</div>',
-        '<div>',
-        '  <h3 class="showcase-card-title">' + feat.title + '</h3>',
-        '  <p class="showcase-card-desc">' + feat.desc + '</p>',
+        '<div style="flex:1; margin-bottom:0.85rem;">',
+        '  <h3 style="font-size:1.02rem; font-weight:800; color:#fff; margin:0 0 0.35rem 0; line-height:1.35;">' + (feat.title || feat.name || feat.id) + '</h3>',
+        '  <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.45; margin:0;">' + (feat.desc || 'Arvora premium interactive feature tool.') + '</p>',
         '</div>',
-        '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.75rem; font-size:0.75rem; color:#00f3ff; font-weight:700;">',
-        '  <span>⚡ CLICK TO SELECT</span>',
-        '  <span>#' + (idx < 9 ? '0' : '') + (idx + 1) + '</span>',
+        '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.65rem; font-size:0.72rem; color:#00f3ff; font-weight:700;">',
+        '  <span>⚡ CLICK TO LAUNCH TAB</span>',
+        '  <span>#' + (idx + 1) + '</span>',
         '</div>'
       ].join('');
+
+      card.addEventListener('mouseenter', function() {
+        card.style.borderColor = 'rgba(0, 243, 255, 0.8)';
+        card.style.transform = 'translateY(-3px)';
+        card.style.boxShadow = '0 10px 30px rgba(0, 243, 255, 0.25)';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.borderColor = 'rgba(0, 243, 255, 0.3)';
+        card.style.transform = 'translateY(0)';
+        card.style.boxShadow = 'none';
+      });
 
       card.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        activeIndex = idx;
-        render3DCarousel();
         if (typeof window.switchTab === 'function') {
           window.switchTab(feat.id);
         }
@@ -22628,28 +22620,12 @@ setTimeout(init3DParallax, 300);
       stage.appendChild(card);
     });
 
-    let activeFeat = filteredFeatures[activeIndex];
-    if (activeFeat) {
-      let catEl = document.getElementById('showcase-active-category');
-      let titleEl = document.getElementById('showcase-active-title');
-      let descEl = document.getElementById('showcase-active-desc');
-      let counterEl = document.getElementById('showcase-index-counter');
-
-      if (catEl) catEl.textContent = activeFeat.category;
-      if (titleEl) titleEl.textContent = activeFeat.title;
-      if (descEl) descEl.textContent = activeFeat.desc;
-      if (counterEl) counterEl.textContent = (activeIndex + 1) + ' / ' + filteredFeatures.length;
-
-      let fill = document.getElementById('showcase-slider-fill');
-      let handle = document.getElementById('showcase-slider-handle');
-      let pct = (activeIndex / Math.max(1, filteredFeatures.length - 1)) * 100;
-      if (fill) fill.style.width = pct + '%';
-      if (handle) handle.style.left = pct + '%';
-    }
+    let counterEl = document.getElementById('showcase-index-counter');
+    if (counterEl) counterEl.textContent = filteredFeatures.length + ' / 180 Features Listed';
   }
 
   function launchActiveFeature() {
-    let activeFeat = filteredFeatures[activeIndex];
+    let activeFeat = filteredFeatures[0];
     if (activeFeat && typeof window.switchTab === 'function') {
       window.switchTab(activeFeat.id);
       closeShowcaseModal();
