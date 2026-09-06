@@ -31089,20 +31089,67 @@ class HackathonGuide {
 
   
   // Decoupled Dynamic openFeature implementation
+  // Rectified Decoupled Dynamic openFeature implementation (27 Distinct Main Working Features)
   function openFeature(featureId, targetUrl) {
     if (!featureId && !targetUrl) return;
 
-    // Highlight clicked chip in taskbar
+    let cleanId = (featureId || '').toString().trim().toLowerCase();
+
+    // Highlight active chip in taskbar
     const chips = document.querySelectorAll('.quick-taskbar .feature-chip');
     chips.forEach(c => {
-      if ((featureId && c.dataset.featureId === featureId) || (targetUrl && c.dataset.toolUrl === targetUrl)) {
+      let cId = (c.dataset.featureId || '').toString().trim().toLowerCase();
+      if (cId === cleanId || c.dataset.toolUrl === targetUrl) {
         c.classList.add('active');
       } else {
         c.classList.remove('active');
       }
     });
 
-    // 1. Direct tab container scrolling/switching if targetUrl is an ID anchor
+    // 1. Handled by launchDirectFeatureTool (Modals, Sub-tabs & Transport modes)
+    const directHandled = [
+      'themestudio', 'theme', 'constellation', 'matrix3d', 'hologram',
+      'spotlight', 'weatherintel',
+      'flight', 'bus', 'car', 'auto', 'train', 'evrouter', 'pnrpredict',
+      'explore', 'attractions', 'culinary', 'planner'
+    ];
+
+    if (cleanId && directHandled.includes(cleanId) && typeof window.launchDirectFeatureTool === 'function') {
+      window.launchDirectFeatureTool(cleanId);
+      return;
+    }
+
+    // 2. Direct Main Tab Navigation
+    const tabMap = {
+      'travelintel': 'travelintel',
+      'transport': 'transport',
+      'roam': 'roam',
+      'market': 'market',
+      'tourism': 'tourism',
+      'impact': 'impact',
+      'authority': 'authority',
+      'lingo': 'lingo',
+      'budget': 'budget',
+      'overcrowding': 'overcrowding',
+      'game': 'game',
+      'survival': 'survival'
+    };
+
+    if (cleanId && tabMap[cleanId]) {
+      if (typeof window.switchTab === 'function') {
+        window.switchTab(tabMap[cleanId]);
+      }
+      const tabEl = document.getElementById('tab-content-' + tabMap[cleanId]);
+      if (tabEl) {
+        tabEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const anchor = document.getElementById('main-app-anchor');
+        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
+    }
+
+    // 3. Fallback targetUrl anchor navigation
     if (targetUrl && targetUrl.startsWith('#')) {
       const targetEl = document.querySelector(targetUrl);
       if (targetEl) {
@@ -31114,39 +31161,6 @@ class HackathonGuide {
         targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
-    }
-
-    // 2. Direct launcher for known tools via featureId
-    if (featureId) {
-      let cleanId = featureId.toString().trim().toLowerCase();
-
-      const tabMap = {
-        'travelintel': 'travelintel',
-        'roam': 'roam',
-        'market': 'market',
-        'tourism': 'tourism',
-        'impact': 'impact',
-        'authority': 'authority',
-        'lingo': 'lingo',
-        'budget': 'budget'
-      };
-
-      if (tabMap[cleanId]) {
-        if (typeof window.switchTab === 'function') window.switchTab(tabMap[cleanId]);
-        const anchor = document.getElementById('main-app-anchor') || document.getElementById('tab-content-' + tabMap[cleanId]);
-        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-
-      if (typeof window.launchDirectFeatureTool === 'function') {
-        window.launchDirectFeatureTool(cleanId);
-        return;
-      }
-    }
-
-    // 3. External link navigation
-    if (targetUrl && (targetUrl.startsWith('http://') || targetUrl.startsWith('https://') || targetUrl.startsWith('/'))) {
-      window.location.href = targetUrl;
     }
   }
 
