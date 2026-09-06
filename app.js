@@ -1542,6 +1542,36 @@
       if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
     }
 
+    // 4.8. Grassroots Merchant & Local Artisan Marketplace Hub
+    else if (['market', 'artisan', 'merchant', 'bazaar', 'crafts', 'homestays'].includes(cleanId)) {
+      tabId = 'market';
+      setTimeout(() => {
+        const container = document.getElementById('standalone-market-container');
+        if (container && (typeof window.BusinessModeController === 'function' || typeof BusinessModeController !== 'undefined')) {
+          try {
+            let bCtrl = new (window.BusinessModeController || BusinessModeController)();
+            let locData = (window.ROAM && window.ROAM.currentLocation) ? window.ROAM.currentLocation : resolveLocation('jaipur');
+            
+            // Create target inner element if missing
+            let innerArea = document.getElementById('business-mode-container');
+            if (!innerArea) {
+              innerArea = document.createElement('div');
+              innerArea.id = 'business-mode-container';
+              container.innerHTML = '';
+              container.appendChild(innerArea);
+            } else if (!container.contains(innerArea)) {
+              container.innerHTML = '';
+              container.appendChild(innerArea);
+            }
+            
+            bCtrl.setDestination(locData);
+          } catch(e) {
+            console.error('[Market Tab Error]', e);
+          }
+        }
+      }, 50);
+    }
+
     // 4.5. Overcrowding Mitigation & Smart Rebalancing Matrix Hub
     else if (['overcrowding', 'overtourism', 'congestion', 'peakbalancer', 'rebalance', 'crowdbalancer', 'throttle'].includes(cleanId)) {
       tabId = 'overcrowding';
@@ -28074,6 +28104,7 @@ class HackathonGuide {
     }
   }
 
+  window.BusinessModeController = BusinessModeController;
   window.DestinationLoadMap = DestinationLoadMap;
   
   // =====================================================================

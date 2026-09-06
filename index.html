@@ -197,6 +197,9 @@
         <button id="tab-btn-overcrowding" class="tab-btn" data-tab="overcrowding" onclick="if(window.switchTab) window.switchTab('overcrowding');">
           <span>⚠️</span> Overcrowding &amp; Rebalance
         </button>
+        <button id="tab-btn-market" class="tab-btn" data-tab="market" onclick="if(window.switchTab) window.switchTab('market');">
+          <span>🏪</span> Artisan Market
+        </button>
         <button id="tab-btn-transport" class="tab-btn" data-tab="transport" onclick="if(window.switchTab) window.switchTab('transport');">
           <span>✈️</span> 5-Mode Transport
         </button>
@@ -724,6 +727,37 @@
 
         <!-- Interactive Overcrowding & Demand Throttle Calculator -->
         <div id="overcrowding-calculator-mount"></div>
+
+      </div>
+    </div>
+
+    
+    <!-- =====================================================================
+         FEATURE #1F: DEDICATED GRASSROOTS MERCHANT & LOCAL ARTISAN MARKETPLACE
+         ===================================================================== -->
+    <div id="tab-content-market" class="tab-content" style="margin-bottom:2rem;">
+      <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98)); border:1px solid rgba(6,182,212,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(6,182,212,0.15);">
+        
+        <!-- Header -->
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+          <div style="display:flex; align-items:center; gap:0.85rem;">
+            <div style="width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg, #06b6d4, #3b82f6); display:flex; align-items:center; justify-content:center; font-size:1.6rem; box-shadow:0 0 20px rgba(6,182,212,0.4);">
+              <span>🏪</span>
+            </div>
+            <div>
+              <span style="font-size:0.72rem; font-weight:800; color:#06b6d4; text-transform:uppercase; letter-spacing:0.12em;">Direct Grassroots Commerce &amp; Heritage Artisans</span>
+              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Grassroots Merchant &amp; Local Artisan Marketplace</h2>
+            </div>
+          </div>
+          <div style="font-size:0.8rem; color:#a5f3fc; background:rgba(6,182,212,0.12); border:1px solid rgba(6,182,212,0.3); padding:0.4rem 0.85rem; border-radius:20px; font-weight:700;">
+            ⚡ Live Merchant Telemetry Active
+          </div>
+        </div>
+
+        <!-- Main Business Telemetry & Craft Pass Mount Container -->
+        <div id="standalone-market-container">
+          <!-- Rendered by BusinessModeController / initMarketTab() -->
+        </div>
 
       </div>
     </div>
