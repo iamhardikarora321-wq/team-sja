@@ -1464,22 +1464,22 @@
         </div>
       </div>
 
-      <!-- Search & Category Filters -->
+            <!-- Search & Category Filters -->
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1.25rem;">
         <div style="position:relative; flex:1; min-width:260px;">
-          <input type="text" id="showcase-search-input" placeholder="🔍 Search 40+ features (e.g. Flight, Bus, Market, Lingo, SOS, Itinerary...)" style="width:100%; padding:0.65rem 1rem 0.65rem 2.4rem; background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); border-radius:12px; color:#fff; font-size:0.88rem; outline:none;" oninput="if(window.filterShowcaseFeatures) window.filterShowcaseFeatures(this.value);">
+          <input type="text" id="showcase-search-input" placeholder="🔍 Search 18 distinct working features (e.g. Flight, Bus, Market, Lingo, SOS, Itinerary...)" style="width:100%; padding:0.65rem 1rem 0.65rem 2.4rem; background:rgba(255,255,255,0.06); border:1px solid rgba(0,243,255,0.3); border-radius:12px; color:#fff; font-size:0.88rem; outline:none;" oninput="if(window.filterShowcaseFeatures) window.filterShowcaseFeatures(this.value);">
           <span style="position:absolute; left:0.8rem; top:50%; transform:translateY(-50%); color:#00f3ff; font-size:0.9rem;">🔍</span>
         </div>
         <div id="showcase-index-counter" style="font-size:0.8rem; font-weight:800; color:#00f3ff; background:rgba(0,243,255,0.1); padding:0.4rem 0.85rem; border-radius:20px; border:1px solid rgba(0,243,255,0.3);">
-          40 Features Listed
+          18 Distinct Features Listed
         </div>
       </div>
 
       <div id="showcase-category-pills" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.25rem;">
-        <button class="showcase-cat-pill active" data-cat="all" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('all', this);" style="background:rgba(0,243,255,0.2); color:#00f3ff; border:1px solid rgba(0,243,255,0.5); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">⚡ All Features (40+)</button>
-        <button class="showcase-cat-pill" data-cat="roam" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('roam', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🧭 Smart Travel</button>
-        <button class="showcase-cat-pill" data-cat="transport" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('transport', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">✈️ Transit &amp; Fares</button>
-        <button class="showcase-cat-pill" data-cat="travelintel" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('travelintel', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🗺️ Travel Intelligence</button>
+        <button class="showcase-cat-pill active" data-cat="all" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('all', this);" style="background:rgba(0,243,255,0.2); color:#00f3ff; border:1px solid rgba(0,243,255,0.5); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">⚡ All Features (18)</button>
+        <button class="showcase-cat-pill" data-cat="roam" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('roam', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🧭 Smart Travel (6)</button>
+        <button class="showcase-cat-pill" data-cat="transport" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('transport', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">✈️ Transit &amp; Fares (5)</button>
+        <button class="showcase-cat-pill" data-cat="travelintel" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('travelintel', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🗺️ Travel Intel</button>
         <button class="showcase-cat-pill" data-cat="lingo" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('lingo', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🗣️ Culture &amp; Audio</button>
         <button class="showcase-cat-pill" data-cat="survival" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('survival', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">📲 Safety &amp; SOS</button>
         <button class="showcase-cat-pill" data-cat="tourism" onclick="if(window.setShowcaseCategory) window.setShowcaseCategory('tourism', this);" style="background:rgba(255,255,255,0.05); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer;">🏛️ State Tourism</button>

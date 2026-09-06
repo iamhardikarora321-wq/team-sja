@@ -2,9 +2,9 @@
   // =====================================================================
   // 🌟 ARVORA CORE WORKING & 3D FEATURE CATALOG
   // =====================================================================
-    const ARVORA_MASTER_180_FEATURES = {
+      const ARVORA_MASTER_180_FEATURES = {
     roam: [
-      { id: 'discover', name: 'Discover Destination Load & Spatial Heatmaps', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting recommendations.' },
+      { id: 'discover', name: 'Discover Destination Load & Spatial Heatmaps', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting.' },
       { id: 'roam-plan', name: 'Plan Dynamic Travel Itinerary Matrix', title: 'Plan Dynamic Travel Itinerary Matrix', category: 'Smart Travel', categoryKey: 'roam', icon: '📅', desc: 'AI-assisted dynamic itinerary generator and smart destination schedule balancer.' },
       { id: 'market', name: 'Local Artisan & GI-Tagged Craft Market', title: 'Local Artisan & GI-Tagged Craft Market', category: 'Smart Travel', categoryKey: 'roam', icon: '🛍️', desc: 'Direct GI-tagged handicraft discovery, traditional artisan bazaars & ethical booking.' },
       { id: 'impact', name: 'Tourist Footprint & Eco-Impact Calculator', title: 'Tourist Footprint & Eco-Impact Calculator', category: 'Smart Travel', categoryKey: 'roam', icon: '🌱', desc: 'Real-time carbon offset tracker, eco-impact scoring & sustainable travel index.' },
@@ -12,54 +12,32 @@
       { id: 'overcrowding', name: 'Overcrowding Heatmap & Peak Balancer', title: 'Overcrowding Heatmap & Peak Balancer', category: 'Smart Travel', categoryKey: 'roam', icon: '📊', desc: 'Live vector heatmap and crowding matrix across top Indian tourist spots.' }
     ],
     transport: [
-      { id: 'flight', name: 'Aeroplane Flight Fare & Time Estimator', title: 'Aeroplane Flight Fare & Time Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '✈️', desc: 'Live domestic flight duration, luggage rules & MakeMyTrip/IndiGo fare estimates.' },
+      { id: 'flight', name: 'Aeroplane Flight Fare & Duration Estimator', title: 'Aeroplane Flight Fare & Duration Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '✈️', desc: 'Domestic flights, MakeMyTrip live pricing, air duration & airport codes.' },
       { id: 'bus', name: 'RedBus Volvo & Intercity Bus Estimator', title: 'RedBus Volvo & Intercity Bus Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚌', desc: 'State Roadways & RedBus AC Sleeper/Seater fare estimator with live departure times.' },
       { id: 'car', name: 'FASTag Toll & Private Cab Calculator', title: 'FASTag Toll & Private Cab Calculator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚗', desc: 'Door-to-door cab rates, FASTag toll costs, fuel consumption & highway dhabas.' },
       { id: 'auto', name: 'City Auto-Rickshaw Meter Tariff Estimator', title: 'City Auto-Rickshaw Meter Tariff Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🛺', desc: 'Official government auto-rickshaw meter rates, night surcharges & e-rickshaw routes.' },
       { id: 'train', name: 'IRCTC Express Train & Tatkal Estimator', title: 'IRCTC Express Train & Tatkal Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚆', desc: 'Vande Bharat, Rajdhani & Express class fares, PNR status predictor & station codes.' }
     ],
     travelintel: [
-      { id: 'travelintel', name: 'Bharat Travel Intelligence & City Explorer', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
-      { id: 'attractions', name: 'Top Monuments & World Heritage Sightseeing', title: 'Top Monuments & World Heritage Sightseeing', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🏛️', desc: 'UNESCO World Heritage sites, photo spots & monument audio guides.' },
-      { id: 'culinary', name: 'Regional Cuisine & Street Food Safe Guide', title: 'Regional Cuisine & Street Food Safe Guide', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🍲', desc: 'Authentic local delicacies, famous street food markets & hygiene rating guides.' },
-      { id: 'weatherintel', name: 'Weather & Monsoon Climate Radar', title: 'Weather & Monsoon Climate Radar', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🌤️', desc: 'Real-time weather forecasts, monsoon safety advisories & peak travel timing.' },
-      { id: 'offbeatspots', name: 'Offbeat Hidden Gems Discoverer', title: 'Offbeat Hidden Gems Discoverer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🌲', desc: 'Unexplored eco-tourism spots, serene hill stations & pristine rural hamlets.' },
-      { id: 'photospots', name: 'Scenic Photography & Sunrise Spots', title: 'Scenic Photography & Sunrise Spots', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '📸', desc: 'Curated list of golden hour photography locations, viewpoints & landscape spots.' }
+      { id: 'travelintel', name: 'Bharat Travel Intelligence & City Explorer', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'City search engine for 50,000+ towns, attractions, local cuisine & travel guides.' }
     ],
     lingo: [
-      { id: 'lingo', name: 'Bharat Lingo & Audio Translator Matrix', title: 'Bharat Lingo & Audio Translator Matrix', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voices.' },
-      { id: 'etiquette', name: 'Temple & Cultural Etiquette Guide', title: 'Temple & Cultural Etiquette Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🛕', desc: 'Sacred site dress codes, shrine customs, footwear rules & local social norms.' },
-      { id: 'phrases', name: 'Essential Regional Travel Phrases', title: 'Essential Regional Travel Phrases', category: 'Culture & Audio', categoryKey: 'lingo', icon: '💬', desc: 'Must-know conversational phrases for bargaining, directions, greetings & dining.' },
-      { id: 'cuisineglossary', name: 'Regional Food & Spice Glossary', title: 'Regional Food & Spice Glossary', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🌶️', desc: 'Comprehensive glossary of Indian spice names, dish descriptions & flavor profiles.' }
+      { id: 'lingo', name: 'Bharat Lingo & Regional Audio Translator', title: 'Bharat Lingo & Regional Audio Translator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voice synthesis.' }
     ],
     survival: [
-      { id: 'survival', name: 'Digital Survival Kit & Emergency SOS', title: 'Digital Survival Kit & Emergency SOS', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency helplines (Police 112, Ambulance 108, Tourist 1363) & safety advice.' },
-      { id: 'scamadvisor', name: 'Tourist Scam Advisor & Fair Rate Checker', title: 'Tourist Scam Advisor & Fair Rate Checker', category: 'Safety & Security', categoryKey: 'survival', icon: '🛡️', desc: 'Auto meter scam prevention, fake guide warnings & transparent rate breakdown.' },
-      { id: 'upi', name: 'UPI Payments & Currency Guide for Tourists', title: 'UPI Payments & Currency Guide for Tourists', category: 'Safety & Security', categoryKey: 'survival', icon: '💳', desc: 'Digital UPI payment setup guide for international travelers, foreign cards & Forex.' },
-      { id: 'visainfo', name: 'NRI & Foreign Tourist Visa Guide', title: 'NRI & Foreign Tourist Visa Guide', category: 'Safety & Security', categoryKey: 'survival', icon: '🛂', desc: 'e-Visa processing requirements, SIM card activation steps & embassy helplines.' },
-      { id: 'vault', name: 'Offline Travel Document Safe Vault', title: 'Offline Travel Document Safe Vault', category: 'Safety & Security', categoryKey: 'survival', icon: '🔒', desc: 'Encrypted client-side storage for passports, ID cards, e-tickets & emergency contacts.' }
+      { id: 'survival', name: 'Digital Survival Kit & Emergency SOS Center', title: 'Digital Survival Kit & Emergency SOS Center', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency numbers (Police 112, Ambulance 108, Tourist 1363) & safety advisor.' }
     ],
     tourism: [
-      { id: 'tourism', name: 'State Tourism Directory (All 36 States & UTs)', title: 'State Tourism Directory (All 36 States & UTs)', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore top attractions, official tourism boards, authentic food & homestays across India.' },
-      { id: 'delhitourism', name: 'Delhi National Capital Region Tourism', title: 'Delhi National Capital Region Tourism', category: 'State Tourism', categoryKey: 'tourism', icon: '🏰', desc: 'Red Fort, Chandni Chowk, Qutub Minar, Humayun Tomb & street food walks.' },
-      { id: 'mumbaitourism', name: 'Maharashtra & Mumbai Capital Guide', title: 'Maharashtra & Mumbai Capital Guide', category: 'State Tourism', categoryKey: 'tourism', icon: '🌊', desc: 'Marine Drive, Gateway of India, Ajanta Ellora Caves & Konkan coast.' },
-      { id: 'jaipurtourism', name: 'Rajasthan & Jaipur Heritage Circuits', title: 'Rajasthan & Jaipur Heritage Circuits', category: 'State Tourism', categoryKey: 'tourism', icon: '🐫', desc: 'Hawa Mahal, Amber Fort, Thar Desert safari, Udaipur lakes & Jodhpur palaces.' },
-      { id: 'keralatourism', name: 'Kerala God\'s Own Country Explorer', title: 'Kerala God\'s Own Country Explorer', category: 'State Tourism', categoryKey: 'tourism', icon: '🌴', desc: 'Alleppey houseboats, Munnar tea hills, Wayanad wildlife & Kovalam beaches.' },
-      { id: 'varanasitourism', name: 'Uttar Pradesh & Varanasi Spiritual Guide', title: 'Uttar Pradesh & Varanasi Spiritual Guide', category: 'State Tourism', categoryKey: 'tourism', icon: '🪔', desc: 'Ganga Aarti, Kashi Vishwanath Temple, Sarnath, Taj Mahal Agra & Mathura.' },
-      { id: 'goatourism', name: 'Goa Coastal & Colonial Heritage Guide', title: 'Goa Coastal & Colonial Heritage Guide', category: 'State Tourism', categoryKey: 'tourism', icon: '🏖️', desc: 'North & South Goa beaches, Old Goa Portuguese churches & spice plantations.' }
+      { id: 'tourism', name: '36 Indian States & UTs Tourism Showcase', title: '36 Indian States & UTs Tourism Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore official state tourism boards, heritage sites, cuisine & homestays across India.' }
     ],
     trip: [
-      { id: 'trip', name: 'Interactive Trip Planner & Itinerary Builder', title: 'Interactive Trip Planner & Itinerary Builder', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate route stops & track expenses.' },
-      { id: 'budget', name: 'Smart Travel Budget & Cost Calculator', title: 'Smart Travel Budget & Cost Calculator', category: 'Trip Planning', categoryKey: 'trip', icon: '💰', desc: 'Estimate daily travel spend for accommodation, food, local transit & shopping.' },
-      { id: 'pack', name: 'Smart Packing List & Checklist Generator', title: 'Smart Packing List & Checklist Generator', category: 'Trip Planning', categoryKey: 'trip', icon: '🎒', desc: 'Weather-based packing checklists for monsoon, Himalayan treks, and beach holidays.' }
+      { id: 'trip', name: 'Interactive Trip Planner & Smart Budgeting', title: 'Interactive Trip Planner & Smart Budgeting', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate daily travel budgets & smart packing lists.' }
     ],
     game: [
-      { id: 'game', name: 'Geoguess Heritage & Culture Quiz', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', categoryKey: 'game', icon: '🎮', desc: 'Test your knowledge of Indian monuments, local dishes, and regional geography.' }
+      { id: 'game', name: 'Geoguess Heritage & Cultural Quiz Game', title: 'Geoguess Heritage & Cultural Quiz Game', category: 'Interactive Game', categoryKey: 'game', icon: '🎮', desc: 'Test your knowledge of Indian monuments, local dishes, and regional geography.' }
     ],
     travel: [
-      { id: 'travel', name: '15,000 City Inter-City Distance Matrix', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, and fuel needs between any 2 Indian cities.' },
-      { id: 'pincode', name: 'PIN Code & District Boundary Lookup', title: 'PIN Code & District Boundary Lookup', category: 'Geography Hub', categoryKey: 'travel', icon: '📮', desc: 'Search postal codes, PIN lookup, and district administration details.' },
-      { id: 'timezone', name: 'IST Sun Position & Timezone Converter', title: 'IST Sun Position & Timezone Converter', category: 'Geography Hub', categoryKey: 'travel', icon: '☀️', desc: 'Calculate solar angles, sunrise/sunset times & regional time adjustments across India.' }
+      { id: 'travel', name: '15,000 City Inter-City Distance Matrix', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, PIN codes & IST solar time converter.' }
     ]
   };
   window.ARVORA_ALL_FEATURES = ARVORA_MASTER_180_FEATURES;
@@ -315,47 +293,25 @@
     "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra",
     "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
     "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
-  ];      var DEFAULT_SHOWCASE_FEATURES = [
-    { id: 'discover', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting recommendations.' },
+  ];        var DEFAULT_SHOWCASE_FEATURES = [
+    { id: 'discover', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting.' },
     { id: 'roam-plan', title: 'Plan Dynamic Travel Itinerary Matrix', category: 'Smart Travel', categoryKey: 'roam', icon: '📅', desc: 'AI-assisted dynamic itinerary generator and smart destination schedule balancer.' },
     { id: 'market', title: 'Local Artisan & GI-Tagged Craft Market', category: 'Smart Travel', categoryKey: 'roam', icon: '🛍️', desc: 'Direct GI-tagged handicraft discovery, traditional artisan bazaars & ethical booking.' },
     { id: 'impact', title: 'Tourist Footprint & Eco-Impact Calculator', category: 'Smart Travel', categoryKey: 'roam', icon: '🌱', desc: 'Real-time carbon offset tracker, eco-impact scoring & sustainable travel index.' },
     { id: 'control', title: 'Spatial Crowd Control & Congestion Radar', category: 'Smart Travel', categoryKey: 'roam', icon: '🛰️', desc: 'Real-time monument crowd density control and smart peak-hour diversion.' },
     { id: 'overcrowding', title: 'Overcrowding Heatmap & Peak Balancer', category: 'Smart Travel', categoryKey: 'roam', icon: '📊', desc: 'Live vector heatmap and crowding matrix across top Indian tourist spots.' },
-    { id: 'flight', title: 'Aeroplane Flight Fare & Time Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '✈️', desc: 'Live domestic flight duration, luggage rules & MakeMyTrip/IndiGo fare estimates.' },
+    { id: 'flight', title: 'Aeroplane Flight Fare & Duration Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '✈️', desc: 'Domestic flights, MakeMyTrip live pricing, air duration & airport codes.' },
     { id: 'bus', title: 'RedBus Volvo & Intercity Bus Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚌', desc: 'State Roadways & RedBus AC Sleeper/Seater fare estimator with live departure times.' },
     { id: 'car', title: 'FASTag Toll & Private Cab Calculator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚗', desc: 'Door-to-door cab rates, FASTag toll costs, fuel consumption & highway dhabas.' },
     { id: 'auto', title: 'City Auto-Rickshaw Meter Tariff Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🛺', desc: 'Official government auto-rickshaw meter rates, night surcharges & e-rickshaw routes.' },
     { id: 'train', title: 'IRCTC Express Train & Tatkal Estimator', category: 'Transit & Fares', categoryKey: 'transport', icon: '🚆', desc: 'Vande Bharat, Rajdhani & Express class fares, PNR status predictor & station codes.' },
-    { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
-    { id: 'attractions', title: 'Top Monuments & World Heritage Sightseeing', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🏛️', desc: 'UNESCO World Heritage sites, photo spots & monument audio guides.' },
-    { id: 'culinary', title: 'Regional Cuisine & Street Food Safe Guide', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🍲', desc: 'Authentic local delicacies, famous street food markets & hygiene rating guides.' },
-    { id: 'weatherintel', title: 'Weather & Monsoon Climate Radar', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🌤️', desc: 'Real-time weather forecasts, monsoon safety advisories & peak travel timing.' },
-    { id: 'offbeatspots', title: 'Offbeat Hidden Gems Discoverer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🌲', desc: 'Unexplored eco-tourism spots, serene hill stations & pristine rural hamlets.' },
-    { id: 'photospots', title: 'Scenic Photography & Sunrise Spots', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '📸', desc: 'Curated list of golden hour photography locations, viewpoints & landscape spots.' },
-    { id: 'lingo', title: 'Bharat Lingo & Audio Translator Matrix', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voices.' },
-    { id: 'etiquette', title: 'Temple & Cultural Etiquette Guide', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🛕', desc: 'Sacred site dress codes, shrine customs, footwear rules & local social norms.' },
-    { id: 'phrases', title: 'Essential Regional Travel Phrases', category: 'Culture & Audio', categoryKey: 'lingo', icon: '💬', desc: 'Must-know conversational phrases for bargaining, directions, greetings & dining.' },
-    { id: 'cuisineglossary', title: 'Regional Food & Spice Glossary', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🌶️', desc: 'Comprehensive glossary of Indian spice names, dish descriptions & flavor profiles.' },
-    { id: 'survival', title: 'Digital Survival Kit & Emergency SOS', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency helplines (Police 112, Ambulance 108, Tourist 1363) & safety advice.' },
-    { id: 'scamadvisor', title: 'Tourist Scam Advisor & Fair Rate Checker', category: 'Safety & Security', categoryKey: 'survival', icon: '🛡️', desc: 'Auto meter scam prevention, fake guide warnings & transparent rate breakdown.' },
-    { id: 'upi', title: 'UPI Payments & Currency Guide for Tourists', category: 'Safety & Security', categoryKey: 'survival', icon: '💳', desc: 'Digital UPI payment setup guide for international travelers, foreign cards & Forex.' },
-    { id: 'visainfo', title: 'NRI & Foreign Tourist Visa Guide', category: 'Safety & Security', categoryKey: 'survival', icon: '🛂', desc: 'e-Visa processing requirements, SIM card activation steps & embassy helplines.' },
-    { id: 'vault', title: 'Offline Travel Document Safe Vault', category: 'Safety & Security', categoryKey: 'survival', icon: '🔒', desc: 'Encrypted client-side storage for passports, ID cards, e-tickets & emergency contacts.' },
-    { id: 'tourism', title: 'State Tourism Directory (All 36 States & UTs)', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore top attractions, official tourism boards, authentic food & homestays across India.' },
-    { id: 'delhitourism', title: 'Delhi National Capital Region Tourism', category: 'State Tourism', categoryKey: 'tourism', icon: '🏰', desc: 'Red Fort, Chandni Chowk, Qutub Minar, Humayun Tomb & street food walks.' },
-    { id: 'mumbaitourism', title: 'Maharashtra & Mumbai Capital Guide', category: 'State Tourism', categoryKey: 'tourism', icon: '🌊', desc: 'Marine Drive, Gateway of India, Ajanta Ellora Caves & Konkan coast.' },
-    { id: 'jaipurtourism', title: 'Rajasthan & Jaipur Heritage Circuits', category: 'State Tourism', categoryKey: 'tourism', icon: '🐫', desc: 'Hawa Mahal, Amber Fort, Thar Desert safari, Udaipur lakes & Jodhpur palaces.' },
-    { id: 'keralatourism', title: 'Kerala God\'s Own Country Explorer', category: 'State Tourism', categoryKey: 'tourism', icon: '🌴', desc: 'Alleppey houseboats, Munnar tea hills, Wayanad wildlife & Kovalam beaches.' },
-    { id: 'varanasitourism', title: 'Uttar Pradesh & Varanasi Spiritual Guide', category: 'State Tourism', categoryKey: 'tourism', icon: '🪔', desc: 'Ganga Aarti, Kashi Vishwanath Temple, Sarnath, Taj Mahal Agra & Mathura.' },
-    { id: 'goatourism', title: 'Goa Coastal & Colonial Heritage Guide', category: 'State Tourism', categoryKey: 'tourism', icon: '🏖️', desc: 'North & South Goa beaches, Old Goa Portuguese churches & spice plantations.' },
-    { id: 'trip', title: 'Interactive Trip Planner & Itinerary Builder', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate route stops & track expenses.' },
-    { id: 'budget', title: 'Smart Travel Budget & Cost Calculator', category: 'Trip Planning', categoryKey: 'trip', icon: '💰', desc: 'Estimate daily travel spend for accommodation, food, local transit & shopping.' },
-    { id: 'pack', title: 'Smart Packing List & Checklist Generator', category: 'Trip Planning', categoryKey: 'trip', icon: '🎒', desc: 'Weather-based packing checklists for monsoon, Himalayan treks, and beach holidays.' },
-    { id: 'game', title: 'Geoguess Heritage & Culture Quiz', category: 'Interactive Game', categoryKey: 'game', icon: '🎮', desc: 'Test your knowledge of Indian monuments, local dishes, and regional geography.' },
-    { id: 'travel', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, and fuel needs between any 2 Indian cities.' },
-    { id: 'pincode', title: 'PIN Code & District Boundary Lookup', category: 'Geography Hub', categoryKey: 'travel', icon: '📮', desc: 'Search postal codes, PIN lookup, and district administration details.' },
-    { id: 'timezone', title: 'IST Sun Position & Timezone Converter', category: 'Geography Hub', categoryKey: 'travel', icon: '☀️', desc: 'Calculate solar angles, sunrise/sunset times & regional time adjustments across India.' }
+    { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', categoryKey: 'travelintel', icon: '🗺️', desc: 'City search engine for 50,000+ towns, attractions, local cuisine & travel guides.' },
+    { id: 'lingo', title: 'Bharat Lingo & Regional Audio Translator', category: 'Culture & Audio', categoryKey: 'lingo', icon: '🗣️', desc: 'Text-to-speech audio translator for 10 regional Indian languages with natural voice synthesis.' },
+    { id: 'survival', title: 'Digital Survival Kit & Emergency SOS Center', category: 'Safety & Security', categoryKey: 'survival', icon: '📲', desc: 'Speed-dial emergency numbers (Police 112, Ambulance 108, Tourist 1363) & safety advisor.' },
+    { id: 'tourism', title: '36 Indian States & UTs Tourism Showcase', category: 'State Tourism', categoryKey: 'tourism', icon: '🏛️', desc: 'Explore official state tourism boards, heritage sites, cuisine & homestays across India.' },
+    { id: 'trip', title: 'Interactive Trip Planner & Smart Budgeting', category: 'Trip Planning', categoryKey: 'trip', icon: '🧳', desc: 'Build multi-day travel itineraries, calculate daily travel budgets & smart packing lists.' },
+    { id: 'game', title: 'Geoguess Heritage & Cultural Quiz Game', category: 'Interactive Game', categoryKey: 'game', icon: '🎮', desc: 'Test your knowledge of Indian monuments, local dishes, and regional geography.' },
+    { id: 'travel', title: '15,000 City Inter-City Distance Matrix', category: 'Geography Hub', categoryKey: 'travel', icon: '🌐', desc: 'Calculate precise road distances, travel times, PIN codes & IST solar time converter.' }
   ];
 
   // --- HARD RESET & UNFREEZE RECOVERY ---
