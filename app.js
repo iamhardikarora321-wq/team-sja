@@ -97,6 +97,7 @@
     let cleanId = tabId.toString().trim().toLowerCase();
 
     // 2. Special Action Modals
+    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { window.location.href = 'mostar.html'; return; }
     if (cleanId === 'theme' || cleanId === 'themestudio') {
       if (typeof window.openThemeModal === 'function') window.openThemeModal();
       return;
@@ -1574,6 +1575,7 @@
     let cleanId = tabId.toString().trim().toLowerCase();
 
     // 1. Theme Studio Trigger
+    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { window.location.href = 'mostar.html'; return; }
     if (cleanId === 'theme' || cleanId === 'themestudio') {
       if (typeof window.openThemeModal === 'function') window.openThemeModal();
       return;
@@ -30593,6 +30595,7 @@ class HackathonGuide {
     closeFeatureDetailModal();
 
     // 1. Theme Studio Trigger
+    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { window.location.href = 'mostar.html'; return; }
     if (cleanId === 'theme' || cleanId === 'themestudio') {
       if (typeof window.openThemeModal === 'function') window.openThemeModal();
       return;

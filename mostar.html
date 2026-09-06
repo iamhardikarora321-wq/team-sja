@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mostar Experience - 3D Cinematic Scroll & High Accessibility</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Accessible Skip Link -->
+  <a href="#sights" class="skip-link">Skip to Browse All Sights</a>
+
+  <main class="site-shell">
+    <section class="cinema-scroll" id="cinema" aria-label="Mostar cinematic scroll story">
+      <div class="stage">
+        <div class="world">
+          <img class="scene-img sky-img" src="https://raft-blast-61784561.figma.site/_assets/v11/16b5007d9c93971e26ffe4e0e3e37946f6bd538c.png" alt="" />
+          
+          <!-- Streamlined Accessible Header -->
+          <header class="site-header" role="banner">
+            <a class="site-logo" href="index.html" aria-label="Arvora Home">Mostar</a>
+            <nav class="site-nav" aria-label="Main Navigation">
+              <a href="#cinema">Story</a>
+              <a href="#bridge">The Bridge</a>
+              <a href="#sights">Browse All</a>
+              <a href="index.html" style="background:linear-gradient(135deg, #00f3ff, #7928ca); font-weight:800; color:#fff;">← Back to Arvora</a>
+            </nav>
+            <div class="header-actions">
+              <span class="status-badge" aria-hidden="true">3D Interactive</span>
+            </div>
+          </header>
+
+          <!-- Parallax Back Layers -->
+          <div class="back-stack">
+            <img class="scene-img back-img back-four" src="https://raft-blast-61784561.figma.site/_assets/v11/8a7f8af50e0ce92ec2e228e7b0b4112178c51cf1.png" alt="" />
+            
+            <!-- 3D Card Slider Section -->
+            <section class="sights-slider" id="sights" aria-label="Browse All Sights" role="region">
+              <div class="sights-track" role="list">
+                <!-- 5 Base Sight Cards (cloned by JS for seamless infinite 3D loop) -->
+                <article class="sight-card" role="listitem" tabindex="0" aria-label="Stari Most card">
+                  <span class="sight-kicker">Highlight</span>
+                  <img class="sight-pin" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260730_230438_d526b8b6-8a2e-4e3b-9993-3908acae03a7.png" alt="" />
+                  <h3>Stari Most</h3>
+                  <p>The iconic 16th-century Ottoman stone arch spanning the turquoise Neretva.</p>
+                </article>
+
+                <article class="sight-card" role="listitem" tabindex="0" aria-label="Kujundziluk card">
+                  <span class="sight-kicker">Old Bazaar</span>
+                  <img class="sight-pin" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260730_230442_140bc25b-b165-4249-904a-f708bff6970e.png" alt="" />
+                  <h3>Kujundziluk</h3>
+                  <p>Traditional cobblestone streets lined with artisan coppersmiths and local crafts.</p>
+                </article>
+
+                <article class="sight-card" role="listitem" tabindex="0" aria-label="Koski Mehmed Pasha Mosque card">
+                  <span class="sight-kicker">Panoramic View</span>
+                  <img class="sight-pin" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260730_230448_825949c9-ccdb-4857-b4a6-e349eccc9010.png" alt="" />
+                  <h3>Koski Mehmed Mosque</h3>
+                  <p>Historic riverside mosque offering sweeping views from its minaret.</p>
+                </article>
+
+                <article class="sight-card" role="listitem" tabindex="0" aria-label="Kajtaz House card">
+                  <span class="sight-kicker">Heritage</span>
+                  <img class="sight-pin" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260730_230438_d526b8b6-8a2e-4e3b-9993-3908acae03a7.png" alt="" />
+                  <h3>Kajtaz House</h3>
+                  <p>A perfectly preserved 16th-century Ottoman residential residence.</p>
+                </article>
+
+                <article class="sight-card" role="listitem" tabindex="0" aria-label="War Photo Exhibition card">
+                  <span class="sight-kicker">Memorial</span>
+                  <img class="sight-pin" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260730_230442_140bc25b-b165-4249-904a-f708bff6970e.png" alt="" />
+                  <h3>War Photo Exhibition</h3>
+                  <p>An essential, poignant photo documentary of the city's modern history.</p>
+                </article>
+              </div>
+            </section>
+
+            <img class="scene-img back-img back-bazaar" src="https://raft-blast-61784561.figma.site/_assets/v11/864afe00e41e2fa20a5aa546e15cb807e0f81384.png" alt="" />
+          </div>
+
+          <!-- Slider Controls -->
+          <div class="sights-controls" aria-label="Slider Controls">
+            <button class="sight-nav sight-prev" aria-label="Previous item">←</button>
+            <span class="slider-hint" aria-hidden="true">Use arrow keys or swipe</span>
+            <button class="sight-nav sight-next" aria-label="Next item">→</button>
+          </div>
+
+          <!-- Hero Foreground Layer -->
+          <h1 class="hero-title">MOSTAR</h1>
+          <img class="scene-img splitframe-img splitframe-left" src="https://raft-blast-61784561.figma.site/_assets/v11/7536d7b60a1fce482cf6edf3f0bffd3bad5d0f8a.png" alt="" />
+          <img class="scene-img splitframe-img splitframe-right" src="https://raft-blast-61784561.figma.site/_assets/v11/392db6a6a6b98e868bd7f8d3f55bb719d51e5028.png" alt="" />
+          <img class="scene-img bridge-img" src="https://raft-blast-61784561.figma.site/_assets/v11/c6a6d8ef49bca43f708aa852692942c45ec950d4.png" alt="" />
+          <img class="scene-img frame-two-img" src="https://raft-blast-61784561.figma.site/_assets/v11/ba75252bab2b1c510987b74837770f7bc8a6b2d4.png" alt="" />
+          <div class="shade"></div>
+        </div>
+
+        <!-- Descriptive Story Scrim Panels -->
+        <section class="intro-copy" aria-label="Overview">
+          <div class="glass-scrim">
+            <p>A stone arch, emerald water, and a historic city shaped by centuries of living culture.</p>
+            <div class="hero-tags">
+              <span>Old Bridge</span>
+              <span>Neretva River</span>
+              <span>UNESCO Site</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="story-panel story-panel-bridge" id="bridge" aria-label="Old Bridge history">
+          <div class="glass-scrim">
+            <h2>The Bridge is the City's Pulse</h2>
+            <p>Stari Most connects two halves of the historic quarter across the emerald waters of the Neretva.</p>
+            <dl class="facts">
+              <div>
+                <dt>1566</dt>
+                <dd>Original stone arch completed</dd>
+              </div>
+              <div>
+                <dt>2005</dt>
+                <dd>Inscribed as UNESCO World Heritage</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section class="story-panel story-panel-bazaar" aria-label="Bazaar details">
+          <div class="glass-scrim">
+            <h2>The Rhythm of the Old Town</h2>
+            <p>Stone-paved alleys, craft studios, and café courtyards remain vibrant and welcoming.</p>
+            <a href="#sights" class="note-button">
+              <span aria-hidden="true">↓</span>
+              <span>Browse All Sights</span>
+            </a>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
