@@ -960,3 +960,141 @@ button { border: 0; font: inherit; }
   color: #edf4ec;
   font-weight: 600;
 }
+
+
+/* ==========================================================================
+   PERFORMANCE & GPU COMPOSITING OVERHAUL (ZERO LAYOUT THRASHING)
+   ========================================================================== */
+
+/* Fixed Sleek Quick Taskbar Styling */
+.quick-taskbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1000 !important;
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 20px !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  background: #060e08 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(140, 168, 146, 0.25) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85) !important;
+  contain: paint layout !important;
+  transform: translateZ(0) !important;
+}
+
+.quick-taskbar-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(140, 168, 146, 0.2);
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.quick-taskbar-search-wrap .search-icon {
+  font-size: 13px;
+  color: #8ca892;
+}
+
+#feature-search {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #edf4ec;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+  width: 140px;
+}
+
+.quick-taskbar-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 0;
+  flex: 1;
+}
+
+.quick-taskbar-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.feature-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(6, 14, 10, 0.88);
+  border: 1px solid rgba(140, 168, 146, 0.2);
+  color: #8ca892;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  contain: paint layout;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.feature-chip:hover {
+  background: rgba(12, 28, 18, 0.95);
+  border-color: rgba(237, 244, 236, 0.4);
+  color: #edf4ec;
+  transform: translate3d(0, -1px, 0);
+}
+
+.feature-chip.active {
+  background: rgba(140, 168, 146, 0.25);
+  border-color: rgba(237, 244, 236, 0.4);
+  color: #edf4ec;
+  font-weight: 600;
+}
+
+/* Force GPU Compositing & Kill Heavy Blur Filters on Moving Layers */
+.outer-canopy-bg,
+.stage,
+.world,
+.scene-img,
+.bridge-img,
+.back-stack,
+.splitframe-img,
+.hero-lockup,
+.hero-title,
+.hero-subtitle,
+.floating-action-tray,
+.sights-slider,
+.sights-track,
+.sight-card,
+.action-pill-btn {
+  contain: paint layout !important;
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+  will-change: transform !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.sight-card,
+.action-pill-btn,
+.sight-nav,
+.note-button {
+  background: rgba(6, 14, 10, 0.88) !important;
+  border: 1px solid rgba(140, 168, 146, 0.2) !important;
+}
