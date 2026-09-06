@@ -28550,8 +28550,163 @@ class HackathonGuide {
     };
   }
 
+  
+  // Global Active Modal State
+  window.activeSelectedFeature = null;
+
+  function launchDirectFeatureTool(featureId) {
+    if (!featureId) return;
+    let cleanId = featureId.toString().trim().toLowerCase();
+
+    // Close floating modal first
+    closeFeatureDetailModal();
+
+    // 1. Theme Studio Trigger
+    if (cleanId === 'theme' || cleanId === 'themestudio') {
+      if (typeof window.openThemeModal === 'function') window.openThemeModal();
+      return;
+    }
+
+    // 2. 3D Constellation Matrix Trigger
+    if (cleanId === 'constellation' || cleanId === 'matrix3d' || cleanId === 'hologram') {
+      if (typeof window.openQuantumHologramModal === 'function') window.openQuantumHologramModal();
+      return;
+    }
+
+    // 3. Hard Reset Trigger
+    if (cleanId === 'reset' || cleanId === 'hardreset') {
+      if (typeof window.performHardReset === 'function') window.performHardReset();
+      return;
+    }
+
+    // 4. Transport & Mobility Features
+    if (['transport', 'transithub', 'transit', 'fares', 'bus', 'car', 'auto', 'aeroplane', 'flight', 'train', 'roadtrip', 'rickshaw', 'bagcalc', 'transitbooking', 'cabestimator', 'fastagcalc', 'evcharge', 'evrouter', 'seat', 'metro', 'airport', 'routesolver', 'fuelcost', 'pnrpredict', 'tatkal', 'baggage', 'airportcode', 'sleeperbus', 'vande', 'ferry', 'carrental', 'bikebook', 'stationcode', 'retiringroom', 'coachlocator', 'highwaydhabas', 'tollfree', 'parking'].includes(cleanId)) {
+      let mode = 'flight';
+      if (['bus', 'busguide', 'intercity', 'sleeperbus'].some(k => cleanId.includes(k))) mode = 'bus';
+      else if (['car', 'roadtrip', 'cab', 'fastag', 'fuel', 'rental', 'dhabas', 'parking', 'tollfree'].some(k => cleanId.includes(k))) mode = 'car';
+      else if (['auto', 'rickshaw', 'erickshaw'].some(k => cleanId.includes(k))) mode = 'auto';
+      else if (['train', 'rail', 'pnr', 'irctc', 'seat', 'coach', 'tatkal', 'vande', 'stationcode', 'retiringroom', 'coachlocator'].some(k => cleanId.includes(k))) mode = 'train';
+      
+      switchTabDirect('transport');
+      if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
+      return;
+    }
+
+    // 5. Travel Intelligence & Explorer Features
+    if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'overcrowding', 'peakbalancer', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
+      let subTab = 'explore';
+      if (['attractions', 'sightseeing', 'monument', 'photospots', 'heritage'].some(k => cleanId.includes(k))) subTab = 'attractions';
+      else if (['food', 'culinary', 'delicacies', 'dhabas', 'cuisine'].some(k => cleanId.includes(k))) subTab = 'culinary';
+      else if (['planner', 'routecalc', 'scenicroutes', 'distance'].some(k => cleanId.includes(k))) subTab = 'planner';
+      
+      switchTabDirect('travelintel');
+      if (typeof window.setIntelTab === 'function') window.setIntelTab(subTab);
+      return;
+    }
+
+    // 6. Nexora ROAM Destination Intelligence Features
+    if (['roam', 'discover', 'market', 'control', 'impact', 'reroute', 'loadmap'].includes(cleanId)) {
+      let mode = 'discover';
+      if (['explore', 'reroute', 'loadmap'].some(k => cleanId.includes(k))) mode = 'explore';
+      else if (cleanId.includes('market')) mode = 'market';
+      else if (cleanId.includes('control')) mode = 'control';
+      else if (cleanId.includes('impact')) mode = 'impact';
+      
+      switchTabDirect('roam');
+      if (window.ROAM && typeof window.ROAM.switchMode === 'function') window.ROAM.switchMode(mode);
+      return;
+    }
+
+    // 7. Culture, Lingo & Audio Translator Features
+    if (['lingo', 'culture', 'lingo-culture', 'translator', 'audio', 'etiquette', 'phrases', 'hindi', 'bengali', 'tamil', 'marathi', 'telugu', 'gujarati', 'kannada', 'malayalam', 'punjabi', 'odia', 'bargain', 'tipping', 'templedress', 'foodetiquette', 'festivals', 'handicrafts', 'music', 'dance', 'architecture', 'cuisineglossary', 'streetfoodsafe', 'tea', 'artisanworkshops', 'heritagecrafts', 'localcustoms'].includes(cleanId)) {
+      switchTabDirect('lingo');
+      const langMap = { hindi:'hi', bengali:'bn', tamil:'ta', marathi:'mr', telugu:'te', gujarati:'gu', kannada:'kn', malayalam:'ml', punjabi:'pa', odia:'or' };
+      if (langMap[cleanId]) {
+        let selectEl = document.getElementById('lingo-lang-select');
+        if (selectEl) {
+          selectEl.value = langMap[cleanId];
+          selectEl.dispatchEvent(new Event('change'));
+        }
+      }
+      return;
+    }
+
+    // 8. Safety, Security & Digital Survival Kit Features
+    if (['survival', 'survival-kit', 'apps', 'digitalsurvival', 'appguide', 'emergency', 'safety', 'vault', 'sos', 'helpline', 'upi', 'simguide', 'solosafety', 'stomach', 'foodsafety', 'scamadvisor', 'nriguide', 'visainfo', 'heatwave', 'monsoonsafety', 'highaltitude', 'embassy', 'travelinsurance', 'lostfound', 'cybersecurity', 'atm', 'pharmacy', 'bloodbank', 'snakebite', 'beachsafety', 'nighttravel', 'scamrates', 'policepost', 'digitalcopies'].includes(cleanId)) {
+      switchTabDirect('survival');
+      return;
+    }
+
+    // 9. State Tourism & Hotelier Showcase Features
+    if (['tourism', 'stateshowcase', 'state', 'states', 'showcase', 'hotel', 'homestay', 'resort', 'delhitourism', 'mumbaitourism', 'jaipurtourism', 'keralatourism', 'varanasitourism', 'goatourism', 'punetourism', 'bengalurutourism', 'kolkatatourism', 'chennaitourism', 'hyderabadtourism', 'shimlatourism', 'rishikeshtourism', 'amritsartourism', 'agratourism', 'udaipurtourism', 'jodhpurtourism', 'mysoretourism', 'darjeelingtourism', 'shillongtourism', 'ladakhtourism', 'andamantourism', 'kazirangatourism', 'hampitourism', 'maduraitourism', 'pondicherrytourism'].includes(cleanId)) {
+      switchTabDirect('tourism');
+      const stateNameMap = {
+        delhitourism: 'Delhi', mumbaitourism: 'Maharashtra', jaipurtourism: 'Rajasthan',
+        keralatourism: 'Kerala', varanasitourism: 'Uttar Pradesh', goatourism: 'Goa',
+        punetourism: 'Maharashtra', bengalurutourism: 'Karnataka', kolkatatourism: 'West Bengal',
+        chennaitourism: 'Tamil Nadu', hyderabadtourism: 'Telangana', shimlatourism: 'Himachal Pradesh',
+        rishikeshtourism: 'Uttarakhand', amritsartourism: 'Punjab', agratourism: 'Uttar Pradesh',
+        udaipurtourism: 'Rajasthan', jodhpurtourism: 'Rajasthan', mysoretourism: 'Karnataka',
+        darjeelingtourism: 'West Bengal', shillongtourism: 'Meghalaya', ladakhtourism: 'Jammu & Kashmir',
+        andamantourism: 'Andaman & Nicobar Islands', kazirangatourism: 'Assam', hampitourism: 'Karnataka',
+        maduraitourism: 'Tamil Nadu', pondicherrytourism: 'Puducherry'
+      };
+      let targetState = stateNameMap[cleanId];
+      if (targetState && typeof window.selectStateTourism === 'function') {
+        window.selectStateTourism(targetState);
+      }
+      return;
+    }
+
+    // 10. Trip Planner & Itinerary Features
+    if (['trip', 'tripplanner', 'itinerary', 'budget', 'pack', 'plan', 'notes', 'smartpacker', 'tracker'].includes(cleanId)) {
+      switchTabDirect('trip');
+      if (cleanId === 'pack' || cleanId === 'smartpacker') {
+        if (typeof window.switchPackCat === 'function') window.switchPackCat('clothes');
+      }
+      return;
+    }
+
+    // 11. Interactive Game & Geography Hub Features
+    if (['game', 'geoguess', 'gameplay', 'quiz', 'guess', 'spelling'].includes(cleanId)) {
+      switchTabDirect('game');
+      return;
+    }
+    if (['travel', 'geography', 'matrix', 'distance', 'map', 'pincode', 'converter', 'socket', 'timezone', 'shopping', 'localizer', 'voice', 'sleep', 'altitude', 'language', 'dialcode', 'rto', 'circuit', 'offline'].includes(cleanId)) {
+      switchTabDirect('travel');
+      return;
+    }
+
+    // Default Fallback to travelintel
+    switchTabDirect('travelintel');
+  }
+
+  function switchTabDirect(tabId) {
+    let activeTab = document.getElementById('tab-content-' + tabId);
+    if (!activeTab) return;
+
+    window._currentActiveTab = tabId;
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.classList.remove('active');
+      tab.style.setProperty('display', 'none', 'important');
+      tab.style.opacity = '0';
+      tab.style.visibility = 'hidden';
+    });
+
+    activeTab.classList.add('active');
+    activeTab.style.setProperty('display', 'block', 'important');
+    activeTab.style.opacity = '1';
+    activeTab.style.visibility = 'visible';
+    activeTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   function openFeatureDetailModal(feat) {
     if (!feat) return;
+    
+    // Save to active modal state dynamically
+    window.activeSelectedFeature = feat;
+
     let modal = document.getElementById('feature-detail-modal');
     if (!modal) return;
 
@@ -28565,12 +28720,16 @@ class HackathonGuide {
     if (titleEl) titleEl.textContent = feat.title || feat.name || feat.id;
     if (catEl) catEl.textContent = feat.category || 'FEATURE VIEW';
     if (descEl) descEl.textContent = feat.desc || 'Explore details and interactive tools for this Arvora feature.';
+    
     if (actionBtn) {
-      actionBtn.onclick = function() {
-        closeFeatureDetailModal();
-        if (feat.parentTab && typeof window.switchTab === 'function') {
-          window.switchTab(feat.parentTab);
-        }
+      actionBtn.dataset.featureId = feat.id;
+      actionBtn.innerHTML = '⚡ ACCESS ' + (feat.title || feat.name || feat.id).toUpperCase() + ' TOOL';
+      
+      // Dynamic button binding without stale closures
+      actionBtn.onclick = function(e) {
+        if (e) e.preventDefault();
+        let targetId = (window.activeSelectedFeature && window.activeSelectedFeature.id) ? window.activeSelectedFeature.id : feat.id;
+        launchDirectFeatureTool(targetId);
       };
     }
 
@@ -28586,6 +28745,7 @@ class HackathonGuide {
     modal.style.setProperty('display', 'none', 'important');
   }
 
-  window.getFeatureMetadata = getFeatureMetadata;
+  window.launchDirectFeatureTool = launchDirectFeatureTool;
   window.openFeatureDetailModal = openFeatureDetailModal;
   window.closeFeatureDetailModal = closeFeatureDetailModal;
+
