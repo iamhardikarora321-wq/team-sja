@@ -28908,6 +28908,27 @@ class HackathonGuide {
   }
 
   window.setQuickRoute = setQuickRoute;
+  
+  window.ALL_SHOWCASE_FEATURES_LIST = [
+    { id: 'discover', title: 'Discover Explorer', category: 'Spatial Engine', icon: '🧭', desc: 'Explore national circuits, regional destination telemetry & authentic uncrowded spots.' },
+    { id: 'plan', title: 'Queue-Free Plan Day Builder', category: 'Spatial Engine', icon: '📅', desc: 'Interactive day builder, custom time-slot rerouter & itinerary exporter.' },
+    { id: 'market', title: 'Grassroots Artisan Market', category: 'Spatial Engine', icon: '🏪', desc: 'Merchant footfall telemetry, GI-tagged craft listings, homestays & Craft Pass.' },
+    { id: 'impact', title: 'Macro Impact Calculator', category: 'Spatial Engine', icon: '📊', desc: 'Calculate carbon footprint offset, local economy spend retention % & queue hours saved.' },
+    { id: 'control', title: 'Municipal Control Center', category: 'Spatial Engine', icon: '🏛️', desc: 'Authority destination control dashboard, infrastructure load & visitor capacity throttle.' },
+    { id: 'overcrowding', title: 'Overcrowding Radar & Heatmap', category: 'Congestion Relief', icon: '⚠️', desc: 'Real-time monument congestion radar, overcrowding mitigation alerts & vector SVG heatmap.' },
+    { id: 'flight', title: 'Aeroplane Flight Estimator', category: 'Transit Hub', icon: '✈️', desc: 'MakeMyTrip-grade fares for 6 trunk corridors, IndiGo/Air India directory & DigiYatra hacks.' },
+    { id: 'bus', title: 'RedBus AC Sleeper Fleet Guide', category: 'Transit Hub', icon: '🚌', desc: 'RedBus Volvo 9600 AC Sleeper & Scania fleet rates, RTC State Roadways directory.' },
+    { id: 'car', title: 'FASTag Toll & Fuel Calculator', category: 'Transit Hub', icon: '🚗', desc: 'Highway toll rates, fuel expense calculator, outstation cabs & Zoomcar self-drive.' },
+    { id: 'auto', title: 'Auto Rickshaw Meter Tariff', category: 'Transit Hub', icon: '🛺', desc: 'Official RTO auto meter base fare & night surge estimator (+25%).' },
+    { id: 'train', title: 'IRCTC Express Railways & Tatkal', category: 'Transit Hub', icon: '🚆', desc: 'Vande Bharat Executive CC, 3AC, Sleeper fares, Tatkal quota timing hacks (10 AM / 11 AM).' },
+    { id: 'lingo', title: 'Regional Voice Lingo Translator', category: 'Culture & Audio', icon: '🗣️', desc: 'Text-to-speech audio pronunciations for 10 regional Indian languages & temple etiquette.' },
+    { id: 'survival', title: 'Emergency SOS & Travel Apps', category: 'Safety & Apps', icon: '📲', desc: 'Direct speed-dial helplines (112, 100, 108, 1363), IRCTC/UTS app vault & NRI eSIM guide.' },
+    { id: 'tourism', title: '36 State Tourism Showcase', category: 'Travel Guide', icon: '🏛️', desc: 'Comprehensive showcase for all 36 States & UTs with boutique heritage hotels & homestays.' },
+    { id: 'trip', title: 'Day-by-Day Trip Planner', category: 'Trip Planning', icon: '🧳', desc: 'Custom itinerary builder, travel budget calculator & smart packing checklist.' },
+    { id: 'game', title: 'Geoguess Spelling Challenge', category: 'Interactive Game', icon: '🎮', desc: 'Test your knowledge of Indian geography with clue-based scrambled city guessing.' },
+    { id: 'travel', title: '15,000 City Distance Matrix', category: 'Geography Hub', icon: '🌐', desc: 'Zero-latency Radix Trie inter-city distance matrix & coordinate solver.' }
+  ];
+
   window.calculateDoorToDoorRoute = calculateDoorToDoorRoute;
 
   document.addEventListener('DOMContentLoaded', () => {
