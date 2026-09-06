@@ -95,12 +95,15 @@ button { border: 0; font: inherit; }
 
 @media (min-width: 900px) {
   .cinema-scroll {
-    padding: 24px;
+    padding: 32px 0;
   }
   .stage.floating-viewport-window,
   .stage.naturecore-viewport {
-    top: 24px;
-    height: calc(100vh - 48px);
+    position: sticky;
+    top: max(20px, calc(50vh - 440px));
+    width: min(92vw, 1440px);
+    height: min(86vh, 880px);
+    margin: 0 auto;
     border-radius: 32px !important;
     border: 1px solid rgba(237, 244, 236, 0.12) !important;
     box-shadow: 0 40px 100px rgba(0, 0, 0, 0.95), 0 0 60px rgba(4, 10, 6, 0.85) !important;
@@ -137,8 +140,8 @@ button { border: 0; font: inherit; }
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 24px;
-  padding: 32px 48px;
+  gap: clamp(16px, 2vw, 32px);
+  padding: 24px 40px;
   pointer-events: auto;
 }
 
@@ -153,7 +156,7 @@ button { border: 0; font: inherit; }
 .site-nav {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 2.5vw, 38px);
+  gap: clamp(16px, 2vw, 32px);
 }
 
 .site-nav a {
@@ -259,8 +262,9 @@ button { border: 0; font: inherit; }
   z-index: 2;
   left: 0;
   right: 0;
-  top: var(--sights-top);
-  padding: 0;
+  top: auto;
+  bottom: 32px;
+  padding: 0 40px;
   opacity: 1;
   visibility: var(--sights-visibility);
   transform: translate3d(var(--sights-enter-x), var(--sights-y), 0) scale(var(--sights-scale));
@@ -284,8 +288,8 @@ button { border: 0; font: inherit; }
 
 .sight-card {
   position: relative;
-  flex: 0 0 clamp(340px, 19vw, 420px);
-  height: 230px;
+  flex: 0 0 clamp(320px, 18vw, 400px);
+  height: 220px;
   padding: 24px;
   overflow: hidden;
   border-radius: 20px;
@@ -382,9 +386,9 @@ button { border: 0; font: inherit; }
 .sights-controls {
   position: absolute;
   z-index: 5;
-  left: 48px;
+  left: 40px;
   right: auto;
-  top: calc(var(--sights-screen-top) + 230px + 18px);
+  bottom: calc(220px + 48px);
   display: flex;
   justify-content: flex-start;
   gap: 14px;
@@ -422,58 +426,70 @@ button { border: 0; font: inherit; }
   transform: scale(1.05);
 }
 
-/* Classical Editorial Hero Title */
-.hero-title {
+/* Classical Editorial Hero Title Lockup (Middle-Left Anchored) */
+.hero-lockup {
   position: absolute;
+  z-index: 5;
+  left: clamp(32px, 5vw, 64px);
+  top: 48%;
+  transform: translateY(-50%);
+  width: min(42vw, 540px);
+  text-align: left;
+  pointer-events: auto;
+}
+
+.hero-title {
+  position: relative;
   z-index: 3;
-  left: 50%;
-  top: clamp(100px, 17vh, 180px);
-  width: min(94vw, 1600px);
+  left: 0;
+  top: 0;
+  width: 100%;
   margin: 0;
   color: var(--text-mist);
   font-family: 'Cormorant Garamond', 'Ogg Medium', serif;
-  font-size: clamp(3.5rem, 8.5vw, 11rem);
+  font-size: clamp(2.5rem, 5.5vw, 6.2rem);
   font-weight: 500;
-  line-height: 0.88;
+  line-height: 0.92;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  text-align: center;
+  text-align: left;
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85), 0 0 40px rgba(140, 168, 146, 0.18);
-  transform: translate3d(-50%, var(--title-y), 0) scale(var(--title-scale));
+  transform: translate3d(0, var(--title-y), 0) scale(var(--title-scale));
   opacity: var(--title-opacity);
   will-change: transform, opacity;
 }
 
 .hero-subtitle {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  left: 50%;
-  top: clamp(280px, 45vh, 460px);
-  width: min(520px, 86vw);
-  margin: 0;
-  transform: translate3d(-50%, var(--title-y), 0);
+  left: 0;
+  top: 0;
+  width: 100%;
+  max-width: 310px;
+  margin-top: 18px;
+  transform: translate3d(0, var(--title-y), 0);
   opacity: var(--title-opacity);
   color: var(--text-sage);
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
   font-weight: 400;
   line-height: 1.4;
-  text-align: center;
+  text-align: left;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.85);
   pointer-events: none;
   will-change: transform, opacity;
 }
 
-/* Floating Action Tray (Right Side Pill Stack) */
+/* Floating Action Tray (Right Side Pill Stack Anchored) */
 .floating-action-tray {
   position: absolute;
   z-index: 8;
-  right: clamp(24px, 4vw, 56px);
+  right: clamp(32px, 5vw, 64px);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   pointer-events: auto;
 }
 
@@ -732,23 +748,33 @@ button { border: 0; font: inherit; }
 }
 
 @media (max-width: 1500px) {
-  .hero-title { font-size: 8.5rem; }
+  .hero-title { font-size: 4.8rem; }
   .story-panel h2 { font-size: 4.1rem; }
 }
 
 @media (max-width: 1100px) {
-  .hero-title { top: 15vh; font-size: 6.5rem; }
+  .hero-lockup { width: min(50vw, 420px); }
+  .hero-title { font-size: 3.8rem; }
   .bridge-img { width: 138vw; }
   .frame-two-img { width: 132vw; }
   .story-panel h2 { font-size: 3.2rem; }
   .facts { gap: 34px; margin-top: 44px; }
   .facts dt { font-size: 3.2rem; }
-  .sight-card { flex-basis: clamp(320px, 40vw, 390px); min-height: 180px; }
+  .sight-card { flex-basis: clamp(300px, 35vw, 360px); min-height: 180px; }
 }
 
 @media (max-width: 900px) {
+  .hero-lockup {
+    position: absolute;
+    top: 22vh;
+    left: 24px;
+    transform: none;
+    width: calc(100% - 48px);
+  }
+  .hero-title { font-size: 3.2rem; text-align: left; }
+  .hero-subtitle { max-width: 100%; text-align: left; }
   .floating-action-tray {
-    right: 16px;
+    right: 24px;
     top: auto;
     bottom: 24px;
     transform: none;
@@ -776,7 +802,7 @@ button { border: 0; font: inherit; }
   .site-nav { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start;
               gap: 16px; overflow-x: auto; scrollbar-width: none; }
   .site-nav::-webkit-scrollbar { display: none; }
-  .hero-title { top: 16vh; font-size: 3.8rem; letter-spacing: 0.08em; }
+  .hero-title { font-size: 2.8rem; letter-spacing: 0.08em; }
   .bridge-img { bottom: 2vh; width: 190vw; }
   .frame-two-img { width: 176vw; }
   .intro-copy { bottom: 32px; }
@@ -788,10 +814,10 @@ button { border: 0; font: inherit; }
   .story-panel h2 { font-size: 2.45rem; }
   .facts { gap: 18px; margin-top: 34px; }
   .facts dt { font-size: 2.5rem; }
-  .sights-slider { padding: 0; }
+  .sights-slider { padding: 0 16px; bottom: 16px; }
   .sights-track { gap: 12px; transform: translate3d(calc(var(--sights-shift) - 18vw), 0, 0); }
-  .sight-card { flex-basis: min(82vw, 330px); height: 230px; padding: 20px; border-radius: 18px; }
-  .sights-controls { top: calc(var(--sights-screen-top) + 246px); }
+  .sight-card { flex-basis: min(82vw, 330px); height: 210px; padding: 20px; border-radius: 18px; }
+  .sights-controls { bottom: calc(210px + 28px); left: 20px; }
   .sight-card h3 { max-width: 78%; font-size: 22px; }
   .sight-card p { max-width: 100%; margin-top: 8px; font-size: 12px; }
   .sight-kicker { margin-bottom: 24px; font-size: 10px; }
