@@ -248,12 +248,12 @@
       if (typeof window.switchTransportMode === 'function') window.switchTransportMode(mode);
     }
     // Domain B: Travel Intelligence & City Explorer
-    else if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'overcrowding', 'peakbalancer', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
+    else if (['travelintel', 'explore', 'food', 'culinary', 'attractions', 'planner', 'routecalc', 'overcrowding', 'peakbalancer', 'artisanhub', 'homestayportal', 'scenicroutes', 'monumentaudio', 'weatherintel', 'weather', 'crowdforecast', 'ecoimpact', 'offbeatspots', 'photospots', 'photo', 'nightlife', 'familycircuits', 'solodirections', 'budgetestimator', 'localguides', 'heritagepreservation'].includes(cleanId)) {
       targetTabId = 'travelintel';
       let subTab = 'explore';
-      if (['attractions', 'sightseeing', 'monument', 'photospots', 'heritage'].some(k => cleanId.includes(k))) subTab = 'attractions';
+      if (['attractions', 'sightseeing', 'monument', 'photospots', 'photo', 'heritage'].some(k => cleanId.includes(k))) subTab = 'attractions';
       else if (['food', 'culinary', 'delicacies', 'dhabas', 'cuisine'].some(k => cleanId.includes(k))) subTab = 'culinary';
-      else if (['planner', 'routecalc', 'scenicroutes', 'distance'].some(k => cleanId.includes(k))) subTab = 'planner';
+      else if (['planner', 'routecalc', 'scenicroutes', 'distance', 'weather', 'photo'].some(k => cleanId.includes(k))) subTab = 'planner';
       
       if (typeof window.setIntelTab === 'function') window.setIntelTab(subTab);
     }
@@ -1592,7 +1592,7 @@
     }
 
     // 10. Trip Planner & Itinerary Features
-    else if (['trip', 'tripplanner', 'itinerary', 'budget', 'pack', 'plan', 'notes', 'smartpacker', 'tracker'].includes(cleanId)) {
+    else if (['trip', 'tripplanner', 'itinerary', 'budget', 'pack', 'plan', 'notes', 'smartpacker', 'tracker', 'reset', 'theme', 'constellation'].includes(cleanId)) {
       tabId = 'trip';
       if (cleanId === 'pack' || cleanId === 'smartpacker') {
         if (typeof window.switchPackCat === 'function') window.switchPackCat('clothes');
@@ -1603,7 +1603,7 @@
     else if (['game', 'geoguess', 'gameplay', 'quiz', 'guess', 'spelling'].includes(cleanId)) {
       tabId = 'game';
     }
-    else if (['travel', 'geography', 'matrix', 'distance', 'map', 'pincode', 'converter', 'socket', 'timezone', 'shopping', 'localizer', 'voice', 'sleep', 'altitude', 'language', 'dialcode', 'rto', 'circuit', 'offline'].includes(cleanId)) {
+    else if (['travel', 'geography', 'matrix', 'distance', 'map', 'pincode', 'converter', 'socket', 'timezone', 'shopping', 'localizer', 'voice', 'sleep', 'altitude', 'language', 'dialcode', 'rto', 'circuit', 'offline', 'photo', 'photohub', 'weather'].includes(cleanId)) {
       tabId = 'travel';
     }
 
@@ -1641,13 +1641,16 @@
 
     // Highlight active navigation buttons across UI
     document.querySelectorAll(".feature-card-compact, .tab-btn, .sidebar-feature-item, .island-btn").forEach(btn => {
-      const target = btn.dataset.tab || btn.getAttribute("data-tab") || btn.dataset.target || btn.getAttribute("data-target");
+      if (!btn) return;
+      const target = (btn.dataset ? btn.dataset.tab : null) || btn.getAttribute("data-tab") || (btn.dataset ? btn.dataset.target : null) || btn.getAttribute("data-target");
       if (target === tabId || (target && cleanId.includes(target))) {
         btn.classList.add("active");
       } else {
         btn.classList.remove("active");
       }
     });
+
+    return tabId;
   }
 
   // =====================================================================
