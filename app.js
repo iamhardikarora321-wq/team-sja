@@ -5,7 +5,7 @@
   const ARVORA_MASTER_180_FEATURES = {
     hubs: [
       { id: 'travelintel', icon: '🗺️', name: 'Bharat Travel Intelligence & City Explorer', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
-      { id: 'roam',        icon: '🧭', name: 'Nexora ROAM Destination Intelligence', title: 'Nexora ROAM Destination Intelligence', category: 'Smart Travel', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
+      { id: 'roam',        icon: '🧭', name: 'Bharat Spatial Destination Matrix', title: 'Bharat Spatial Destination Matrix', category: 'Smart Travel', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
       { id: 'transport',   icon: '✈️', name: 'Bharat Multi-Mode Transport & Tariff Hub', title: 'Bharat Multi-Mode Transport & Tariff Hub', category: 'Transit & Fares', desc: 'Separated 5-mode transport estimator for Flights, Buses, Cars, Auto meter, and Railways.' },
       { id: 'lingo',       icon: '🗣️', name: 'Bharat Lingo & Cultural Etiquette Matrix', title: 'Bharat Lingo & Cultural Etiquette Matrix', category: 'Culture & Audio', desc: 'Interactive Text-to-Speech audio translator for 10 regional Indian languages & temple etiquette.' },
       { id: 'survival',    icon: '📲', name: 'Digital Survival Kit & SOS Center', title: 'Digital Survival Kit & SOS Center', category: 'Safety & Security', desc: 'Speed-dial emergency helplines, essential travel apps, and NRI/foreign tourist guide.' },
@@ -76,7 +76,7 @@
       
       if (typeof window.setIntelTab === 'function') window.setIntelTab(subTab);
     }
-    // Domain C: Nexora ROAM Destination Intelligence
+    // Domain C: Bharat Spatial Destination Matrix
     else if (['roam', 'discover', 'market', 'control', 'impact', 'reroute', 'loadmap'].includes(cleanId)) {
       targetTabId = 'roam';
       let mode = 'discover';
@@ -270,7 +270,7 @@
     "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
   ];    var DEFAULT_SHOWCASE_FEATURES = [
       { id: 'travelintel', title: 'Bharat Travel Intelligence & City Explorer', category: 'Travel Intelligence', icon: '🗺️', desc: 'Explore top attractions, authentic regional cuisine, travel guides & digital survival tools.' },
-      { id: 'roam', title: 'Nexora ROAM Destination Intelligence', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
+      { id: 'roam', title: 'Bharat Spatial Destination Matrix', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
       { id: 'transport', title: 'Bharat Multi-Mode Transport & Tariff Hub', category: 'Transit & Fares', icon: '✈️', desc: 'Separated 5-mode transport estimator for Flights, Buses, Cars, Auto meter, and Railways.' },
       { id: 'lingo', title: 'Bharat Lingo & Cultural Etiquette Matrix', category: 'Culture & Audio', icon: '🗣️', desc: 'Interactive Text-to-Speech audio translator for 10 regional Indian languages & temple etiquette.' },
       { id: 'survival', title: 'Digital Survival Kit & SOS Center', category: 'Safety & Apps', icon: '📲', desc: 'Speed-dial emergency helplines, essential travel apps, and NRI/foreign tourist guide.' },
@@ -1553,7 +1553,7 @@
       if (typeof window.setIntelTab === 'function') window.setIntelTab(subTab);
     }
 
-    // 6. Nexora ROAM Destination Intelligence Features
+    // 6. Bharat Spatial Destination Matrix Features
     else if (['roam', 'discover', 'market', 'control', 'impact', 'reroute', 'loadmap'].includes(cleanId)) {
       tabId = 'roam';
       let mode = 'discover';
@@ -22478,7 +22478,7 @@ setTimeout(init3DParallax, 300);
 
     const catNameMap = {
       travelintel: 'Bharat Travel Intelligence',
-      roam: 'Nexora ROAM Destination Intelligence',
+      roam: 'Bharat Spatial Destination Matrix',
       transport: 'Multi-Mode Transit & Mobility',
       lingo: 'Regional Lingo & Culture Matrix',
       survival: 'Digital Survival Kit & SOS Center',
@@ -27872,7 +27872,7 @@ class HackathonGuide {
     }
 
     init() {
-      console.log('[ROAM Engine] Initializing Nexora ROAM Platform...');
+      console.log('[Spatial Engine] Initializing Bharat Spatial Tourism Engine...');
       try {
         this.culturalCanvas = new CulturalCanvasController();
         this.placeIdentity = new PlaceIdentityController('place-identity-mount');
@@ -28572,7 +28572,7 @@ class HackathonGuide {
     planner: { id: 'planner', title: 'Smart Route & Multi-City Trip Calculator', category: 'Travel Intelligence', icon: '📍', desc: 'Calculate multi-stop driving distances, routes, and transit times.', parentTab: 'travelintel' },
     routecalc: { id: 'routecalc', title: 'Multi-Stop Distance & Route Calculator', category: 'Travel Intelligence', icon: '🛣️', desc: 'Calculate exact distances and drive times between Indian cities.', parentTab: 'travelintel' },
 
-    roam: { id: 'roam', title: 'Nexora ROAM Destination Intelligence', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
+    roam: { id: 'roam', title: 'Bharat Spatial Destination Matrix', category: 'Smart Travel', icon: '🧭', desc: 'Dynamic crowd-balancer, destination load map, and real-time smart rerouting.' },
     discover: { id: 'discover', title: 'Live Crowd & Destination Discovery', category: 'Smart Travel', icon: '🧭', desc: 'Real-time crowd heatmaps and spot traffic discovery.', parentTab: 'roam' },
     reroute: { id: 'reroute', title: 'Smart Rerouting & Peak Traffic Avoidance', category: 'Smart Travel', icon: '⚡', desc: 'Restructure your itinerary on the fly to bypass high crowd peak hours.', parentTab: 'roam' },
     loadmap: { id: 'loadmap', title: 'Real-Time Destination Load Map', category: 'Smart Travel', icon: '🗺️', desc: 'Visual load map indicator for popular attractions and heritage hubs.', parentTab: 'roam' },
@@ -28704,7 +28704,7 @@ class HackathonGuide {
       return;
     }
 
-    // 6. Nexora ROAM Destination Intelligence Features
+    // 6. Bharat Spatial Destination Matrix Features
     if (['roam', 'discover', 'market', 'control', 'impact', 'reroute', 'loadmap'].includes(cleanId)) {
       let mode = 'discover';
       if (['explore', 'reroute', 'loadmap'].some(k => cleanId.includes(k))) mode = 'explore';
