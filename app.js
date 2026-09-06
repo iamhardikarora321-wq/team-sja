@@ -3256,10 +3256,29 @@
     renderStateGrid();
   };
 
-  window.filterTourismStates = function(query) {
+    window.filterTourismStates = function(query) {
     const q = (query || "").trim();
     renderStateGrid(q);
     renderTourismPlaceDropdown(q);
+
+    // AUTOMATIC INSTANT DOSSIER RENDER ON TYPING:
+    if (q.length >= 3) {
+      const qLower = q.toLowerCase();
+      const allStates = Object.keys(TOURISM_DATABASE).concat(STATES_LIST);
+      const matchState = allStates.find(st => st.toLowerCase() === qLower || st.toLowerCase().startsWith(qLower));
+
+      if (matchState) {
+        activeState = matchState;
+        loadStateDetails(matchState);
+      } else {
+        const matches = getPanIndiaPlaceSuggestions(q, 1);
+        if (matches.length > 0) {
+          selectTourismPlace(matches[0].name);
+        } else {
+          selectTourismPlace(q);
+        }
+      }
+    }
   };
 
   window.selectTourismSearchEnter = function(query) {
@@ -24990,6 +25009,17 @@ setTimeout(init3DParallax, 300);
         return;
       }
 
+      // INSTANT DOSSIER RENDER ON TYPING
+      if (query.length >= 3) {
+        const dbKeys = Object.keys(window.TRAVEL_INTEL_DB || {});
+        const matchKey = dbKeys.find(k => k === query || k.startsWith(query));
+        if (matchKey) {
+          selectIntelCity(matchKey, window.TRAVEL_INTEL_DB[matchKey].name);
+        } else {
+          selectIntelCity(query, capitalizeWord(query));
+        }
+      }
+
       // Fuzzy match against TRAVEL_INTEL_DB and all 50k cities (CITIES_DATA)
       const dbKeys = Object.keys(window.TRAVEL_INTEL_DB || {});
       let matches = dbKeys.filter(k => {
@@ -25153,6 +25183,43 @@ setTimeout(init3DParallax, 300);
         </div>
       `).join('');
 
+      let famousShopsHtml = '';
+      if (data.famousFoodShops && data.famousFoodShops.length > 0) {
+        famousShopsHtml = `
+          <div style="margin-top:1.5rem; background:rgba(245,158,11,0.03); border:1px solid rgba(245,158,11,0.25); border-radius:16px; padding:1.25rem;">
+            <h3 style="font-size:1.1rem; font-weight:900; color:#fbbf24; margin-bottom:0.85rem;">🏛️ Famous Food Shops &amp; Iconic Eateries</h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:0.85rem;">
+              ${data.famousFoodShops.map(sh => `
+                <div style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:0.85rem 1rem;">
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.25rem;">
+                    <h5 style="font-size:0.92rem; font-weight:800; color:#fbbf24; margin:0;">🏛️ ${sh.shop}</h5>
+                    <span style="font-size:0.68rem; font-weight:700; color:#fff; background:rgba(245,158,11,0.2); padding:0.15rem 0.5rem; border-radius:10px;">${sh.dish}</span>
+                  </div>
+                  <p style="font-size:0.8rem; color:#cbd5e1; line-height:1.45; margin:0;">${sh.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      let marketsHtml = '';
+      if (data.markets && data.markets.length > 0) {
+        marketsHtml = `
+          <div style="margin-top:1.5rem;">
+            <h3 style="font-size:1.1rem; font-weight:800; color:#f59e0b; margin-bottom:0.85rem;">🛍️ Famous Markets &amp; Craft Bazaars</h3>
+            <div class="intel-card-grid">
+              ${data.markets.map(m => `
+                <div class="intel-item-card" style="border-color:rgba(245,158,11,0.3);">
+                  <h4 style="font-size:1rem; font-weight:800; color:#f59e0b; margin:0 0 0.35rem 0;">${m.icon || '🛍️'} ${m.name}</h4>
+                  <p style="font-size:0.82rem; color:#94a3b8; line-height:1.45; margin:0;">${m.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
       pane.innerHTML = `
         <div style="margin-bottom:1.5rem;">
           <h3 style="font-size:1.1rem; font-weight:800; color:#00f3ff; margin-bottom:0.85rem;">🏛️ Top Attractions &amp; Heritage Sites</h3>
@@ -25162,6 +25229,8 @@ setTimeout(init3DParallax, 300);
           <h3 style="font-size:1.1rem; font-weight:800; color:#ff007f; margin-bottom:0.85rem;">🍛 Iconic Culinary Specialties &amp; Delicacies</h3>
           <div class="intel-card-grid">${foodHtml}</div>
         </div>
+        ${famousShopsHtml}
+        ${marketsHtml}
       `;
     } else if (currentIntelTab === 'planner') {
       let pane = document.getElementById('intel-tab-content-planner');
