@@ -9,6 +9,7 @@
   let targetScroll = 0, smoothScroll = 0;
   let initialized = false;
   let rafPending = false;
+  let isIdle = false;
 
   let sightCards = [];
   let originalSightCount = 0;
@@ -147,12 +148,19 @@
     root.style.setProperty('--sights-top', `${sightsParentTop.toFixed(4)}px`);
     root.style.setProperty('--sights-screen-top', `${sightsScreenTop.toFixed(4)}px`);
 
-    // Idle Cutoff Check: stop RAF loop when motion settles
+    // Idle Detection Engine Cutoff: Stop RAF loop when scroll and mouse motion halt
     const scrollDelta = Math.abs(smoothScroll - targetScroll);
     const mouseDeltaX = Math.abs(mouseX - targetMouseX);
     const mouseDeltaY = Math.abs(mouseY - targetMouseY);
 
-    if (scrollDelta > 0.05 || mouseDeltaX > 0.0005 || mouseDeltaY > 0.0005) {
+    if (scrollDelta < 0.05 && mouseDeltaX < 0.0005 && mouseDeltaY < 0.0005) {
+      smoothScroll = targetScroll;
+      mouseX = targetMouseX;
+      mouseY = targetMouseY;
+      isIdle = true;
+      rafPending = false;
+      // Loop cut off cleanly, stop calling requestAnimationFrame
+    } else {
       requestTick();
     }
   }
@@ -161,6 +169,15 @@
     if (!rafPending) {
       rafPending = true;
       requestAnimationFrame(update);
+    }
+  }
+
+  function wakeRAF() {
+    if (isIdle) {
+      isIdle = false;
+      requestTick();
+    } else {
+      requestTick();
     }
   }
 
@@ -291,6 +308,39 @@
     });
   }
 
+  function bindQuickTaskbarDelegation() {
+    const taskbar = document.querySelector('.quick-taskbar');
+    if (taskbar) {
+      taskbar.addEventListener('click', (e) => {
+        const chip = e.target.closest('.feature-chip');
+        if (!chip) return;
+        e.preventDefault();
+        const targetUrl = chip.dataset.toolUrl;
+        const featureId = chip.dataset.featureId;
+        if (typeof window.openFeature === 'function') {
+          window.openFeature(featureId, targetUrl);
+        }
+      });
+    }
+
+    const searchInput = document.getElementById('feature-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        const chips = document.querySelectorAll('.quick-taskbar .feature-chip');
+        chips.forEach(chip => {
+          const text = chip.textContent.toLowerCase();
+          const fid = (chip.dataset.featureId || '').toLowerCase();
+          if (!q || text.includes(q) || fid.includes(q)) {
+            chip.style.display = 'inline-flex';
+          } else {
+            chip.style.display = 'none';
+          }
+        });
+      });
+    }
+  }
+
   function init() {
     section = document.querySelector('.cinema-scroll');
     stage = document.querySelector('.stage') || document.querySelector('.naturecore-viewport');
@@ -302,17 +352,17 @@
     sightPrev = document.querySelector('.sight-prev');
     sightNext = document.querySelector('.sight-next');
 
-    // Strictly Passive Listeners for 60+ FPS Scroll & Motion
-    window.addEventListener('scroll', requestTick, { passive: true });
+    // Strictly Passive Listeners for 60+ FPS Scroll & Motion with Idle Wakeup
+    window.addEventListener('scroll', wakeRAF, { passive: true });
     window.addEventListener('resize', () => {
       updateSightSlider();
-      requestTick();
+      wakeRAF();
     }, { passive: true });
 
     window.addEventListener('pointermove', (e) => {
       targetMouseX = e.clientX / window.innerWidth - 0.5;
       targetMouseY = e.clientY / window.innerHeight - 0.5;
-      requestTick();
+      wakeRAF();
     }, { passive: true });
 
     if (sightPrev) sightPrev.addEventListener('click', () => moveSightSlider(-1));
@@ -320,7 +370,8 @@
 
     setupSightSlider();
     bindFloatingActionTray();
-    requestTick();
+    bindQuickTaskbarDelegation();
+    wakeRAF();
   }
 
   if (document.readyState === 'loading') {

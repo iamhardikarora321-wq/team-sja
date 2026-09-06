@@ -31087,6 +31087,71 @@ class HackathonGuide {
     modal.style.setProperty('display', 'none', 'important');
   }
 
+  
+  // Decoupled Dynamic openFeature implementation
+  function openFeature(featureId, targetUrl) {
+    if (!featureId && !targetUrl) return;
+
+    // Highlight clicked chip in taskbar
+    const chips = document.querySelectorAll('.quick-taskbar .feature-chip');
+    chips.forEach(c => {
+      if ((featureId && c.dataset.featureId === featureId) || (targetUrl && c.dataset.toolUrl === targetUrl)) {
+        c.classList.add('active');
+      } else {
+        c.classList.remove('active');
+      }
+    });
+
+    // 1. Direct tab container scrolling/switching if targetUrl is an ID anchor
+    if (targetUrl && targetUrl.startsWith('#')) {
+      const targetEl = document.querySelector(targetUrl);
+      if (targetEl) {
+        const parentTab = targetEl.closest('.tab-content');
+        if (parentTab) {
+          const tabId = parentTab.id.replace('tab-content-', '');
+          if (typeof window.switchTab === 'function') window.switchTab(tabId);
+        }
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+
+    // 2. Direct launcher for known tools via featureId
+    if (featureId) {
+      let cleanId = featureId.toString().trim().toLowerCase();
+
+      const tabMap = {
+        'travelintel': 'travelintel',
+        'roam': 'roam',
+        'market': 'market',
+        'tourism': 'tourism',
+        'impact': 'impact',
+        'authority': 'authority',
+        'lingo': 'lingo',
+        'budget': 'budget'
+      };
+
+      if (tabMap[cleanId]) {
+        if (typeof window.switchTab === 'function') window.switchTab(tabMap[cleanId]);
+        const anchor = document.getElementById('main-app-anchor') || document.getElementById('tab-content-' + tabMap[cleanId]);
+        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      if (typeof window.launchDirectFeatureTool === 'function') {
+        window.launchDirectFeatureTool(cleanId);
+        return;
+      }
+    }
+
+    // 3. External link navigation
+    if (targetUrl && (targetUrl.startsWith('http://') || targetUrl.startsWith('https://') || targetUrl.startsWith('/'))) {
+      window.location.href = targetUrl;
+    }
+  }
+
+  window.openFeature = openFeature;
+
   window.launchDirectFeatureTool = launchDirectFeatureTool;
   window.openFeatureDetailModal = openFeatureDetailModal;
   window.closeFeatureDetailModal = closeFeatureDetailModal;
