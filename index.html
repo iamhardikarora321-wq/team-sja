@@ -458,6 +458,9 @@
     <!-- =====================================================================
          FEATURE #1C: REGIONAL LINGO, AUDIO SPEECH TRANSLATOR & CULTURE HUB
          ===================================================================== -->
+        <!-- =====================================================================
+         FEATURE #1C: REGIONAL LINGO, UNIVERSAL SPEECH & TEXT TRANSLATOR APP
+         ===================================================================== -->
     <div id="tab-content-lingo" class="tab-content" style="margin-bottom:2rem;">
       <div class="panel" style="background:linear-gradient(135deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98)); border:1px solid rgba(255,0,127,0.4); border-radius:24px; padding:1.75rem; box-shadow:0 0 35px rgba(255,0,127,0.15);">
         
@@ -468,35 +471,185 @@
               <span>🗣️</span>
             </div>
             <div>
-              <span style="font-size:0.72rem; font-weight:800; color:#ff007f; text-transform:uppercase; letter-spacing:0.12em;">Voice Audio & Multi-Language Engine</span>
-              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Bharat Lingo &amp; Cultural Etiquette Matrix</h2>
+              <span style="font-size:0.72rem; font-weight:800; color:#ff007f; text-transform:uppercase; letter-spacing:0.12em;">Universal Live Language Engine</span>
+              <h2 style="font-size:1.4rem; font-weight:900; color:#ffffff; margin:2px 0 0 0;">Arvora Universal Live Audio &amp; Text Translator App</h2>
             </div>
           </div>
           <div style="font-size:0.8rem; color:#f472b6; background:rgba(255,0,127,0.12); border:1px solid rgba(255,0,127,0.3); padding:0.4rem 0.85rem; border-radius:20px; font-weight:700;">
-            🔊 Text-to-Speech Audio Enabled
+            🌐 Real-Time Any Language to Any Language
           </div>
         </div>
 
-        <!-- Language Selector Chips -->
-        <div style="margin-bottom:1.25rem;">
-          <label style="display:block; font-size:0.78rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem;">Select Regional Indian Language / State</label>
-          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;" id="lingo-lang-chips">
-            <button class="intel-chip-btn active" onclick="if(window.setLingoLanguage) window.setLingoLanguage('hindi');">🇮🇳 Hindi (North India)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('rajasthani');">🏰 Rajasthani (Jaipur)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('marathi');">🌊 Marathi (Mumbai/Pune)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('tamil');">🏛️ Tamil (Chennai)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('bengali');">🎨 Bengali (Kolkata)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('gujarati');">🦁 Gujarati (Ahmedabad)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('telugu');">💎 Telugu (Hyderabad)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('malayalam');">🌴 Malayalam (Kochi)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('kannada');">💻 Kannada (Bengaluru)</button>
-            <button class="intel-chip-btn" onclick="if(window.setLingoLanguage) window.setLingoLanguage('punjabi');">🌾 Punjabi (Amritsar)</button>
+        <!-- LANGUAGE CONTROL BAR -->
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:1rem; margin-bottom:1.25rem;">
+          <div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:0.75rem; align-items:center;">
+            
+            <!-- Source Language Selector -->
+            <div>
+              <label style="display:block; font-size:0.72rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-bottom:0.35rem;">From (Source Language)</label>
+              <select id="lingo-source-select" style="width:100%; background:rgba(2,6,23,0.85); border:1px solid rgba(255,0,127,0.4); border-radius:12px; padding:0.6rem 0.85rem; color:#fff; font-size:0.9rem; font-weight:700; outline:none;" onchange="if(window.translateLingoText) window.translateLingoText();">
+                <option value="auto" selected>✨ Auto-Detect Language</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="hi">🇮🇳 Hindi (हिंदी)</option>
+                <option value="mr">🌊 Marathi (मराठी)</option>
+                <option value="ta">🏛️ Tamil (தமிழ்)</option>
+                <option value="bn">🎨 Bengali (বাংলা)</option>
+                <option value="te">💎 Telugu (తెలుగు)</option>
+                <option value="gu">🦁 Gujarati (ગુજરાતી)</option>
+                <option value="kn">💻 Kannada (ಕன்னಡ)</option>
+                <option value="ml">🌴 Malayalam (മലയാളം)</option>
+                <option value="pa">🌾 Punjabi (ਪੰਜਾਬੀ)</option>
+                <option value="es">🇪🇸 Spanish (Español)</option>
+                <option value="fr">🇫🇷 French (Français)</option>
+                <option value="de">🇩🇪 German (Deutsch)</option>
+                <option value="zh-CN">🇨🇳 Chinese (中文)</option>
+                <option value="ja">🇯🇵 Japanese (日本語)</option>
+                <option value="ar">🇸🇦 Arabic (العربية)</option>
+                <option value="ru">🇷🇺 Russian (Русский)</option>
+                <option value="pt">🇵🇹 Portuguese (Português)</option>
+                <option value="it">🇮🇹 Italian (Italiano)</option>
+                <option value="ko">🇰🇷 Korean (한국어)</option>
+              </select>
+            </div>
+
+            <!-- Swap Button -->
+            <div style="padding-top:1.2rem; text-align:center;">
+              <button class="visualizer-btn" style="background:rgba(255,0,127,0.2); border:1px solid rgba(255,0,127,0.5); color:#fff; border-radius:50%; width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem;" onclick="if(window.swapLingoLanguages) window.swapLingoLanguages();" title="Swap Source and Target Languages">
+                ↔️
+              </button>
+            </div>
+
+            <!-- Target Language Selector -->
+            <div>
+              <label style="display:block; font-size:0.72rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-bottom:0.35rem;">To (Target Language)</label>
+              <select id="lingo-target-select" style="width:100%; background:rgba(2,6,23,0.85); border:1px solid rgba(0,243,255,0.4); border-radius:12px; padding:0.6rem 0.85rem; color:#00f3ff; font-size:0.9rem; font-weight:700; outline:none;" onchange="if(window.translateLingoText) window.translateLingoText();">
+                <option value="hi" selected>🇮🇳 Hindi (हिंदी)</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="mr">🌊 Marathi (मराठी)</option>
+                <option value="ta">🏛️ Tamil (தமிழ்)</option>
+                <option value="bn">🎨 Bengali (বাংলা)</option>
+                <option value="te">💎 Telugu (తెలుగు)</option>
+                <option value="gu">🦁 Gujarati (ગુજરાતી)</option>
+                <option value="kn">💻 Kannada (கன்னட)</option>
+                <option value="ml">🌴 Malayalam (മലയാളം)</option>
+                <option value="pa">🌾 Punjabi (ਪੰਜਾਬੀ)</option>
+                <option value="es">🇪🇸 Spanish (Español)</option>
+                <option value="fr">🇫🇷 French (Français)</option>
+                <option value="de">🇩🇪 German (Deutsch)</option>
+                <option value="zh-CN">🇨🇳 Chinese (中文)</option>
+                <option value="ja">🇯🇵 Japanese (日本語)</option>
+                <option value="ar">🇸🇦 Arabic (العربية)</option>
+                <option value="ru">🇷🇺 Russian (Русский)</option>
+                <option value="pt">🇵🇹 Portuguese (Português)</option>
+                <option value="it">🇮🇹 Italian (Italiano)</option>
+                <option value="ko">🇰🇷 Korean (한국어)</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Target Language Quick Chips -->
+          <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap; margin-top:0.85rem; font-size:0.75rem;">
+            <span style="color:#94a3b8; font-weight:700;">Quick Target:</span>
+            <button class="intel-chip-btn active" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('hi');">🇮🇳 Hindi</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('mr');">🌊 Marathi</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('ta');">🏛️ Tamil</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('bn');">🎨 Bengali</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('te');">💎 Telugu</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('gu');">🦁 Gujarati</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('kn');">💻 Kannada</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('ml');">🌴 Malayalam</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('pa');">🌾 Punjabi</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('en');">🇬🇧 English</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('es');">🇪🇸 Spanish</button>
+            <button class="intel-chip-btn" onclick="if(window.setQuickTargetLang) window.setQuickTargetLang('fr');">🇫🇷 French</button>
           </div>
         </div>
 
-        <!-- Dynamic Lingo & Culture Display -->
-        <div id="lingo-culture-display-area">
-          <!-- Dynamically rendered by JS setLingoLanguage() -->
+        <!-- DUAL COLUMN TYPING TRANSLATOR WORKSPACE -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+          
+          <!-- LEFT COLUMN: INPUT TYPING TEXTAREA -->
+          <div style="background:rgba(15,23,42,0.9); border:2px solid rgba(255,0,127,0.4); border-radius:20px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+                <span style="font-size:0.8rem; font-weight:800; color:#ff007f; text-transform:uppercase;">✍️ Type Your Statement (Any Language)</span>
+                <span id="lingo-char-counter" style="font-size:0.72rem; color:#94a3b8; font-weight:600;">0 / 2000</span>
+              </div>
+              
+              <textarea id="lingo-input-textarea" rows="6" placeholder="Type or paste any sentence in any language of the world (e.g. Where is the nearest railway station? How much does this cost? Bonjour, comment allez-vous?)..." style="width:100%; background:rgba(2,6,23,0.85); border:1px solid rgba(255,255,255,0.15); border-radius:14px; padding:0.85rem; color:#ffffff; font-size:1rem; font-family:inherit; line-height:1.5; outline:none; resize:vertical; min-height:140px;" oninput="if(window.handleLingoTyping) window.handleLingoTyping();"></textarea>
+            </div>
+
+            <!-- Input Toolbar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.85rem; flex-wrap:wrap; gap:0.5rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.75rem;">
+              <div style="display:flex; gap:0.4rem;">
+                <button class="visualizer-btn" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:0.75rem; padding:0.35rem 0.7rem; border-radius:8px; display:inline-flex; align-items:center; gap:4px; cursor:pointer;" onclick="if(window.speakLingoInputText) window.speakLingoInputText();" title="Listen to Input Text">
+                  🔊 Speech
+                </button>
+                <button class="visualizer-btn" style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#f87171; font-size:0.75rem; padding:0.35rem 0.7rem; border-radius:8px; cursor:pointer;" onclick="if(window.clearLingoInput) window.clearLingoInput();">
+                  ⌫ Clear
+                </button>
+              </div>
+
+              <button class="visualizer-btn" style="background:linear-gradient(135deg, #ff007f, #7928ca); border:none; color:#ffffff; font-weight:800; font-size:0.85rem; padding:0.5rem 1.2rem; border-radius:10px; cursor:pointer; text-transform:uppercase; letter-spacing:0.04em;" onclick="if(window.translateLingoText) window.translateLingoText();">
+                Translate ⚡
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: TRANSLATED RESULT BOX -->
+          <div style="background:linear-gradient(145deg, rgba(15,23,42,0.95), rgba(2,6,23,0.98)); border:2px solid rgba(0,243,255,0.45); border-radius:20px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+                <span style="font-size:0.8rem; font-weight:800; color:#00f3ff; text-transform:uppercase;">🌐 Translated Output</span>
+                <span id="lingo-detected-lang-badge" style="font-size:0.72rem; color:#a7f3d0; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); padding:0.2rem 0.6rem; border-radius:10px; font-weight:700; display:none;">Detected: Auto</span>
+              </div>
+
+              <div id="lingo-output-container" style="background:rgba(2,6,23,0.9); border:1px solid rgba(0,243,255,0.25); border-radius:14px; padding:1rem; min-height:140px; display:flex; flex-direction:column; justify-content:center;">
+                <div id="lingo-placeholder-state" style="color:#64748b; font-size:0.9rem; text-align:center; font-style:italic;">
+                  Translation will appear here in real-time as you type...
+                </div>
+                <div id="lingo-translated-text" style="display:none; font-size:1.25rem; font-weight:800; color:#ffffff; line-height:1.45; word-break:break-word;"></div>
+              </div>
+            </div>
+
+            <!-- Output Action Toolbar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.85rem; flex-wrap:wrap; gap:0.5rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.75rem;">
+              <div style="display:flex; gap:0.5rem;">
+                <button id="lingo-speak-out-btn" class="visualizer-btn" style="background:rgba(0,243,255,0.15); border:1px solid rgba(0,243,255,0.4); color:#00f3ff; font-size:0.8rem; font-weight:800; padding:0.4rem 0.95rem; border-radius:8px; display:inline-flex; align-items:center; gap:6px; cursor:pointer;" onclick="if(window.speakLingoOutputText) window.speakLingoOutputText();">
+                  🔊 Listen Audio
+                </button>
+                <button class="visualizer-btn" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:0.8rem; font-weight:700; padding:0.4rem 0.85rem; border-radius:8px; display:inline-flex; align-items:center; gap:4px; cursor:pointer;" onclick="if(window.copyLingoTranslation) window.copyLingoTranslation();">
+                  📋 Copy
+                </button>
+              </div>
+
+              <span id="lingo-toast-msg" style="font-size:0.75rem; color:#10b981; font-weight:800; display:none;">✓ Copied!</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- QUICK STATEMENT TEMPLATES (Click to insert & auto-translate) -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:1.1rem; margin-bottom:1.5rem;">
+          <h3 style="font-size:0.95rem; font-weight:800; color:#ff007f; margin:0 0 0.75rem 0; display:flex; align-items:center; gap:0.5rem;">
+            <span>💡</span> Quick Travel Phrase Templates (Click to Type &amp; Translate):
+          </h3>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('Where is the nearest railway station or bus stand?');">🚕 Nearest Station</button>
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('How much does this cost? Can you give me a discount?');">🏷️ How Much &amp; Discount</button>
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('Is this food pure vegetarian and clean?');">🍲 Vegetarian Food Check</button>
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('Can you help me with directions to the main market?');">🗺️ Market Directions</button>
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('Do you have a hotel room available for tonight?');">🏨 Hotel Room Query</button>
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('I need emergency medical assistance, please help me.');">🚨 Emergency Doctor Help</button>
+            <button class="intel-chip-btn" onclick="if(window.insertLingoTemplate) window.insertLingoTemplate('What is the dress code for visiting this heritage temple?');">🛕 Temple Dress Code</button>
+          </div>
+        </div>
+
+        <!-- RECENT TRANSLATIONS STACK -->
+        <div id="lingo-history-card" style="display:none; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:1.1rem;">
+          <h3 style="font-size:0.9rem; font-weight:800; color:#00f3ff; margin:0 0 0.65rem 0;">🕒 Recent Session Translations</h3>
+          <div id="lingo-history-list" style="display:flex; flex-direction:column; gap:0.5rem;"></div>
         </div>
 
       </div>

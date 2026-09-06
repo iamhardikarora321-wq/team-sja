@@ -25021,23 +25021,27 @@ setTimeout(init3DParallax, 300);
       let pane = document.getElementById('intel-tab-content-lingo');
       if (!pane) return;
 
-      let lingoHtml = data.lingo.map(l => `
-        <div class="intel-item-card" style="border-color:rgba(0,243,255,0.3);">
-          <div style="font-size:0.75rem; font-weight:700; color:#00f3ff; text-transform:uppercase; margin-bottom:0.25rem;">${l.phrase}</div>
-          <div style="font-size:1.15rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">${l.local}</div>
-          <div style="font-size:0.8rem; color:#a7f3d0; font-style:italic; margin-bottom:0.65rem;">🗣️ Pronunciation: "${l.pronunciation}"</div>
-          <button class="visualizer-btn" style="background:rgba(0,243,255,0.15); border:1px solid rgba(0,243,255,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" onclick="if(window.speakLingoPhrase) window.speakLingoPhrase('${l.local.replace(/'/g, "\\'")}');">
-            🔊 Listen Audio
-          </button>
-        </div>
-      `).join('');
+      const defaultLangMap = {
+        'jaipur': 'hi', 'delhi': 'hi', 'mumbai': 'mr', 'varanasi': 'hi', 'goa': 'en',
+        'chennai': 'ta', 'kolkata': 'bn', 'bengaluru': 'kn', 'kochi': 'ml', 'hyderabad': 'te'
+      };
+      let targetLang = defaultLangMap[(data.name || '').toLowerCase()] || 'hi';
 
       pane.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.85rem; flex-wrap:wrap; gap:0.5rem;">
-          <h4 style="font-size:1rem; font-weight:800; color:#00f3ff; margin:0;">🗣️ Regional Everyday Language Quick-Translator (${data.name})</h4>
-          <button class="visualizer-btn" style="background:rgba(255,0,127,0.15); border:1px solid rgba(255,0,127,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.85rem; border-radius:10px;" onclick="if(window.switchTab) window.switchTab('lingo');">Full 10-Language Audio Matrix ➔</button>
+          <h4 style="font-size:1rem; font-weight:800; color:#00f3ff; margin:0;">🗣️ ${data.name} Regional Interactive Live Translator</h4>
+          <button class="visualizer-btn" style="background:rgba(255,0,127,0.15); border:1px solid rgba(255,0,127,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.85rem; border-radius:10px;" onclick="if(window.switchTab) window.switchTab('lingo');">Full Live Translator App ➔</button>
         </div>
-        <div class="intel-card-grid">${lingoHtml}</div>
+        <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(0,243,255,0.3); border-radius:16px; padding:1.1rem;">
+          <label style="display:block; font-size:0.75rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-bottom:0.4rem;">Type any statement in any language to translate into local regional dialect:</label>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <input type="text" id="intel-inline-translator-input" placeholder="Type anything in any language (e.g. Where is the main fort? How much for taxi?)..." style="flex:1; background:rgba(2,6,23,0.8); border:1px solid rgba(0,243,255,0.4); border-radius:10px; padding:0.6rem 0.85rem; color:#fff; font-size:0.9rem; font-weight:600; outline:none;" onkeydown="if(event.key==='Enter' && window.translateIntelInlineText) window.translateIntelInlineText('${targetLang}');">
+            <button class="visualizer-btn" style="background:linear-gradient(135deg, #00f3ff, #7928ca); border:none; color:#fff; font-weight:800; font-size:0.82rem; padding:0.6rem 1rem; border-radius:10px; cursor:pointer;" onclick="if(window.translateIntelInlineText) window.translateIntelInlineText('${targetLang}');">Translate ⚡</button>
+          </div>
+          <div id="intel-inline-translator-output" style="background:rgba(2,6,23,0.9); border:1px dashed rgba(0,243,255,0.3); border-radius:12px; padding:0.85rem; color:#a7f3d0; font-size:0.95rem; font-weight:700; min-height:48px; display:flex; align-items:center; justify-content:space-between;">
+            <span>Type above and press Translate...</span>
+          </div>
+        </div>
       `;
     } else if (currentIntelTab === 'apps') {
       let pane = document.getElementById('intel-tab-content-apps');
@@ -29884,75 +29888,282 @@ class HackathonGuide {
     }
   };
 
-  let currentLingoLang = 'hindi';
+  let lingoDebounceTimer = null;
+  let recentLingoHistory = [];
 
-  function setLingoLanguage(langKey) {
-    currentLingoLang = langKey || 'hindi';
-    
-    // update chip active states
-    const btns = document.querySelectorAll('#lingo-lang-chips .intel-chip-btn');
-    btns.forEach(b => {
-      let isTarget = b.getAttribute('onclick') && b.getAttribute('onclick').includes(currentLingoLang);
-      b.classList.toggle('active', isTarget);
-    });
-
-    const area = document.getElementById('lingo-culture-display-area');
-    if (!area) return;
-
-    const langObj = LINGO_DATA[currentLingoLang] || LINGO_DATA['hindi'];
-
-    const phrasesHtml = langObj.phrases.map(p => `
-      <div class="intel-item-card" style="border-color:rgba(255,0,127,0.25);">
-        <div style="font-size:0.75rem; font-weight:700; color:#ff007f; text-transform:uppercase; margin-bottom:0.25rem;">${p.phrase}</div>
-        <div style="font-size:1.15rem; font-weight:900; color:#ffffff; margin-bottom:0.35rem;">${p.local}</div>
-        <div style="font-size:0.8rem; color:#a7f3d0; font-style:italic; margin-bottom:0.65rem;">🗣️ Pronunciation: "${p.pronunciation}"</div>
-        <button class="visualizer-btn" style="background:rgba(255,0,127,0.15); border:1px solid rgba(255,0,127,0.4); color:#fff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:8px; display:inline-flex; align-items:center; gap:5px;" onclick="if(window.speakLingoPhrase) window.speakLingoPhrase('${p.local.replace(/'/g, "\'")}');">
-          🔊 Listen Audio
-        </button>
-      </div>
-    `).join('');
-
-    area.innerHTML = `
-      <div style="margin-bottom:1.5rem;">
-        <h3 style="font-size:1.1rem; font-weight:800; color:#ff007f; margin-bottom:0.85rem;">🗣️ ${langObj.langName} Essential Everyday Phrases</h3>
-        <div class="intel-card-grid">${phrasesHtml}</div>
-      </div>
-
-      <!-- Cultural Etiquette & Customs Guide -->
-      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:1.25rem;">
-        <h3 style="font-size:1.05rem; font-weight:800; color:#00f3ff; margin:0 0 0.85rem 0; display:flex; align-items:center; gap:0.5rem;">
-          <span>🕌</span> Cultural Etiquette &amp; Social Norms in India
-        </h3>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; font-size:0.83rem; color:#cbd5e1; line-height:1.5;">
-          <div>
-            <strong style="color:#fff;">👞 Temple &amp; Shrine Entry:</strong><br>
-            Always remove footwear at temple entrances. Wear modest clothing covering shoulders &amp; knees. Ask before photographing inside sanctums.
-          </div>
-          <div>
-            <strong style="color:#fff;">💵 Tipping Culture:</strong><br>
-            Tipping auto drivers is not mandatory (round off fare). At casual dhabas 5-10% is customary. At fine dining, check if service charge is already included.
-          </div>
-          <div>
-            <strong style="color:#fff;">🛍️ Market Bargaining:</strong><br>
-            In street bazaars (like Johari Bazaar or Janpath), respectful bargaining for handicrafts & textiles is expected. Start offer at 60-70% of quoted price.
-          </div>
-        </div>
-      </div>
-    `;
+  function handleLingoTyping() {
+    const inputEl = document.getElementById('lingo-input-textarea');
+    const counterEl = document.getElementById('lingo-char-counter');
+    if (inputEl && counterEl) {
+      counterEl.textContent = inputEl.value.length + ' / 2000';
+    }
+    if (lingoDebounceTimer) clearTimeout(lingoDebounceTimer);
+    lingoDebounceTimer = setTimeout(function() {
+      translateLingoText();
+    }, 450);
   }
 
-  function speakLingoPhrase(text) {
+  async function translateLingoText() {
+    const inputEl = document.getElementById('lingo-input-textarea');
+    const sourceSelect = document.getElementById('lingo-source-select');
+    const targetSelect = document.getElementById('lingo-target-select');
+    const placeholderState = document.getElementById('lingo-placeholder-state');
+    const translatedTextEl = document.getElementById('lingo-translated-text');
+    const detectedBadge = document.getElementById('lingo-detected-lang-badge');
+
+    if (!inputEl) return;
+    const text = inputEl.value.trim();
+
+    if (!text) {
+      if (placeholderState) {
+        placeholderState.style.display = 'block';
+        placeholderState.textContent = 'Translation will appear here in real-time as you type...';
+      }
+      if (translatedTextEl) {
+        translatedTextEl.style.display = 'none';
+        translatedTextEl.textContent = '';
+      }
+      if (detectedBadge) detectedBadge.style.display = 'none';
+      return;
+    }
+
+    const sourceLang = sourceSelect ? sourceSelect.value : 'auto';
+    const targetLang = targetSelect ? targetSelect.value : 'hi';
+
+    if (placeholderState) {
+      placeholderState.style.display = 'block';
+      placeholderState.textContent = '⚡ Translating statement...';
+    }
+
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      let translated = '';
+      if (data && data[0]) {
+        translated = data[0].map(item => item[0]).join('');
+      }
+
+      if (translated) {
+        if (placeholderState) placeholderState.style.display = 'none';
+        if (translatedTextEl) {
+          translatedTextEl.textContent = translated;
+          translatedTextEl.style.display = 'block';
+        }
+
+        if (data && data[2] && detectedBadge) {
+          detectedBadge.textContent = 'Detected: ' + data[2].toUpperCase();
+          detectedBadge.style.display = 'inline-block';
+        } else if (detectedBadge) {
+          detectedBadge.style.display = 'none';
+        }
+
+        addLingoHistory(text, translated, sourceLang, targetLang);
+      } else {
+        throw new Error('Translation empty');
+      }
+    } catch (err) {
+      console.warn('[Lingo Translator] Primary API attempt:', err);
+      try {
+        const fallbackUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang === 'auto' ? 'en' : sourceLang}|${targetLang}`;
+        const fbRes = await fetch(fallbackUrl);
+        const fbData = await fbRes.json();
+        if (fbData && fbData.responseData && fbData.responseData.translatedText) {
+          const translated = fbData.responseData.translatedText;
+          if (placeholderState) placeholderState.style.display = 'none';
+          if (translatedTextEl) {
+            translatedTextEl.textContent = translated;
+            translatedTextEl.style.display = 'block';
+          }
+          addLingoHistory(text, translated, sourceLang, targetLang);
+          return;
+        }
+      } catch(fbErr) {
+        console.error('[Lingo Translator] All translation APIs failed:', fbErr);
+      }
+
+      if (placeholderState) {
+        placeholderState.style.display = 'block';
+        placeholderState.textContent = '⚠️ Translation unavailable. Please check network connection.';
+      }
+    }
+  }
+
+  async function translateIntelInlineText(targetLang) {
+    const inputEl = document.getElementById('intel-inline-translator-input');
+    const outputEl = document.getElementById('intel-inline-translator-output');
+    if (!inputEl || !outputEl) return;
+
+    const text = inputEl.value.trim();
+    if (!text) {
+      outputEl.innerHTML = '<span>Type above and press Translate...</span>';
+      return;
+    }
+
+    outputEl.innerHTML = '<span style="color:#00f3ff;">⚡ Translating...</span>';
+
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang || 'hi'}&dt=t&q=${encodeURIComponent(text)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      let translated = '';
+      if (data && data[0]) {
+        translated = data[0].map(item => item[0]).join('');
+      }
+      if (translated) {
+        outputEl.innerHTML = `
+          <div>
+            <div style="font-size:0.75rem; color:#94a3b8;">Original: "${text}"</div>
+            <div style="font-size:1.1rem; color:#fff; font-weight:900; margin-top:2px;">${translated}</div>
+          </div>
+          <button class="visualizer-btn" style="background:rgba(0,243,255,0.15); border:1px solid rgba(0,243,255,0.4); color:#00f3ff; font-size:0.75rem; font-weight:700; padding:0.3rem 0.65rem; border-radius:6px;" onclick="if(window.speakNativeText) window.speakNativeText('${translated.replace(/'/g, "\'")}', '${targetLang}');">🔊 Listen</button>
+        `;
+      }
+    } catch(e) {
+      outputEl.innerHTML = '<span style="color:#f87171;">⚠️ Translation failed. Check internet.</span>';
+    }
+  }
+
+  function swapLingoLanguages() {
+    const sourceSelect = document.getElementById('lingo-source-select');
+    const targetSelect = document.getElementById('lingo-target-select');
+    if (!sourceSelect || !targetSelect) return;
+
+    let sVal = sourceSelect.value;
+    let tVal = targetSelect.value;
+
+    if (sVal === 'auto') sVal = 'en';
+
+    sourceSelect.value = tVal;
+    targetSelect.value = sVal;
+    translateLingoText();
+  }
+
+  function setQuickTargetLang(langCode) {
+    const targetSelect = document.getElementById('lingo-target-select');
+    if (targetSelect) {
+      targetSelect.value = langCode;
+      
+      const btns = document.querySelectorAll('#tab-content-lingo .intel-chip-btn');
+      btns.forEach(b => {
+        let isTarget = b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${langCode}'`);
+        b.classList.toggle('active', isTarget);
+      });
+
+      translateLingoText();
+    }
+  }
+
+  function insertLingoTemplate(text) {
+    const inputEl = document.getElementById('lingo-input-textarea');
+    if (inputEl) {
+      inputEl.value = text;
+      handleLingoTyping();
+      translateLingoText();
+    }
+  }
+
+  function clearLingoInput() {
+    const inputEl = document.getElementById('lingo-input-textarea');
+    if (inputEl) {
+      inputEl.value = '';
+      handleLingoTyping();
+    }
+  }
+
+  function speakLingoInputText() {
+    const inputEl = document.getElementById('lingo-input-textarea');
+    const sourceSelect = document.getElementById('lingo-source-select');
+    if (!inputEl || !inputEl.value.trim()) return;
+    let lang = sourceSelect ? sourceSelect.value : 'en';
+    if (lang === 'auto') lang = 'en';
+    speakNativeText(inputEl.value.trim(), lang);
+  }
+
+  function speakLingoOutputText() {
+    const translatedTextEl = document.getElementById('lingo-translated-text');
+    const targetSelect = document.getElementById('lingo-target-select');
+    if (!translatedTextEl || !translatedTextEl.textContent.trim()) return;
+    let lang = targetSelect ? targetSelect.value : 'hi';
+    speakNativeText(translatedTextEl.textContent.trim(), lang);
+  }
+
+  function speakNativeText(text, langCode) {
     if (!('speechSynthesis' in window)) {
-      alert("Text-to-speech is not supported by your browser.");
+      alert('Speech Synthesis not supported in browser.');
       return;
     }
     window.speechSynthesis.cancel();
-    // clean bracketed text
-    let cleanText = text.replace(/\([^)]*\)/g, '').trim();
-    let utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'hi-IN';
+    const utterance = new SpeechSynthesisUtterance(text);
+    const bcpMap = {
+      'hi': 'hi-IN', 'mr': 'mr-IN', 'ta': 'ta-IN', 'bn': 'bn-IN',
+      'te': 'te-IN', 'gu': 'gu-IN', 'kn': 'kn-IN', 'ml': 'ml-IN',
+      'pa': 'pa-IN', 'en': 'en-IN', 'es': 'es-ES', 'fr': 'fr-FR',
+      'de': 'de-DE', 'zh-CN': 'zh-CN', 'ja': 'ja-JP', 'ar': 'ar-SA',
+      'ru': 'ru-RU', 'pt': 'pt-PT', 'it': 'it-IT', 'ko': 'ko-KR'
+    };
+    utterance.lang = bcpMap[langCode] || langCode || 'hi-IN';
     utterance.rate = 0.9;
     window.speechSynthesis.speak(utterance);
+  }
+
+  function copyLingoTranslation() {
+    const translatedTextEl = document.getElementById('lingo-translated-text');
+    const toastEl = document.getElementById('lingo-toast-msg');
+    if (!translatedTextEl || !translatedTextEl.textContent.trim()) return;
+
+    navigator.clipboard.writeText(translatedTextEl.textContent.trim()).then(() => {
+      if (toastEl) {
+        toastEl.style.display = 'inline';
+        setTimeout(() => { toastEl.style.display = 'none'; }, 2000);
+      }
+    });
+  }
+
+  function addLingoHistory(srcText, tgtText, srcLang, tgtLang) {
+    if (!srcText || !tgtText) return;
+    if (recentLingoHistory.length > 0 && recentLingoHistory[0].src === srcText && recentLingoHistory[0].tgt === tgtText) {
+      return;
+    }
+    recentLingoHistory.unshift({ src: srcText, tgt: tgtText, srcLang: srcLang, tgtLang: tgtLang, time: new Date().toLocaleTimeString() });
+    if (recentLingoHistory.length > 5) recentLingoHistory.pop();
+    renderLingoHistory();
+  }
+
+  function renderLingoHistory() {
+    const cardEl = document.getElementById('lingo-history-card');
+    const listEl = document.getElementById('lingo-history-list');
+    if (!cardEl || !listEl) return;
+
+    if (recentLingoHistory.length === 0) {
+      cardEl.style.display = 'none';
+      return;
+    }
+    cardEl.style.display = 'block';
+
+    listEl.innerHTML = recentLingoHistory.map(item => `
+      <div style="background:rgba(2,6,23,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:0.65rem 0.85rem; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; font-size:0.82rem;">
+        <div style="flex:1;">
+          <div style="color:#94a3b8; font-size:0.75rem;">"${item.src.replace(/</g, '&lt;')}"</div>
+          <div style="color:#00f3ff; font-weight:800; font-size:0.88rem; margin-top:2px;">➔ ${item.tgt.replace(/</g, '&lt;')}</div>
+        </div>
+        <button class="visualizer-btn" style="background:rgba(0,243,255,0.12); border:1px solid rgba(0,243,255,0.3); color:#00f3ff; font-size:0.72rem; padding:0.25rem 0.6rem; border-radius:6px;" onclick="if(window.speakNativeText) window.speakNativeText('${item.tgt.replace(/'/g, "\'")}', '${item.tgtLang}');">🔊 Listen</button>
+      </div>
+    `).join('');
+  }
+
+  function setLingoLanguage(langKey) {
+    const targetSelect = document.getElementById('lingo-target-select');
+    if (targetSelect) {
+      const codeMap = { hindi:'hi', marathi:'mr', tamil:'ta', bengali:'bn', telugu:'te', gujarati:'gu', kannada:'kn', malayalam:'ml', punjabi:'pa', rajasthani:'hi' };
+      targetSelect.value = codeMap[langKey] || langKey || 'hi';
+      translateLingoText();
+    }
+  }
+
+  function speakLingoPhrase(text) {
+    speakNativeText(text, 'hi');
   }
 
   // =====================================================================
@@ -30254,6 +30465,17 @@ class HackathonGuide {
   window.switchTransportMode = switchTransportMode;
   window.calcCarFuelToll = calcCarFuelToll;
   window.calcAutoMeter = calcAutoMeter;
+    window.handleLingoTyping = handleLingoTyping;
+  window.translateLingoText = translateLingoText;
+  window.translateIntelInlineText = translateIntelInlineText;
+  window.swapLingoLanguages = swapLingoLanguages;
+  window.setQuickTargetLang = setQuickTargetLang;
+  window.insertLingoTemplate = insertLingoTemplate;
+  window.clearLingoInput = clearLingoInput;
+  window.speakLingoInputText = speakLingoInputText;
+  window.speakLingoOutputText = speakLingoOutputText;
+  window.speakNativeText = speakNativeText;
+  window.copyLingoTranslation = copyLingoTranslation;
   window.setLingoLanguage = setLingoLanguage;
   window.speakLingoPhrase = speakLingoPhrase;
   window.renderSurvivalKit = renderSurvivalKit;
