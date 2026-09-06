@@ -31091,3 +31091,23 @@ class HackathonGuide {
   window.openFeatureDetailModal = openFeatureDetailModal;
   window.closeFeatureDetailModal = closeFeatureDetailModal;
 
+
+
+// Quick Taskbar Live Filter Logic
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('feature-search');
+  const chipContainer = document.getElementById('quick-taskbar-chips');
+
+  if (searchInput && chipContainer) {
+    searchInput.addEventListener('input', function() {
+      const q = searchInput.value.toLowerCase().trim();
+      const chips = chipContainer.querySelectorAll('.feature-chip');
+      
+      chips.forEach(chip => {
+        const text = chip.textContent.toLowerCase();
+        const matches = !q || text.includes(q);
+        chip.style.display = matches ? 'inline-flex' : 'none';
+      });
+    });
+  }
+});
