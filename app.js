@@ -32,6 +32,20 @@
   }
   window.safeText = safeText;
 
+  window.openCityCardFromSlider = function(cityName) {
+    if (!cityName) return;
+    if (window.switchTab) window.switchTab('travelintel');
+    const searchInput = document.getElementById('intel-search-input');
+    if (searchInput) {
+      searchInput.value = cityName;
+      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    const anchor = document.getElementById('main-app-anchor') || document.getElementById('tab-content-travelintel');
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
     const ARVORA_MASTER_180_FEATURES = {
     roam: [
       { id: 'discover', name: 'Discover Destination Load & Spatial Heatmaps', title: 'Discover Destination Load & Spatial Heatmaps', category: 'Smart Travel', categoryKey: 'roam', icon: '🧭', desc: 'Real-time spatial destination load map, crowding index & smart rerouting.' },
@@ -127,7 +141,7 @@
     let cleanId = tabId.toString().trim().toLowerCase();
 
     // 2. Special Action Modals
-    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { window.location.href = 'mostar.html'; return; }
+    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { var cinema = document.getElementById('cinema'); if(cinema) cinema.scrollIntoView({behavior:'smooth'}); return; }
     if (cleanId === 'theme' || cleanId === 'themestudio') {
       if (typeof window.openThemeModal === 'function') window.openThemeModal();
       return;
@@ -1605,7 +1619,7 @@
     let cleanId = tabId.toString().trim().toLowerCase();
 
     // 1. Theme Studio Trigger
-    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { window.location.href = 'mostar.html'; return; }
+    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { var cinema = document.getElementById('cinema'); if(cinema) cinema.scrollIntoView({behavior:'smooth'}); return; }
     if (cleanId === 'theme' || cleanId === 'themestudio') {
       if (typeof window.openThemeModal === 'function') window.openThemeModal();
       return;
@@ -30889,7 +30903,7 @@ class HackathonGuide {
     closeFeatureDetailModal();
 
     // 1. Theme Studio Trigger
-    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { window.location.href = 'mostar.html'; return; }
+    if (cleanId === 'mostar' || cleanId === 'mostar3d' || cleanId === 'mostarexperience') { var cinema = document.getElementById('cinema'); if(cinema) cinema.scrollIntoView({behavior:'smooth'}); return; }
     if (cleanId === 'theme' || cleanId === 'themestudio') {
       if (typeof window.openThemeModal === 'function') window.openThemeModal();
       return;
